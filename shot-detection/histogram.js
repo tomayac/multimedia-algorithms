@@ -7,6 +7,8 @@ var Histogram = (function(window) {
       var w = opt_width || ctx.canvas.width;
       var h = opt_height || ctx.canvas.height;      
       var returnValues = opt_values || false;
+      // Core bits adapted (stolen) from
+      // https://github.com/jseidelin/pixastic/blob/master/actions/histogram.js
       if (returnValues) {
         var values = [];
         for (var i = 0; i < 256; i++) {
