@@ -2,10 +2,26 @@
   ini_set('memory_limit', '-1');
   set_time_limit(0);  
 
-  $dontPrintOutput = true;
-  require_once('getVideoInfo.php');
-
-  $json = json_decode($json, true);
+  // Core bits stolen from http://stackoverflow.com/questions/206059/php-validation-regex-for-url  
+  $urlRegExp = "#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie";
+      
+  if (preg_match($urlRegExp, $_GET['video'])) {
+    $json = array(array('url' => $_GET['video'], 'type' => ''));
+    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+    srand((double)microtime()*1000000); 
+    $i = 0; 
+    $videoId = ''; 
+    while ($i < 7) { 
+      $num = rand() % 33; 
+      $tmp = substr($chars, $num, 1); 
+      $videoId = $videoId . $tmp; 
+      $i++; 
+    } 
+  } else {
+    $dontPrintOutput = true;
+    require_once('getVideoInfo.php');
+    $json = json_decode($json, true);    
+  }
 
   $url = $json[0]['url'];
   $type = $json[0]['type'];
