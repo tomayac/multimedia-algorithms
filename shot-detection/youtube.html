@@ -15,10 +15,16 @@
         float: left;
         border: solid green 1px;
       }
+      DIV.strip IMG {
+        width: 50px;
+      }
       DIV.break {
         margin-left: 52px;
-        float:left;
+        float: left;
         border: solid red 1px;
+      }      
+      DIV.break IMG {
+        width: 50px;
       }      
       UL LI {
         display: inline;
@@ -26,50 +32,125 @@
       SMALL {
         font-size: 0.5em;
       }
+      DIV.video {
+        float: left;
+      }
+      DIV.canvas {
+        float: left;
+      }
+      DIV.canvas CANVAS {
+        margin-left: 10px;
+      }
+      DIV.scenes {
+        clear: both;
+      }
+      DIV.label {
+        display: inline-block;
+        width: 0.5em;
+      }
+      SPAN.debug_options {
+        display: none;
+      }
     </style>
   </head> 
   <body> 
     <div>
-      <input id="video_id" value="Hu-YsZNpkZs" />
-      <button id="start">OK</button>
+      <form onsubmit="return false;">
+        <input id="video_id" value="Hu-YsZNpkZs" />
+        <button type="submit" id="start">OK</button>
+        <small>
+          <input id="debug" type="checkbox" checked />
+          <label for="debug"> Debug</label>
+          <span id="debug_options">
+            <input id="different" type="checkbox" checked />
+            <label for="different"> Show Most Different Tiles</label>
+            <input id="similar" type="checkbox" checked />
+            <label for="similar"> Show Most Similar Tiles</label>          
+          </span>  
+        </small>
+      </form>  
+      
     </div> 
-    <div style="float:left;" id="video"> 
+    <div class="video" id="video"> 
       <video controls></video>
-      <br/>
-      <input size="2" id="rows" type="range" min="1" max="20" step="1"/>
-      <input id="rows_value"/> Rows
-      <br/>
-      <input size="2" id="cols" type="range" min="1" max="20" step="1"/>
-      <input id="cols_value"/> Columns
-      <br/>
-      <input size="2" id="threshold" type="range" min="1" max="300" step="1"/>
-      <input id="threshold_value"/> Scene Threshold
+      <div>
+        <div class="label"><small id="rows_min">1</small></div>
+        <input size="2" id="rows" type="range" min="1" max="20" step="1"/>
+        <div class="label"><small id="rows_max">20</small></div>
+        <input id="rows_value"/> # Rows
+        <br/>
+        <div class="label"><small id="cols_min">1</small></div>
+        <input size="2" id="cols" type="range" min="1" max="20" step="1"/>
+        <div class="label"><small id="cols_max">20</small></div>
+        <input id="cols_value"/> # Columns
+        <br/>
+        <div class="label"><small id="tiles_min">1</small></div>
+        <input size="2" id="tiles" type="range" min="1" step="1"/>
+        <div class="label"><small id="tiles_max"></small></div>
+        <input id="tiles_value"/> # Most Different Tiles      
+        <br/>
+        <div class="label"><small id="threshold_min">1</small></div>
+        <input size="2" id="threshold" type="range" min="1" max="300" step="1"/>
+        <div class="label"><small id="threshold_max">300</small></div>
+        <input id="threshold_value"/> Scene Threshold
+        <br/>
+        <div class="label"><small id="boosting_min">1</small></div>
+        <input size="2" id="boosting" type="range" min="1" max="2" step="0.1"/>
+        <div class="label"><small id="boosting_max">2</small></div>
+        <input id="boosting_value"/> Different Tile Boosting Factor
+        <br/>
+        <div class="label"><small id="limiting_min">0</small></div>
+        <input size="2" id="limiting" type="range" min="0" max="1" step="0.1"/>
+        <div class="label"><small id="limiting_max">1</small></div>
+        <input id="limiting_value"/> Similar Tile Limiting Factor        
+      </div>
     </div>     
-    <div style="float:left;" id="average_canvas"></div>             
-    <div style="clear:both;" id="scenes"> 
+    <div class="canvas" id="average_canvas"></div>             
+    <div class="scenes" id="scenes"> 
       <ul></ul> 
     </div> 
 
     <script> 
-      (function () {
-        function removeAllChildNodes(elem) {
-          while(elem.hasChildNodes()){
-            elem.removeChild(elem.lastChild);
+      (function () {        
+        var similarCheckbox = document.getElementById('similar');
+        var showSimilar = similarCheckbox.checked;
+        similarCheckbox.addEventListener('change', function(e) {
+          showSimilar = this.checked;
+        }, false);
+
+        var differentCheckbox = document.getElementById('different');
+        var showDifferent = differentCheckbox.checked;
+        differentCheckbox.addEventListener('change', function(e) {
+          showDifferent = this.checked;
+        }, false);
+
+        var debugCheckbox = document.getElementById('debug');
+        var debugOptions = document.getElementById('debug_options');
+        var debug = debugCheckbox.checked;
+        var timeout = null;
+        var canvasWidth = null;        
+        if (!debug) {
+          timeout = 100;
+          canvasWidth = 50;
+        } else {
+          timeout = 500;
+          canvasWidth = 300;
+        }
+        debugCheckbox.addEventListener('change', function() {
+          debug = debugCheckbox.checked;
+          debugOptions.classList.toggle('debug_options');
+          if (!debug) {            
+            avgCanvas.parentNode.removeChild(avgCanvas);
+            canvas.parentNode.removeChild(canvas);
+            timeout = 100;
+            canvasWidth = 50;
+          } else {
+            averageCanvas.appendChild(canvas);
+            averageCanvas.appendChild(avgCanvas);
+            timeout = 500;
+            canvasWidth = 300;
           }
-        }
-        
-        // Core bits adapted (stolen) from
-        // http://isithackday.com/videograbber/
-        function formatTime(time) {
-          var hours = parseInt((time / 60 / 60) % 60, 10),
-              mins = parseInt((time / 60) % 60, 10),
-              secs = parseInt(time, 10) % 60,
-              hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':',
-              minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':',
-              secss  = (secs < 10 ? '0' : '') +(secs % 60),
-              timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
-          return timestring;
-        }
+        }, false);        
         
         var startButton = document.getElementById('start');
         startButton.addEventListener('click', function(e) {
@@ -88,6 +169,10 @@
         
         var colsSlider = document.getElementById('cols');
         var colsValue = document.getElementById('cols_value');
+
+        var tilesSlider = document.getElementById('tiles');
+        var tilesValue = document.getElementById('tiles_value');
+        var tilesMax = document.getElementById('tiles_max');
         
         var thresholdSlider = document.getElementById('threshold');
         var thresholdValue = document.getElementById('threshold_value');        
@@ -99,18 +184,68 @@
         colsValue.value = cols;
         colsSlider.value = cols;
         var rows_x_cols = rows * cols;
+        var rowsOrColsChanged = false;
+        
+        function assureValidTiles() {
+          tilesSlider.max = rows_x_cols;
+          tilesMax.innerHTML = rows_x_cols;
+          if (rows_x_cols < tiles) {
+            tiles = rows_x_cols;
+            tilesSlider.value = tiles;
+            tilesValue.value = tiles;            
+          }          
+        }
         
         rowsSlider.addEventListener('change', function(e) {
           rows = this.value;
           rows_x_cols = rows * cols;
+          assureValidTiles();
           rowsValue.value = rows;          
+          rowsOrColsChanged = true;
         }, false);
 
         colsSlider.addEventListener('change', function(e) {
           cols = this.value;
           rows_x_cols = rows * cols;
+          assureValidTiles();
           colsValue.value = cols;
+          rowsOrColsChanged = true;
         }, false); 
+
+        function round(num, numOfDec) {
+          var pow10s = Math.pow(10, numOfDec || 0);
+          return (numOfDec)? Math.round(pow10s * num) / pow10s : num;
+        }
+        
+        boostingSlider = document.getElementById('boosting');
+        boostingValue = document.getElementById('boosting_value');
+        var boosting = 2.0;
+        boostingSlider.value = boosting;
+        boostingValue.value = boosting;
+        boostingSlider.addEventListener('change', function(e) {
+          boosting = round(this.value, 1);
+          boostingValue.value = boosting;
+        }, false);
+
+        limitingSlider = document.getElementById('limiting');
+        limitingValue = document.getElementById('limiting_value');
+        var limiting = 0.5;
+        limitingSlider.value = limiting;
+        limitingValue.value = limiting;
+        limitingSlider.addEventListener('change', function(e) {
+          limiting = round(this.value, 1);
+          limitingValue.value = limiting;
+        }, false);      
+        
+        var tiles = 1;        
+        tilesSlider.max = rows_x_cols;
+        tilesMax.innerHTML = rows_x_cols;
+        tilesSlider.value = tiles;
+        tilesValue.value = tiles;                
+        tilesSlider.addEventListener('change', function(e) {
+          tiles = this.value;
+          tilesValue.value = tiles;          
+        }, false);         
         
         var threshold = 50;
         thresholdValue.value = threshold;
@@ -132,67 +267,108 @@
         }, false);
         
         var canvas = document.createElement('canvas');       
-        var avgCanvas = document.createElement('canvas');
+        var avgCanvas = null;
+        if (debug) {
+          avgCanvas = document.createElement('canvas');
+          averageCanvas.appendChild(canvas);
+          averageCanvas.appendChild(avgCanvas);
+        }
         
-        function start(id) {          
+        var interval = null;
+        function start(id) {  
+          function removeAllChildNodes(elem) {
+            while(elem.hasChildNodes()){
+              elem.removeChild(elem.lastChild);
+            }
+          }
+
+          // Core bits adapted (stolen) from
+          // http://isithackday.com/videograbber/
+          function formatTime(time) {
+            var hours = parseInt((time / 60 / 60) % 60, 10),
+                mins = parseInt((time / 60) % 60, 10),
+                secs = parseInt(time, 10) % 60,
+                hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':',
+                minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':',
+                secss  = (secs < 10 ? '0' : '') +(secs % 60),
+                timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
+            return timestring;
+          }          
+                  
+          if (interval) {
+            clearInterval(interval);
+            interval = null;
+          }
+          removeAllChildNodes(video);
+          removeAllChildNodes(scenes);
           $.ajax({
             dataType: 'json',      
             url: "http://tomayac.com/youpr0n/proxy.php?video=" + id,
             success: function(data) {
               distances = [];
-              removeAllChildNodes(video);
               for (var i = 0, len = data.length; i < len; i++) {
                 var source = document.createElement('source');
                 source.src = data[i].url;
                 if (data[i].type) {
                   source.type = data[i].type
                 }
-                video.appendChild(source);
+                video.appendChild(source);                
               }
+              video.load();
             }
           });
  
-         video.addEventListener('play', function(e) {
-           if (video.currentTime === 0) {
-             removeAllChildNodes(scenes);
-           }
-         }, false);
+          video.addEventListener('play', function(e) {
+            if (video.currentTime === 0) {
+              removeAllChildNodes(scenes);
+            }
+          }, false);
  
           video.addEventListener('loadedmetadata', function(e) {
-            console.log('loadedmetadata');
+            console.log('Loaded Metadata.');
             var videoWidth = video.videoWidth;
             var videoHeight = video.videoHeight;
             var videoRatio = videoWidth / videoHeight;
-            video.volume = 0;
-          
-            var canvasWidth = 50;
+            video.volume = 0;          
+            
             var canvasHeight = ~~(canvasWidth / videoRatio);            
             canvas.width = canvasWidth;
-            canvas.height = canvasHeight;          
-            canvas.style.border = '2px solid green';
-            
+            canvas.height = canvasHeight;
             avgCanvas.width = canvasWidth;
-            avgCanvas.height = canvasHeight;            
-            
+            avgCanvas.height = canvasHeight;                          
             var ctx = canvas.getContext('2d');
-            var avgCtx = avgCanvas.getContext('2d');
+            avgCtx = avgCanvas.getContext('2d');
             
             var lastFrame = null;            
             
             var abs = Math.abs;            
+            var max = Math.max;
+            var min = Math.min;
+            
             video.addEventListener('loadeddata', function(e) {
-              console.log('loadeddata');
+              console.log('Loaded Data.');
+              analyzeVideo();
+            }, false);                   
+
+            function analyzeVideo() {
               var step = 0.5;
               video.currentTime = 0;
               var html = {};
               var counter = 0;
-              FICKEN_complexDistances = [0,0,0,0,0,0,0,0,0];
-              var interval = setInterval(function() {                
+              var sw = ~~(videoWidth / cols);
+              var sh = ~~(videoHeight / rows);
+              var dw = ~~(canvasWidth / cols);
+              var dh = ~~(canvasHeight / rows);              
+
+              interval = setInterval(function() {                
+                if (rowsOrColsChanged) {
+                  sw = ~~(videoWidth / cols);
+                  sh = ~~(videoHeight / rows);
+                  dw = ~~(canvasWidth / cols);
+                  dh = ~~(canvasHeight / rows);                  
+                  rowsOrColsChanged = false;
+                }
                 var currentTime = video.currentTime;
-                var sw = ~~(videoWidth / cols);
-                var sh = ~~(videoHeight / rows);
-                var dw = ~~(canvasWidth / cols);
-                var dh = ~~(canvasHeight / rows);
 
                 var thisFrame = {};
 
@@ -206,36 +382,78 @@
                   ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
                   var histogram =
                       Histogram.getHistogram(ctx, dx, dy, dw, dh, false);
-                  avgCtx.fillStyle = histogram.css;
-                  avgCtx.fillRect(dx, dy, dw, dh);
+                  if (debug) {    
+                    avgCtx.fillStyle = histogram.css;
+                    avgCtx.fillRect(dx, dy, dw, dh);
+                  }
 
                   thisFrame[i] = histogram.average;
                 }
                 thisFrame.average = 0;
+                if (!lastFrame) {
+                  lastFrame = thisFrame;
+                }
+                var complexDistance = [];
                 for (var i = 0; i < rows_x_cols; i++) {
-                  thisFrame.average += thisFrame[i];
+                  complexDistance[i] = abs(thisFrame[i] - lastFrame[i]);                  
+                }                
+                var complexDistanceCopy = complexDistance.slice(0);
+                complexDistanceCopy.sort(function(a, b) { return a - b; });
+                var mostSimilarTiles = [];
+                var mostDifferentTiles = [];                
+                var index = null;
+                for (var i = 0; i < tiles; i++) {                  
+                  var maxDifference = complexDistanceCopy[rows_x_cols - i - 1];
+                  index = complexDistance.indexOf(maxDifference);                      
+                  mostDifferentTiles[i] = index;                      
+                  complexDistance[index] = null;                      
+                  
+                  var minDifference = complexDistanceCopy[i];
+                  index = complexDistance.indexOf(minDifference);                      
+                  mostSimilarTiles[i] = index;
+                  complexDistance[index] = null;                      
+                }             
+                for (var i = 0; i < rows_x_cols; i++) {
+                  var value = thisFrame[i];
+                  var boostingFactor = 1;
+                  if (mostSimilarTiles.indexOf(i) !== -1) {
+                    boostingFactor = limiting;
+                  } else if (mostDifferentTiles.indexOf(i) !== -1) {
+                    boostingFactor = boosting;
+                  }
+                  thisFrame.average += value * boostingFactor;
                 }
                 if (!lastFrame) {
                   lastFrame = thisFrame;
                 }
                 thisFrame.average = ~~(thisFrame.average / rows_x_cols);
                 var distance = abs(thisFrame.average - lastFrame.average);
-                var complexDistance = [];
-                for (var i = 0; i < rows_x_cols; i++) {
-                  complexDistance[i] = abs(thisFrame[i] - lastFrame[i]);
-                  FICKEN_complexDistances[i] += complexDistance[i];
-                }
-                var max = Math.max.apply(null, complexDistance);
-                var min = Math.min.apply(null, complexDistance);
-                //console.log(complexDistance);
-                
-                var mostSimilarTile = complexDistance.indexOf(min);
-                var mostDifferentTile = complexDistance.indexOf(max);
-                console.log(counter + ' === ' + mostDifferentTile + ' === ' + mostSimilarTile);                
                 distances.push(distance);
+                if (debug) {
+                  for (var i = 0; i < tiles; i++) {  
+                    if (showDifferent) {                                  
+                      var mostDifferentTile = mostDifferentTiles[i];                    
+                      mod = (mostDifferentTile % cols);
+                      div = ~~(mostDifferentTile / cols); 
+                      dx = mod * dw;
+                      dy = div * dh;                  
+                      avgCtx.strokeStyle = 'red';
+                      avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);
+                    }
+                    if (showSimilar) {
+                      var mostSimilarTile = mostSimilarTiles[i];
+                      mod = (mostSimilarTile % cols);
+                      div = ~~(mostSimilarTile / cols); 
+                      dx = mod * dw;
+                      dy = div * dh;                  
+                      avgCtx.strokeStyle = 'green';
+                      avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);                  
+                    }
+                  }
+                }                                
                 var time = parseFloat(currentTime);
                 lastFrame = thisFrame;
-                
+
                 var src = canvas.toDataURL('image/png');
                 var divCss = null;
                 if (distance > threshold) {
@@ -247,7 +465,7 @@
                     '<li><div ' + divCss + '><img src="' + src + '"/>' +
                     '<br/><small>' + formatTime(time) + ' / ' +
                     '<strong>' + distance + '</strong></small></div></li>';               
-                                
+
                 var nextTime = currentTime + step;                                                
                 if (nextTime > video.duration) {
                   clearInterval(interval);
@@ -269,9 +487,9 @@
                   video.currentTime = nextTime;
                 }
                 counter++;                
-              }, 100);
-            }, false);       
-          }, false);
+              }, timeout);            
+            }            
+          }, false);       
         } 
       })();
     </script> 
