@@ -225,6 +225,7 @@
         boostingSlider.addEventListener('change', function(e) {
           boosting = round(this.value, 1);
           boostingValue.value = boosting;
+          updateStrips();
         }, false);
 
         limitingSlider = document.getElementById('limiting');
@@ -235,6 +236,7 @@
         limitingSlider.addEventListener('change', function(e) {
           limiting = round(this.value, 1);
           limitingValue.value = limiting;
+          updateStrips();
         }, false);      
         
         var tiles = 1;        
@@ -253,17 +255,8 @@
         var distances = [];
         thresholdSlider.addEventListener('change', function(e) {
           threshold = this.value;
-          thresholdValue.value = threshold;
-          
-          var stripDivs = document.querySelectorAll('.strip');
-          for (var i = 0, len = stripDivs.length; i < len; i++) {
-            var div = stripDivs[i];
-            var distance = distances[i];
-            div.classList.remove('break');
-            if (distance > threshold) {
-              div.classList.add('break');
-            }
-          }
+          thresholdValue.value = threshold;          
+          updateStrips();
         }, false);
         
         var canvas = document.createElement('canvas');       
@@ -272,6 +265,62 @@
           avgCanvas = document.createElement('canvas');
           averageCanvas.appendChild(canvas);
           averageCanvas.appendChild(avgCanvas);
+        }
+        
+        function updateStrips() {
+          // recalculate distances with new limiting and boosting factors          
+          var newDistances = [];           
+          var abs = Math.abs;
+          for (var i = 0, len = distances.length; i < len; i++) {
+            var average = 0;
+            var distance = distances[i];            
+            var tiles = distance.tiles;
+            var mostSimilarTiles = distance.mostSimilarTiles;
+            var mostDifferentTiles = distance.mostDifferentTiles;            
+            for (var j = 0; j < rows_x_cols; j++) {              
+              var value = tiles[j];
+              var boostingFactor = 1;
+              if (mostSimilarTiles.indexOf(j) !== -1) {
+                boostingFactor = limiting;
+              } else if (mostDifferentTiles.indexOf(j) !== -1) {
+                boostingFactor = boosting;
+              }
+              average += value * boostingFactor;
+            }
+            average = ~~(average / rows_x_cols);
+            if (i > 0) {
+              newDistances[i] = abs(average - newDistances[i - 1]);
+            } else {
+              newDistances[i] = average;
+            }
+          }
+          var absoluteDistances = [];
+          for (var i = 0, len = distances.length; i < len; i++) {
+            absoluteDistances[i] = distances[i].absolute;
+          }          
+          console.log(absoluteDistances); 
+          console.log(newDistances);
+          var averageDistance = ~~Stat.getAverage(newDistances);
+          var standardDeviationDistance =
+              ~~Stat.getStandardDeviation(newDistances);                  
+          console.log('Average Distance: ' + averageDistance);
+          console.log('Standard Deviation Distance: ' + standardDeviationDistance);                                
+          if (thresholdSlider.value != standardDeviationDistance) {
+            //alert('New standard deviation:\n\nOld: ' + thresholdSlider.value + '\nNew: ' + standardDeviation);
+          }
+          //thresholdSlider.value = standardDeviation;
+          //thresholdValue.value = standardDeviation;
+          
+          // update display
+          var stripDivs = document.querySelectorAll('.strip');
+          for (var i = 0, len = stripDivs.length; i < len; i++) {
+            var div = stripDivs[i];            
+            div.classList.remove('break');
+            var distance = newDistances[i];
+            if (distance > threshold) {
+              div.classList.add('break');
+            }
+          }          
         }
         
         var interval = null;
@@ -393,25 +442,25 @@
                 if (!lastFrame) {
                   lastFrame = thisFrame;
                 }
-                var complexDistance = [];
+                var absoluteDistance = [];
                 for (var i = 0; i < rows_x_cols; i++) {
-                  complexDistance[i] = abs(thisFrame[i] - lastFrame[i]);                  
+                  absoluteDistance[i] = abs(thisFrame[i] - lastFrame[i]);                  
                 }                
-                var complexDistanceCopy = complexDistance.slice(0);
-                complexDistanceCopy.sort(function(a, b) { return a - b; });
+                var absoluteDistanceCopy = absoluteDistance.slice(0);
+                absoluteDistanceCopy.sort(function(a, b) { return a - b; });
                 var mostSimilarTiles = [];
                 var mostDifferentTiles = [];                
                 var index = null;
                 for (var i = 0; i < tiles; i++) {                  
-                  var maxDifference = complexDistanceCopy[rows_x_cols - i - 1];
-                  index = complexDistance.indexOf(maxDifference);                      
+                  var maxDifference = absoluteDistanceCopy[rows_x_cols - i - 1];
+                  index = absoluteDistance.indexOf(maxDifference);                      
                   mostDifferentTiles[i] = index;                      
-                  complexDistance[index] = null;                      
+                  absoluteDistance[index] = null;                      
                   
-                  var minDifference = complexDistanceCopy[i];
-                  index = complexDistance.indexOf(minDifference);                      
+                  var minDifference = absoluteDistanceCopy[i];
+                  index = absoluteDistance.indexOf(minDifference);                      
                   mostSimilarTiles[i] = index;
-                  complexDistance[index] = null;                      
+                  absoluteDistance[index] = null;                      
                 }             
                 for (var i = 0; i < rows_x_cols; i++) {
                   var value = thisFrame[i];
@@ -427,7 +476,13 @@
                   lastFrame = thisFrame;
                 }
                 thisFrame.average = ~~(thisFrame.average / rows_x_cols);
-                var distance = abs(thisFrame.average - lastFrame.average);
+                var distance = {
+                  absolute: abs(thisFrame.average - lastFrame.average),
+                  mostSimilarTiles: mostSimilarTiles,
+                  mostDifferentTiles: mostDifferentTiles,
+                  tiles: thisFrame
+                };
+                                
                 distances.push(distance);
                 if (debug) {
                   for (var i = 0; i < tiles; i++) {  
@@ -456,7 +511,7 @@
 
                 var src = canvas.toDataURL('image/png');
                 var divCss = null;
-                if (distance > threshold) {
+                if (distance.absolute > threshold) {
                   divCss = 'class="break strip"';
                 } else {
                   divCss = 'class="strip"';
@@ -464,7 +519,7 @@
                 html[counter] = 
                     '<li><div ' + divCss + '><img src="' + src + '"/>' +
                     '<br/><small>' + formatTime(time) + ' / ' +
-                    '<strong>' + distance + '</strong></small></div></li>';               
+                    '<strong>' + distance.absolute + '</strong></small></div></li>';               
 
                 var nextTime = currentTime + step;                                                
                 if (nextTime > video.duration) {
@@ -477,8 +532,13 @@
                   }
                   scenes.innerHTML = innerHtml;
                   video.currentTime = 0;
-                  var average = ~~Stat.getAverage(distances);
-                  var standardDeviation = ~~Stat.getStandardDeviation(distances);                  
+                  var absoluteDistances = [];
+                  for (var i = 0, len = distances.length; i < len; i++) {
+                    absoluteDistances[i] = distances[i].absolute;
+                  }
+                  var average = ~~Stat.getAverage(absoluteDistances);
+                  var standardDeviation =
+                      ~~Stat.getStandardDeviation(absoluteDistances);                  
                   console.log('Average Distance: ' + average);
                   console.log('Standard Deviation Distance: ' + standardDeviation);                                
                   thresholdSlider.value = standardDeviation;
