@@ -672,6 +672,14 @@
             }
           }, false);
         }
+        
+        (function init() {     
+          var videoId = document.location.search.replace(/\?v=(\w+)$/, '$1');
+          if (videoId) {
+            console.log('Video ID ' + videoId);
+            start(videoId);          
+          }          
+        })();
       })();
     </script>
   </body>
