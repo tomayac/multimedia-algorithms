@@ -439,6 +439,8 @@
                 var div = null;
                 var dx = null;
                 var dy = null;
+                var dw2 = dw - 2;
+                var dh2 = dh - 2;
                 for (var i = 0; i < tiles; i++) {
                   // all most different tiles
                   if (showDifferent) {
@@ -448,7 +450,7 @@
                     dx = mod * dw;
                     dy = div * dh;
                     avgCtx.strokeStyle = 'red';
-                    avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);
+                    avgCtx.strokeRect(dx + 1, dy + 1, dw2, dh2);
                   }
                   // all most similar tiles
                   if (showSimilar) {
@@ -458,7 +460,7 @@
                     dx = mod * dw;
                     dy = div * dh;
                     avgCtx.strokeStyle = 'green';
-                    avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);
+                    avgCtx.strokeRect(dx + 1, dy + 1, dw2, dh2);
                   }
                 }
               }
