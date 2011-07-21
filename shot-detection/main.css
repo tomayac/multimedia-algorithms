@@ -4,14 +4,14 @@ BODY {
 }
 DIV.strip {
   float: left;
+  margin: 4px 0px;
   border: solid green 1px;
 }
 DIV.strip IMG {
   width: 50px;
 }
 DIV.break {
-  margin-left: 52px;
-  float: left;
+  clear: both;
   border: solid red 1px;
 }      
 DIV.break IMG {
@@ -30,7 +30,7 @@ DIV.canvas {
   float: left;
 }
 DIV.canvas CANVAS {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 DIV.scenes {
   clear: both;
@@ -41,4 +41,7 @@ DIV.label {
 }
 SPAN.debug_options {
   display: none;
+}
+INPUT.options {
+  width: 3em;
 }

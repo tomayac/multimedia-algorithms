@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel=stylesheet href="main.css" type="text/css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"
+        type="text/javascript"></script>
     <script src="histogram.js" type="text/javascript"></script>
     <script src="stat.js" type="text/javascript"></script>
   </head>
@@ -25,44 +27,66 @@
         </small>
       </form>
     </div>
+    
     <div class="video" id="video">
       <video controls></video>
+      
       <div>
         <div class="label"><small id="rows_min">1</small></div>
-        <input size="2" id="rows" type="range" min="1" max="20" step="1"/>
+        <input id="rows" type="range" min="1" max="20" step="1"/>
         <div class="label"><small id="rows_max">20</small></div>
-        <input id="rows_value"/> # Rows
+        <input class="options" id="rows_value"/> # Rows
         <br/>
+        
         <div class="label"><small id="cols_min">1</small></div>
-        <input size="2" id="cols" type="range" min="1" max="20" step="1"/>
+        <input id="cols" type="range" min="1" max="20" step="1"/>
         <div class="label"><small id="cols_max">20</small></div>
-        <input id="cols_value"/> # Columns
+        <input class="options" id="cols_value"/> # Columns
         <br/>
+        
         <div class="label"><small id="tiles_min">1</small></div>
-        <input size="2" id="tiles" type="range" min="1" step="1"/>
+        <input id="tiles" type="range" min="1" step="1"/>
         <div class="label"><small id="tiles_max"></small></div>
-        <input id="tiles_value"/> # Most Different Tiles
+        <input class="options" id="tiles_value"/> # Most Different Tiles
         <br/>
+        
         <div class="label"><small id="threshold_min">1</small></div>
-        <input size="2" id="threshold" type="range" min="1" max="300" step="1"/>
+        <input id="threshold" type="range" min="1" max="300" step="1"/>
         <div class="label"><small id="threshold_max">300</small></div>
-        <input id="threshold_value"/> Scene Threshold
+        <input class="options" id="threshold_value"/> Scene Threshold
         <br/>
+        
         <div class="label"><small id="boosting_min">1</small></div>
-        <input size="2" id="boosting" type="range" min="1" max="2" step="0.1"/>
+        <input id="boosting" type="range" min="1" max="2" step="0.1"/>
         <div class="label"><small id="boosting_max">2</small></div>
-        <input id="boosting_value"/> Different Tile Boosting Factor
+        <input class="options" id="boosting_value"/>
+        Different Tile Boosting Factor
         <br/>
+        
         <div class="label"><small id="limiting_min">0</small></div>
-        <input size="2" id="limiting" type="range" min="0" max="1" step="0.1"/>
+        <input id="limiting" type="range" min="0" max="1" step="0.1"/>
         <div class="label"><small id="limiting_max">1</small></div>
-        <input id="limiting_value"/> Similar Tile Limiting Factor
+        <input class="options" id="limiting_value"/>
+        Similar Tile Limiting Factor
+        <br/>
+        
+        <input class="options" id="average"/> Frame Average Distance
+        <br/>
+        
+        <input class="options" id="deviation"/> Frame Standard Deviation
+        <br/>
+        
+        <input type="checkbox" id="keep_synced" checked/>
+        <label for="keep_synced">
+          Adjust Scene Threshold to Frame Standard Deviation
+        </label>
       </div>
     </div>
+    
     <div class="canvas" id="average_canvas"></div>
-    <div class="scenes" id="scenes">
-      <ul></ul>
-    </div>
+    
+    <div class="scenes" id="scenes"></div>
+    
     <script>
       (function () {
         // global configuration object
@@ -81,18 +105,21 @@
           step: 0.5,
           sortFunction: function (a, b) { return a - b; }
         };
+        
         // show similar tiles checkbox
         var similarCheckbox = document.getElementById('similar');
         var showSimilar = similarCheckbox.checked;
         similarCheckbox.addEventListener('change', function (e) {
           showSimilar = this.checked;
         }, false);
+        
         // show different tiles checkbox
         var differentCheckbox = document.getElementById('different');
         var showDifferent = differentCheckbox.checked;
         differentCheckbox.addEventListener('change', function (e) {
           showDifferent = this.checked;
         }, false);
+        
         // show debug mode checkbox
         var debugCheckbox = document.getElementById('debug');
         var debugOptions = document.getElementById('debug_options');
@@ -121,18 +148,23 @@
             canvasWidth = GLOBAL_config.debugCanvasWidth;
           }
         }, false);
+        
         // start button
         var startButton = document.getElementById('start');
         startButton.addEventListener('click', function (e) {
           start(document.getElementById('video_id').value);
         }, false);
+        
         // main video element
         var video = document.querySelector('video');
         video.height = GLOBAL_config.videoHeight;
+        
         // container for the two debug canvases
         var averageCanvasDiv = document.getElementById('average_canvas');
+        
         // container for the video scenes
-        var scenes = document.querySelector('#scenes ul');
+        var scenes = document.querySelector('#scenes');
+        
         // rows slider
         var rowsSlider = document.getElementById('rows');
         var rowsValue = document.getElementById('rows_value');
@@ -146,6 +178,30 @@
           rowsValue.value = rows;
           rowsOrColsChanged = true;
         }, false);
+        
+        // average distance input
+        var averageDistanceInput = document.getElementById('average');
+        averageDistanceInput.value = 0;
+        
+        // standard devitation input
+        var standardDeviationInput = document.getElementById('deviation');
+        standardDeviationInput.value = 0;
+        
+        // adjust scene threshold to frame standard deviation checkbox
+        var keepSyncedCheckbox = document.getElementById('keep_synced');
+        var keepSynced = keepSyncedCheckbox.checked;
+        keepSyncedCheckbox.addEventListener('change', function (e) {
+          keepSynced = this.checked;
+          if (keepSynced) {
+            threshold = standardDeviationInput.value;
+            if (thresholdSlider.value !== threshold) {
+              thresholdSlider.value = threshold;
+              thresholdValue.value = threshold;            
+              updateScenes();
+            }
+          }
+        }, false);
+        
         // cols slider
         var colsSlider = document.getElementById('cols');
         var colsValue = document.getElementById('cols_value');
@@ -161,6 +217,7 @@
           colsValue.value = cols;
           rowsOrColsChanged = true;
         }, false);
+        
         // threshold slider
         var thresholdSlider = document.getElementById('threshold');
         var thresholdValue = document.getElementById('threshold_value');
@@ -175,6 +232,7 @@
             updateScenes();
           }
         }, false);
+        
         // assures that the number of most similar / different tiles is never
         // greater than the number of absolute tiles
         function assureValidTiles() {
@@ -186,11 +244,13 @@
             tilesValue.value = tiles;
           }
         }
+        
         // rounds a double number to n decimals
         function round(num, numOfDec) {
           var pow10s = Math.pow(10, numOfDec || 0);
           return numOfDec ? Math.round(pow10s * num) / pow10s : num;
         }
+        
         // different tiles boosting slider
         boostingSlider = document.getElementById('boosting');
         boostingValue = document.getElementById('boosting_value');
@@ -204,6 +264,7 @@
             updateScenes();
           }
         }, false);
+        
         // similar tiles limiting slider
         limitingSlider = document.getElementById('limiting');
         limitingValue = document.getElementById('limiting_value');
@@ -217,6 +278,7 @@
             updateScenes();
           }
         }, false);
+        
         // most similar / different tiles slider
         var tilesSlider = document.getElementById('tiles');
         var tilesValue = document.getElementById('tiles_value');
@@ -230,11 +292,13 @@
           tiles = this.value;
           tilesValue.value = tiles;
         }, false);
+        
         // calculates the distance between two frames taking into account
         // the different tiles boosting factor and the similar tiles limiting
         // factor
         function calculateFrameDistance(thisFrame, lastFrame) {
           var abs = Math.abs;
+          
           // first calculate the absolute distance form tile to tile
           // and store the results in a distance vector
           var absoluteDistance = [];
@@ -307,6 +371,17 @@
           averageCanvasDiv.appendChild(canvas);
           averageCanvasDiv.appendChild(avgCanvas);
         }
+        
+        // updates the frame average distance and the frame standard deviation
+        function updateSceneStats(average, standardDeviation) {
+          averageDistanceInput.value = average;
+          standardDeviationInput.value = standardDeviation;
+          if (keepSynced) {
+            thresholdSlider.value = standardDeviation;
+            thresholdValue.value = standardDeviation;            
+          }
+        } 
+        
         // updates the video scenes distribution upon changing either of: scene
         // threshold, different tile boosting factor, similar tile limiting
         // factor
@@ -329,13 +404,7 @@
           var averageDistance = ~~Stat.getAverage(newDistances);
           var standardDeviationDistance =
               ~~Stat.getStandardDeviation(newDistances);
-          console.log('Average Distance: ' + averageDistance);
-          console.log('Standard Deviation Distance: ' + standardDeviationDistance);
-          if (thresholdSlider.value != standardDeviationDistance) {
-            //alert('New standard deviation:\n\nOld: ' + thresholdSlider.value + '\nNew: ' + standardDeviation);
-          }
-          //thresholdSlider.value = standardDeviation;
-          //thresholdValue.value = standardDeviation;
+          updateSceneStats(averageDistance, standardDeviationDistance);
           // update scene distribution display
           var stripDivs = document.querySelectorAll('.strip');
           for (var i = 0, len = stripDivs.length; i < len; i++) {
@@ -344,9 +413,11 @@
             var distance = newDistances[i];
             if (distance > threshold) {
               div.classList.add('break');
-            }
+            }            
+            div.getElementsByTagName('strong')[0].innerHTML = distance;
           }
         }
+        
         // main init / start function
         var interval = null;
         function start(id) {
@@ -356,6 +427,7 @@
               elem.removeChild(elem.lastChild);
             }
           }
+          
           // formats the time in a readable way
           //
           // Core bits adapted (stolen) from
@@ -397,6 +469,7 @@
               video.load();
             }
           });
+          
           // on manual video play, remove the video scenes from the video scene
           // container
           video.addEventListener('play', function (e) {
@@ -404,6 +477,7 @@
               removeAllChildNodes(scenes);
             }
           }, false);
+          
           // upon load of all video metadata, configure the canvas dimensions
           // for the debug canvases
           video.addEventListener('loadedmetadata', function (e) {
@@ -421,15 +495,19 @@
             avgCanvas.height = canvasHeight;
             var ctx = canvas.getContext('2d');
             var avgCtx = avgCanvas.getContext('2d');
+            
             // the first "last" frame does not exist
             var lastFrame = null;
+            
             // upon load of the complete video data, start analyzing the video
             video.addEventListener('loadeddata', function (e) {
               console.log('Loaded Data.');
               analyzeVideo();
             }, false);
+            
             // main video analysis function
             function analyzeVideo() {
+              
               // draws the most similar / different tiles on the average canvas
               // when in debug mode
               function drawMostSimilarDifferentTiles(
@@ -464,6 +542,7 @@
                   }
                 }
               }
+              
               // generates a video scene html snippet
               function generateSceneHtmlSnippet(currentTime, distance) {
                 var time = parseFloat(currentTime);
@@ -475,10 +554,10 @@
                   divCss = 'class="strip"';
                 }
                 html[counter] =
-                    '<li><div ' + divCss + '><img src="' + src + '"/>' +
+                    '<div ' + divCss + '><img src="' + src + '"/>' +
                     '<br/><small>' + formatTime(time) + ' / ' +
                     '<strong>' + distance +
-                    '</strong></small></div></li>';
+                    '</strong></small></div>';
               }
               // analyze the video in n second steps
               var step = GLOBAL_config.step;
@@ -580,11 +659,8 @@
                   }
                   var average = ~~Stat.getAverage(absoluteDistances);
                   var standardDeviation =
-                      ~~Stat.getStandardDeviation(absoluteDistances);
-                  console.log('Average Distance: ' + average);
-                  console.log('Standard Deviation Distance: ' + standardDeviation);
-                  thresholdSlider.value = standardDeviation;
-                  thresholdValue.value = standardDeviation;
+                      ~~Stat.getStandardDeviation(absoluteDistances);                  
+                  updateSceneStats(average, standardDeviation);
                 // if the next video step is within the video's duration, seek
                 // to the new position
                 } else {
