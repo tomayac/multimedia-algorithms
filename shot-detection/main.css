@@ -1,0 +1,44 @@
+BODY {
+  font-family: sans-serif;
+  font-size: 12pt;
+}
+DIV.strip {
+  float: left;
+  border: solid green 1px;
+}
+DIV.strip IMG {
+  width: 50px;
+}
+DIV.break {
+  margin-left: 52px;
+  float: left;
+  border: solid red 1px;
+}      
+DIV.break IMG {
+  width: 50px;
+}      
+UL LI {
+  display: inline;
+}
+SMALL {
+  font-size: 0.5em;
+}
+DIV.video {
+  float: left;
+}
+DIV.canvas {
+  float: left;
+}
+DIV.canvas CANVAS {
+  margin-left: 10px;
+}
+DIV.scenes {
+  clear: both;
+}
+DIV.label {
+  display: inline-block;
+  width: 0.5em;
+}
+SPAN.debug_options {
+  display: none;
+}

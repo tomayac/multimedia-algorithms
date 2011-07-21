@@ -3,55 +3,10 @@
   <head> 
     <meta charset="UTF-8"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <link rel=stylesheet href="main.css" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script> 
     <script src="histogram.js" type="text/javascript"></script>
     <script src="stat.js" type="text/javascript"></script>    
-    <style>
-      BODY {
-        font-family: sans-serif;
-        font-size: 12pt;
-      }
-      DIV.strip {
-        float: left;
-        border: solid green 1px;
-      }
-      DIV.strip IMG {
-        width: 50px;
-      }
-      DIV.break {
-        margin-left: 52px;
-        float: left;
-        border: solid red 1px;
-      }      
-      DIV.break IMG {
-        width: 50px;
-      }      
-      UL LI {
-        display: inline;
-      }
-      SMALL {
-        font-size: 0.5em;
-      }
-      DIV.video {
-        float: left;
-      }
-      DIV.canvas {
-        float: left;
-      }
-      DIV.canvas CANVAS {
-        margin-left: 10px;
-      }
-      DIV.scenes {
-        clear: both;
-      }
-      DIV.label {
-        display: inline-block;
-        width: 0.5em;
-      }
-      SPAN.debug_options {
-        display: none;
-      }
-    </style>
   </head> 
   <body> 
     <div>
@@ -68,8 +23,7 @@
             <label for="similar"> Show Most Similar Tiles</label>          
           </span>  
         </small>
-      </form>  
-      
+      </form>        
     </div> 
     <div class="video" id="video"> 
       <video controls></video>
@@ -79,26 +33,31 @@
         <div class="label"><small id="rows_max">20</small></div>
         <input id="rows_value"/> # Rows
         <br/>
+        
         <div class="label"><small id="cols_min">1</small></div>
         <input size="2" id="cols" type="range" min="1" max="20" step="1"/>
         <div class="label"><small id="cols_max">20</small></div>
         <input id="cols_value"/> # Columns
         <br/>
+        
         <div class="label"><small id="tiles_min">1</small></div>
         <input size="2" id="tiles" type="range" min="1" step="1"/>
         <div class="label"><small id="tiles_max"></small></div>
         <input id="tiles_value"/> # Most Different Tiles      
         <br/>
+        
         <div class="label"><small id="threshold_min">1</small></div>
         <input size="2" id="threshold" type="range" min="1" max="300" step="1"/>
         <div class="label"><small id="threshold_max">300</small></div>
         <input id="threshold_value"/> Scene Threshold
         <br/>
+        
         <div class="label"><small id="boosting_min">1</small></div>
         <input size="2" id="boosting" type="range" min="1" max="2" step="0.1"/>
         <div class="label"><small id="boosting_max">2</small></div>
         <input id="boosting_value"/> Different Tile Boosting Factor
         <br/>
+        
         <div class="label"><small id="limiting_min">0</small></div>
         <input size="2" id="limiting" type="range" min="0" max="1" step="0.1"/>
         <div class="label"><small id="limiting_max">1</small></div>
@@ -111,30 +70,51 @@
     </div> 
 
     <script> 
-      (function () {        
+      (function () {  
+        
+        // global configuration object      
+        var GLOBAL_config = {
+          normalTimeout: 100,
+          debugTimeout: 500,          
+          normalCanvasWidth: 50,
+          debugCanvasWidth: 300,
+          videoHeight: 200,
+          rows: 9,
+          cols: 9,
+          boosting: 2.0,
+          limiting: 0.5,
+          threshold: 50,
+          proxy: 'http://tomayac.com/youpr0n/proxy.php?video=',
+          step: 0.5,
+          sortFunction: function(a, b) { return a - b; }
+        };                
+        
+        // show similar tiles checkbox
         var similarCheckbox = document.getElementById('similar');
         var showSimilar = similarCheckbox.checked;
         similarCheckbox.addEventListener('change', function(e) {
           showSimilar = this.checked;
         }, false);
 
+        // show different tiles checkbox
         var differentCheckbox = document.getElementById('different');
         var showDifferent = differentCheckbox.checked;
         differentCheckbox.addEventListener('change', function(e) {
           showDifferent = this.checked;
         }, false);
 
+        // show debug mode checkbox
         var debugCheckbox = document.getElementById('debug');
         var debugOptions = document.getElementById('debug_options');
         var debug = debugCheckbox.checked;
         var timeout = null;
         var canvasWidth = null;        
         if (!debug) {
-          timeout = 100;
-          canvasWidth = 50;
+          timeout = GLOBAL_config.normalTimeout;
+          canvasWidth = GLOBAL_config.normalCanvasWidth;
         } else {
-          timeout = 500;
-          canvasWidth = 300;
+          timeout = GLOBAL_config.debugTimeout;
+          canvasWidth = GLOBAL_config.debugCanvasWidth;
         }
         debugCheckbox.addEventListener('change', function() {
           debug = debugCheckbox.checked;
@@ -142,50 +122,79 @@
           if (!debug) {            
             avgCanvas.parentNode.removeChild(avgCanvas);
             canvas.parentNode.removeChild(canvas);
-            timeout = 100;
-            canvasWidth = 50;
+            timeout = GLOBAL_config.normalTimeout;
+            canvasWidth = GLOBAL_config.normalCanvasWidth;
           } else {
-            averageCanvas.appendChild(canvas);
-            averageCanvas.appendChild(avgCanvas);
-            timeout = 500;
-            canvasWidth = 300;
+            averageCanvasDiv.appendChild(canvas);
+            averageCanvasDiv.appendChild(avgCanvas);
+            timeout = GLOBAL_config.debugTimeout;
+            canvasWidth = GLOBAL_config.debugCanvasWidth;
           }
         }, false);        
         
+        // start button
         var startButton = document.getElementById('start');
         startButton.addEventListener('click', function(e) {
           start(document.getElementById('video_id').value);
         }, false);
         
+        // main video element
         var video = document.querySelector('video');        
-        video.height = '200';
+        video.height = GLOBAL_config.videoHeight;
         
-        var averageCanvas = document.getElementById('average_canvas');        
+        // container for the two debug canvases
+        var averageCanvasDiv = document.getElementById('average_canvas');        
         
+        // container for the video scenes
         var scenes = document.querySelector('#scenes ul');
         
+        // rows slider
         var rowsSlider = document.getElementById('rows');
         var rowsValue = document.getElementById('rows_value');
+        var rows = GLOBAL_config.rows;            
+        rowsValue.value = rows;
+        rowsSlider.value = rows;        
+        rowsSlider.addEventListener('change', function(e) {
+          rows = this.value;
+          rows_x_cols = rows * cols;
+          assureValidTiles();
+          rowsValue.value = rows;          
+          rowsOrColsChanged = true;
+        }, false);        
         
+        // cols slider
         var colsSlider = document.getElementById('cols');
         var colsValue = document.getElementById('cols_value');
-
-        var tilesSlider = document.getElementById('tiles');
-        var tilesValue = document.getElementById('tiles_value');
-        var tilesMax = document.getElementById('tiles_max');
-        
-        var thresholdSlider = document.getElementById('threshold');
-        var thresholdValue = document.getElementById('threshold_value');        
-        
-        var rows = 3;            
-        rowsValue.value = rows;
-        rowsSlider.value = rows;
-        var cols = 3;        
+        var cols = GLOBAL_config.cols; 
         colsValue.value = cols;
         colsSlider.value = cols;
         var rows_x_cols = rows * cols;
         var rowsOrColsChanged = false;
+        colsSlider.addEventListener('change', function(e) {
+          cols = this.value;
+          rows_x_cols = rows * cols;
+          assureValidTiles();
+          colsValue.value = cols;
+          rowsOrColsChanged = true;
+        }, false);         
         
+        // threshold slider
+        var thresholdSlider = document.getElementById('threshold');
+        var thresholdValue = document.getElementById('threshold_value');                
+        var threshold = GLOBAL_config.threshold; 
+        thresholdValue.value = threshold;
+        thresholdSlider.value = threshold;
+        var distances = [];
+        thresholdSlider.addEventListener('change', function(e) {
+          if (threshold !== this.value) {            
+            threshold = this.value;
+            thresholdValue.value = threshold;                                
+            updateScenes();
+          }
+        }, false);        
+        
+        // assures that the number of most similar / different tiles is never
+        // greater than the number of absolute tiles
         function assureValidTiles() {
           tilesSlider.max = rows_x_cols;
           tilesMax.innerHTML = rows_x_cols;
@@ -195,51 +204,46 @@
             tilesValue.value = tiles;            
           }          
         }
-        
-        rowsSlider.addEventListener('change', function(e) {
-          rows = this.value;
-          rows_x_cols = rows * cols;
-          assureValidTiles();
-          rowsValue.value = rows;          
-          rowsOrColsChanged = true;
-        }, false);
 
-        colsSlider.addEventListener('change', function(e) {
-          cols = this.value;
-          rows_x_cols = rows * cols;
-          assureValidTiles();
-          colsValue.value = cols;
-          rowsOrColsChanged = true;
-        }, false); 
-
+        // rounds a double number to n decimals
         function round(num, numOfDec) {
           var pow10s = Math.pow(10, numOfDec || 0);
           return (numOfDec)? Math.round(pow10s * num) / pow10s : num;
         }
         
+        // different tiles boosting slider
         boostingSlider = document.getElementById('boosting');
         boostingValue = document.getElementById('boosting_value');
-        var boosting = 2.0;
+        var boosting = GLOBAL_config.boosting; 
         boostingSlider.value = boosting;
         boostingValue.value = boosting;
         boostingSlider.addEventListener('change', function(e) {
-          boosting = round(this.value, 1);
-          boostingValue.value = boosting;
-          updateStrips();
+          if (boosting !== this.value) {
+            boosting = round(this.value, 1);
+            boostingValue.value = boosting;
+            updateScenes();
+          }
         }, false);
 
+        // similar tiles limiting slider
         limitingSlider = document.getElementById('limiting');
         limitingValue = document.getElementById('limiting_value');
-        var limiting = 0.5;
+        var limiting = GLOBAL_config.limiting;
         limitingSlider.value = limiting;
         limitingValue.value = limiting;
         limitingSlider.addEventListener('change', function(e) {
-          limiting = round(this.value, 1);
-          limitingValue.value = limiting;
-          updateStrips();
+          if (limiting !== this.value) {          
+            limiting = round(this.value, 1);
+            limitingValue.value = limiting;
+            updateScenes();
+          }
         }, false);      
         
-        var tiles = 1;        
+        // most similar / different tiles slider
+        var tilesSlider = document.getElementById('tiles');
+        var tilesValue = document.getElementById('tiles_value');
+        var tilesMax = document.getElementById('tiles_max');
+        var tiles = ~~(Math.sqrt(rows_x_cols));        
         tilesSlider.max = rows_x_cols;
         tilesMax.innerHTML = rows_x_cols;
         tilesSlider.value = tiles;
@@ -249,57 +253,105 @@
           tilesValue.value = tiles;          
         }, false);         
         
-        var threshold = 50;
-        thresholdValue.value = threshold;
-        thresholdSlider.value = threshold;
-        var distances = [];
-        thresholdSlider.addEventListener('change', function(e) {
-          threshold = this.value;
-          thresholdValue.value = threshold;          
-          updateStrips();
-        }, false);
+        // calculates the distance between two frames taking into account
+        // the different tiles boosting factor and the similar tiles limiting
+        // factor
+        function calculateFrameDistance(thisFrame, lastFrame) {          
+          var abs = Math.abs;
+          // first calculate the absolute distance form tile to tile
+          // and store the results in a distance vector
+          var absoluteDistance = [];
+          for (var i = 0; i < rows_x_cols; i++) {
+            absoluteDistance[i] = abs(thisFrame[i] - lastFrame[i]);                  
+          }
+          // copy the distance vector and sort it
+          var absoluteDistanceCopy = absoluteDistance.slice(0);
+          absoluteDistanceCopy.sort(GLOBAL_config.sortFunction);
+          var mostSimilarTiles = [];
+          var mostDifferentTiles = [];                
+          var index = null;          
+          // find the most similar and the most different tiles
+          for (var i = 0; i < tiles; i++) {                  
+            // find the most different tiles
+            var maxDifference = absoluteDistanceCopy[rows_x_cols - i - 1];            
+            if (maxDifference > 0) {
+              index = absoluteDistance.indexOf(maxDifference);                      
+              mostDifferentTiles[i] = index;                      
+              // x-out the already considered tiles
+              absoluteDistance[index] = null;                      
+            }
+            // find the most similar tiles
+            var minDifference = absoluteDistanceCopy[i];
+            if (minDifference < maxDifference) {
+              index = absoluteDistance.indexOf(minDifference);                      
+              mostSimilarTiles[i] = index;
+              // x-out the already considered tiles
+              absoluteDistance[index] = null;                      
+            }
+          }
+          // apply boosting / limiting factors to the most different / similar
+          // tiles
+          for (var i = 0; i < rows_x_cols; i++) {
+            var value = thisFrame[i];
+            var boostingFactor = 1;
+            if (mostSimilarTiles.indexOf(i) !== -1) {
+              boostingFactor = limiting;
+            } else if (mostDifferentTiles.indexOf(i) !== -1) {
+              boostingFactor = boosting;
+            }
+            thisFrame.average += value * boostingFactor;
+          }
+          // calculate the average with applied boosting / limiting factors
+          thisFrame.average = ~~(thisFrame.average / rows_x_cols);
+          // most different / similar tile data only
+          var tileData = {
+            mostDifferentTiles: mostDifferentTiles,
+            mostSimilarTiles: mostSimilarTiles            
+          };
+          // distance data only
+          var distance = {
+            absolute: abs(thisFrame.average - lastFrame.average),
+            tiles: thisFrame
+          }
+          // return both distance data and tile data together
+          return {
+            distance: distance,
+            tileData: tileData
+          };
+        }
         
+        // main canvas element (displays frames from the main video element in
+        // debug mode)
         var canvas = document.createElement('canvas');       
+        
+        // average canvas element (displays average tiles and most similar /
+        // different tiles in debug mode)
         var avgCanvas = null;
         if (debug) {
           avgCanvas = document.createElement('canvas');
-          averageCanvas.appendChild(canvas);
-          averageCanvas.appendChild(avgCanvas);
+          averageCanvasDiv.appendChild(canvas);
+          averageCanvasDiv.appendChild(avgCanvas);
         }
         
-        function updateStrips() {
+        // updates the video scenes distribution upon changing either of: scene
+        // threshold, different tile boosting factor, similar tile limiting
+        // factor
+        function updateScenes() {
           // recalculate distances with new limiting and boosting factors          
           var newDistances = [];           
-          var abs = Math.abs;
-          for (var i = 0, len = distances.length; i < len; i++) {
-            var average = 0;
-            var distance = distances[i];            
-            var tiles = distance.tiles;
-            var mostSimilarTiles = distance.mostSimilarTiles;
-            var mostDifferentTiles = distance.mostDifferentTiles;            
-            for (var j = 0; j < rows_x_cols; j++) {              
-              var value = tiles[j];
-              var boostingFactor = 1;
-              if (mostSimilarTiles.indexOf(j) !== -1) {
-                boostingFactor = limiting;
-              } else if (mostDifferentTiles.indexOf(j) !== -1) {
-                boostingFactor = boosting;
-              }
-              average += value * boostingFactor;
-            }
-            average = ~~(average / rows_x_cols);
-            if (i > 0) {
-              newDistances[i] = abs(average - newDistances[i - 1]);
-            } else {
-              newDistances[i] = average;
-            }
+          var thisFrame = distances[0].tiles;
+          var lastFrame = thisFrame;
+          var newDistance =
+              (calculateFrameDistance(thisFrame, lastFrame)).distance;
+          newDistances[0] = newDistance.absolute;
+          for (var i = 1 /* yes, 1 */, len = distances.length; i < len; i++) {            
+            thisFrame = distances[i].tiles;
+            lastFrame = distances[i - 1].tiles;
+            newDistance =
+                (calculateFrameDistance(thisFrame, lastFrame)).distance;
+            newDistances[i] = newDistance.absolute;
           }
-          var absoluteDistances = [];
-          for (var i = 0, len = distances.length; i < len; i++) {
-            absoluteDistances[i] = distances[i].absolute;
-          }          
-          console.log(absoluteDistances); 
-          console.log(newDistances);
+          // recalculate average distance, standard deviation distance
           var averageDistance = ~~Stat.getAverage(newDistances);
           var standardDeviationDistance =
               ~~Stat.getStandardDeviation(newDistances);                  
@@ -311,7 +363,7 @@
           //thresholdSlider.value = standardDeviation;
           //thresholdValue.value = standardDeviation;
           
-          // update display
+          // update scene distribution display
           var stripDivs = document.querySelectorAll('.strip');
           for (var i = 0, len = stripDivs.length; i < len; i++) {
             var div = stripDivs[i];            
@@ -323,38 +375,50 @@
           }          
         }
         
+        // main init / start function
         var interval = null;
         function start(id) {  
+          
+          // removes all child nodes from an element
           function removeAllChildNodes(elem) {
             while(elem.hasChildNodes()){
               elem.removeChild(elem.lastChild);
             }
           }
 
+          // formats the time in a readable way
+          //
           // Core bits adapted (stolen) from
           // http://isithackday.com/videograbber/
           function formatTime(time) {
-            var hours = parseInt((time / 60 / 60) % 60, 10),
-                mins = parseInt((time / 60) % 60, 10),
-                secs = parseInt(time, 10) % 60,
-                hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':',
-                minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':',
-                secss  = (secs < 10 ? '0' : '') +(secs % 60),
-                timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
+            var hours = parseInt((time / 60 / 60) % 60, 10);
+            var mins = parseInt((time / 60) % 60, 10);
+            var secs = parseInt(time, 10) % 60;
+            var hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':';
+            var minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':';
+            var secss  = (secs < 10 ? '0' : '') +(secs % 60);
+            var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
             return timestring;
           }          
                   
+          // if an interval was active upon start-up, clear it
           if (interval) {
             clearInterval(interval);
             interval = null;
           }
+          
+          // remove all child nodes from the video element and video scene
+          // container
           removeAllChildNodes(video);
           removeAllChildNodes(scenes);
+          
+          // copy the video (from youtube via id, or anywhere via url) to the 
+          // local domain (because of the same origin policy that applies to
+          // canvas)
           $.ajax({
             dataType: 'json',      
-            url: "http://tomayac.com/youpr0n/proxy.php?video=" + id,
+            url: GLOBAL_config.proxy + id, 
             success: function(data) {
-              distances = [];
               for (var i = 0, len = data.length; i < len; i++) {
                 var source = document.createElement('source');
                 source.src = data[i].url;
@@ -367,151 +431,86 @@
             }
           });
  
+          // on manual video play, remove the video scenes from the video scene
+          // container
           video.addEventListener('play', function(e) {
             if (video.currentTime === 0) {
               removeAllChildNodes(scenes);
             }
           }, false);
  
+          // upon load of all video metadata, configure the canvas dimensions
+          // for the debug canvases
           video.addEventListener('loadedmetadata', function(e) {
             console.log('Loaded Metadata.');
+            var max = Math.max;
+            var min = Math.min;            
+            
             var videoWidth = video.videoWidth;
             var videoHeight = video.videoHeight;
             var videoRatio = videoWidth / videoHeight;
-            video.volume = 0;          
+            video.volume = 0;            
             
             var canvasHeight = ~~(canvasWidth / videoRatio);            
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
             avgCanvas.width = canvasWidth;
             avgCanvas.height = canvasHeight;                          
+            
             var ctx = canvas.getContext('2d');
-            avgCtx = avgCanvas.getContext('2d');
+            var avgCtx = avgCanvas.getContext('2d');
             
-            var lastFrame = null;            
+            // the first "last" frame does not exist
+            var lastFrame = null;                       
             
-            var abs = Math.abs;            
-            var max = Math.max;
-            var min = Math.min;
-            
+            // upon load of the complete video data, start analyzing the video
             video.addEventListener('loadeddata', function(e) {
               console.log('Loaded Data.');
               analyzeVideo();
-            }, false);                   
+            }, false);  
 
+            // main video analysis function
             function analyzeVideo() {
-              var step = 0.5;
-              video.currentTime = 0;
-              var html = {};
-              var counter = 0;
-              var sw = ~~(videoWidth / cols);
-              var sh = ~~(videoHeight / rows);
-              var dw = ~~(canvasWidth / cols);
-              var dh = ~~(canvasHeight / rows);              
-
-              interval = setInterval(function() {                
-                if (rowsOrColsChanged) {
-                  sw = ~~(videoWidth / cols);
-                  sh = ~~(videoHeight / rows);
-                  dw = ~~(canvasWidth / cols);
-                  dh = ~~(canvasHeight / rows);                  
-                  rowsOrColsChanged = false;
-                }
-                var currentTime = video.currentTime;
-
-                var thisFrame = {};
-
-                for (var i = 0; i < rows_x_cols; i++) {
-                  var mod = (i % cols);
-                  var div = ~~(i / cols); 
-                  var sx = mod * sw;
-                  var sy = div * sh;
-                  var dx = mod * dw;
-                  var dy = div * dh;
-                  ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
-                  var histogram =
-                      Histogram.getHistogram(ctx, dx, dy, dw, dh, false);
-                  if (debug) {    
-                    avgCtx.fillStyle = histogram.css;
-                    avgCtx.fillRect(dx, dy, dw, dh);
+              
+              // draws the most similar / different tiles on the average canvas
+              // when in debug mode
+              function drawMostSimilarDifferentTiles(
+                  mostDifferentTiles,
+                  mostSimilarTiles) {
+                var mod = null;
+                var div = null; 
+                var dx = null;
+                var dy = null;                  
+                for (var i = 0; i < tiles; i++) {  
+                  // all most different tiles
+                  if (showDifferent) {                                  
+                    var mostDifferentTile = mostDifferentTiles[i];                    
+                    mod = (mostDifferentTile % cols);
+                    div = ~~(mostDifferentTile / cols); 
+                    dx = mod * dw;
+                    dy = div * dh;                  
+                    avgCtx.strokeStyle = 'red';
+                    avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);
                   }
-
-                  thisFrame[i] = histogram.average;
-                }
-                thisFrame.average = 0;
-                if (!lastFrame) {
-                  lastFrame = thisFrame;
-                }
-                var absoluteDistance = [];
-                for (var i = 0; i < rows_x_cols; i++) {
-                  absoluteDistance[i] = abs(thisFrame[i] - lastFrame[i]);                  
-                }                
-                var absoluteDistanceCopy = absoluteDistance.slice(0);
-                absoluteDistanceCopy.sort(function(a, b) { return a - b; });
-                var mostSimilarTiles = [];
-                var mostDifferentTiles = [];                
-                var index = null;
-                for (var i = 0; i < tiles; i++) {                  
-                  var maxDifference = absoluteDistanceCopy[rows_x_cols - i - 1];
-                  index = absoluteDistance.indexOf(maxDifference);                      
-                  mostDifferentTiles[i] = index;                      
-                  absoluteDistance[index] = null;                      
-                  
-                  var minDifference = absoluteDistanceCopy[i];
-                  index = absoluteDistance.indexOf(minDifference);                      
-                  mostSimilarTiles[i] = index;
-                  absoluteDistance[index] = null;                      
-                }             
-                for (var i = 0; i < rows_x_cols; i++) {
-                  var value = thisFrame[i];
-                  var boostingFactor = 1;
-                  if (mostSimilarTiles.indexOf(i) !== -1) {
-                    boostingFactor = limiting;
-                  } else if (mostDifferentTiles.indexOf(i) !== -1) {
-                    boostingFactor = boosting;
+                  // all most similar tiles                  
+                  if (showSimilar) {
+                    var mostSimilarTile = mostSimilarTiles[i];
+                    mod = (mostSimilarTile % cols);
+                    div = ~~(mostSimilarTile / cols); 
+                    dx = mod * dw;
+                    dy = div * dh;                  
+                    avgCtx.strokeStyle = 'green';
+                    avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);                  
                   }
-                  thisFrame.average += value * boostingFactor;
                 }
-                if (!lastFrame) {
-                  lastFrame = thisFrame;
-                }
-                thisFrame.average = ~~(thisFrame.average / rows_x_cols);
-                var distance = {
-                  absolute: abs(thisFrame.average - lastFrame.average),
-                  mostSimilarTiles: mostSimilarTiles,
-                  mostDifferentTiles: mostDifferentTiles,
-                  tiles: thisFrame
-                };
-                                
-                distances.push(distance);
-                if (debug) {
-                  for (var i = 0; i < tiles; i++) {  
-                    if (showDifferent) {                                  
-                      var mostDifferentTile = mostDifferentTiles[i];                    
-                      mod = (mostDifferentTile % cols);
-                      div = ~~(mostDifferentTile / cols); 
-                      dx = mod * dw;
-                      dy = div * dh;                  
-                      avgCtx.strokeStyle = 'red';
-                      avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);
-                    }
-                    if (showSimilar) {
-                      var mostSimilarTile = mostSimilarTiles[i];
-                      mod = (mostSimilarTile % cols);
-                      div = ~~(mostSimilarTile / cols); 
-                      dx = mod * dw;
-                      dy = div * dh;                  
-                      avgCtx.strokeStyle = 'green';
-                      avgCtx.strokeRect(dx + 1, dy + 1, dw - 1, dh - 1);                  
-                    }
-                  }
-                }                                
+              }
+              
+              // generates a video scene html snippet
+              function generateSceneHtmlSnippet(currentTime, distance) {
                 var time = parseFloat(currentTime);
-                lastFrame = thisFrame;
-
                 var src = canvas.toDataURL('image/png');
                 var divCss = null;
-                if (distance.absolute > threshold) {
+                if (distance > threshold) {
                   divCss = 'class="break strip"';
                 } else {
                   divCss = 'class="strip"';
@@ -519,19 +518,114 @@
                 html[counter] = 
                     '<li><div ' + divCss + '><img src="' + src + '"/>' +
                     '<br/><small>' + formatTime(time) + ' / ' +
-                    '<strong>' + distance.absolute + '</strong></small></div></li>';               
+                    '<strong>' + distance +
+                    '</strong></small></div></li>';                               
+              }
+              
+              // analyze the video in n second steps
+              var step = GLOBAL_config.step;              
+              
+              // canvas and average canvas step widths / heights for the tiles
+              var sw = ~~(videoWidth / cols);
+              var sh = ~~(videoHeight / rows);
+              var dw = ~~(canvasWidth / cols);
+              var dh = ~~(canvasHeight / rows);              
 
+              // reset all variables before the main video analysis interval
+              // starts
+              video.currentTime = 0;               
+              distances = [];
+              var html = {};
+              var counter = 0;              
+              // main video analysis interval, active while the video has not 
+              // been entirely analyzed
+              interval = setInterval(function() {                
+                // only recalculate canvas and average canvas step widths /
+                // heights for the tiles when the tile layout has changed
+                if (rowsOrColsChanged) {
+                  sw = ~~(videoWidth / cols);
+                  sh = ~~(videoHeight / rows);
+                  dw = ~~(canvasWidth / cols);
+                  dh = ~~(canvasHeight / rows);                  
+                  rowsOrColsChanged = false;
+                }
+                
+                // freeze the current time for the whole interval run-through
+                var currentTime = video.currentTime;
+
+                // initialize this frame's object
+                var thisFrame = {};
+
+                // for all tiles
+                for (var i = 0; i < rows_x_cols; i++) {
+                  // calculate the boundaries for the current tile from the
+                  // video and translate it to boundaries on the main canvas
+                  var mod = (i % cols);
+                  var div = ~~(i / cols); 
+                  var sx = mod * sw;
+                  var sy = div * sh;
+                  var dx = mod * dw;
+                  var dy = div * dh;
+                  // draw the current tile on the main canvas
+                  ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
+                  // calculate the histogram of the current tile
+                  var histogram =
+                      Histogram.getHistogram(ctx, dx, dy, dw, dh, false);
+                  // when in debug mode, draw the current tile's average color
+                  // on the average canvas
+                  if (debug) {    
+                    avgCtx.fillStyle = histogram.css;
+                    avgCtx.fillRect(dx, dy, dw, dh);
+                  }
+                  // store the current tile's average color value (weighted
+                  // triple (r + g + b), see histogram.js)
+                  thisFrame[i] = histogram.average;
+                }
+                // initialize this frame's overall average color value
+                thisFrame.average = 0;
+                // for the very first frame, the "last" frame is the current
+                // frame
+                if (!lastFrame) {
+                  lastFrame = thisFrame;
+                }
+                // calculate the distance between this frame and the last frame
+                var distanceData = calculateFrameDistance(thisFrame, lastFrame);
+                var distance = distanceData.distance;
+                distances.push(distance);
+                
+                // if in debug mode, draw the most different / similar tiles on
+                // the average canvas.
+                if (debug) {
+                  drawMostSimilarDifferentTiles(
+                      distanceData.tileData.mostDifferentTiles,
+                      distanceData.tileData.mostSimilarTiles); 
+                }                     
+                
+                // the new last frame is the current this frame
+                lastFrame = thisFrame;
+                
+                // generate the video scenes html snippet               
+                generateSceneHtmlSnippet(currentTime, distance.absolute);
+
+                // prepare the next video step
                 var nextTime = currentTime + step;                                                
-                if (nextTime > video.duration) {
+                // if the next step would be beyond the video's duration, clear
+                // the interval and prepare the final video scene html
+                if (nextTime >= video.duration) {
                   clearInterval(interval);
+                  // seek the video back to the beginning
+                  video.currentTime = 0;
+                  // make sure the different video scene html snippets get
+                  // displayed in the correct time order
                   var timestamps = Object.keys(html);
-                  timestamps.sort(function(a, b) { return a-b; });
+                  timestamps.sort(GLOBAL_config.sortFunction);
                   var innerHtml = '';
                   for (var i = 0, len = timestamps.length; i < len; i++) {
                     innerHtml += html[timestamps[i]];
                   }
                   scenes.innerHTML = innerHtml;
-                  video.currentTime = 0;
+                  
+                  // recalculate average distance, standard deviation distance
                   var absoluteDistances = [];
                   for (var i = 0, len = distances.length; i < len; i++) {
                     absoluteDistances[i] = distances[i].absolute;
@@ -543,9 +637,12 @@
                   console.log('Standard Deviation Distance: ' + standardDeviation);                                
                   thresholdSlider.value = standardDeviation;
                   thresholdValue.value = standardDeviation;
+                // if the next video step is within the video's duration, seek
+                // to the new position
                 } else {
                   video.currentTime = nextTime;
                 }
+                // needed for the video scene html snippet time order
                 counter++;                
               }, timeout);            
             }            
