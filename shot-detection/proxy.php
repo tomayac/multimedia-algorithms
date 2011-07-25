@@ -11,7 +11,10 @@
   } else {
     $dontPrintOutput = true;
     require_once('getVideoInfo.php');
-    $json = json_decode($json, true);    
+    $json = json_decode($json, true);        
+  }
+  if (!$json) {
+    echo 'false';
   }
 
   $url = $json[0]['url'];

@@ -43,6 +43,18 @@
   for ($i = 0, $len = sizeOf($parts); $i < $len; $i++) {
     $part = $parts[$i];
     $keyValues = explode('=', $part);
+    if ($keyValues[0] === 'status' && $keyValues[1] === 'fail') {
+      $json = 'false';      
+      if ($_GET['callback']) {        
+        $json = $_GET['callback'] . '(' . $json . ')'; 
+      }
+      if (!$dontPrintOutput) {
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');      
+        echo($json);
+      }
+      exit();
+    }
     if ($keyValues[0] === 'html5_fmt_map') {
       $videoInfo = urldecode(str_replace('+', ' ', $keyValues[1]));
       $videoInfo = preg_replace('/\]$/', '', preg_replace('/^\[/', '', $videoInfo));

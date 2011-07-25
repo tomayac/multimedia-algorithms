@@ -23,6 +23,9 @@ UL LI {
 SMALL {
   font-size: 0.5em;
 }
+DIV.embedded {
+  display: none;
+}
 DIV.video {
   float: left;
 }
