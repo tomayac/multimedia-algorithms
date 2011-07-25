@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Filmstrip for YouTube",
+    "description": "Extension name"
+  },
+  "extDesc": {
+    "message": "This extension creates a filmstrip-like summary of most YouTube videos.",
+    "description": "Extension description"
+  },
+  "extTitle": {
+    "message": "Filmstrip for YouTube",
+    "description": "Extension description"
+  }  
+}

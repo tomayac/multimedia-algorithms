@@ -1,0 +1,26 @@
+{
+  "name": "__MSG_extName__",
+  "version": "1.0.0",
+  "description": "__MSG_extDesc__",
+  "icons": {
+      "48": "icon_48.png",
+      "128": "icon_128.png"
+  },
+  "default_locale": "en_US",
+  "content_scripts": [
+      {
+          "matches": [
+              "http://www.youtube.com/watch*"
+          ],
+          "js": [
+              "jquery.min.js",  
+              "content_script.js"
+          ],
+          "run_at": "document_idle"
+      }
+  ],
+  "permissions": [
+      "http://www.youtube.com/watch*",
+      "http://tomayac.com/youpr0n/*"
+  ]
+}
