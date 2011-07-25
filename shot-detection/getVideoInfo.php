@@ -67,6 +67,9 @@
     $json .= $i < $len1 - 1? '},' : '}';
   }
   $json .= ']';
+  if ($_GET['callback']) {
+    $json = $_GET['callback'] . '(' . $json . ')'; 
+  }
   if (!$dontPrintOutput) {
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');      

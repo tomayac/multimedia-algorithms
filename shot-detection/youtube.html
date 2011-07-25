@@ -16,7 +16,7 @@
         <input id="video_id" value="Hu-YsZNpkZs" />
         <button type="submit" id="start">OK</button>
         <small>
-          <input id="debug" type="checkbox" checked />
+          <input id="debug" type="checkbox"/>
           <label for="debug"> Debug</label>
           <span id="debug_options">
             <input id="different" type="checkbox" checked />
@@ -29,8 +29,8 @@
     </div>
     
     <div class="video" id="video">
-      <video controls></video>
-      
+    </div>  
+    <div>  
       <div>
         <div class="label"><small id="rows_min">1</small></div>
         <input id="rows" type="range" min="1" max="20" step="1"/>
@@ -85,10 +85,13 @@
     
     <div class="canvas" id="average_canvas"></div>
     
+    <div class="progress">
+      <progress id="progress" max value />
+    </div>
     <div class="scenes" id="scenes"></div>
     
     <script>
-      (function () {
+      (function () {        
         // global configuration object
         var GLOBAL_config = {
           normalTimeout: 100,
@@ -102,9 +105,14 @@
           limiting: 0.5,
           threshold: 50,
           proxy: 'http://tomayac.com/youpr0n/proxy.php?video=',
-          step: 0.5,
+          step: 1,
           sortFunction: function (a, b) { return a - b; }
-        };
+        };        
+        
+        // progress indicator for video analysis
+        var videoProgress = document.getElementById('progress');
+        videoProgress.max = 100;
+        var videoProgressValue = 0;
         
         // show similar tiles checkbox
         var similarCheckbox = document.getElementById('similar');
@@ -124,6 +132,7 @@
         var debugCheckbox = document.getElementById('debug');
         var debugOptions = document.getElementById('debug_options');
         var debug = debugCheckbox.checked;
+        debugOptions.classList.toggle('debug_options');
         var timeout = null;
         var canvasWidth = null;
         if (!debug) {
@@ -150,13 +159,17 @@
         }, false);
         
         // start button
+        var videoIdInput = document.getElementById('video_id');
         var startButton = document.getElementById('start');
         startButton.addEventListener('click', function (e) {
-          start(document.getElementById('video_id').value);
-        }, false);
+          start(videoIdInput.value);
+        }, false);                
         
         // main video element
-        var video = document.querySelector('video');
+        var video = document.createElement('video');
+        video.controls = 'controls';
+        var videoContainer = document.querySelector('DIV.video');
+        videoContainer.appendChild(video);          
         video.height = GLOBAL_config.videoHeight;
         
         // container for the two debug canvases
@@ -416,7 +429,7 @@
             }            
             div.getElementsByTagName('strong')[0].innerHTML = distance;
           }
-        }
+        }        
         
         // main init / start function
         var interval = null;
@@ -442,14 +455,14 @@
             var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
             return timestring;
           }
-          // if an interval was active upon start-up, clear it
+          // if an interval was active upon start-up, clear it          
           if (interval) {
             clearInterval(interval);
             interval = null;
           }
           // remove all child nodes from the video element and video scene
           // container
-          removeAllChildNodes(video);
+          removeAllChildNodes(video);          
           removeAllChildNodes(scenes);
           // copy the video (from youtube via id, or anywhere via url) to the
           // local domain (because of the same origin policy that applies to
@@ -481,7 +494,6 @@
           // upon load of all video metadata, configure the canvas dimensions
           // for the debug canvases
           video.addEventListener('loadedmetadata', function (e) {
-            console.log('Loaded Metadata.');
             var max = Math.max;
             var min = Math.min;
             var videoWidth = video.videoWidth;
@@ -491,17 +503,19 @@
             var canvasHeight = ~~(canvasWidth / videoRatio);
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
-            avgCanvas.width = canvasWidth;
-            avgCanvas.height = canvasHeight;
-            var ctx = canvas.getContext('2d');
-            var avgCtx = avgCanvas.getContext('2d');
+            var avgCtx = null;
+            if (debug) {
+              avgCanvas.width = canvasWidth;
+              avgCanvas.height = canvasHeight;
+              avgCtx = avgCanvas.getContext('2d');
+            }
+            var ctx = canvas.getContext('2d');            
             
             // the first "last" frame does not exist
             var lastFrame = null;
             
             // upon load of the complete video data, start analyzing the video
             video.addEventListener('loadeddata', function (e) {
-              console.log('Loaded Data.');
               analyzeVideo();
             }, false);
             
@@ -569,12 +583,13 @@
               // reset all variables before the main video analysis interval
               // starts
               video.currentTime = 0;
+              var videoDuration = video.duration;              
               distances = [];
               var html = {};
               var counter = 0;
               // main video analysis interval, active while the video has not
               // been entirely analyzed
-              interval = setInterval(function () {
+              interval = setInterval(function () {                
                 // only recalculate canvas and average canvas step widths /
                 // heights for the tiles when the tile layout has changed
                 if (rowsOrColsChanged) {
@@ -586,6 +601,16 @@
                 }
                 // freeze the current time for the whole interval run-through
                 var currentTime = video.currentTime;
+                var percentage = ~~(currentTime / videoDuration * 100);                
+                
+                // update progress indicator
+                if (percentage > videoProgressValue) {
+                  window.parent.postMessage({progress: percentage},
+                      'http://www.youtube.com');
+                  videoProgress.value = percentage;
+                  videoProgressValue = percentage;
+                }
+                
                 // initialize this frame's object
                 var thisFrame = {};
                 // for all tiles
@@ -639,8 +664,11 @@
                 var nextTime = currentTime + step;
                 // if the next step would be beyond the video's duration, clear
                 // the interval and prepare the final video scene html
-                if (nextTime >= video.duration) {
+                if (nextTime >= videoDuration) {
                   clearInterval(interval);
+                  videoProgress.value = 100;                  
+                  window.parent.postMessage({progress: 100},
+                      'http://www.youtube.com');                  
                   // seek the video back to the beginning
                   video.currentTime = 0;
                   // make sure the different video scene html snippets get
@@ -671,15 +699,18 @@
               }, timeout);
             }
           }, false);
-        }
+        } 
         
-        (function init() {     
-          var videoId = document.location.search.replace(/\?v=(\w+)$/, '$1');
+        // automatically starts the analysis process if the script gets run 
+        // remotely via an iframe
+        (function init() {
+          var videoId = window.location.getParameter('v');
           if (videoId) {
-            console.log('Video ID ' + videoId);
+            videoIdInput.value = videoId;            
             start(videoId);          
           }          
-        })();
+        })();        
+               
       })();
     </script>
   </body>
