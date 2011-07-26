@@ -711,6 +711,8 @@
                   var average = ~~Stat.getAverage(absoluteDistances);
                   var standardDeviation =
                       ~~Stat.getStandardDeviation(absoluteDistances);                  
+                  thresholdSlider.value = standardDeviation;
+                  thresholdValue.value = standardDeviation;
                   updateSceneStats(average, standardDeviation);
                 // if the next video step is within the video's duration, seek
                 // to the new position
