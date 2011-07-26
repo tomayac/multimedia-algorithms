@@ -15,13 +15,13 @@
     }    
     var videoId = window.location.getParameter('v');
     if (videoId) {  
-      var url = GLOBAL_config.proxy + '/youpr0n/getVideoInfo.php?video=' +
-          videoId;
+      var url = 'http://www.youtube.com/get_video_info?video_id=' + videoId +
+          '&html5=1&eurl=unknown&el=embedded&hl=en_US';
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState == 4) {
           if (xhr.status == 200) {
-            var videoData = JSON.parse(xhr.responseText);            
+            var videoData = parseVideoData(xhr.responseText);
             if (!videoData) {
               throw 'Could not embed video.';
             }
@@ -53,8 +53,40 @@
     } else {
       throw 'No video ID found.';
     }    
-  }, 100);  
-    
+  }, 100);     
+  
+  function parseVideoData(videoInfo) {
+    var parts = videoInfo.split(/&/);
+    for (var i = 0, len = parts.length; i < len; i++) {
+      var part = parts[i];
+      var keyValues = part.split(/=/);
+      if (keyValues[0] === 'html5_fmt_map') {
+        videoInfo = decodeURIComponent(keyValues[1]).replace(/\+/g, ' ');
+        videoInfo = videoInfo.replace(/^\[/, '').replace(/\]$/, '');
+        break;
+      }
+    }
+    parts = videoInfo.split(/\},/);
+    var json = '[{';
+    for (var i = 0, len1 = parts.length; i < len1; i++) {
+      if (i < len1 - 1) {
+        parts[i] += '}';
+      }
+      var part = parts[i].replace(/^\{/, '').replace(/\}$/, '');
+      var keyValues = part.split(/'\,/);
+      for (var j = 0, len2 = keyValues.length; j < len2; j++) {        
+        var keyValue = keyValues[j].split(/':/);
+        json += j > 0? ',' : '';
+        json += keyValue[0].replace(/\s*'/g, '"') + '":' +
+            keyValue[1].replace(/^\s*'/, '"').replace(/="/g, '=\\"')
+            .replace(/"$/g, '\\"');
+        json += keyValue[0] !== ' \'itag'? '"' : '';
+      }
+      json += i < len1 - 1? '},' : '}';
+    }
+    json += ']';
+    return JSON.parse(json);
+  }
     
   function replaceVideoElement(
       placeholder, videoContainer, videoData, videoId) {

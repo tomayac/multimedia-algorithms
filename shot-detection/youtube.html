@@ -77,7 +77,7 @@
           <input class="options" id="deviation"/> Frame Standard Deviation
           <br/>
         
-          <input type="checkbox" id="keep_synced" checked/>
+          <input type="checkbox" id="keep_synced"/>
           <label for="keep_synced">
             Adjust Scene Threshold to Frame Standard Deviation
           </label>
@@ -99,8 +99,8 @@
           normalCanvasWidth: 50,
           debugCanvasWidth: 300,
           videoHeight: 200,
-          rows: 9,
-          cols: 9,
+          rows: 20,
+          cols: 20,
           boosting: 2.0,
           limiting: 0.5,
           threshold: 50,
@@ -170,7 +170,8 @@
           videoProgressContainer.appendChild(videoProgress);
         }
         videoProgress.max = 100;
-        var videoProgressValue = 0;        
+        var videoProgressValue = 0; 
+        videoProgress.value = videoProgressValue;
         
         // start button
         var videoIdInput = document.getElementById('video_id');
@@ -313,7 +314,7 @@
         var tilesSlider = document.getElementById('tiles');
         var tilesValue = document.getElementById('tiles_value');
         var tilesMax = document.getElementById('tiles_max');
-        var tiles = ~~(Math.sqrt(rows_x_cols));
+        var tiles = ~~(rows_x_cols / 3);
         tilesSlider.max = rows_x_cols;
         tilesMax.innerHTML = rows_x_cols;
         tilesSlider.value = tiles;
@@ -395,9 +396,8 @@
         var canvas = document.createElement('canvas');
         // average canvas element (displays average tiles and most similar /
         // different tiles in debug mode)
-        var avgCanvas = null;
-        if (debug) {
-          avgCanvas = document.createElement('canvas');
+        var avgCanvas = document.createElement('canvas');
+        if (debug) {          
           averageCanvasDiv.appendChild(canvas);
           averageCanvasDiv.appendChild(avgCanvas);
         }
@@ -522,13 +522,10 @@
             video.volume = 0;
             var canvasHeight = ~~(canvasWidth / videoRatio);
             canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-            var avgCtx = null;
-            if (debug) {
-              avgCanvas.width = canvasWidth;
-              avgCanvas.height = canvasHeight;
-              avgCtx = avgCanvas.getContext('2d');
-            }
+            canvas.height = canvasHeight;            
+            avgCanvas.width = canvasWidth;
+            avgCanvas.height = canvasHeight;              
+            var avgCtx = avgCanvas.getContext('2d');
             var ctx = canvas.getContext('2d');            
             
             // the first "last" frame does not exist
