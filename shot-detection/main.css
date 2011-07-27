@@ -2,26 +2,27 @@ BODY {
   font-family: sans-serif;
   font-size: 12pt;
 }
+DIV.current {
+  background-color: yellow;
+}
 DIV.strip {
-  float: left;
-  margin: 4px 0px;
-  border: solid green 1px;
+  float: left;  
+  cursor: pointer;
 }
 DIV.strip IMG {
-  width: 50px;
+  width: 70px;
+  margin-right: -8px;
+  margin-bottom: -15px;
 }
 DIV.break {
   clear: both;
-  border: solid red 1px;
+  color: blue;
 }      
 DIV.break IMG {
-  width: 50px;
+  width: 70px;
 }      
-UL LI {
-  display: inline;
-}
 SMALL {
-  font-size: 0.5em;
+  font-size: 0.7em;
 }
 DIV.embedded {
   display: none;

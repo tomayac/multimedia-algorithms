@@ -96,7 +96,7 @@
         var GLOBAL_config = {
           normalTimeout: 100,
           debugTimeout: 500,
-          normalCanvasWidth: 50,
+          normalCanvasWidth: 70,
           debugCanvasWidth: 300,
           videoHeight: 200,
           rows: 20,
@@ -105,9 +105,13 @@
           limiting: 0.5,
           threshold: 50,
           proxy: 'http://tomayac.com/youpr0n/proxy.php?video=',
+          youtube: 'http://www.youtube.com',
           step: 1,
           sortFunction: function (a, b) { return a - b; }
         };        
+        
+        var GLOBAL_scenesDataStructure = {};  
+        var GLOBAL_interval = null;            
         
         // determine if we are embedded in a different webpage
         var GLOBAL_embedded =
@@ -116,6 +120,30 @@
         // if we are embedded, do not show the options
         if (!GLOBAL_embedded) {
           GLOBAL_embeddedOptions.classList.toggle('embedded');            
+        }
+        
+        // if we are embedded listen to current position updated from the
+        // extension running on youtube
+        if (GLOBAL_embedded) {          
+          window.addEventListener('message', function (e) {
+            if (e.origin !== GLOBAL_config.youtube) {
+              return;
+            }
+            if (e.data.type === 'currentTime') {
+              var currentTime = e.data.currentTime;
+              var timestamps = Object.keys(GLOBAL_scenesDataStructure);
+              for (var i = 0, len = timestamps.length; i < len; i++) {
+                var time = GLOBAL_scenesDataStructure[i].time;
+                if (time === currentTime) {
+                  document.getElementById('frame_' + i)
+                      .classList.add('current');
+                } else {
+                  document.getElementById('frame_' + i)
+                      .classList.remove('current');                  
+                }
+              }
+            }
+          }, false);
         }
             
         // show similar tiles checkbox
@@ -316,8 +344,6 @@
           GLOBAL_averageCanvasDiv.appendChild(GLOBAL_canvas);
           GLOBAL_averageCanvasDiv.appendChild(GLOBAL_avgCanvas);
         }
-        var GLOBAL_scenesDataStructure = {};  
-        var GLOBAL_interval = null;    
 
         // assures that the number of most similar / different tiles is never
         // greater than the number of absolute tiles
@@ -443,13 +469,74 @@
             var distance = scenesData.distance.absolute;
             var divCss = distance > GLOBAL_threshold ?
                 'class="break strip"': 'class="strip"';
+            var time = scenesData.time;    
             innerHtml +=
-                '<div ' + divCss + '><img src="' + scenesData.dataUri + '"/>' +
-                '<br/><small>' + formatTime(scenesData.time) + ' / ' +
-                '<strong>' + distance +
-                '</strong></small></div>';            
+                '<div id="frame_' + time + '" ' + divCss + '><img src="' +
+                scenesData.dataUri + '"/><br/><small data="' + time + '">' +
+                formatTime(time) +
+                (!GLOBAL_embedded ?
+                    ' / <strong>' + distance + '</strong>' : '') +
+                '</small></div>';            
+          }
+          
+          function selectDiv(nodeName, target) {
+            if ((nodeName === 'IMG') ||
+                (nodeName === 'SMALL') ||
+                (nodeName === 'BR')) {
+              return target.parentNode;  
+            } else if (nodeName === 'STRONG') {
+              return target.parentNode.parentNode;
+            } else if (nodeName === 'DIV') {
+              return target;
+            } else {
+              return null;
+            }
+          }
+          function selectSmall(nodeName, target) {
+            if ((nodeName === 'IMG') ||
+                (nodeName === 'BR')) {
+              return target.parentNode.lastChild;    
+            } else if (nodeName === 'SMALL') {
+              return target;
+            } else if (nodeName === 'STRONG') {
+              return target.parentNode;
+            } else if (nodeName === 'DIV') {
+              return target.lastChild;
+            } else {
+              return null;
+            }
           }
           GLOBAL_scenesContainer.innerHTML = innerHtml;
+          GLOBAL_scenesContainer.addEventListener('mouseover', function (e) {
+            var div = null;
+            div = selectDiv(e.target.nodeName, e.target);
+            if (div) {
+              div.style.backgroundColor = '#FAF8CC';
+            }            
+          }, false);
+          GLOBAL_scenesContainer.addEventListener('mouseout', function (e) {
+            var div = null;
+            div = selectDiv(e.target.nodeName, e.target);
+            if (div) {
+              div.style.backgroundColor = 'transparent';
+            }
+          }, false);                    
+          GLOBAL_scenesContainer.addEventListener('click', function (e) {
+            var small = null;
+            small = selectSmall(e.target.nodeName, e.target);            
+            if (small) {
+              var time = small.getAttribute('data');
+              if (GLOBAL_embedded) {
+                window.parent.postMessage({
+                  jumpTo: time,
+                  type: 'jumpTo'
+                }, GLOBAL_config.youtube);
+              } else {
+                GLOBAL_video.currentTime = time;
+                GLOBAL_video.play();
+              }
+            }
+          }, false);                    
         }         
         
         // updates the video scenes distribution upon changing either of: scene
@@ -458,15 +545,15 @@
         function updateScenes() {
           // recalculate distances with new limiting and boosting factors
           var newDistances = [];
-          var thisFrame = distances[0].tiles;
+          var thisFrame = GLOBAL_scenesDataStructure[0].distance.tiles;
           var lastFrame = thisFrame;
           var newDistance =
               (calculateFrameDistance(thisFrame, lastFrame)).distance;
           newDistances[0] = newDistance.absolute;
-          var len = Object.keys(distances).length;
+          var len = Object.keys(GLOBAL_scenesDataStructure).length;
           for (var i = 1 /* yes, 1 */; i < len; i++) {
-            thisFrame = distances[i].tiles;
-            lastFrame = distances[i - 1].tiles;
+            thisFrame = GLOBAL_scenesDataStructure[i].distance.tiles;
+            lastFrame = GLOBAL_scenesDataStructure[i - 1].distance.tiles;
             newDistance =
                 (calculateFrameDistance(thisFrame, lastFrame)).distance;
             newDistances[i] = newDistance.absolute;
@@ -611,10 +698,10 @@
               // starts
               GLOBAL_video.currentTime = 0;
               var videoDuration = GLOBAL_video.duration;              
-              distances = {};              
               var counter = 0;
               // main video analysis interval, active while the video has not
               // been entirely analyzed
+              var lastCurrentTime = -1;
               GLOBAL_interval = setInterval(function () {                
                 // only recalculate canvas and average canvas step widths /
                 // heights for the tiles when the tile layout has changed
@@ -625,16 +712,26 @@
                   dh = ~~(canvasHeight / GLOBAL_rows);
                   GLOBAL_rowsOrColsChanged = false;
                 }
-                // freeze the current time for the whole interval run-through
+                // freeze the current time for the whole interval run-through                
                 var currentTime = GLOBAL_video.currentTime;
+                // check if the current time is less than or equal the last 
+                // current time. this can happen sometimes due to seekability
+                // issues. if it happens, just jump to the next step.
+                if (currentTime <= lastCurrentTime) {
+                  GLOBAL_video.currentTime += step;
+                  return;
+                }
+                lastCurrentTime = currentTime;
                 var percentage = ~~(currentTime / videoDuration * 100);                
                 
                 // update progress indicator
                 if (percentage > GLOBAL_videoProgressValue) {
                   // only send the message if we are embedded
                   if (GLOBAL_embedded) {
-                    window.parent.postMessage({progress: percentage},
-                        'http://www.youtube.com');
+                    window.parent.postMessage({
+                      progress: percentage,
+                      type: 'progress'
+                    }, GLOBAL_config.youtube);
                   }
                   GLOBAL_videoProgress.value = percentage;
                   GLOBAL_videoProgressValue = percentage;
@@ -676,8 +773,7 @@
                 }
                 // calculate the distance between this frame and the last frame
                 var distanceData = calculateFrameDistance(thisFrame, lastFrame);
-                var distance = distanceData.distance;
-                distances[counter] = distance;
+                var distance = distanceData.distance;                
                 // if in debug mode, draw the most different / similar tiles on
                 // the average canvas.
                 if (GLOBAL_debug) {
@@ -702,15 +798,21 @@
                   GLOBAL_videoProgress.value = 100;                  
                   // only send the message if we are embedded
                   if (GLOBAL_embedded) {
-                    window.parent.postMessage({progress: 100},
-                        'http://www.youtube.com');                  
+                    window.parent.postMessage({
+                      progress: 100,
+                      type: 'progress'
+                    }, GLOBAL_config.youtube);                  
+                    window.parent.postMessage({
+                      type: 'getCurrentTime'
+                    }, GLOBAL_config.youtube);
                   }
                   // generate the scenes html
                   generateScenesHtml();
                   // recalculate average distance, standard deviation distance
                   var absoluteDistances = [];
                   for (var i = 0; i < counter; i++) {
-                    absoluteDistances[i] = distances[i].absolute;
+                    absoluteDistances[i] =
+                        GLOBAL_scenesDataStructure[i].distance.absolute;
                   }
                   var average = ~~Stat.getAverage(absoluteDistances);
                   var standardDeviation =

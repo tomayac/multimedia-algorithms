@@ -2,6 +2,7 @@
   
   var GLOBAL_config = {
     proxy: 'http://tomayac.com',
+    youtube: 'http://www.youtube.com',
     spinner: 'data:image/gif;base64,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'
   };
   
@@ -28,6 +29,8 @@
             var placeholder = document.createElement('div');
             placeholder.id = 'placeholder';
             var placeholderStyle = placeholder.style;
+            placeholderStyle.backgroundColor = 'white !important';
+            placeholderStyle.textalign = 'center !important';
             placeholderStyle.width = videoElement.width + 'px';
             placeholderStyle.height = videoElement.height + 'px', 
             placeholderStyle.backgroundImage =
@@ -38,8 +41,9 @@
             if (videoContainer.nodeName.toLowerCase() !== 'div') {
               throw 'No video or embed container found.';
             }    
+            videoContainer.style.backgroundColor = 'white !important';
             videoContainer.style.height =
-                (parseInt(videoElement.height, 10) + 220) + 'px';
+                (parseInt(videoElement.height, 10) + 220) + 'px !important';
             videoContainer.replaceChild(placeholder, videoElement);                    
             replaceVideoElement(
                 placeholder, videoContainer, videoData, videoId);
@@ -90,7 +94,24 @@
     
   function replaceVideoElement(
       placeholder, videoContainer, videoData, videoId) {
+        
+    // formats the time in a readable way
+    //
+    // Core bits adapted (stolen) from
+    // http://isithackday.com/videograbber/
+    function formatTime(time) {
+      var hours = parseInt((time / 60 / 60) % 60, 10);
+      var mins = parseInt((time / 60) % 60, 10);
+      var secs = parseInt(time, 10) % 60;
+      var hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':';
+      var minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':';
+      var secss  = (secs < 10 ? '0' : '') +(secs % 60);
+      var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
+      return timestring;
+    }          
+            
     var video = document.createElement('video');
+    video.id = 'GLOBAL_video_id';
     video.controls = 'controls';
     for (var i = 0, len = videoData.length; i < len; i++) {
       var source = document.createElement('source');
@@ -100,44 +121,121 @@
       }
       video.appendChild(source);
     }
-    video.width = placeholder.style.width.replace('px', '');
+    //video.width = placeholder.style.width.replace('px', '');
     video.height = placeholder.style.height.replace('px', '');
-    videoContainer.replaceChild(video, placeholder);    
+    videoContainer.replaceChild(video, placeholder);        
     video.load();
     video.addEventListener('canplaythrough', function(e) {
       video.play();
-    }, false);        
+    }, false);  
 
     var progress = document.createElement('progress');
+    placeholder.appendChild(progress);            
+    videoContainer.appendChild(placeholder);    
+    var progressStyle = progress.style;
+    progressStyle.position = 'relative';
+    progressStyle.top = '70%';
+    progressStyle.left =
+        (~~(video.width / 2) - ~~(progress.offsetWidth / 2)) + 'px';
     progress.max = 100;
-    placeholder.style.height = '100px !important';
-    var h1 = document.createElement('h1');
-    h1.innerHTML = 'Analyzing Video...';
-    videoContainer.appendChild(placeholder);
-    videoContainer.appendChild(h1);
-    videoContainer.appendChild(progress);        
+    placeholder.style.height = '150px !important';
+
     window.addEventListener('message', function(e) {
       if (e.origin !== GLOBAL_config.proxy) {
         return;
       }
-      var data = e.data.progress;
-      if (data === 100) {
-        progress.parentNode.removeChild(progress);
-        h1.parentNode.removeChild(h1);
-        placeholder.parentNode.removeChild(placeholder);
-        iframe.style.display = 'block';      
-      } else {
-        progress.value = data;
-      }      
+      if (e.data.type === 'progress') {
+        var data = e.data.progress;
+        if (data === 100) {
+          placeholder.parentNode.removeChild(placeholder);
+          iframe.style.display = 'block';      
+        } else {
+          progress.value = data;
+        }      
+      } else if (e.data.type === 'jumpTo') {
+        var data = e.data.jumpTo;
+        video.currentTime = data;
+        trackEvent('seek', videoId, data);        
+        console.log('Seeking to ' + formatTime(data));
+      }        
     }, false);
-    
+
+    // need the backreference to e.source (the iframe), as e.source is null when
+    // postmessage is run from an extension context
+    // (https://developer.mozilla.org/en/DOM/window.postMessage#Using_window.postMessage_in_extensions_Non-standard)
+    // trick it by appending the script data manually (i.e. script runs not
+    // from an extension context) and dynamically add the event listener 
+    // timeupdate to the video with the e.source backreference retrieved before. 
+    appendScript(
+        "window.addEventListener('message', function (e) {\n" +
+        "  if (e.origin !== '" + GLOBAL_config.proxy + "') {\n" +
+        "    return;\n" +
+        "  }\n" +
+        "  if (e.data.type === 'getCurrentTime') {\n" +
+        "    var currentTime = 0;\n" +
+        "    var video = document.getElementById('GLOBAL_video_id');\n" +
+        "    video.addEventListener('timeupdate', function (f) {\n" +
+        "      var time = ~~(video.currentTime);\n" +
+        "      if (time > currentTime) {\n" +
+        "        currentTime = time;\n" +
+        "        e.source.postMessage({\n" +
+        "          currentTime: time,\n" +
+        "          type: 'currentTime'\n" +
+        "        }, e.origin);\n" +
+        "      }\n" +
+        "    }, false);\n" +
+        "  }\n" +
+        "}, false);\n");
+            
     var iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     var iframeStyle = iframe.style;
+    iframeStyle.backgroundColor = 'white !important;';
     iframeStyle.width = '640px !important';    
     iframeStyle.height = '200px !important';
     iframeStyle.border = 'solid #313131 1px';
-    iframe.src = 'http://tomayac.com/youpr0n/youtube.html?v=' + videoId;
-    videoContainer.appendChild(iframe);
-  }  
+    var src = 'http://tomayac.com/youpr0n/youtube.html?v=' + videoId;
+    iframe.src = src;
+    videoContainer.appendChild(iframe);    
+    
+    addAnalyticsCode();           
+  }
+  
+  function appendScript(code) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.innerHTML = code;  
+    var head = document.getElementsByTagName('head')[0];
+    head.appendChild(script);
+    script.parentNode.removeChild(script);         
+  }
+
+  function addAnalyticsCode(screenName) {
+    appendScript("var _gaq = _gaq || [];\n" +
+        "_gaq.push(['filmstrip._setAccount', 'UA-2040927-12']);\n" +
+        "_gaq.push(['filmstrip._setDomainName', 'none']);\n" +
+        "_gaq.push(['filmstrip._setAllowLinker', true]);\n" +
+        "_gaq.push(['filmstrip._trackPageview']);\n" +
+        "(function() {\n" +
+        "  var ga = document.createElement('script');\n" +
+        "  ga.type = 'text/javascript';" +
+        "  ga.async = true;\n" +
+        "  ga.src = ('https:' == document.location.protocol ?\n" +
+        "      'https://ssl' : 'http://www') + " +
+        "      '.google-analytics.com/ga.js';\n" +
+        "  var s = document.getElementsByTagName('script')[0];\n" +
+        "  s.parentNode.insertBefore(ga, s);\n" +
+        "})();\n");  
+  }
+
+  function trackEvent(category, action, label, value) {
+    appendScript(
+        "_gaq.push(['filmstrip._trackEvent', '" +
+        category + "', '" +
+        action + "', '" +
+        label + "', " +
+        value + "]);\n");
+  }
+  
+    
 })();
