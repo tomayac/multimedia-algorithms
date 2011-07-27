@@ -1,69 +1,62 @@
-(function() {
-  
+(function () {
   var GLOBAL_config = {
     proxy: 'http://tomayac.com',
     youtube: 'http://www.youtube.com',
-    spinner: 'data:image/gif;base64,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'
+    containerHeight: 220,
+    controlsOffset: 20,
+    analyticsId: 'UA-2040927-12',
+    placeholderHeight: 150,
+    watchSidebarOffset: -250    
   };
   
   var interval = setInterval(function () {
     var videoElement =
         document.querySelector('embed') || document.querySelector('video');
     if (videoElement === null) {      
+      // keep trying
       return;
-    } else {
-      clearInterval(interval);
-    }    
+    }
+    var videoContainer = videoElement.parentNode;        
+    if (!videoContainer || videoContainer.nodeName !== 'DIV') {
+      throw 'No video or embed container found.';
+    }
+    clearInterval(interval);    
+    videoContainer.style.height =
+        (parseInt(videoElement.height, 10) + GLOBAL_config.containerHeight) +
+        'px !important';
     var videoId = window.location.getParameter('v');
-    if (videoId) {  
-      var url = 'http://www.youtube.com/get_video_info?video_id=' + videoId +
-          '&html5=1&eurl=unknown&el=embedded&hl=en_US';
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function(e) {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200) {
-            var videoData = parseVideoData(xhr.responseText);
-            if (!videoData) {
-              throw 'Could not embed video.';
-            }
-            var placeholder = document.createElement('div');
-            placeholder.id = 'placeholder';
-            var placeholderStyle = placeholder.style;
-            placeholderStyle.backgroundColor = 'white !important';
-            placeholderStyle.textalign = 'center !important';
-            placeholderStyle.width = videoElement.width + 'px';
-            placeholderStyle.height = videoElement.height + 'px', 
-            placeholderStyle.backgroundImage =
-                'url(' + GLOBAL_config.spinner + ')';
-            placeholderStyle.backgroundRepeat = 'no-repeat';
-            placeholderStyle.backgroundPosition = 'center center';
-            var videoContainer = videoElement.parentNode;        
-            if (videoContainer.nodeName.toLowerCase() !== 'div') {
-              throw 'No video or embed container found.';
-            }    
-            videoContainer.style.backgroundColor = 'white !important';
-            videoContainer.style.height =
-                (parseInt(videoElement.height, 10) + 220) + 'px !important';
-            videoContainer.replaceChild(placeholder, videoElement);                    
-            replaceVideoElement(
-                placeholder, videoContainer, videoData, videoId);
-          } else {
-            throw 'Could not get video metadata.'
-          }
-        }        
-      }
-      xhr.open("GET", url, true);
-      xhr.send();
-    } else {
+    if (!videoId) {        
       throw 'No video ID found.';
-    }    
+    }      
+    var url = GLOBAL_config.youtube + '/get_video_info?video_id=' + videoId +
+        '&html5=1&eurl=unknown&el=embedded&hl=en_US';
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function (e) {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var sources = parseVideoSources(xhr.responseText);
+          if (!sources) {
+            throw 'Could not embed video.';
+          }            
+          replaceVideoElement(videoContainer, videoElement, sources, videoId);
+        } else {
+          throw 'Could not get video metadata.'
+        }
+      }        
+    }
+    xhr.open("GET", url, true);
+    xhr.send();
   }, 100);     
   
-  function parseVideoData(videoInfo) {
+  function parseVideoSources(videoInfo) {
     var parts = videoInfo.split(/&/);
     for (var i = 0, len = parts.length; i < len; i++) {
       var part = parts[i];
       var keyValues = part.split(/=/);
+      if (keyValues[0] === 'status' && keyValues[1] === 'fail') {
+        var json = false;          
+        return JSON.parse(json);        
+      }
       if (keyValues[0] === 'html5_fmt_map') {
         videoInfo = decodeURIComponent(keyValues[1]).replace(/\+/g, ' ');
         videoInfo = videoInfo.replace(/^\[/, '').replace(/\]$/, '');
@@ -91,78 +84,127 @@
     json += ']';
     return JSON.parse(json);
   }
+  
+  // formats the time in a readable way
+  //
+  // Core bits adapted (stolen) from
+  // http://isithackday.com/videograbber/
+  function formatTime(time) {
+    var hours = parseInt((time / 60 / 60) % 60, 10);
+    var mins = parseInt((time / 60) % 60, 10);
+    var secs = parseInt(time, 10) % 60;
+    var hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':';
+    var minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':';
+    var secss  = (secs < 10 ? '0' : '') + (secs % 60);
+    var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
+    return timestring;
+  }  
     
-  function replaceVideoElement(
-      placeholder, videoContainer, videoData, videoId) {
-        
-    // formats the time in a readable way
-    //
-    // Core bits adapted (stolen) from
-    // http://isithackday.com/videograbber/
-    function formatTime(time) {
-      var hours = parseInt((time / 60 / 60) % 60, 10);
-      var mins = parseInt((time / 60) % 60, 10);
-      var secs = parseInt(time, 10) % 60;
-      var hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':';
-      var minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':';
-      var secss  = (secs < 10 ? '0' : '') +(secs % 60);
-      var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
-      return timestring;
-    }          
+  function replaceVideoElement(videoContainer, videoElement, sources, videoId) {     
+    var placeholder = document.createElement('div');
+    placeholder.id = 'filmstrip_placeholder';
+    placeholder.style.width = (videoElement.width - 2 /*border width*/) + 'px';
+    placeholder.style.height = videoElement.height + 'px';     
+    var nativeWidth = videoElement.width;
+    var nativeHeight = videoElement.height;
+    videoContainer.replaceChild(placeholder, videoElement);                    
             
     var video = document.createElement('video');
-    video.id = 'GLOBAL_video_id';
-    video.controls = 'controls';
-    for (var i = 0, len = videoData.length; i < len; i++) {
+    video.id = 'filmstrip_video'
+    video.width = nativeWidth;
+    video.style.width = nativeWidth + 'px';
+    video.height = nativeHeight;
+    for (var i = 0, len = sources.length; i < len; i++) {
       var source = document.createElement('source');
-      source.src = videoData[i].url;
-      if (videoData[i].type) {
-        source.type = videoData[i].type
+      source.src = sources[i].url;
+      if (sources[i].type) {
+        source.type = sources[i].type
       }
       video.appendChild(source);
-    }
-    //video.width = placeholder.style.width.replace('px', '');
-    video.height = placeholder.style.height.replace('px', '');
+    }    
     videoContainer.replaceChild(video, placeholder);        
     video.load();
+    
+    var fullscreen = false;
+    var fullScreenDiv = document.createElement('div');
+    fullScreenDiv.id = 'filmstrip_fullscreen';
+    fullScreenDiv.style.width = window.innerWidth + 'px';
+    fullScreenDiv.style.height =
+        (window.innerHeight - GLOBAL_config.controlsOffset) + 'px';          
+    
+    video.addEventListener('mousemove', function (e) {
+      video.controls = 'controls';
+    }, false);    
+    
+    video.addEventListener('mouseover', function (e) {
+      video.controls = 'controls';      
+    }, false);
+    
+    video.addEventListener('mouseout', function (e) {
+      setTimeout(function () {
+        video.removeAttribute('controls');              
+      }, 500);      
+    }, false);    
+        
     video.addEventListener('canplaythrough', function(e) {
       video.play();
     }, false);  
+    
+    video.addEventListener('ended', function(e) {
+      video.currentTime = 0;
+      video.play();
+    }, false);        
+    
+    video.addEventListener('click', function (e) {
+      var currentTime = video.currentTime;
+      if (!fullscreen) {        
+        fullscreen = true;
+        document.body.appendChild(fullScreenDiv);
+        document.body.style.overflow = 'hidden !important';
+        video.width = window.innerWidth;
+        video.style.width = window.innerWidth + 'px';
+        video.height = window.innerHeight - GLOBAL_config.controlsOffset;
+        videoContainer.removeChild(video);
+        fullScreenDiv.appendChild(video);                
+        video.addEventListener('loadedmetadata', function (e) {
+          video.currentTime = currentTime;
+        }, false);        
+      } else {
+        fullscreen = false;
+        document.body.removeChild(fullScreenDiv);        
+        document.body.style.overflow = 'auto !important';                
+        video.width = nativeWidth;
+        video.style.width = nativeWidth + 'px';
+        video.height = nativeHeight;
+        fullScreenDiv.removeChild(video);
+        videoContainer.insertBefore(video, videoContainer.firstChild);        
+        video.addEventListener('loadedmetadata', function (e) {
+          video.currentTime = currentTime;
+        }, false);        
+      }  
+    }, false);        
 
-    var progress = document.createElement('progress');
-    placeholder.appendChild(progress);            
     videoContainer.appendChild(placeholder);    
-    var progressStyle = progress.style;
-    progressStyle.position = 'relative';
-    progressStyle.top = '70%';
-    progressStyle.left =
-        (~~(video.width / 2) - ~~(progress.offsetWidth / 2)) + 'px';
-    progress.max = 100;
-    placeholder.style.height = '150px !important';
+    placeholder.style.height =
+        GLOBAL_config.placeholderHeight + 'px !important';    
+    placeholder.innerHTML = '<small id="filmstrip_progress">0%</small>';
+    
+    var iframe = document.createElement('iframe');    
+    iframe.id = 'filmstrip_iframe';
+    iframe.src = GLOBAL_config.proxy + '/youpr0n/youtube.html?v=' + videoId;
+    videoContainer.appendChild(iframe);        
 
-    window.addEventListener('message', function(e) {
-      if (e.origin !== GLOBAL_config.proxy) {
-        return;
-      }
-      if (e.data.type === 'progress') {
-        var data = e.data.progress;
-        if (data === 100) {
-          placeholder.parentNode.removeChild(placeholder);
-          iframe.style.display = 'block';      
-        } else {
-          progress.value = data;
-        }      
-      } else if (e.data.type === 'jumpTo') {
-        var data = e.data.jumpTo;
-        video.currentTime = data;
-        trackEvent('seek', videoId, data);        
-        console.log('Seeking to ' + formatTime(data));
-      }        
-    }, false);
+    var watchSidebar = document.getElementById('watch-sidebar');
+    if (watchSidebar) {
+      watchSidebar.style.position = 'relative !important';
+      watchSidebar.style.top =
+          GLOBAL_config.watchSidebarOffset + 'px !important';
+    }
 
     // need the backreference to e.source (the iframe), as e.source is null when
     // postmessage is run from an extension context
-    // (https://developer.mozilla.org/en/DOM/window.postMessage#Using_window.postMessage_in_extensions_Non-standard)
+    // (https://developer.mozilla.org/en/DOM/window.postMessage-
+    // #Using_window.postMessage_in_extensions_Non-standard)
     // trick it by appending the script data manually (i.e. script runs not
     // from an extension context) and dynamically add the event listener 
     // timeupdate to the video with the e.source backreference retrieved before. 
@@ -173,7 +215,13 @@
         "  }\n" +
         "  if (e.data.type === 'getCurrentTime') {\n" +
         "    var currentTime = 0;\n" +
-        "    var video = document.getElementById('GLOBAL_video_id');\n" +
+        "    var video = document.getElementById('filmstrip_video');\n" +
+        "    video.addEventListener('ended', function (f) {\n" +
+        "      currentTime = 0;\n" +
+        "    }, false);\n" +        
+        "    video.addEventListener('seeked', function (f) {\n" +
+        "      currentTime = video.currentTime;\n" +
+        "    }, false);\n" +        
         "    video.addEventListener('timeupdate', function (f) {\n" +
         "      var time = ~~(video.currentTime);\n" +
         "      if (time > currentTime) {\n" +
@@ -185,18 +233,38 @@
         "      }\n" +
         "    }, false);\n" +
         "  }\n" +
-        "}, false);\n");
-            
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    var iframeStyle = iframe.style;
-    iframeStyle.backgroundColor = 'white !important;';
-    iframeStyle.width = '640px !important';    
-    iframeStyle.height = '200px !important';
-    iframeStyle.border = 'solid #313131 1px';
-    var src = 'http://tomayac.com/youpr0n/youtube.html?v=' + videoId;
-    iframe.src = src;
-    videoContainer.appendChild(iframe);    
+        "}, false);\n");            
+
+    window.addEventListener('resize', function (e) {
+      fullScreenDiv.style.width = window.innerWidth + 'px';
+      fullScreenDiv.style.height =
+          (window.innerHeight - GLOBAL_config.controlsOffset) + 'px';
+      if (fullscreen) {
+        video.width = window.innerWidth;
+        video.style.width = window.innerWidth + 'px';
+        video.height = window.innerHeight;              
+      }
+    }, false);    
+    
+    window.addEventListener('message', function(e) {
+      if (e.origin !== GLOBAL_config.proxy) {
+        return;
+      }
+      if (e.data.type === 'progress') {
+        var data = e.data.progress;
+        if (data === 100) {
+          placeholder.parentNode.removeChild(placeholder);
+          iframe.style.display = 'block !important';      
+        } else {
+          placeholder.innerHTML =
+              '<small id="filmstrip_progress">' + data + '%</small>';
+        }      
+      } else if (e.data.type === 'jumpTo') {
+        var data = e.data.jumpTo;
+        video.currentTime = data;
+        trackEvent('seek', videoId, data);        
+      }        
+    }, false);  
     
     addAnalyticsCode();           
   }
@@ -212,7 +280,8 @@
 
   function addAnalyticsCode(screenName) {
     appendScript("var _gaq = _gaq || [];\n" +
-        "_gaq.push(['filmstrip._setAccount', 'UA-2040927-12']);\n" +
+        "_gaq.push(['filmstrip._setAccount', '" +
+            GLOBAL_config.analyticsId + "']);\n" +
         "_gaq.push(['filmstrip._setDomainName', 'none']);\n" +
         "_gaq.push(['filmstrip._setAllowLinker', true]);\n" +
         "_gaq.push(['filmstrip._trackPageview']);\n" +
@@ -235,7 +304,5 @@
         action + "', '" +
         label + "', " +
         value + "]);\n");
-  }
-  
-    
+  }    
 })();

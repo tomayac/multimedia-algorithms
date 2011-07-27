@@ -12,6 +12,9 @@
           "matches": [
               "http://www.youtube.com/watch*"
           ],
+          "css": [
+              "main.css"
+          ],
           "js": [
               "jquery.min.js",  
               "content_script.js"

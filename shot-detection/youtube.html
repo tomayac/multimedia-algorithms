@@ -452,7 +452,7 @@
           var secs = parseInt(time, 10) % 60;
           var hourss = (hours < 10 ? '0' : '') + parseInt(hours, 10) + ':';
           var minss = (mins < 10 ? '0' : '') + parseInt(mins, 10) + ':';
-          var secss  = (secs < 10 ? '0' : '') +(secs % 60);
+          var secss  = (secs < 10 ? '0' : '') + (secs % 60);
           var timestring = ( hourss !== '00:' ? hourss : '' ) + minss + secss;
           return timestring;
         }          
@@ -602,7 +602,9 @@
             url: GLOBAL_config.proxy + id,
             success: function (data) {
               if (!data) {
-                throw 'Cannot Embed Video.';
+                var error = 'Cannot Embed Video.';
+                alert(error);
+                throw error;
               }
               for (var i = 0, len = data.length; i < len; i++) {
                 var source = document.createElement('source');
