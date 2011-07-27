@@ -156,6 +156,9 @@
     }, false);        
     
     video.addEventListener('click', function (e) {
+      if (video.height - e.layerY <= GLOBAL_config.controlsOffset) {
+        return;
+      }
       var currentTime = video.currentTime;
       if (!fullscreen) {        
         fullscreen = true;
