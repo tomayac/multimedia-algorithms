@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extDesc": {
-    "message": "This extension creates a filmstrip-like summary of most YouTube videos.",
+    "message": "This extension creates a filmstrip-like summary for most YouTube videos, enables HTML5 video, and adds auto-replay.",
     "description": "Extension description"
   },
   "extTitle": {
