@@ -78,6 +78,40 @@ Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium
 \end{figure*}
 
 
+\section{Related work}
+\subsection{Shot boundary detection}
+
+Video fragments consist of shots, which are sequences of consecutive frames from a single viewpoint,
+representing an continuous action in time and space.
+The topic of shot boundary detection has already been described extensively in literature.
+While some specific issues still remain (notably gradual transitions and false positives due to large movement or illumination changes),
+the problem is considered resolved for many cases~\cite{Hanjalic2002, Yuan2007}.
+Below, we present an overview of several well-known categories of techniques.
+
+Pixel comparison methods~\cite{Hampapur1994, Zhang1993} construct a discontinuity metric based on differences in color or intensity values of corresponding pixels in successive frames.
+This dependency on spatial location makes this technique very sensitive to (even global) motion.
+Various improvements have been suggested, such as prefiltering frames~\cite{Zhang1995},
+but pixel-by-pixel comparison methods proved inferior in the end and have steered research to other directions.
+
+A related method is histogram analysis~\cite{Smeaton1999}, where changes in frame histograms are used to justify the boundaries of shots.
+Their insensitivity to spatial information within a frame makes histograms less prone to partial and global movements in a scene.
+We can argue as a drawback that even visually very dissimilar frames can have similar overall histograms.
+For example, different shots in the same scene can be difficult to distinguish because of similar color information.
+
+As a compromise, a third group of methods consisted of a trade-off between the above two techniques~\cite{Ahmed1999}.
+Different histograms of several, non-overlapping blocks are calculated for each frame,
+thereby categorizing different regions of the image with its own color-based, space-invariant fingerprint.
+The results are promising while computational complexity is kept to a minimum,
+which is why we have chosen a variation on this approach in this paper.
+
+Other approaches to shot boundary detection include the comparison of mean and standard deviations of frame intensities~\cite{Lienhart1999}.
+Detection using other features such as edges~\cite{Zabih1995} and motion~\cite{Bouthemy1997} have also been proposed.
+However, Gargi \emph{et~al.}\ have shown that these more complex methods do not necessarily outperform histogram-based approaches~\cite{Gargi2000}.
+A detailed overview and comparison can be found in Yuan \emph{et~al.}~\cite{Yuan2007}.
+
+Another interesting track is shot boundary detection in the compressed domain~\cite{Yeo1995},
+which is especially relevant for online video, as compression plays a major part herein.
+Unfortunately, even though this article focuses on online video, client-side manipulation of the raw, compressed stream would introduce a lot of computational overhead and make our implementation codec-dependent.
 
 {\small
 \bibliographystyle{ieee}
