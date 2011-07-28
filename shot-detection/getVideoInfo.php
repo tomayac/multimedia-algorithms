@@ -55,30 +55,35 @@
       }
       exit();
     }
-    if ($keyValues[0] === 'html5_fmt_map') {
-      $videoInfo = urldecode(str_replace('+', ' ', $keyValues[1]));
-      $videoInfo = preg_replace('/\]$/', '', preg_replace('/^\[/', '', $videoInfo));
+    if ($keyValues[0] === 'url_encoded_fmt_stream_map') {
+      $videoInfo = preg_split('/,/', urldecode($keyValues[1]));
       break;
     }
   }
-  $parts = preg_split('/\},/', $videoInfo);
-  $json = '[{';
-  for ($i = 0, $len1 = sizeOf($parts); $i < $len1; $i++) {
-    if ($i < $len1 - 1) {
-      $parts[$i] .= '}';
+  $json = '[';
+  for ($i = 0, $len1 = sizeOf($videoInfo); $i < $len1; $i++) {
+    $parts = preg_split('/&/', $videoInfo[$i]);
+    $json .= $i > 0 ? ',{' : '{';
+    for ($j = 0, $len2 = sizeOf($parts); $j < $len2; $j++) {
+      $part = $parts[$j];
+      $keyValues = preg_split('/=/', $part);
+      $key = $keyValues[0];
+      if ($key === 'itag' || $key === 'fallback_host') {
+        continue;
+      }
+      $value = $keyValues[1];
+      if ($key === 'url' || $key === 'type') {
+        $value = urldecode($value);
+      }
+      if ($key === 'type') {
+        $value = preg_replace('/"/', '\\"', $value);
+      }
+      $json .= ($j > 0 ? ',"' . $key . '"' : '"' . $key . '"') .
+          ':"' . $value . '"'; 
     }
-    $part = preg_replace('/\}$/', '', preg_replace('/^\{/', '', $parts[$i]));
-    $keyValues = preg_split('/\'\,/', $part);
-    for ($j = 0, $len2 = sizeOf($keyValues); $j < $len2; $j++) {        
-      $keyValue = preg_split('/\':/', $keyValues[$j]);
-      $json .= $j > 0? ',' : '';
-      $json .= preg_replace('/\s*\'/', '"', $keyValue[0]) . '":' .
-          preg_replace('/"$/', '\\"', preg_replace('/="/', '=\\"', preg_replace('/^\s*\'/', '"', $keyValue[1])));
-      $json .= $keyValue[0] !== ' \'itag'? '"' : '';
-    }
-    $json .= $i < $len1 - 1? '},' : '}';
+    $json .= '}';
   }
-  $json .= ']';
+  $json .= ']';  
   if ($_GET['callback']) {
     $json = $_GET['callback'] . '(' . $json . ')'; 
   }

@@ -34,7 +34,13 @@
     xhr.onreadystatechange = function (e) {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
-          var sources = parseVideoSources(xhr.responseText);
+          var sources = null;
+          try {
+            sources = parseVideoSources(xhr.responseText);
+          } catch (e) {
+            alert('YouTube have changed their response format.\n\nPlease inform me (tomac@google.com), so that I can fix the Filmstrip for YouTube extension. Thanks!');
+            throw 'YouTube have changed their response format.\n\nPlease inform me (tomac@google.com), so that I can fix the Filmstrip for YouTube extension. Thanks!';
+          }
           if (!sources) {
             throw 'Could not embed video.';
           }            
@@ -57,29 +63,33 @@
         var json = false;          
         return JSON.parse(json);        
       }
-      if (keyValues[0] === 'html5_fmt_map') {
-        videoInfo = decodeURIComponent(keyValues[1]).replace(/\+/g, ' ');
-        videoInfo = videoInfo.replace(/^\[/, '').replace(/\]$/, '');
+      if (keyValues[0] === 'url_encoded_fmt_stream_map') {
+        videoInfo = decodeURIComponent(keyValues[1]).split(/,/);
         break;
       }
     }
-    parts = videoInfo.split(/\},/);
-    var json = '[{';
-    for (var i = 0, len1 = parts.length; i < len1; i++) {
-      if (i < len1 - 1) {
-        parts[i] += '}';
+    var json = '[';
+    for (var i = 0, len1 = videoInfo.length; i < len1; i++) {
+      var parts = videoInfo[i].split(/&/);
+      json += i > 0 ? ',{' : '{';
+      for (var j = 0, len2 = parts.length; j < len2; j++) {
+        var part = parts[j];
+        keyValues = part.split(/=/);
+        var key = keyValues[0];
+        if (key === 'itag' || key === 'fallback_host') {
+          continue;
+        }
+        var value = keyValues[1];
+        if (key === 'url' || key === 'type') {
+          value = decodeURIComponent(value);
+        }
+        if (key === 'type') {
+          value = value.replace(/"/g, '\\"');
+        }
+        json += (j > 0 ? ',"' + key + '"' : '"' + key + '"') +
+            ':"' + value + '"'; 
       }
-      var part = parts[i].replace(/^\{/, '').replace(/\}$/, '');
-      var keyValues = part.split(/'\,/);
-      for (var j = 0, len2 = keyValues.length; j < len2; j++) {        
-        var keyValue = keyValues[j].split(/':/);
-        json += j > 0? ',' : '';
-        json += keyValue[0].replace(/\s*'/g, '"') + '":' +
-            keyValue[1].replace(/^\s*'/, '"').replace(/="/g, '=\\"')
-            .replace(/"$/g, '\\"');
-        json += keyValue[0] !== ' \'itag'? '"' : '';
-      }
-      json += i < len1 - 1? '},' : '}';
+      json += '}';
     }
     json += ']';
     return JSON.parse(json);
@@ -105,8 +115,8 @@
     placeholder.id = 'filmstrip_placeholder';
     placeholder.style.width = (videoElement.width - 2 /*border width*/) + 'px';
     placeholder.style.height = videoElement.height + 'px';     
-    var nativeWidth = videoElement.width;
-    var nativeHeight = videoElement.height;
+    var nativeWidth = videoElement.width || 640;
+    var nativeHeight = videoElement.height || 352;
     videoContainer.replaceChild(placeholder, videoElement);                    
             
     var video = document.createElement('video');
@@ -129,8 +139,7 @@
     var fullScreenDiv = document.createElement('div');
     fullScreenDiv.id = 'filmstrip_fullscreen';
     fullScreenDiv.style.width = window.innerWidth + 'px';
-    fullScreenDiv.style.height =
-        (window.innerHeight - GLOBAL_config.controlsOffset) + 'px';          
+    fullScreenDiv.style.height = window.innerHeight + 'px';          
     
     video.addEventListener('mousemove', function (e) {
       video.controls = 'controls';
@@ -164,6 +173,8 @@
         fullscreen = true;
         document.body.appendChild(fullScreenDiv);
         document.body.style.overflow = 'hidden !important';
+        fullScreenDiv.style.width = window.innerWidth + 'px';
+        fullScreenDiv.style.height = window.innerHeight + 'px';          
         video.width = window.innerWidth;
         video.style.width = window.innerWidth + 'px';
         video.height = window.innerHeight - GLOBAL_config.controlsOffset;
@@ -240,8 +251,7 @@
 
     window.addEventListener('resize', function (e) {
       fullScreenDiv.style.width = window.innerWidth + 'px';
-      fullScreenDiv.style.height =
-          (window.innerHeight - GLOBAL_config.controlsOffset) + 'px';
+      fullScreenDiv.style.height = window.innerHeight + 'px';
       if (fullscreen) {
         video.width = window.innerWidth;
         video.style.width = window.innerWidth + 'px';
