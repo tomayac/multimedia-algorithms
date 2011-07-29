@@ -41,11 +41,11 @@ DIV.scenes {
 }
 DIV.label {
   display: inline-block;
-  width: 0.5em;
+  width: 1.1em;
 }
 SPAN.debug_options {
   display: none;
 }
 INPUT.options {
-  width: 3em;
+  width: 4em;
 }

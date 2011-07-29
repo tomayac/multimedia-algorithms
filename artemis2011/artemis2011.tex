@@ -1,5 +1,6 @@
 \documentclass[10pt,twocolumn,letterpaper]{article}
 
+\usepackage{listings} 
 \usepackage{iccv}
 \usepackage{times}
 \usepackage{epsfig}
@@ -91,7 +92,9 @@ In~\cite{semwebvid}, Steiner and Hausenblas describe a Web application that allo
 Finally, Gao et al. propose in~\cite{Gao:2009} a theme-based thumbnail selection algorithm that explicitly models the visual characteristics of the underlying semantic video theme. This semantic model is constructed by finding the common features of relevant visual samples, which are obtained by querying a visual database with keywords associated with the video. Synergies between the approaches~\cite{Choudhury:YouTube,Gao:2009,semwebvid} and our current approach of scene detection with crowd-sourced hot spot detection are possible.
 
 \section{Scene Detection Algorithm} \label{sec:details-of-algo}
-In this Section, we discuss our scene detection algorithm.
+In this Section, we discuss our scene detection algorithm, which falls in the category of histogram-based algorithms.  It is driven by the common observation that different video still frames can have the same histogram. In order to minimize the probability of this to happen, we split our video frames in freely configurable rows and columns, hence, lay over a grid of tiles over the frames. The user interface currently allows for anything from $1 * 1$ to $20 * 20$ layouts. For each step we examine a frame $n$ and its direct predecessor frame $n - 1$.
+
+Apart from the obvious average histogram value per-tile distance, in our frame distance function we further consider an also freely configurable number of to-be-examined most different or similar tiles. This is driven by the observation that different parts of the video have different intensities of color changes, dependent on the movements from frame to frame. The idea is thus to increase the influence of movements in the frame distance function, and to decrease the influence of static parts. This can be best illustrated with the example given in Figure~\ref{fig:algorithm}. The anchorman is framed by two news tickers, one above, and one below his head. There are many red boxes, i.e., movements, on the tiles with the news tickers. In contrast, the top-upper gray background of the studio wall is entirely static, in consequence there are many green boxes. Besides from the anchorman's movements which result in red boxes around his face, there are many screens with live video to be seen behind the anchorman, which explains the remaining red boxes. For this example, we used a grid layout of $20x20$ (which implies $numTiles = rows * columns$), and a number $nDiffSim$ of most different or similar tiles of $133$ (which corresponds to $rows * columns / 3$). In our frame distance function we apply boosting and limiting factors to the most different and most similar tiles respectively. In our example we worked with a $boostingFactor$ of $2$, which doubles the impact of the most different tiles, and a $limitingFactor$ of $0.5$, which of course halves the impact of the most similar tiles. The complete algorithm can be seen in Listing~\ref{code:algorithm}.
 
 \begin{figure}
 \begin{center}
@@ -100,6 +103,36 @@ In this Section, we discuss our scene detection algorithm.
    \caption{Debug view of the scene detection process. Red boxes highlight tiles with the most, green boxes with the least differences to the previous frame.}
 \label{fig:algorithm}
 \end{figure}
+
+\begin{lstlisting}[caption=Pseudocode for our scene detection algorithm., label=code:algorithm, float=t, frame=single]
+dist = []
+for i = 0; i < numTiles; i++
+  frameN = getFrame(i)
+  frameN-1 = getFrame(i - 1)
+  dist[i] = histoDist(frameN, frameN-1)
+  
+mostDiffTiles = []
+mostSimTiles = []
+mostDiffTiles =
+    getMostDiffTiles(dist, nDiffSim)
+mostSimTiles =
+    getMostSimTiles(dist, nDiffSim)
+
+for i = 0; i < numTiles; i++
+  currentTile = getTile(i)
+  fact = 1
+  if tile in mostDiffTiles
+    fact = boostingFactor
+  if tile in mostSimTiles
+    fact = limitingFactor
+  frameN.avgHisto(currentTile) =
+    frameN.avgHisto(currentTile) * fact
+    
+frameN.avgHisto =
+    getAvgHisto(frameN)    
+\end{lstlisting}
+
+We have made some basic statistic examinations of the frame distance data and experimentally found out that while the average frame distance defined as $$avgDist = \frac{1}{numTiles}\sum_{n=1}^{numTiles}frame_{n}.avgHisto$$ is very intuitive to human beings, far more value lies in the standard deviation, based on the definition of the average distance before $$\sqrt{\frac{1}{numTiles}\sum_{n=1}^{numTiles}(frame_{n}.avgHisto - avgDist)^{2}}$$ We can actually directly use the value of the standard deviation as a scene splitting threshold value to come to very accurate scene splitting results. We found the boosting and limiting factors to have overall a positive scene splitting quality impact with more lively videos, and a negative quality impact with more monotone videos. The results are best if after changing either the boosting or the limiting factor the scene splitting threshold gets adapted to the new standard deviation.
 
 \section{Implementation Details} \label{sec:implementation}
 
