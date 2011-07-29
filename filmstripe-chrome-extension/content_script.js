@@ -6,7 +6,8 @@
     controlsOffset: 20,
     analyticsId: 'UA-2040927-12',
     placeholderHeight: 150,
-    watchSidebarOffset: -250    
+    watchSidebarOffset: -250,
+    html5: false    
   };
   
   var interval = setInterval(function () {
@@ -16,6 +17,11 @@
       // keep trying
       return;
     }
+    if (videoElement.nodeName === 'VIDEO') {
+      GLOBAL_config.html5 = true;
+    }
+    videoElement.width = videoElement.width || 640;   
+    videoElement.height = videoElement.height || 352;   
     var videoContainer = videoElement.parentNode;        
     if (!videoContainer || videoContainer.nodeName !== 'DIV') {
       throw 'No video or embed container found.';
@@ -115,9 +121,12 @@
     placeholder.id = 'filmstrip_placeholder';
     placeholder.style.width = (videoElement.width - 2 /*border width*/) + 'px';
     placeholder.style.height = videoElement.height + 'px';     
-    var nativeWidth = videoElement.width || 640;
-    var nativeHeight = videoElement.height || 352;
-    videoContainer.replaceChild(placeholder, videoElement);                    
+    var nativeWidth = videoElement.width;
+    var nativeHeight = videoElement.height;
+
+    videoContainer.replaceChild(placeholder, videoElement);
+    videoElement = null;
+    delete videoElement;
             
     var video = document.createElement('video');
     video.id = 'filmstrip_video'
@@ -213,6 +222,13 @@
       watchSidebar.style.position = 'relative !important';
       watchSidebar.style.top =
           GLOBAL_config.watchSidebarOffset + 'px !important';
+    }
+    
+    if (GLOBAL_config.html5) {
+      var watchPlayer = document.getElementById('watch-player');
+      if (watchPlayer) {
+        watchPlayer.style.overflow = 'visible !important';
+      }
     }
 
     // need the backreference to e.source (the iframe), as e.source is null when
