@@ -86,7 +86,7 @@ The remainder of this paper is structured as follows: \autoref{sec:related-work}
 \begin{center}
    \includegraphics[width=0.8\linewidth]{./resources/screenshot.png}
 \end{center}
-   \caption{Screenshot of the YouTube scene detection browser extension.}
+   \caption{Screenshot of the YouTube browser extension, showing the different detected scenes.}
 \label{fig:screenshot}
 \end{figure*}
 
@@ -122,7 +122,7 @@ Apart from the obvious average histogram value per-tile distance, in our frame d
 \begin{center}
    \includegraphics[width=1.0\linewidth]{./resources/algorithm.png}
 \end{center}
-   \caption{Debug view of the scene detection process. Red boxes highlight tiles with the most, green boxes with the least differences to the previous frame.}
+   \caption{Debug view of the scene detection process. Red boxes highlight tiles with the most differences to the previous frame, green boxes those with most similarities.}
 \label{fig:algorithm}
 \end{figure}
 
@@ -168,7 +168,7 @@ Google Analytics~\cite{googleanalytics} is Google's Web analysis solution allowi
 \subsection{Video Analysis Process}
 As outlined before, the complete video analysis process happens fully on the client side. We use modern HTML5~\cite{w3c_html5} JavaScript APIs of the HTML \texttt{<video>} and \texttt{<canvas>} elements. Our extension gets activated as soon as the user enters a page that matches the URL pattern \url{http://www.youtube.com/watch*}, i.e., YouTube video watch pages. By default, YouTube uses Flash-encoded~\cite{flash} videos that are not programmatically accessible, however, via an API used by the YouTube \texttt{<iframe>} embed code~\cite{youtubeiframe}, we can retrieve the HTML5 versions of a video that are encoded in any of the HTML5-supported video codecs~\cite{html5video}. In order to obtain a video still frame from the \texttt{<video>} element at the current video position, we use the \texttt{drawImage()} function of the 2D context of the \texttt{<canvas>} element, which as its first parameter accepts a \texttt{<video>} element. We then analyze the video frame's pixels tile-wise and calculate the histograms. The pitfall with this approach is that in order to retrieve the tile-wise pixel data from the 2D context of the \texttt{<canvas>}, we need the \texttt{getImageData()} function to which the so-called Same Origin Policy~\cite{sameoriginpolicy} applies. This means that the \texttt{<canvas>} cannot use the video data directly  from YouTube, but has to use a proxied version on the same domain, which effectively means that we have to temporarily store the video on a proxy server. For processing speed reasons, we currently limit our approach to a resolution of one second, i.e., for each analysis step seek the video in second-steps. We then calculate the frame distances as outlined in Section~\ref{sec:details-of-algo}. For each frame, we generate an \texttt{<img>} element with a base64-encoded data URI~\cite{datauri} representation of the video frame's data that later gets injected into the YouTube watch page's DOM tree, as can be seen in \autoref{fig:screenshot}. Each of the \texttt{<img>} elements has a registered JavaScript event handler that upon click triggers two actions: first, the video seeks to the corresponding time, and second, the frame gets tracked as a hot spot in the video, i.e., as a scene of interest. We therefore use Google Analytics event tracking~\cite{analyticsevent}, a sample hot spot tracking event code snippet is shown in Listing~\ref{code:event}.
 
-\begin{lstlisting}[caption=JavaScript hot spot event tracking code snippet. The \texttt{\_gaq} object refers to the Analytics event tracking queue., label=code:event, float=t, frame=single, language=JavaScript]
+\begin{lstlisting}[caption=JavaScript hot spot event tracking code snippet. The \texttt{\_gaq} object refers to the Google Analytics event tracking queue., label=code:event, float=t, frame=single, language=JavaScript]
 _gaq.push(['filmstrip._trackEvent', 
     'seek', // event type (string)
     'Bo2p82aTQzo', // video ID (string)
