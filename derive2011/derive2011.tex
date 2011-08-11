@@ -44,31 +44,36 @@
 
 \mainmatter
 
-\title{Enabling On-the-Fly Video Scene Detection on YouTube\\ and Crowdsourcing In-Video Hot Spot Identification}
+\title{On-the-fly Detection of Events in YouTube Videos}
 
-\author{Thomas Steiner, Arnaud Brousseau\\
-Google Germany GmbH\\
-ABC Str. 19\\
-{\tt\small \{tomac, arnaudbrousseau\}@google.com}
-% For a paper whose authors are all at the same institution,
-% omit the following lines up until the closing ``}''.
-% Additional authors and addresses can be added with ``\and'',
-% just like the second author.
-% To save space, use either the email address or home page, not both
-\and
-Ruben Verborgh, Rik Van de Walle \\
-Ghent University -- IBBT, ELIS -- Multimedia Lab\\
-Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium\\
-{\tt\small \{ruben.verborgh, rik.vandewalle\}@ugent.be}
+% a short form should be given in case it is too long for the running head
+\titlerunning{On-the-fly Detection of Events in YouTube Videos}
+
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{Thomas Steiner$^{1}$ \and Ruben Verborgh$^{2}$ \and Rik Van de Walle$^{2}$ \and Michael Hausenblas$^{3}$ \and Joaquim Gabarr\'{o} Vall\'{e}s$^{1}$}
+\institute{Universitat Polit\'ecnica de Catalunya -- Department LSI\\
+08034 Barcelona, Spain\\
+\urldef{\emails}\path|{tsteiner,gabarro}@lsi.upc.edu|\emails
+\and Ghent University -- IBBT, ELIS -- Multimedia Lab\\Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium\\
+\urldef{\emails}\path|{ruben.verborgh,rik.vandewalle}@ugent.be|\emails
+\and DERI, NUI Galway IDA Business Park, Lower Dangan Galway, Ireland\\
+\urldef{\emails}\path|michael.hausenblas@deri.org|\emails
 }
+%
+\authorrunning{On-the-fly Detection of Events in YouTube Videos}
+% (feature abused for this document to repeat the title also on left hand pages)
 
 \maketitle
 % \thispagestyle{empty}
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Video scene detection is the processor-intensive task of splitting a video into continuous scenes, with hard or soft cuts as the boundaries. In this paper, we present a client-side on-the-fly approach to this challenge based on modern HTML5-enabled Web APIs. We show how using browser extensions video scene detection can be seamlessly embedded into video platforms like YouTube.
-We then explain how the generated scene set of a video drives crowdsourced identification of ``hot spots'', interesting scenes watched by many viewers. We evaluate our approach based on a set of videos that were manually split into scenes and annotated with hot~spots, indicating the potential of this technique.
+Albeit considerable efforts have been put in making video content on the Web more accessible, searchable, and navigable by both textual and visual analysis of the content, most of the time videos still are relatively opaque objects in websites. With the ongoing process of Web browsers gaining more and more support for the HTML5 \texttt{video} tag, at least mark-up-wise videos are becoming first class citizens on the Web. In this paper, we show how through a combination of \emph{textual}, \emph{visual}, and \emph{behavioral} analysis events can be detected on-the-fly in YouTube videos. We therefore define two types of events: visible events in the sense of scene changes, and interest-based events in the sense of purposeful in-video navigation. We realize this by means of a Web browser extension that seamlessly integrates into the YouTube homepage. This extension shows points of interest in the video, contained named entities with their depictions, and the different scenes.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
