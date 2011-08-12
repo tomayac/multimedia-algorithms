@@ -170,11 +170,22 @@ Google Chrome extensions are small software programs that users can install to e
 \subsubsection{Google Analytics}
 Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an invisible snippet of JavaScript code on the to-be-tracked pages of a website. This code collects visitor data through a request for a specific $1 \times 1$ pixel image, during which the page and user data is reported back in the query part of the image's URL. In addition to that, the snippet sets a first party cookie on visitors' computers in order to store anonymous information such as the timestamp of the current visit, whether the visitor is a new or returning visitor, and the website the visitor came from.
 
-\subsection{Video Shot Detection Process}
-The complete process has been detailed in~\cite{artemis}. This paper is a first step in the direction of therein outlined future work, specifically the combination of textual analysis as outlined in~\cite{semwebvid} with visual and behavioral analysis. Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances.
+\subsection{Event Detection Processes}
+This paper is a first step in the direction of therein outlined future work, specifically the combination of textual analysis as outlined in~\cite{semwebvid} with visual and behavioral analysis. 
 
-\subsection{Named Entity Detection Process}
-In~\cite{semwebvid}, we document an interactive Ajax application that allows for the automatic annotation of videos on YouTube with RDF. In the current implementation we use \texttt{event:factor}, \texttt{event:product}, and \texttt{event:agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (non-person entities), products (the particular closed caption cues), and agents (persons entities). ~\ref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
+\subsubsection{Visual Event Detection Process}
+Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. The complete process has been detailed in~\cite{artemis}. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances. \autoref{fig:shots} shows the shots detected in a YouTube video on the London riots.
+
+\begin{figure}[htb!]
+\begin{center}
+   \includegraphics[width=0.7\linewidth]{./resources/london}
+\end{center}
+   \caption{Exemplary shots detected in a YouTube video on the London riots.}
+\label{fig:shots}
+\end{figure}
+
+\subsubsection{Occurrences Event Detection Process}
+In~\cite{semwebvid}, we document an interactive Ajax application that allows for the automatic annotation of videos on YouTube with RDF based on title, description, tags, and closed captions. In the current implementation we use \texttt{event:Factor}, \texttt{event:Product}, and \texttt{event:Agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (non-person entities), products (the particular closed caption cues), and agents (persons entities). \autoref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
 
 \begin{lstlisting}[caption=Exemplary extracted named entities from a YouTube video on the London riots., label=code:semwebvid, float=t, escapechar=§]
 <http://gdata.youtube.com/[...]/9oWNcw8dits> event:Event :event.
@@ -197,6 +208,12 @@ In~\cite{semwebvid}, we document an interactive Ajax application that allows for
               to use plastic bullets and water cannons,"""@en;
   ].
 \end{lstlisting} 
+
+\subsubsection{Interest-based Event Detection Process}
+
+
+\subsection{Bringing It All Together}
+
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
 Lorem ipsum.
