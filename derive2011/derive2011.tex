@@ -45,10 +45,10 @@
 
 \mainmatter
 
-\title{Crowdsourced On-the-fly Detection of Events\\ in YouTube Videos}
+\title{Crowdsourced On-the-Fly Detection of Events\\ in YouTube Videos}
 
 % a short form should be given in case it is too long for the running head
-\titlerunning{Crowdsourced On-the-fly Detection of Events in YouTube Videos}
+\titlerunning{Crowdsourced On-the-Fly Detection of Events in YouTube Videos}
 
 % the name(s) of the author(s) follow(s) next
 %
@@ -66,7 +66,7 @@
 \urldef{\emails}\path|michael.hausenblas@deri.org|\emails
 }
 %
-\authorrunning{Crowdsourced On-the-fly Detection of Events in YouTube Videos}
+\authorrunning{Crowdsourced On-the-Fly Detection of Events in YouTube Videos}
 % (feature abused for this document to repeat the title also on left hand pages)
 
 \maketitle
@@ -130,11 +130,6 @@ One possibility is the generalization of text-based search to nontextual informa
 Another strategy is semantic indexing, \emph{i.e.}, to annotate a multimedia item's content using textual or ontological means~\cite{Hauptmann:2008}.
 In this context, various feature extraction algorithms can be used, an interesting option being face detection~\cite{ViolaJones} followed by face recognition~\cite{Verstockt:2009}.
 
-
-
-
-
-
 \section{Crowdsourceability of Video Event Detection} \label{sec:crowdsourcing}
 The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes:
 
@@ -151,15 +146,21 @@ The difference to outsourcing is that the crowd is undefined by design. For our 
 \end{description} 
 
 \section{Implementation Details} \label{sec:implementation}
-We begin this Section with an overview of the technologies used by introducing Google Chrome extensions for the Google Chrome browser and give a brief summary of the Web analysis solution Google Analytics.
+We begin this Section with an overview of the used background technologies and then give an overview of how our browser extension works.
 
-\subsection{Google Chrome Extensions}
+\subsection{Background Technologies}
+
+\subsubsection{Google Chrome Extensions}
 Google Chrome extensions are small software programs that users can install to enrich the browsing experience with the Google Chrome browser. They are written using a combination of standard Web technologies, such as HTML, JavaScript, and CSS. Chrome extensions are usually (but not necessarily) distributed through the Chrome Web Store. There are several types of extensions; for this paper we focus on extensions based on so-called content scripts. Content scripts are JavaScript programs that run in the context of Web pages via dynamic code injection. By using the standard Document Object Model (DOM), they can read or modify details of the Web pages a user visits.
 
-\subsection{Google Analytics}
+\subsubsection{Google Analytics}
 Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an invisible snippet of JavaScript code on the to-be-tracked pages of a website. This code collects visitor data through a request for a specific $1 \times 1$ pixel image, during which the page and user data is reported back in the query part of the image's URL. In addition to that, the snippet sets a first party cookie on visitors' computers in order to store anonymous information such as the timestamp of the current visit, whether the visitor is a new or returning visitor, and the website the visitor came from.
 
-\subsection{}
+\subsection{Video Shot Detection Process}
+The complete process has been detailed in~\cite{artemis}. This paper is a first step in the direction of therein outlined future work, specifically the combination of textual analysis as outlined in~\cite{semwebvid} with visual and behavioral analysis. Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances.
+
+\subsection{Named Entity Detection Process}
+
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
 Lorem ipsum.
