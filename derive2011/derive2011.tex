@@ -121,7 +121,8 @@ The remainder of this paper is structured as follows: lorem ipsum.
 
 \section{Related Work} \label{sec:related-work}
 Many different approaches to event detection in video exist.
-A first category is artificial vision, which tries to extract visual characteristics and identify objects and patterns.
+A~first category is artificial vision, which tries to extract visual characteristics and identify objects and patterns.
+A~second option is to reuse existing metadata and try to enhance that in a semantic way.
 
 \subsection{Computer Vision Techniques}
 Searching through multimedia objects is inherently more difficult than searching through text.
@@ -129,6 +130,14 @@ Multimedia information retrieval is still an active research topic with many cha
 One possibility is the generalization of text-based search to nontextual information~\cite{Sivic:2008}, in which the query is posed as a multimedia object itself, the so-called query-by-example strategy.
 Another strategy is semantic indexing, \emph{i.e.}, to annotate a multimedia item's content using textual or ontological means~\cite{Hauptmann:2008}.
 In this context, various feature extraction algorithms can be used, an interesting option being face detection~\cite{ViolaJones} followed by face recognition~\cite{Verstockt:2009}.
+
+\subsection{Semantic Enrichment of Existing Metadata}
+In addition to automatically available metadata such as recording time and location, video creators can add metadata to their creations, such as title, textual description, and a list of tags. Also, YouTube automatically provides closed captioning in some cases. Unfortunately, these elements are not constrained to any framework or ontology, making automated interpretation difficult. Therefore, several efforts have tried to semantically enrich these existing metadata.
+
+Choudhury \emph{et~al.}~\cite{Choudhury:YouTube} describe a framework for the semantic enrichment, ranking, and integration of Web video tags using Semantic Web technologies. They use existing metadata and social features such as related videos and playlists a video appears in.
+Gao \emph{et~al.}~\cite{Gao:2009} explicitly model the visual characteristics of the underlying semantic video theme. This semantic model is constructed by finding the common features of relevant visual samples, which are obtained by querying a visual database with keywords associated with the video.
+
+We previously described~\cite{semwebvid} a Web application that allows for the automatic generation of Resource Description Framework (RDF) video descriptions based on existing metadata. Textual information is enriched by extracting named entities via multiple Natural Language Processing Web services in parallel. The detected named entities are interlinked with DBpedia concepts. These entities are explicitly anchored to a point in the video thanks to the closed captions. In combination with a shot detection framework, entities can be anchored to shots instead, which is context-wise oftentimes the better option.
 
 \section{Crowdsourceability of Video Event Detection} \label{sec:crowdsourcing}
 The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes:
