@@ -1,5 +1,10 @@
 \documentclass[runningheads,a4paper]{llncs}
 
+% linewrap symbol
+\usepackage{MnSymbol}
+\definecolor{grey}{RGB}{160,160,160}
+\newcommand{\linewrap}{\raisebox{-.4ex}{\textcolor{grey}{$\rhookleftarrow$}}}
+
 % proper encoding
 \usepackage[T1]{fontenc}
 
@@ -169,7 +174,29 @@ Google Analytics is Google's Web analysis solution allowing for detailed statist
 The complete process has been detailed in~\cite{artemis}. This paper is a first step in the direction of therein outlined future work, specifically the combination of textual analysis as outlined in~\cite{semwebvid} with visual and behavioral analysis. Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances.
 
 \subsection{Named Entity Detection Process}
+In~\cite{semwebvid}, we document an interactive Ajax application that allows for the automatic annotation of videos on YouTube with RDF. In the current implementation we use \texttt{event:factor}, \texttt{event:product}, and \texttt{event:agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (non-person entities), products (the particular closed caption cues), and agents (persons entities). ~\ref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
 
+\begin{lstlisting}[caption=Exemplary extracted named entities from a YouTube video on the London riots., label=code:semwebvid, float=t, escapechar=§]
+<http://gdata.youtube.com/[...]/9oWNcw8dits> event:Event :event.
+:event
+  a event:Event;
+  event:time [
+    tl:start "PT0.00918S"^^xsd:duration;
+    tl:end "PT0.01459S"^^xsd:duration;
+    tl:duration "PT0.00541S"^^xsd:duration;
+    tl:timeline :timeline;
+  ];
+  event:Factor <http://dbpedia.org/resource/David_Cameron>;
+  event:Factor <http://sw.opencyc.org/2008/06/10/concept/en/§\linewrap§
+      PrimeMinister_HeadOfGovernment>;
+  event:Factor <http://dbpedia.org/resource/Plastic_bullet>;
+  event:Factor <http://dbpedia.org/resource/Water_cannon>;
+  event:Product [
+    a bibo:Quote;
+    rdf:value """Prime Minister David Cameron authorized police
+              to use plastic bullets and water cannons,"""@en;
+  ].
+\end{lstlisting} 
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
 Lorem ipsum.
