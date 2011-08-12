@@ -9,10 +9,15 @@
 \usepackage[T1]{fontenc}
 
 \usepackage{flushend}
+\usepackage{verbatim} 
 
 \usepackage{textcomp}
 \usepackage{listings}
 \lstset{frame=lines,captionpos=b,numberbychapter=false,escapechar=§,basicstyle=\ttfamily,upquote=true}
+
+% todo macro
+\usepackage{color}
+\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{ToDo }#1{\bf \}}}}
 
 \usepackage{times}
 %\usepackage{epsfig}
@@ -50,10 +55,10 @@
 
 \mainmatter
 
-\title{Crowdsourced On-the-Fly Detection of Events\\ in YouTube Videos}
+\title{Crowdsourced Detection of Events in YouTube Videos}
 
 % a short form should be given in case it is too long for the running head
-\titlerunning{Crowdsourced On-the-Fly Detection of Events in YouTube Videos}
+\titlerunning{Crowdsourced Detection of Events in YouTube Videos}
 
 % the name(s) of the author(s) follow(s) next
 %
@@ -71,7 +76,7 @@
 \urldef{\emails}\path|michael.hausenblas@deri.org|\emails
 }
 %
-\authorrunning{Crowdsourced On-the-Fly Detection of Events in YouTube Videos}
+\authorrunning{Crowdsourced Detection of Events in YouTube Videos}
 % (feature abused for this document to repeat the title also on left hand pages)
 
 \maketitle
@@ -79,14 +84,14 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Even if considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata, most of the time videos still are relatively opaque objects in websites. With the ongoing process of Web browsers gaining more and more support for the HTML5 \texttt{video} tag, at least mark-up-wise videos are becoming first class citizens on the Web. In this paper, we show how through a combination of crowdsourced textual, visual, and behavioral analysis events can be detected on-the-fly in YouTube videos. By crowdsourcing this processor-intensive task, we can perform video event detection at scale. We realize this by means of a Web browser extension that seamlessly integrates into the YouTube homepage. This extension highlights points of interest in the video, lists the contained named entities with their depictions, and splits a video in shots. We evaluate our preliminary results against traditional server-based approaches to video event detection. The main contribution of this paper is a generalizable framework for the automatic scalable semantic annotation of HTML5 video content.  While users lean back and watch videos, the machine does the heavy lifting in the background.
+Even if considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata, most of the time videos still are relatively opaque objects in websites. With the ongoing process of Web browsers gaining more and more support for the HTML5 \texttt{video} tag, at least mark-up-wise videos are becoming first class citizens on the Web. In this paper, we show how through a combination of crowdsourced textual, visual, and behavioral analysis events can be detected on-the-fly in YouTube videos. By crowdsourcing this processor-intensive task, we can perform video event detection at scale. We realize this by means of a Web browser extension that seamlessly integrates into the YouTube homepage. This extension highlights points of interest in the video, lists the contained named entities with their depictions, and splits a video in shots. We evaluate our preliminary results against traditional server-based approaches to video event detection. The main contribution of this paper is a generalizable crowdsourcing framework for the automatic scalable semantic annotation of HTML5 video content.  While users lean back and watch videos, the machine does the heavy lifting in the background.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
-Official statistics~\cite{youtube:stats} from YouTube~\cite{youtube}, owned by Google and one of the biggest online video platforms, state that more than 13 million hours of video were uploaded during~2010, and that 35~hours of video are uploaded every single minute. Given this huge amount of video content, it becomes evident that advanced search techniques are necessary in order to retrieve the few needles from the giant haystack. Closed captions allow for keyword-based in-video search, a feature announced in 2008~\cite{googlevideo}. Searching for a phrase like \emph{``that's a tremendous gift''}, a caption from Randy Pausch's famous last lecture titled \emph{Achieving Your Childhood Dreams}~\cite{pausch}, indeed reveals a link to that lecture on YouTube. If no closed captions are available, nor can be automatically generated~\cite{youtubecaptions}, keyword-based search is still available over tags, video descriptions, and titles. Presented with a potentially huge list of results, preview thumbnails based on video still frames help users decide on the most promising result.
+Official statistics~\cite{youtube:stats} from YouTube, owned by Google and one of the biggest online video platforms, state that more than 13 million hours of video were uploaded during~2010, and that 35~hours of video are uploaded every single minute. Given this huge amount of video content, it becomes evident that advanced search techniques are necessary in order to retrieve the few needles from the giant haystack. Closed captions allow for keyword-based in-video search, a feature announced in 2008~\cite{googlevideo}. Searching for a phrase like \emph{``that's a tremendous gift''}, a caption from Randy Pausch's famous last lecture titled \emph{Achieving Your Childhood Dreams}~\cite{pausch}, indeed reveals a link to that lecture on YouTube. If no closed captions are available, nor can be automatically generated~\cite{youtubecaptions}, keyword-based search is still available over tags, video descriptions, and titles. Presented with a potentially huge list of results, preview thumbnails based on video still frames help users decide on the most promising result.
 
-A query for at the time of writing recent events like the London riots\footnote{\url{http://en.wikipedia.org/wiki/2011_London_riots}} or the shooting in Ut\o ya\footnote{\url{http://en.wikipedia.org/wiki/2011_Norway_attacks}} reveals a broad selection of all sort of video content, both professionally produced and even more often shaky amateur videos taken with smartphones. Their thumbnails are typically very similar, as can be seen in~\autoref{fig:thumbnails}. These thumbnails are automatically generated by an unpublished computer vision-based algorithm~\cite{googleresearch}. From a user's point of view, it would be oftentimes very interesting to see whether a video contains different shots. For example, a back-and-forth between a news anchorman and live images can be an indicator for professionally  produced content, whereas just one shot during the whole video can be an indicator for amateur-generated eyewitness footage.
+A query for at the time of writing recent events like the London riots\footnote{\url{http://en.wikipedia.org/wiki/2011_London_riots}} or the shooting in Ut\o ya\footnote{\url{http://en.wikipedia.org/wiki/2011_Norway_attacks}} reveals a broad selection of all sort of video content, both professionally produced and even more often shaky amateur videos taken with smartphones. Their thumbnails are typically very similar, as can be seen in~\autoref{fig:thumbnails}. These thumbnails are automatically generated by an unpublished computer vision-based algorithm~\cite{googleresearch}. From a user's point of view, it would be very interesting to see whether a video contains different shots. For example, a back-and-forth between a news anchorman and live images can be an indicator for professionally  produced content, whereas just one shot during the whole video can be an indicator for amateur-generated eyewitness footage.
 
 \begin{figure}[htb!]
   \begin{center}
@@ -98,21 +103,15 @@ A query for at the time of writing recent events like the London riots\footnote{
   \end{center}  
 \end{figure}
 
-In addition to the information provided by the separation of a video in shots, listing occurrences of named entities and their disambiguation can help users quickly decide whether a given video is of interest or not. For example, if a video about Ut\o ya contains an occurrence of the Norwegian Prime Minister Jens Stoltenberg, or a video about the London riots contains an occurrence of the Prime Minister of the United Kingdom David Cameron, they can potentially be considered more trustworthy than other videos. While obviously the detection of persons and their identification would be possible through face detection and face recognition techniques, this task is computationally very expensive. As we have shown in~\cite{semwebvid}, through the analysis of the available textual metadata with Natural Language Processing (NLP) techniques, however, good results are also possible, especially given the relatively broad availability of closed captions on YouTube, or their automatic generation~\cite{youtubecaptions} respectively.
-
-Finally, for videos that are longer than the attention span of a typical YouTube user, exploiting purposeful in-video navigation data can help determine points of interest within videos. For example, many users might skip the intros typically contained in professionally produced video content, or jump to spectacular shots directly. 
-
-We define three types of events: \emph{visual events} in the sense of shot changes, \emph{occurrence events} in the sense of the appearance of a named entity, and \emph{interest-based events} in the sense of purposeful in-video navigation by users. In this paper, we show a crowdsourced browser extension-based  approach for the on-the-fly event detection in YouTube videos through a combination of emph{textual}, \emph{visual}, and \emph{behavioral} analysis techniques. When a user starts watching a video, three processes start:
+In addition to the information provided by the separation of a video in shots, listing occurrences of named entities and their disambiguation can help users quickly decide whether a given video is of interest or not. For example, if a video about Ut\o ya contains an occurrence of the Norwegian Prime Minister Jens Stoltenberg, or a video about the London riots contains an occurrence of the Prime Minister of the United Kingdom David Cameron, they can potentially be considered more trustworthy than other videos. While obviously the detection of persons and their identification would be possible through face detection and face recognition techniques, this task is computationally very expensive. As we have shown in~\cite{semwebvid}, through the analysis of the available textual metadata with Natural Language Processing (NLP) techniques, however, good results are also possible, especially given the relatively broad availability of closed captions on YouTube, or their automatic generation~\cite{youtubecaptions} respectively. Finally, for videos that are longer than the attention span of a typical YouTube user, exploiting purposeful in-video navigation data can help determine points of interest within videos. For example, many users might skip the intros typically contained in professionally produced video content, or jump to spectacular shots directly. We define three types of events: \emph{visual events} in the sense of shot changes, \emph{occurrence events} in the sense of the appearance of a named entity, and \emph{interest-based events} in the sense of purposeful in-video navigation by users. In this paper, we show a crowdsourced browser extension-based  approach for the on-the-fly event detection in YouTube videos through a combination of emph{textual}, \emph{visual}, and \emph{behavioral} analysis techniques. When a user starts watching a video, three processes start:
 
 \begin{description}
-  \item[Visual Events] We detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs dynamically on the client-side, using the modern HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements. As soon as the shots have been detected, we offer the user the choice to quickly jump into a specific shot by clicking on a representative still frame.
+  \item[Visual Events] We detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs on the client-side using the modern HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements. As soon as the shots have been detected, we offer the user the choice to quickly jump into a specific shot by clicking on a representative still frame.
   \item[Occurrence Events] We analyze the available video metadata using NLP techniques, as outlined in~\cite{semwebvid}. The detected named entities are presented to the user in list form, and upon click allow for jumping into the  shots where the entity occurs.
   \item[Interest-based Events] As soon as the \emph{visual events} have been detected, we attach JavaScript event listeners to each of the shots and count clicks on shots as an expression of interest in those shots.
 \end{description} 
  
-\autoref{fig:youtube} shows the seamless integration of the detected events into the YouTube homepage. Contributions of this paper are the browser extension itself and the underlying generalizable framework for the automatic semantic HTML5 video annotation.
-
-The remainder of this paper is structured as follows: lorem ipsum.
+\autoref{fig:youtube} shows the seamless integration of the detected events into the YouTube homepage. Contributions of this paper are the browser extension itself and the underlying crowdsourcing framework for the automatic semantic video annotation.
 
 \begin{figure}[htb!]
 \begin{center}
@@ -138,31 +137,14 @@ Another strategy is semantic indexing, \emph{i.e.}, to annotate a multimedia ite
 In this context, various feature extraction algorithms can be used, an interesting option being face detection~\cite{ViolaJones} followed by face recognition~\cite{Verstockt:2009}.
 
 \subsection{Semantic Enrichment of Existing Metadata}
-In addition to automatically available metadata such as recording time and location, video creators can add metadata to their creations, such as title, textual description, and a list of tags. Also, YouTube automatically provides closed captioning in some cases. Unfortunately, these elements are not constrained to any framework or ontology, making automated interpretation difficult. Therefore, several efforts have tried to semantically enrich these existing metadata.
-
-Choudhury \emph{et~al.}~\cite{Choudhury:YouTube} describe a framework for the semantic enrichment, ranking, and integration of Web video tags using Semantic Web technologies. They use existing metadata and social features such as related videos and playlists a video appears in.
-Gao \emph{et~al.}~\cite{Gao:2009} explicitly model the visual characteristics of the underlying semantic video theme. This semantic model is constructed by finding the common features of relevant visual samples, which are obtained by querying a visual database with keywords associated with the video.
-Recently, Br{\ae}ck~Leer~\cite{BraeckLeer:2011} also provided an interesting method to detect events in videos using semantic subtitle analysis.
-
-We previously described~\cite{semwebvid} a Web application that allows for the automatic generation of Resource Description Framework (RDF) video descriptions based on existing metadata. Textual information is enriched by extracting named entities via multiple Natural Language Processing Web services in parallel. The detected named entities are interlinked with DBpedia concepts. These entities are explicitly anchored to a point in the video thanks to the closed captions. In combination with a shot detection framework, entities can be anchored to shots instead, which is context-wise oftentimes the better option.
+In addition to automatically available metadata such as recording time and location, video creators can add metadata to their creations, such as title, textual description, and a list of tags. Also, YouTube automatically provides closed captioning in some cases. Unfortunately, these elements are not constrained to any framework or ontology, making automated interpretation difficult. Therefore, several efforts have tried to semantically enrich these existing metadata. Choudhury \emph{et~al.}~\cite{Choudhury:YouTube} describe a framework for the semantic enrichment, ranking, and integration of Web video tags using Semantic Web technologies. They use existing metadata and social features such as related videos and playlists a video appears in. Gao \emph{et~al.}~\cite{Gao:2009} explicitly model the visual characteristics of the underlying semantic video theme. This semantic model is constructed by finding the common features of relevant visual samples, which are obtained by querying a visual database with keywords associated with the video. Recently, Br{\ae}ck~Leer~\cite{BraeckLeer:2011} also provided an interesting method to detect events in videos using semantic subtitle analysis. We previously described~\cite{semwebvid} a Web application that allows for the automatic generation of Resource Description Framework (RDF) video descriptions based on existing metadata. Textual information is enriched by extracting named entities via multiple Natural Language Processing Web services in parallel. The detected named entities are interlinked with DBpedia concepts. These entities are explicitly anchored to a point in the video thanks to the closed captions. In combination with a shot detection framework, entities can be anchored to shots instead, which is context-wise the better option.
 
 \subsection{Crowdsourced Annnotation Approaches}
-A radically different approach is to tackle the plethora of videos with the driving force behind it:
-an enormous community of users.
-The idea of crowdsourcing~\cite{Doan:2011} is that, given the current limitations of automated vision and semantic analysis, we use human intelligence to perform those tasks in which humans currently excel.
-The aim is to make this task as easy and as less time-consuming as possible, in order to avoid disturbing a~user's experience.
-
-Soleymani and Larson describe the use of crowdsourcing for annotating the affective response to video~\cite{Soleymani:2010}.
-They discuss the design of such a crowdsourcing task and list best practices to employ crowdsourcing.
-The trade-off between the required effort versus the accuracy and the cost of annotating has been described by Vondrick~\emph{et~al.}~\cite{Vondrick:2010}.
-
-The quality of annotations generated by a crowdsourcing process has been assessed by Nowak and R\"{u}ger~\cite{Nowak:2010}.
-They conclude that a majority vote is a good filter for noisy judgements to some extent, and that under certain conditions the final annotations can be comparable to those of experts.
-Welinder and Perona~\cite{Welinder:2010} devise a model that includes the degree of uncertainty and a measure of of the annotators' ability.
-It should be noted, however, that the usefulness of annotations also depends on their envisioned functional value, \emph{i.e.}, what purpose they should serve in the application.
+A radically different approach is to tackle the plethora of videos with the driving force behind it: an enormous community of users. The idea of crowdsourcing~\cite{Doan:2011} is that, given the current limitations of automated vision and semantic analysis, we use human intelligence to perform those tasks in which humans currently excel.
+The aim is to make this task as easy and as less time-consuming as possible, in order to avoid disturbing a~user's experience. Soleymani and Larson describe the use of crowdsourcing for annotating the affective response to video~\cite{Soleymani:2010}. They discuss the design of such a crowdsourcing task and list best practices to employ crowdsourcing. The trade-off between the required effort versus the accuracy and the cost of annotating has been described by Vondrick~\emph{et~al.}~\cite{Vondrick:2010}. The quality of annotations generated by a crowdsourcing process has been assessed by Nowak and R\"{u}ger~\cite{Nowak:2010}. They conclude that a majority vote is a good filter for noisy judgements to some extent, and that under certain conditions the final annotations can be comparable to those of experts. Welinder and Perona~\cite{Welinder:2010} devise a model that includes the degree of uncertainty and a measure of of the annotators' ability. It should be noted, however, that the usefulness of annotations also depends on their envisioned functional value, \emph{i.e.}, what purpose they should serve in the application.
 
 \section{Crowdsourceability of Video Event Detection} \label{sec:crowdsourcing}
-The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes: \textit{``The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R \& D''}. The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object \textit{per se}, i.e., the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts: for \emph{visual} and \emph{occurrence events}, shots and named entities in the video are detected once by whatever YouTube user happens to watch the video for the first time. The following users can directly profit form the generated annotations. For \emph{interest-based Events}, acknowledging that points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat map-like overlay on top of the video shots, which results in an intuitive representation of video scenes worth watching.
+The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes: \textit{``The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R \& D''}. The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object \textit{per se}, i.e., the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts: for \emph{visual} and \emph{occurrence events}, shots and named entities in the video are detected once by whatever YouTube user happens to watch the video for the first time. The following users can directly profit form the generated annotations. For \emph{interest-based Events}, acknowledging that points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat map-like overlay on top of the video shots, which results in an intuitive representation of popular scenes.
 
 \section{Implementation Details} \label{sec:implementation}
 We begin this Section with an overview of the used background technologies and then give an overview of how our browser extension works.
@@ -170,7 +152,7 @@ We begin this Section with an overview of the used background technologies and t
 \subsection{Background Technologies}
 
 \subsubsection{Google Chrome Extensions}
-Google Chrome extensions are small software programs that users can install to enrich the browsing experience with the Google Chrome browser. They are written using a combination of standard Web technologies, such as HTML, JavaScript, and CSS. There are several types of extensions; for this paper we focus on extensions based on so-called content scripts. Content scripts are JavaScript programs that run in the context of Web pages via dynamic code injection. By using the standard Document Object Model (DOM), they can read or modify details of the Web pages a user visits.
+Google Chrome extensions are small software programs that users can install to enrich the browsing experience with the Google Chrome browser. They are written using a combination of standard Web technologies, such as HTML, JavaScript, and CSS. There are several types of extensions; for this paper we focus on extensions based on so-called content scripts. Content scripts are JavaScript programs that run in the context of Web pages via dynamic code injection. By using the standard Document Object Model (DOM), they can modify details of Web pages.
 
 \subsubsection{Google Analytics}
 Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an invisible snippet of JavaScript code on a website. This code collects visitor data through a request for an invisible image, during which the page and user data is reported back in the query part of the image's URL. The snippet also sets a first party cookie on visitors' computers in order to store anonymous information such as whether the visitor is a new or returning visitor, or the website the visitor came from.
@@ -179,8 +161,9 @@ Google Analytics is Google's Web analysis solution allowing for detailed statist
 This paper is a first step in the direction of future work outlined in~\cite{artemis}, specifically the combination of textual analysis detailed in~\cite{semwebvid} with visual and behavioral analysis detailed in~\cite{artemis}. 
 
 \subsubsection{Visual Event Detection Process}
-Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. The complete process has been detailed in~\cite{artemis}. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances. \autoref{fig:shots} shows the shots detected in a YouTube video on the London riots.
+Our approach is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shote detection algorithms. The complete process has been detailed in~\cite{artemis}. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances.\begin{comment} \autoref{fig:shots} shows the shots detected in a YouTube video on the London riots.\end{comment}
 
+\begin{comment}
 \begin{figure}[htb!]
 \begin{center}
    \includegraphics[width=0.7\linewidth]{./resources/london}
@@ -188,6 +171,7 @@ Our approach to shot detection is based on HTML5~\cite{w3c_html5} JavaScript API
    \caption{Exemplary shots detected in a YouTube video on the London riots.}
 \label{fig:shots}
 \end{figure}
+\end{comment}
 
 \subsubsection{Occurrences Event Detection Process}
 In~\cite{semwebvid}, we document an interactive Ajax application that allows for the automatic annotation of videos on YouTube with RDF based on title, description, tags, and closed captions. In the current implementation we use \texttt{event:Factor}, \texttt{event:Product}, and \texttt{event:Agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (non-person entities), products (the particular closed caption cues), and agents (persons entities). \autoref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
@@ -238,8 +222,7 @@ From a Linked Data point of view, the main challenge with our browser extension 
               back is under way. [...] there are things that
               are badly wrong in our society. [...]"""@en;
   ];
-  event:sub\_event :event2.
-  
+  event:sub_event :event2.
 :event2
   a event:Event;
   event:time [
@@ -249,14 +232,15 @@ From a Linked Data point of view, the main challenge with our browser extension 
   ];  
   event:product§\linewrap§
       <http://gdata.youtube.com/[...]/9oWNcw8dits#t=26.5>.
-  
 <http://gdata.youtube.com/[...]/9oWNcw8dits#T=27> a§\linewrap§
     ma:MediaFragment.
 \end{lstlisting} 
 
+\section{Evaluation}
+\todo{write evaluation}
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
-Lorem ipsum.
+\todo{write future work}
 
 % back to normal size Computer Modern for URLs in bibliography
 \renewcommand{\ttdefault}{cmvtt}
