@@ -109,13 +109,13 @@ We define three types of events: \emph{visual events} in the sense of shot chang
 
 The remainder of this paper is structured as follows: lorem ipsum.
 
-\begin{figure*}
+\begin{figure}[htb!]
 \begin{center}
    \includegraphics[width=0.8\linewidth]{./resources/youtube}
 \end{center}
    \caption{Screenshot of the YouTube browser extension, showing the three different event types: \emph{visual events} (video shots below the video), \emph{occurrence events} (contained named entities and their depiction at the right of the video), and \emph{interest-based events} (points of interest in the video highlighted with a red background in the bottom left).}
 \label{fig:youtube}
-\end{figure*}
+\end{figure}
 
 % MICHAEL: what is the research question we are after? how do we evaluate it? currently it reads like an engineering excercise - don't get me wrong, this is great stuff and I like it, but we need to render the underlying question: for example, can events in YouTube videos be crowdsourced and how does this compare to other approaches of event detection etc?
 
@@ -134,6 +134,21 @@ In this context, various feature extraction algorithms can be used, an interesti
 
 
 
+
+\section{Crowdsourceability of Video Event Detection} \label{sec:crowdsourcing}
+The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes:
+
+\begin{quotation}
+  The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R \& D.
+\end{quotation}
+
+The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object \textit{per se}, i.e., the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts:
+
+\begin{description}
+  \item[Visual Events] Shots in the video are analyzed once by whatever YouTube user that happens to watch the video for the first time. The following users can directly profit form the generated annotations.
+  \item[Occurrence Events] Named entities in the video are detected once by whatever YouTube user happens to watch the video for the first time. The following users can directly profit form the generated annotations.
+  \item[Interest-based Events] As points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat map-like overlay on top of the video shots, which results in an intuitive representation of video scenes worth watching.
+\end{description} 
 
 \section{Implementation Details} \label{sec:implementation}
 We begin this Section with an overview of the technologies used, as we introduce Google Chrome extensions for the Google Chrome browser and give a brief summary of the Web analysis solution Google Analytics.
