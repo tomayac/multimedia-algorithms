@@ -120,18 +120,20 @@ The remainder of this paper is structured as follows: lorem ipsum.
 % MICHAEL: what is the research question we are after? how do we evaluate it? currently it reads like an engineering excercise - don't get me wrong, this is great stuff and I like it, but we need to render the underlying question: for example, can events in YouTube videos be crowdsourced and how does this compare to other approaches of event detection etc?
 
 \section{Related Work} \label{sec:related-work}
-% Ruben
+Many different approaches to event detection in video exist.
+A first category is artificial vision, which tries to extract visual characteristics and identify objects and patterns.
 
-% MICHAEL: suggest to include the following:
+\subsection{Computer Vision Techniques}
+Searching through multimedia objects is inherently more difficult than searching through text.
+Multimedia information retrieval is still an active research topic with many challenges left to address~\cite{Hanjalic:2008}.
+One possibility is the generalization of text-based search to nontextual information~\cite{Sivic:2008}, in which the query is posed as a multimedia object itself, the so-called query-by-example strategy.
+Another strategy is semantic indexing, \emph{i.e.}, to annotate a multimedia item's content using textual or ontological means~\cite{Hauptmann:2008}.
+In this context, various feature extraction algorithms can be used, an interesting option being face detection~\cite{ViolaJones} followed by face recognition~\cite{Verstockt:2009}.
 
 
-Crowdsourcing Systems on the World-Wide Web, Anhai Doan, Raghu Ramakrishnan, Alon Y. Halevy, Communications of the ACM,
-Vol. 54 No. 4, Pages 86-96, 10.1145/1924421.1924442 
-
-\url{http://cacm.acm.org/magazines/2011/4/106563-crowdsourcing-systems-on-the-world-wide-web/fulltext}
 
 
-ContexTube, \url{http://blog.programmableweb.com/2011/06/24/contextube-the-music-discovery-mashup-we-asked-for/}
+
 
 \section{Implementation Details} \label{sec:implementation}
 We begin this Section with an overview of the technologies used, as we introduce Google Chrome extensions for the Google Chrome browser and give a brief summary of the Web analysis solution Google Analytics.
