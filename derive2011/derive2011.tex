@@ -90,9 +90,9 @@ A query for at the time of writing recent events like the London riots\footnote{
 
 \begin{figure}[htb!]
   \begin{center}
-\subfloat[YouTube search for ``tariq jahan'', father of a victim of the London riots.]{\label{fig:thumbnails-a}\includegraphics[width=0.3\textwidth]{./resources/riots}}
+\subfloat[YouTube search for ``tariq jahan'', father of a victim of the London riots.]{\label{fig:thumbnails-a}\includegraphics[width=0.25\textwidth]{./resources/riots}}
 \hspace{10pt}
-\subfloat[YouTube search for ``ut\o ya shooting'', scene of a terrible massacre in Norway.]{\label{fig:thumbnails-b}\includegraphics[width=0.3\textwidth]{./resources/utoya}}
+\subfloat[YouTube search for ``ut\o ya shooting'', scene of a terrible massacre in Norway.]{\label{fig:thumbnails-b}\includegraphics[width=0.25\textwidth]{./resources/utoya}}
   \caption{Similar thumbnails for different videos make the decision on a particular video harder. The shown user interface is from the iPhone YouTube application.}
   \label{fig:thumbnails}
   \end{center}  
@@ -162,19 +162,7 @@ Welinder and Perona~\cite{Welinder:2010} devise a model that includes the degree
 It should be noted, however, that the usefulness of annotations also depends on their envisioned functional value, \emph{i.e.}, what purpose they should serve in the application.
 
 \section{Crowdsourceability of Video Event Detection} \label{sec:crowdsourcing}
-The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes:
-
-\begin{quotation}
-  The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R \& D.
-\end{quotation}
-
-The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object \textit{per se}, i.e., the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts:
-
-\begin{description}
-  \item[Visual Events] Shots in the video are analyzed once by whatever YouTube user that happens to watch the video for the first time. The following users can directly profit form the generated annotations.
-  \item[Occurrence Events] Named entities in the video are detected once by whatever YouTube user happens to watch the video for the first time. The following users can directly profit form the generated annotations.
-  \item[Interest-based Events] As points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat map-like overlay on top of the video shots, which results in an intuitive representation of video scenes worth watching.
-\end{description} 
+The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes: \textit{``The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R \& D''}. The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object \textit{per se}, i.e., the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts: for \emph{visual} and \emph{occurrence events}, shots and named entities in the video are detected once by whatever YouTube user happens to watch the video for the first time. The following users can directly profit form the generated annotations. For \emph{interest-based Events}, acknowledging that points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat map-like overlay on top of the video shots, which results in an intuitive representation of video scenes worth watching.
 
 \section{Implementation Details} \label{sec:implementation}
 We begin this Section with an overview of the used background technologies and then give an overview of how our browser extension works.
@@ -182,10 +170,10 @@ We begin this Section with an overview of the used background technologies and t
 \subsection{Background Technologies}
 
 \subsubsection{Google Chrome Extensions}
-Google Chrome extensions are small software programs that users can install to enrich the browsing experience with the Google Chrome browser. They are written using a combination of standard Web technologies, such as HTML, JavaScript, and CSS. Chrome extensions are usually (but not necessarily) distributed through the Chrome Web Store. There are several types of extensions; for this paper we focus on extensions based on so-called content scripts. Content scripts are JavaScript programs that run in the context of Web pages via dynamic code injection. By using the standard Document Object Model (DOM), they can read or modify details of the Web pages a user visits.
+Google Chrome extensions are small software programs that users can install to enrich the browsing experience with the Google Chrome browser. They are written using a combination of standard Web technologies, such as HTML, JavaScript, and CSS. There are several types of extensions; for this paper we focus on extensions based on so-called content scripts. Content scripts are JavaScript programs that run in the context of Web pages via dynamic code injection. By using the standard Document Object Model (DOM), they can read or modify details of the Web pages a user visits.
 
 \subsubsection{Google Analytics}
-Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an invisible snippet of JavaScript code on the to-be-tracked pages of a website. This code collects visitor data through a request for a specific $1 \times 1$ pixel image, during which the page and user data is reported back in the query part of the image's URL. In addition to that, the snippet sets a first party cookie on visitors' computers in order to store anonymous information such as the timestamp of the current visit, whether the visitor is a new or returning visitor, and the website the visitor came from.
+Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an invisible snippet of JavaScript code on a website. This code collects visitor data through a request for an invisible image, during which the page and user data is reported back in the query part of the image's URL. The snippet also sets a first party cookie on visitors' computers in order to store anonymous information such as whether the visitor is a new or returning visitor, or the website the visitor came from.
 
 \subsection{Event Detection Processes}
 This paper is a first step in the direction of future work outlined in~\cite{artemis}, specifically the combination of textual analysis detailed in~\cite{semwebvid} with visual and behavioral analysis detailed in~\cite{artemis}. 
@@ -247,14 +235,8 @@ From a Linked Data point of view, the main challenge with our browser extension 
     a bibo:Quote;
     rdf:value """on camera. DAVID CAMERON, British prime
               minister: We needed a fight back, and a fight
-              back is under way. There are pockets of our
-              society that are not just broken, but, frankly,
-              sick. When we see children as young as 12 and 13
-              looting and laughing, when we see the disgusting
-              sight of an injured young man, with people
-              pretending to help him while they are robbing him,
-              it is clear there are things that are badly wrong
-              in our society.  JUDY WOODRUFF:"""@en;
+              back is under way. [...] there are things that
+              are badly wrong in our society. [...]"""@en;
   ];
   event:sub\_event :event2.
   
