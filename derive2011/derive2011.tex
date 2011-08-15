@@ -84,7 +84,7 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{video} tag, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing i) textual, ii) visual, and iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
+Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{<video>} tag, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing i) textual, ii) visual, and iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -95,36 +95,22 @@ A query for---at time of writing---recent events such as the London riots\footno
 
 \begin{figure}[htb!]
   \begin{center}
-% RUBEN: I think the images are rather small and therefore are not maximally useful.
-% Could we, for instance, take the left image in a landscape orientation and then display it alone in twice the size?
-\subfloat[YouTube search for ``tariq jahan'', father of a victim of the London riots.]{\label{fig:thumbnails-a}\includegraphics[width=0.25\textwidth]{./resources/riots}}
-\hspace{10pt}
-\subfloat[YouTube search for ``ut\o ya shooting'', scene of a terrible massacre in Norway.]{\label{fig:thumbnails-b}\includegraphics[width=0.25\textwidth]{./resources/utoya}}
-  \caption{Similar thumbnails for different videos make the decision on a particular video harder.
-% RUBEN: Is it relevant that the interface comes from iPhone?
-  The shown user interface is from the iPhone YouTube application.}
+   \includegraphics[width=0.65\linewidth]{./resources/riots}
+  \end{center}
+  \caption{YouTube search for ``tariq jahan'', father of a victim of the London riots.}
   \label{fig:thumbnails}
-  \end{center}  
 \end{figure}
 
-In addition to the information provided by the separation of a video in shots, listing occurrences of named entities and their disambiguation can help users quickly decide whether a given video is of interest. For example, if a video about Ut\o ya contains an occurrence of the Norwegian Prime Minister Jens Stoltenberg, or a video about the London riots contains an occurrence of the Prime Minister of the United Kingdom David Cameron, they can potentially be considered more trustworthy than other videos. 
-% RUBEN: Non-technical issue, but: isn't "trustworthiness" the next processing step (that should be left to people)?
-% Maybe people WANT to see raw from-the-streets video, maybe they trust the eyes of a witness more.
-% The important thing here is that the application helps THEM decide what they want to see (broadcast versus amateur), and lets THEM make the judgment.
+In addition to the information provided by the separation of a video in shots, listing occurrences of named entities and their disambiguation can help users quickly decide whether a given video is of interest. For example, if a video about Ut\o ya contains an occurrence of the Norwegian Prime Minister Jens Stoltenberg, or a video about the London riots contains an occurrence of the Prime Minister of the United Kingdom David Cameron, they can potentially be considered more trustworthy than other videos. It is up to the user to judge the trustworthiness aspect, however, the more context is available, the easier this decision gets.
 
 While the detection of persons and their identification would be possible through face detection and face recognition techniques, this task is computationally expensive. As we have shown in~\cite{semwebvid}, however, good results are possible through the analysis of the available textual metadata with Natural Language Processing (NLP) techniques, especially given the availability of (possibly automatically generated~\cite{youtubecaptions}) closed captions on YouTube. Finally, for videos that are longer than the attention span of a typical YouTube user, exploiting purposeful in-video navigation data can help determine points of interest within videos. For example, many users might skip the intros typically contained in professionally produced video content, or jump to spectacular shots directly. 
 
 We define three types of events: \emph{visual events} in the sense of shot changes, \emph{occurrence events} in the sense of the appearance of a named entity, and \emph{interest-based events} in the sense of purposeful in-video navigation by users. In this paper, we report on a~browser extension that enables crowdsourcing  of event detection in YouTube videos through a combination of \emph{textual}, \emph{visual}, and \emph{behavioral} analysis techniques. When a~user starts watching a video, three processes start:
 
 \begin{description}
-  \item[Visual Events] We detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs on the client-side using the modern HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements. As soon as the shots have been detected, we offer the user the choice to quickly jump into a specific shot by clicking on a representative still frame.
-% RUBEN: this is nitpicking, but technically, its the "<video>" tag and the "video" element. But probably, the angular brackets make them easier to recognize.
-  \item[Occurrence Events] We analyze the available video metadata using NLP techniques, as outlined in~\cite{semwebvid}. The detected named entities are presented to the user in a list, and upon click allow for jumping into the  shots where the entity occurs.
-% RUBEN: to which shot? The first? The last? The best? All of them in a row?
+  \item[Visual Events] We detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs on the client-side using the modern HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements. As soon as the shots have been detected, we offer the user the choice to quickly jump into a specific shot by clicking on a representative still frame. 
+  \item[Occurrence Events] We analyze the available video metadata using NLP techniques, as outlined in~\cite{semwebvid}. The detected named entities are presented to the user in a list, and upon click via a timeline-like user interface allow for jumping into one of the shots where the entity occurs.
   \item[Interest-based Events] As soon as the \emph{visual events} have been detected, we attach JavaScript event listeners to each of the shots and count clicks on shots as an expression of interest in those shots.
-% RUBEN: suggestion - we add a listener to the VIDEO TIMELINE and count PLAY HEADER MOVEMENTS to a certain shot as INCREASED interest?
-% RUBEN: Does it also work if I keep watching, if I move to the previous shot (because I don't want to miss the start of this one beautiful shot) but then keep watching? For this reason, I believe I would always go to the shot BEFORE the one I'm interested in.
-% SEE ALSO: \subsubsection{Interest-based Event Detection Process}
 \end{description} 
  
 \autoref{fig:youtube} shows the seamless integration of the detected events into the YouTube homepage. Contributions of this paper are the browser extension itself as well as the underlying crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos.
@@ -136,8 +122,6 @@ We define three types of events: \emph{visual events} in the sense of shot chang
    \caption{Screenshot of the YouTube browser extension, showing the three different event types: \emph{visual events} (video shots below the video), \emph{occurrence events} (contained named entities and their depiction at the right of the video), and \emph{interest-based events} (points of interest in the video highlighted with a red background in the bottom left).}
 \label{fig:youtube}
 \end{figure}
-
-% MICHAEL: what is the research question we are after? how do we evaluate it? currently it reads like an engineering excercise - don't get me wrong, this is great stuff and I like it, but we need to render the underlying question: for example, can events in YouTube videos be crowdsourced and how does this compare to other approaches of event detection etc?
 
 \section{Related Work} \label{sec:related-work}
 Many different approaches to event detection in video exist.
@@ -170,12 +154,8 @@ Welinder and Perona~\cite{Welinder:2010} devise a model that includes the degree
 
 \section{Crowdsourcing Event Detection in Videos} \label{sec:crowdsourcing}
 The term \emph{crowdsourcing} was first coined by Jeff Howe in an article in the magazine Wired~\cite{crowdsourcing}. It is a \textit{portmanteau} of ``crowd'' and ``outsourcing''. Howe writes: \textit{``The new pool of cheap labor: everyday people using their spare cycles to create content, solve problems, even do corporate R\&D''}. The difference to outsourcing is that the crowd is undefined by design. For our specific use case, any YouTube user with the browser extension installed could be part of that crowd. 
-% RUBEN: Is this a difference? We could target specific user sections based on profile info. But that's Big Brother :)
-% On the other hand, it could really enable personalized highlights. E.g. (sorry for sexism), boys like the explosion, girls want to see the emotional response afterwards.
 
-Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object in itself, \emph{i.e.}, the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}, so as soon as a video has been analyzed, everyone else can profit form the generated annotations. In the following, we outline for each event type the crowdsourced parts: for \emph{visual} and \emph{occurrence events}, shots and named entities in the video are detected once by whatever the first YouTube user that watches the video. Subsequent viewers can directly profit from the generated annotations. For \emph{interest-based events}, acknowledging that points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat-map-like overlay on top of the video shots, which results in an intuitive representation of popular scenes.
-
-% MICHAEL: how is our work different to the above approaches? what is our advancement?
+Event detection in videos is an ideal candidate for crowdsourcing, as each video is an independent object in itself, \emph{i.e.}, the whole set of all existing YouTube videos can be easily split into subtasks by just analyzing one video at a time. We store analysis results centrally, as outlined in~\autoref{sec:implementation}. In the following, we outline for each event type the crowdsourced parts: for \emph{visual} and \emph{occurrence events}, shots and named entities in the video are detected once by whatever the first YouTube user that watches the video. Subsequent viewers can directly profit from the generated annotations. For \emph{interest-based events}, acknowledging that points of interest within a video might change over time, we capture purposeful navigation events by all users. This allows for the generation of a heat-map-like overlay on top of the video shots, which results in an intuitive representation of popular scenes. Our advancement here is that we do not need write access to YouTube, but through our browser extension generate that metadata layer on top, while still creating a seamless and crowd-enriched experience for the user. 
 
 \section{Implementation Details} \label{sec:implementation}
 We first provide an overview of the background technologies used in the framework and then explain how our browser extension works.
@@ -189,8 +169,7 @@ Google Chrome extensions are small software programs that users can install to e
 Google Analytics is Google's Web analysis solution allowing for detailed statistics about the visitors of a website. The software is implemented by adding an unobtrusive snippet of JavaScript code on a website. This code collects visitor data through a request for an invisible image, during which the page and user data is reported back in the query part of the image's URL. The snippet also sets a first party cookie on visitors' computers in order to store anonymous information such as whether the visitor is a new or returning visitor, or the website the visitor came from.
 
 \subsection{Event Detection Processes}
-% RUBEN: The paragraph below sounds a bit confusing. (future work outlined in X, combined with Y and parts of, again, X) Maybe we want to introduce X and Y somewhat longer?
-This paper is a first step in the direction of future work outlined in~\cite{artemis}, specifically the combination of textual analysis detailed in~\cite{semwebvid} with visual and behavioral analysis detailed in~\cite{artemis}. 
+This paper is a first step in the direction of future work outlined in prior work~\cite{artemis}. Therein, we described the visual analysis-based shot detection algorithm in isolation and noted the potential of combining the visual results with textual analysis results following a method detailed in~\cite{semwebvid}.
 
 \subsubsection{Visual Event Detection Process}
 Our approach is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements and falls in the family of histogram-based shot detection algorithms. The complete process has been detailed in~\cite{artemis}. We analyze the video frame's pixels tile-wise and calculate the local histograms in steps of one second. We then calculate the frame distances and finally split the video in shots wherever the frame distance is greater than the average deviation of all frame distances.\begin{comment} \autoref{fig:shots} shows the shots detected in a YouTube video on the London riots.\end{comment}
@@ -206,9 +185,7 @@ Our approach is based on HTML5~\cite{w3c_html5} JavaScript APIs of the \texttt{<
 \end{comment}
 
 \subsubsection{Occurrences Event Detection Process}
-% RUBEN: Does AJAX need a reference, or can we omit the word? "Web applications" can be fine.
-In~\cite{semwebvid}, we document an interactive AJAX application that allows for the automatic annotation of videos on YouTube in RDF based on title, description, tags, and closed captions. In the current implementation we use \texttt{Factor}, \texttt{Product}, and \texttt{Agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (non-human entities), products (the particular closed caption cues), and agents (human entities). \autoref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
-% RUBEN: I changed "non-person" to "non-human", but was "non-person" correct in the first place? Shouldn't it be "non-living" (e.g., to include cats of course) or even "non-acting" (e.g., to include robots)
+In~\cite{semwebvid}, we document an interactive Web application that allows for the automatic annotation of videos on YouTube in RDF based on title, description, tags, and closed captions. In the current implementation we use \texttt{Factor}, \texttt{Product}, and \texttt{Agent} from the Event Ontology~\cite{Raimond:Event} to relate events to factors (everything used as a factor in an event), products (everything produced by an event), and agents (everything that can serve as an event agent). \autoref{code:semwebvid} shows a sample video fragment annotated with the Event Ontology.
 
 \begin{lstlisting}[caption=Exemplary extracted named entities from a YouTube video on the London riots., label=code:semwebvid, float=htb!, escapechar=§]
 <http://gdata.youtube.com/[...]/9oWNcw8dits> event:Event :event .
@@ -233,31 +210,19 @@ In~\cite{semwebvid}, we document an interactive AJAX application that allows for
   ] .
 \end{lstlisting} 
 
-% RUBEN: SEE ALSO \item[Interest-based Events]
 \subsubsection{Interest-based Event Detection Process}
 For each scene in a video, we generate a set of \texttt{<img>} elements. These sets get injected into the YouTube homepage's DOM tree, as can be seen in \autoref{fig:youtube}. Each of the \texttt{<img>} elements has a registered JavaScript event handler that upon click triggers two actions: first, the video seeks to the corresponding time, and second, the shot is tracked as a point of interest in the video. We therefore use Google Analytics event tracking~\cite{analyticsevent}, logging the video ID and the video timestamp.
 
 \subsection{Bringing It All Together}
-% MICHAEL: Linked Data has never been properly introduced up to now - we could use the following paper as a short of intro and overview into the overall topic:
-%
-% Interlinking Multimedia: How to Apply Linked Data Principles to Multimedia Fragments (Michael Hausenblas, Raphael Troncy, Tobias Buerger, Yves Raimond) http://events.linkeddata.org/ldow2009/ LDOW2009 workshop
+From a Linked Data~\cite{Hausenblas:LDOW09} point of view, the main challenge with our browser extension was to decide on an as-consistent-as-possible way to model the three different event types of \emph{visual events}, \emph{occurrence events}, and \emph{interest-based events}. We decided for a combination of two vocabularies: the Event Ontology~\cite{Raimond:Event} mentioned before, and the W3C Ontology for Media Resources~\cite{mediaontology}, which aims to foster the interoperability among various kinds of metadata formats currently used to describe media resources on the Web. This ontology allows for the definition of media fragments. For this purpose we follow the Media Fragments URIs~\cite{W3C:MediaFrags} W3C Working Draft that specifies the syntax for media fragment URIs along several dimensions. The temporal dimension denotes a specific time range in the original media denoted by the~\texttt{t} parameter. In our case, a media fragment is the part of a video spun by the boundaries of the shot that contains the frame that the user clicked. \autoref{code:combined} shows an exemplary semantic annotation of a 27s long video shot containing a \emph{visual event} (the shot itself), an \emph{occurrence event} (the DBpedia URI representing David Cameron), and an \emph{interest-based event} (a point of interest spanning the whole shot). 
 
-From a Linked Data point of view, the main challenge with our browser extension was to decide on an as-consistent-as-possible way to model the three different event types of \emph{visual events}, \emph{occurrence events}, and \emph{interest-based events}. We decided for a combination of two vocabularies: the Event Ontology~\cite{Raimond:Event} mentioned before, and the W3C Ontology for Media Resources~\cite{mediaontology}, which aims to foster the interoperability among various kinds of metadata formats currently used to describe media resources on the Web. This ontology allows for the definition of media fragments. In our case, a media fragment is the part of a video starting at a point of interest to the end of the video (alternatively the part spun by the boundaries of the shot that contains the point of interest). 
-% RUBEN: Although that's the way how media fragments without an end boundary work, the "to the end of the video" will probably not be relevant for this use case. Also, the above formulation can be a bit difficult for people not acquainted with media fragment URIs.
-% But, I just saw you clarify this in the paragraph below. Although this can be too late for the confused reader.
-% I'm not entirely sure if this explanation needs to be here, since the case where one of the boundaries is absent, will probably not be relevant and unnecessarily complicates things.
-
-We follow the Media Fragments URIs~\cite{W3C:MediaFrags} W3C Working Draft that specifies the syntax for media fragment URIs along several dimensions. The temporal dimension denotes a specific time range in the original media denoted by the key named~\texttt{t}, and specified as an interval with a start time and an end time. Either or both may be omitted, with the start time defaulting to 0 seconds and the end time defaulting to the duration of the source media. \autoref{code:combined} shows an exemplary semantic annotation of a 27s long video shot containing a \emph{visual event} (the shot itself), an \emph{occurrence event} (the DBpedia URI representing David Cameron), and an \emph{interest-based event} (a point of interest at 26.5s). 
-
-% This might just be a hole in my Media Fragment URI knowledge, but the point of interest at 26.5s is most likely not a "point", e.g., according to the above (and to my understanding of Media Fragment URIs), it is defined as the range from 26.5 to the end. In previous work, Davy (who contributes to MF URIs) and me had to use t=26.5,26.54 to indicate this point (which, I think, is a problem with the specification, since it states that the end frame is not inclusive). However, probably the user does not want to point to the frame, but to the shot (of a part thereof)?
-\begin{lstlisting}[caption=Semantic annotation of a 27s long video shot showing David Cameron talk about the London riots (\texttt{:event1}). A point of interest generated by a YouTube user (\texttt{:event2} that is modeled as a sub event of \texttt{:event1}) is defined at 26.5s in the video where Cameron starts to appear., label=code:combined, float=htb!, escapechar=§]
+\begin{lstlisting}[caption=Semantic annotation of a 27s long video shot (\emph{visual event}) showing David Cameron (\emph{occurrence event}) talk about the London riots. The shot is also a point of interest generated by a click of a YouTube user (\emph{interest-based event})., label=code:combined, float=htb!, escapechar=§]
 <http://gdata.youtube.com/[...]/9oWNcw8dits> event:Event :event1.
 
 :event1 a event:Event;
   event:time [
     tl:start "PT0.025269S"^^xsd:duration;
     tl:end "PT0.05305S"^^xsd:duration;
-    tl:duration "PT0.027781S"^^xsd:duration;
     tl:timeline :timeline;
   ];
   event:factor <http://dbpedia.org/resource/David_Cameron>;
@@ -268,17 +233,10 @@ We follow the Media Fragments URIs~\cite{W3C:MediaFrags} W3C Working Draft that 
               back is under way. [...] there are things that
               are badly wrong in our society. [...]"""@en;
   ];
-  event:sub_event :event2 .
-
-:event2 a event:Event;
-  event:time [
-    tl:start "PT0.0265S"^^xsd:duration;
-    tl:end "PT0.0265S"^^xsd:duration;
-    tl:timeline :timeline;
-  ];  
   event:product §\linewrap§
-      <http://gdata.youtube.com/[...]/9oWNcw8dits#t=26.5>.
-<http://gdata.youtube.com/[...]/9oWNcw8dits#T=27> a §\linewrap§
+      <http://gdata.youtube.com/[...]/9oWNcw8dits#t=25,53>.
+      
+<http://gdata.youtube.com/[...]/9oWNcw8dits#T=25,53> a §\linewrap§
     ma:MediaFragment.
 \end{lstlisting} 
 
@@ -287,6 +245,7 @@ We follow the Media Fragments URIs~\cite{W3C:MediaFrags} W3C Working Draft that 
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
 \todo{write future work}
+more elaborate interaction tracking
 
 % back to normal size Computer Modern for URLs in bibliography
 \renewcommand{\ttdefault}{cmvtt}
