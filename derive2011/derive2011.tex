@@ -84,7 +84,7 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{<video>} tag, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing i) textual, ii) visual, and iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
+Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{<video>} element, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing i) textual, ii) visual, and iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -95,10 +95,12 @@ A query for---at time of writing---recent events such as the London riots\footno
 
 \begin{figure}[htb!]
   \begin{center}
-   \includegraphics[width=0.65\linewidth]{./resources/riots}
-  \end{center}
-  \caption{YouTube search for ``tariq jahan'', father of a victim of the London riots.}
+\subfloat[YouTube search for ``tariq jahan'', father of a victim of the London riots.]{\label{fig:thumbnails-a}\includegraphics[width=0.35\textwidth]{./resources/riots}}
+\hspace{10pt}
+\subfloat[YouTube search for ``ut\o ya shooting'', scene of a terrible massacre in Norway.]{\label{fig:thumbnails-b}\includegraphics[width=0.35\textwidth]{./resources/utoya}}
+  \caption{Very similar thumbnails impeding the decision on a particular video.}
   \label{fig:thumbnails}
+  \end{center}  
 \end{figure}
 
 In addition to the information provided by the separation of a video in shots, listing occurrences of named entities and their disambiguation can help users quickly decide whether a given video is of interest. For example, if a video about Ut\o ya contains an occurrence of the Norwegian Prime Minister Jens Stoltenberg, or a video about the London riots contains an occurrence of the Prime Minister of the United Kingdom David Cameron, they can potentially be considered more trustworthy than other videos. It is up to the user to judge the trustworthiness aspect, however, the more context is available, the easier this decision gets.
@@ -244,8 +246,11 @@ From a Linked Data~\cite{Hausenblas:LDOW09} point of view, the main challenge wi
 \todo{write evaluation}
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
-\todo{write future work}
-more elaborate interaction tracking
+In this paper, we have motivated why videos profit from richer crowd-generated event metadata and therefore have defined three different event types. We have shown related work in different fields and discussed crowdsourcing specifically in the context of video annotation. In continuation, we have described the implementation details of a browser extension for crowdsourced event detection and evaluated our crowdsourced approach against a classic server-based approach.
+
+Future work will focus on several aspects. First, given the streaming video nature, our approach inherits the speed and accuracy challenges from~\cite{artemis}; the solution here is to work with lower resolution versions of the video files in the background. Second, more elaborate interaction tracking for \emph{interest-based events} is necessary. Facets like playing time after a navigational click can shine more light on the quality of the believed point of interest. If a user clicks on a supposedly interesting scene, however, navigates away quickly afterwards, this is a strong indicator we need to consider. In the complete opposite, if a user never navigates within a video, this can be an indicator that the video is exciting from the first second to the last. Third, rather than just enriching the user experience for the current video, we will explore in how far the crowd-generated background knowledge gained on videos can be used for a more efficient video recommender system. This can be evaluated via A/B blind tests on clickthrough rates, where a user is randomly presented with a YouTube-generated related video recommendation, and a recommendation generated by the browser extension. 
+
+ Concluding, our crowdsourced approach has shown promising results. The combination of \emph{textual}, \emph{visual}, and \emph{behavioral} analysis techniques indeed provides for high quality metadata that otherwise could only be generated through human annotators. Our framework is a scalable first step towards video event detection, with some actionable steps ahead.
 
 % back to normal size Computer Modern for URLs in bibliography
 \renewcommand{\ttdefault}{cmvtt}
