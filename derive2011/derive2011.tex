@@ -84,7 +84,7 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{<video>} element, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing i) textual, ii) visual, and iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
+Considerable efforts have been put into making video content on the Web more accessible, searchable, and navigable by research on both textual and visual analysis of the actual video content and the accompanying metadata. Nevertheless, most of the time, videos are opaque objects in websites. With Web browsers gaining more support for the HTML5 \texttt{<video>} element, videos are becoming first class citizens on the Web. In this paper we show how events can be detected on-the-fly through crowdsourcing (i) textual, (ii) visual, and (iii) behavioral analysis in YouTube videos, at scale. The main contribution of this paper is a generic crowdsourcing framework for automatic and scalable semantic annotations of HTML5 videos. Eventually, we present our preliminary results using traditional server-based approaches to video event detection as a baseline. 
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -243,7 +243,26 @@ From a Linked Data~\cite{Hausenblas:LDOW09} point of view, the main challenge wi
 \end{lstlisting} 
 
 \section{Evaluation}
-\todo{write evaluation}
+Regarded in isolation, neither of our video event analysis steps is new, as detailed in~\autoref{sec:related-work}. We see our contributions (i) in the scalability through crowdsourcing, (ii) in the on-the-fly HTML5 client-side nature of our approach, and (iii) in the combination of the three different event type annotations. Hence, we evaluate our preliminary results against a classic server-based approach. If we implement the shot detection algorithm for \emph{visual event} detection from~\cite{artemis} on the server, the tool of choice is FFmpeg~\cite{www.ffmpeg.org}, a complete, cross-platform solution to record, convert and stream audio and video. The command
+
+\noindent \texttt{ffmpeg -i video.avi -r 1 -s WxH -f image2 frame-\%03d.jpg}
+
+\noindent extracts one video frame per second from the video, rescales them to fit the new $W \times H$ values, and outputs them in files named `frame-001.jpg', `frame-002.jpg', etc. For \emph{textual event} detection, we can use the same framework that we developed in the context of~\cite{semwebvid} that necessarily runs on the server due to the huge text corpora. Finally, \emph{behavioral event} detection by definition is only possible on the client. \autoref{table:comparison} shows a comparison for all three event type annotations.
+
+% TOM: what is the best option to force linebreaks in a table cell? This boxing thing looks just plain wrong.
+\begin{table}
+\begin{center}  
+    \begin{tabular}{ | l | c | c |}
+    \hline
+    \textbf{Event Type} & \textbf{Client-Side} & \textbf{Server-Side} \\ \hline
+    \emph{Visual Event} & (+) More scalable (-) Streaming issues, slower & (+) Direct file access, faster (-) Less scalable \\ \hline
+    \emph{Textual Event} & N/A & (+) Direct file access, faster (-) Limited scalability \\ \hline
+    \emph{Behavioral Event} & (+) Scalable (-) Peril of spam & N/A \\ \hline
+    \end{tabular}
+\end{center}
+\caption{Comparison of server-side and client-side video event detection.}
+\label{table:comparison}
+\end{table}
 
 \section{Future Work and Conclusion} \label{sec:future-work-conclusion}
 In this paper, we have motivated why videos profit from richer crowd-generated event metadata and therefore have defined three different event types. We have shown related work in different fields and discussed crowdsourcing specifically in the context of video annotation. In continuation, we have described the implementation details of a browser extension for crowdsourced event detection and evaluated our crowdsourced approach against a classic server-based approach.
