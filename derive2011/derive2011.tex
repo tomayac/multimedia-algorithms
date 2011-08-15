@@ -244,7 +244,13 @@ From a Linked Data~\cite{Hausenblas:LDOW09} point of view, the main challenge wi
 
 \vspace{-5mm}
 \section{Discussion of our Approach}
-Regarded in isolation, neither of our video event analysis steps is new, as detailed in~\autoref{sec:related-work}. We see our contributions (i) in the scalability through crowdsourcing, (ii) in the on-the-fly HTML5 client-side nature of our approach, and (iii) in the combination of the three different event type annotations. Hence, we discuss our preliminary results in contrast to a classic centralized approach. For \emph{visual event} analysis, rather than detecting shots client-side with HTML5 JavaScript APIs, a centralized approach with low level video tools is superior in terms of accuracy and speed, as the video files do not have to be streamed before they can be processed. In terms of scalability, however, the crowdsourced approach is superior. For \emph{textual event} detection, this is a task that necessarily runs centrally and not at the client due to the required huge text corpora. Finally, \emph{behavioral event} detection by definition is only possible on the client. While most users are not aware that their navigation behavior can be used to detect points of interest and thus behave naturally, fraud detection is necessary to filter out pseudo navigation events from spammers. 
+Regarded in isolation, neither of our video event analysis steps is new, as detailed in~\autoref{sec:related-work}. Our contributions are situated (i) in the scalability through crowdsourcing, (ii) in the on-the-fly HTML5 client-side nature of our approach, and (iii) in the combination of the three different event type annotations. Hence, we discuss our preliminary results in contrast to a classic centralized approach.
+
+For \emph{visual event} analysis, rather than detecting shots client-side with HTML5 Java\-Script APIs, a centralized approach with low level video tools is superior in terms of accuracy and speed, as the video files do not have to be streamed before they can be processed. In terms of scalability, however, the crowdsourced approach is superior.
+
+For \emph{textual event} detection, this is a task that necessarily runs centrally and not at the client due to the required huge text corpora.
+
+Finally, \emph{behavioral event} detection by definition is only possible on the client. While most users are not aware that their navigation behavior can be used to detect points of interest and thus behave naturally, fraud detection is necessary to filter out pseudo navigation events from spammers. 
 
 \begin{comment}
 % TOM: what is the best option to force linebreaks in a table cell? This boxing thing looks just plain wrong.
