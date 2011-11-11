@@ -96,25 +96,25 @@ Ruben Verborgh\\
 	\affaddr{Multimedia Lab}\\
 	\affaddr{9050 Ghent, Belgium}\\
 	\email{ruben.verborgh@ugent.be}
-\alignauthor	
-Michael Hausenblas
-	\affaddr{DERI, NUI Galway}
-	\affaddr{IDA Business Park}
-	\affaddr{Lower Dangan Galway, Ireland}
-	\email{michael.hausenblas@deri.org}
-\and	
-\alignauthor	
-Rapha\"{e}l Troncy\\
-       \affaddr{EURECOM}\\
-       \affaddr{Sophia Antipolis}\\
-       \affaddr{France}\\
-       \email{raphael.troncy@eurecom.fr}
 \alignauthor
 Joaquim Gabarr\'o Vall\'es\\
 	\affaddr{Universitat Polit\`{e}cnica}\\
 	\affaddr{de Catalunya}\\
 	\affaddr{08034 Barcelona, Spain}\\
-	\email{gabarro@lsi.upc.edu}
+	\email{gabarro@lsi.upc.edu}	
+\and
+\alignauthor	
+Michael Hausenblas\\
+	\affaddr{DERI, NUI Galway}\\
+	\affaddr{IDA Business Park}\\
+	\affaddr{Lower Dangan Galway, Ireland}\\
+	\email{michael.hausenblas@deri.org}	
+\alignauthor	
+Rapha\"{e}l Troncy\\
+       \affaddr{EURECOM}\\
+       \affaddr{2229 route des crêtes, BP 193}\\
+       \affaddr{Sophia Antipolis, France}\\
+       \email{rtroncy@eurecom.fr}
 \alignauthor
 Rik Van de Walle\\
 	\affaddr{Ghent University -- IBBT, ELIS}\\
@@ -137,9 +137,9 @@ Video shot detection is the processor-intensive task of splitting a video into c
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
-Official press statistics~\cite{youtube:stats} from YouTube, one of the biggest online video platforms, state that more than 13 million hours of video were uploaded during 2010, and that 48 hours of video are uploaded every single minute. Given this huge amount of video content, it becomes evident that advanced search techniques are necessary in order to retrieve the few needles from the giant haystack. Closed captions allow for keyword-based in-video search, a feature announced in 2008~\footnote{\url{http://googlevideo.blogspot.com/2008/06/closed-captioning-search-options.html}}. Searching YouTube for a phrase like ``that's a tremendous gift'', a caption from Randy Pausch's famous last lecture \emph{Achieving Your Childhood Dreams}\footnote{\url{http://www.youtube.com/watch?v=ji5\_MqicxSo}}, reveals the video of his lecture. If no closed captions are available, nor can be automatically generated, keyword-based search is still available over tags, video descriptions, and titles. Presented with a potentially long list of results, preview thumbnails based on video still frames help users decide on the most promising result. YouTube uses an unpublished computer vision-based algorithm for the generation of smart thumbnails on YouTube and lets video owners choose one out of three automatically suggested thumbnails.
+Official press statistics~\cite{youtube:stats} from YouTube, one of the biggest online video platforms, state that more than 13 million hours of video were uploaded during 2010, and that 48 hours of video are uploaded every single minute. Given this huge amount of video content, it becomes evident that advanced search techniques are necessary in order to retrieve the few needles from the giant haystack. Closed captions allow for keyword-based in-video search, a feature announced in 2008~\cite{googlevideo}. Searching YouTube for a phrase like ``that's a tremendous gift'', a caption from Randy Pausch's famous last lecture \emph{Achieving Your Childhood Dreams}\footnote{Last Lecture: \url{http://bit.ly/pausch-last-lecture}}, reveals the video of his lecture. If no closed captions are available, nor can be automatically generated, keyword-based search is still available over tags, video descriptions, and titles. Presented with a potentially long list of results, preview thumbnails based on video still frames help users decide on the most promising result. YouTube uses an unpublished computer vision-based algorithm for the generation of smart thumbnails on YouTube and lets video owners choose one out of three automatically suggested thumbnails.
 
-In this paper, we introduce on-the-fly shot detection for YouTube videos as a third means besides keyword-based search and thumbnail preview for deciding on a video from the haystack. As a user starts watching a video, we detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs dynamically on the client-side, using modern HTML5 JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements~\cite{w3c_html5}. As soon as the shots have been detected, we offer the user the choice to quickly jump into a~specific shot by clicking on a~representative still frame. \autoref{fig:screenshot} shows the seamless integration of the detected shots into the YouTube website enabled by the browser extension. The main contributions of this paper are the browser extension itself and improved video navigability by shot navigation. A screencast of our approach is available on YouTube\footnote{\url{http://bit.ly/filmstrip}}.
+In this paper, we introduce on-the-fly shot detection for YouTube videos as a third means besides keyword-based search and thumbnail preview for deciding on a video from the haystack. As a user starts watching a video, we detect shots in the video by visually analyzing its content. We do this with the help of a browser extension, i.e., the whole process runs dynamically on the client-side, using modern HTML5 JavaScript APIs of the \texttt{<video>} and \texttt{<canvas>} elements~\cite{w3c_html5}. As soon as the shots have been detected, we offer the user the choice to quickly jump into a~specific shot by clicking on a~representative still frame. \autoref{fig:screenshot} shows the seamless integration of the detected shots into the YouTube website enabled by the browser extension. The main contributions of this paper are the browser extension itself and improved video navigability by shot navigation. A screencast\footnote{Screencast: \url{http://bit.ly/filmstrip}} and demo\footnote{Demo: \url{http://bit.ly/filmstrip-debug}} of our approach are available.
 
 \begin{figure}
 \begin{center}
