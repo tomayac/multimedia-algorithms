@@ -1,0 +1,125 @@
+\documentclass{acm_proc_article-sp}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[activate=compatibility]{microtype}
+
+% autoref command
+\usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+\def\subfloatautorefname{Subfigure}
+
+\usepackage[lofdepth,lotdepth]{subfig}
+
+\usepackage{enumitem}
+
+\usepackage{mathtools}
+
+% give emph a normal fontsize
+\let\oldemph\emph
+\renewcommand{\emph}[1]{\oldemph{\fontsize{9}{9}\selectfont #1}}
+
+% more readable footnote layout
+\renewcommand{\footnotesize}{\fontsize{8pt}{10pt}}
+\setlength{\footnotesep}{.5cm}
+
+% todo macro
+\usepackage{color}
+\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO}: #1{\bf \}}}}
+
+% listings and Verbatim environment
+\usepackage{fancyvrb}
+\usepackage{relsize}
+\usepackage{listings}
+\usepackage{verbatim}
+\newcommand{\defaultlistingsize}{\fontsize{8pt}{9.5pt}}
+\newcommand{\inlinelistingsize}{\fontsize{8pt}{11pt}}
+\newcommand{\smalllistingsize}{\fontsize{7.5pt}{9.5pt}}
+\newcommand{\listingsize}{\defaultlistingsize}
+\RecustomVerbatimCommand{\Verb}{Verb}{fontsize=\inlinelistingsize}
+\RecustomVerbatimEnvironment{Verbatim}{Verbatim}{fontsize=\defaultlistingsize}
+\lstset{frame=lines,captionpos=b,numberbychapter=false,escapechar=§,
+        aboveskip=0.5em,belowskip=0em,abovecaptionskip=0em,belowcaptionskip=0em,
+framexbottommargin=-1em,
+        basicstyle=\ttfamily\listingsize\selectfont}
+
+% use Courier from this point onward
+\let\oldttdefault\ttdefault
+\renewcommand{\ttdefault}{pcr}
+\let\oldurl\url
+\renewcommand{\url}[1]{\inlinelistingsize\oldurl{#1}}
+
+% superscript for 1st, 2nd, etc.
+%\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+%\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+%\newcommand{\th}[0]{\superscript{th}}
+%\newcommand{\st}[0]{\superscript{st}}
+%\newcommand{\nd}[0]{\superscript{nd}}
+%\newcommand{\rd}[0]{\superscript{rd}}
+
+% linewrap symbol
+\definecolor{grey}{RGB}{130,130,130}
+\newcommand{\linewrap}{\raisebox{-.6ex}{\textcolor{grey}{$\hookleftarrow$}}}
+
+% more pleasing quote environment
+\usepackage{tikz}
+\newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-7pt,yshift=1pt]
+     \node (OQ) {\fontfamily{fxl}\fontsize{16}{16}\selectfont``};\kern0pt}
+\newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=2pt,yshift=-4.5pt]
+     \node (CQ) {\fontfamily{fxl}\fontsize{16}{16}\selectfont''};}
+\renewenvironment{quote}%
+{\setlength{\parindent}{1cm}\par\openquote}
+{\closequote\vspace{-4.5pt}
+}
+
+\makeatletter
+\let\@copyrightspace\relax
+\makeatother
+
+\begin{document}
+
+\title{\todo{Working Title}}
+
+\numberofauthors{3}
+\author{
+\alignauthor
+\textbf{Thomas Steiner}\\
+	\affaddr{Google Germany GmbH}\\
+	\affaddr{tomac@google.com}
+\alignauthor
+\textbf{Raphaël Troncy}\\
+	\affaddr{EURECOM}\\
+	\affaddr{rtroncy@eurecom.fr}
+\alignauthor
+\textbf{Ruben Verborgh}\\ 	
+	\affaddr{UGhent}\\
+	\affaddr{ruben.verborgh@ughent.be}
+}
+
+\maketitle
+
+\begin{abstract}
+\todo{Abstract}
+\end{abstract}
+
+\category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
+\category{H.3.5}{Online Information Services}{Web-based services}
+
+\keywords{\todo{Keywords}}
+
+\section{Introduction} \label{sec:introduction}
+
+\section{Acknowledgments}
+This work was partially supported by the European Commission under Grant No. 248296 FP7 \mbox{I-SEARCH} project.
+
+% back to normal size Computer Modern for URLs in bibliography
+\let\ttdefault\oldttdefault
+\let\url\oldurl
+
+\bibliographystyle{abbrv}
+\bibliography{icmr2012}
+
+\balancecolumns
+\end{document}
