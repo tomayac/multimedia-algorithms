@@ -124,10 +124,21 @@ An example is Facebook.
 Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media hosting platforms.
 An example is the TweetDeck for Twitter application and their integration with TwitPic.
 
-\subsection{API Access vs. Screenscraping}
+\subsection{API Access vs. Web Scraping}
+An \emph{Application Programming Interface (API)} in the sense of Web-based API is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other.
+
+\emph{Web scraping} is the process of automatically extracting information from websites.
+Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc.
+Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree.
+
 Social networks today are very much perceived as ``walled gardens'', excellently illustrated by a cartoon by David Simonds~(\autoref{fig:DavidSimonds}).
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
-
+Some social networks have full read and write access via specified APIs.
+An example is Twitter.
+Other social networks have read access via APIs.
+An example is Google+.
+Interestingly, some media hosting platforms have just write API support, however, no read support, which requires us to fall back to Web scraping the website in order to retrieve data.
+An example is Img.ly.
 
 \begin{figure}
 \centering
