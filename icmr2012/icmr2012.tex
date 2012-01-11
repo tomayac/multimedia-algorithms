@@ -128,6 +128,13 @@ Visual clustering, photos contained in videos.
 
 \section{Introduction} \label{sec:introduction}
 
+\subsection{Definitions}
+\subsubsection{Media Item}
+
+\subsubsection{Micropost}
+
+\subsubsection{Event}
+
 \section{Social Networks and Media Items}
 
 \subsection{Social Networks vs. Hosting Platforms}
@@ -172,27 +179,40 @@ An example is Img.ly.
 
 \subsection{Media Item Collectors}
 
-\subsection{Media Item Analysis}
+\subsection{Machine Translation}
 
-\subsubsection{Machine Translation}
+\subsection{Part of Speech Tagging}
 
-\subsubsection{Part of Speech Tagging}
+\subsection{Named Entity Disambiguation}
 
-\subsubsection{Named Entity Disambiguation}
+\subsection{Irrelevant Media Item Pruning}
 
 \section{Experiments}
+For our experiments, we have taken into account several events that happened on, or were still ongoing the morning of January 10, 2012, CET, and thus the subject of discussion on various social networks.
+We have captured event-related media items and microposts, and made a subset of it available online\footnote{Event-related media items and microposts (subset): \todo{http://example.org/}}. 
 
 \subsection{Considered Events}
+In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 
 \subsubsection{Assad Speech}
+On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters\footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}. 
 
 \subsubsection{CES Las Vegas}
+The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
+Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements\footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}.
 
 \subsubsection{Christian Wulff Case}
+Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while governor of Lower Saxony.
+When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad.
+When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action\footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}.
 
 \subsubsection{Cut the Rope Launch}
+On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced\footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}.
 
 \subsubsection{Dixville Notch}
+Dixville Notch is an unincorporated village in Dixville township of Coos County, New Hampshire, USA, best known in connection with its longstanding middle-of-the-night vote in the U.S. presidential election.
+In a tradition that started in the 1960 election, all the eligible voters in Dixville Notch gather at midnight in the ballroom of The Balsams.
+This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later\footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}.
 
 \subsubsection{Free Mobile Launch}
 
@@ -209,9 +229,13 @@ Restrict selection to geolocated content and time period.
 
 \cite{Liu2011}
 Objective is to aggregate heterogeneous event information sources using Linked Data principles.
-Just Flickr and YouTube.
+Just Flickr and YouTube, with additional media from event information sources.
+Query with "what", "where", "when", uses "title"+"time" and "geotag"+"time".
+Use machine-tagged media items to find visually similar media items.
 
 \section{Future Work}
+Privacy and licensing issues.
+Support more social networks and improve Web scrapers.
 
 \section{Conclusion}
 
