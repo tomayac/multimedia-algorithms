@@ -86,22 +86,39 @@ framexbottommargin=-1em,
 \author{
 \alignauthor
 \textbf{Thomas Steiner}\\
-	\affaddr{Google Germany GmbH}\\
-	\affaddr{tomac@google.com}
+	\affaddr{Univ. Polit\`{e}cnica de Catalunya}\\
+	\affaddr{Department LSI}\\
+	\affaddr{08034 Barcelona, Spain,}\\
+	\affaddr{tsteiner@lsi.upc.edu}
 \alignauthor
 \textbf{Raphaël Troncy}\\
 	\affaddr{EURECOM}\\
+	\affaddr{06560 Sophia Antipolis}\\
+	\affaddr{France}\\
 	\affaddr{rtroncy@eurecom.fr}
+\and
 \alignauthor
 \textbf{Ruben Verborgh}\\ 	
-	\affaddr{UGhent}\\
+	\affaddr{Ghent University -- IBBT, ELIS}\\
+	\affaddr{Multimedia Lab}\\
+	\affaddr{9050 Ghent, Belgium}\\
 	\affaddr{ruben.verborgh@ughent.be}
+\alignauthor
+\textbf{Joaquim Gabarró Vallés}\\
+	\affaddr{Univ. Polit\`{e}cnica de Catalunya}\\
+	\affaddr{Department LSI}\\
+	\affaddr{08034 Barcelona, Spain,}\\
+	\affaddr{gabarro@lsi.upc.edu}	
 }
 
 \maketitle
 
 \begin{abstract}
-
+Core contributions:
+Social network and media hosting platform agnostic media item search, and search results alignment.
+Search results semantic enrichment by putting microposts and media items in relation.
+Cross-channel popularity analysis.
+Visual clustering, photos contained in videos.
 \end{abstract}
 
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
@@ -111,10 +128,8 @@ framexbottommargin=-1em,
 
 \section{Introduction} \label{sec:introduction}
 
-
-\section{Related Work} \label{sec:relatedwork}
 \section{Social Networks and Media Items}
-\section{Media Item Extraction}
+
 \subsection{Social Networks vs. Hosting Platforms}
 The boundary between social networks and media hosting platforms is fluid.
 There are media hosting platforms where people can upload their content with optionally content viewers -- in a relation to the original uploader or not -- having the possibility to react in form of comments, or in form of likes or dislikes.
@@ -124,12 +139,16 @@ An example is Facebook.
 Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media hosting platforms.
 An example is the TweetDeck for Twitter application and their integration with TwitPic.
 
+\subsection{Media Item Extraction}
+
 \subsection{API Access vs. Web Scraping}
 An \emph{Application Programming Interface (API)} in the sense of Web-based API is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other.
 
 \emph{Web scraping} is the process of automatically extracting information from websites.
 Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc.
 Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree.
+
+The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, whereas Web scraping relies on the textual and/or hierarchical structure of websites.
 
 Social networks today are very much perceived as ``walled gardens'', excellently illustrated by a cartoon by David Simonds~(\autoref{fig:DavidSimonds}).
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
@@ -147,9 +166,55 @@ An example is Img.ly.
 \label{fig:DavidSimonds}
 \end{figure}
 
-\subsection{Social Networks}
-\section{Discussion}
-\section{Future Work and Conclusion}
+\section{Implementation Details}
+
+\subsection{Data Structure}
+
+\subsection{Media Item Collectors}
+
+\subsection{Media Item Analysis}
+
+\subsubsection{Machine Translation}
+
+\subsubsection{Part of Speech Tagging}
+
+\subsubsection{Named Entity Disambiguation}
+
+\section{Experiments}
+
+\subsection{Considered Events}
+
+\subsubsection{Assad Speech}
+
+\subsubsection{CES Las Vegas}
+
+\subsubsection{Christian Wulff Case}
+
+\subsubsection{Cut the Rope Launch}
+
+\subsubsection{Dixville Notch}
+
+\subsubsection{Free Mobile Launch}
+
+\subsubsection{Ubuntu TV Launch}
+
+\subsection{Discussion}
+
+\section{Related Work} \label{sec:relatedwork}
+\cite{Fabro2012}
+Just Flickr and YouTube.
+Use clustering algorithm for textual content.
+Duplicate detection via Color and Edge Directivity Descriptor (CEDD).
+Restrict selection to geolocated content and time period.
+
+\cite{Liu2011}
+Objective is to aggregate heterogeneous event information sources using Linked Data principles.
+Just Flickr and YouTube.
+
+\section{Future Work}
+
+\section{Conclusion}
+
 \section{Acknowledgments}
 This work was partially supported by the European Commission under Grant No. 248296 FP7 \mbox{I-SEARCH} project.
 
