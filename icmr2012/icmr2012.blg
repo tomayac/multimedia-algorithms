@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: icmr2012.aux
+The style file: abbrv.bst
+Database file #1: icmr2012.bib
+Warning--entry type for "DavidSimonds" isn't style-file defined
+--line 1 of file icmr2012.bib
+A bad cross reference---entry "Fabro2012"
+refers to entry "DBLP:conf/mmm/2012", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/mmm/2012"
+You've used 3 entries,
+            2118 wiz_defined-function locations,
+            521 strings with 4354 characters,
+and the built_in function-call counts, 1217 in all, are:
+= -- 127
+> -- 38
+< -- 2
++ -- 15
+- -- 12
+* -- 67
+:= -- 181
+add.period$ -- 11
+call.type$ -- 3
+change.case$ -- 15
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 55
+empty$ -- 106
+format.name$ -- 12
+if$ -- 281
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 2
+newline$ -- 19
+num.names$ -- 6
+pop$ -- 22
+preamble$ -- 1
+purify$ -- 12
+quote$ -- 0
+skip$ -- 49
+stack$ -- 0
+substring$ -- 83
+swap$ -- 24
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 12
+warning$ -- 0
+while$ -- 11
+width$ -- 4
+write$ -- 39
+(There was 1 error message)
