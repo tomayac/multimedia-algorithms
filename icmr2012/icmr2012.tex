@@ -117,7 +117,7 @@ framexbottommargin=-1em,
 
 \begin{abstract}
 Core contributions:
-Social network and media hosting platform agnostic media item search, and search results alignment.
+Social network and media platform agnostic media item search, and search results alignment.
 Search results semantic enrichment by putting microposts and media items in relation.
 Cross-channel popularity analysis.
 Visual clustering, photos contained in videos.
@@ -131,25 +131,28 @@ Visual clustering, photos contained in videos.
 \section{Introduction} \label{sec:introduction}
 
 \subsection{Definitions}
-We ficken
+In this Subsection, we provide necessary definition for the terms that we will use throughout this paper.
 
-\subsubsection{Media Item}
-
-
-\subsubsection{Micropost}
-
-\subsubsection{Event}
-
-\section{Social Networks and Media Items}
-
-\subsection{Social Networks vs. Hosting Platforms}
-The boundary between social networks and media hosting platforms is fluid.
-There are media hosting platforms where people can upload their content with optionally content viewers -- in a relation to the original uploader or not -- having the possibility to react in form of comments, or in form of likes or dislikes.
+\subsection{Social Network}
+A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, for example, share interests and/or activities.
+The boundary between social networks and media platforms is fluid.
+There are media platforms where people can upload their content with optionally content viewers -- in a relation to the original uploader or not -- having the possibility to react in form of comments, or in form of likes or dislikes.
 An example is YouTube.
 There are social networks where people can update their status, post links to stories, or upload their content with necessarily viewers -- standing in a relation or not -- having the option to react.
 An example is Facebook.
-Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media hosting platforms.
+Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media platforms.
 An example is the TweetDeck for Twitter application and their integration with TwitPic.
+
+\subsubsection{Media Item}
+A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network. An example can be a baby photo that someone shares on Facebook. 
+
+\subsubsection{Micropost}
+A \emph{micropost} is any textual status update that can -- but not has to -- accompany a media item. An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
+
+\subsubsection{Event}
+An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points. An event with a defined start (May 15, 2011), however, no concrete end, are the 2011 protests in Spain. An event with both start and end can be a concert.
+
+\section{Social Networks and Media Items}
 
 \subsection{Media Item Extraction}
 Talk about media item recall (ratio items that match the query vs. items that match the query with media items).
@@ -169,7 +172,7 @@ Some social networks have full read and write access via specified APIs.
 An example is Twitter.
 Other social networks have read access via APIs.
 An example is Google+.
-Interestingly, some media hosting platforms have just write API support, however, no read support, which requires us to fall back to Web scraping the website in order to retrieve data.
+Interestingly, some media platforms have just write API support, however, no read support, which requires us to fall back to Web scraping the website in order to retrieve data.
 An example is Img.ly.
 
 \begin{figure}
