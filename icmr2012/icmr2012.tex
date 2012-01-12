@@ -129,7 +129,10 @@ Visual clustering, photos contained in videos.
 \section{Introduction} \label{sec:introduction}
 
 \subsection{Definitions}
+We ficken
+
 \subsubsection{Media Item}
+
 
 \subsubsection{Micropost}
 
@@ -177,6 +180,66 @@ An example is Img.ly.
 \section{Implementation Details}
 
 \subsection{Data Structure}
+Our approach being agnostic of concrete social networks, we offer a common alignment schema for all considered social networks, which allows us to treat each social network's data the same way.
+The resulting set of metadata for a media item can be seen below:
+\begin{itemize}
+  \item	\textbf{Media URL}, the deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
+  \item \textbf{Type}, the type of the media item, one out of ``photo'' or ``video''.
+  \item \textbf{Story URL}, the URL of the micropost where the media item appeared, e.g., \url{http://www.flickr.com/photos/96628098@N00/6290784192/}.
+  \item \textbf{Message}, the concrete micropost or description text in raw format, e.g., ``Laura. \#lumixg20f17, \#iswc2011, \#internationalsemanticwebconference, \#bonn, \#germany''.
+  \item \textbf{Clean}, the concrete cleaned micropost or description text with some characters (e.g., hash sign) removed, e.g., ``Laura. lumixg20f17, iswc2011, internationalsemanticwebconference, bonn, germany''.
+  \item \textbf{User}, the URL of the author of the micropost, e.g., \url{http://www.flickr.com/photos/96628098@N00/}.
+  \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
+\end{itemize}
+
+\autoref{lst:media} shows the sample output of a media collector for the Google+ media provider.
+
+\begin{lstlisting}[caption={Sample output of the media collector showing a Google+ post originally authored in German, then translated to English, and finally processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
+{
+  "GooglePlus": [
+    {
+      "mediaurl": "http://res2.windows.microsoft.com/
+          Resources/3.2/[...]",
+      "storyurl": "https://plus.google.com/
+          109193268606381083733/[...]",
+      "message": {
+        "text": "Frohe Weihnachten ... Frohe Weihnachten ...",
+        "clean": "Frohe Weihnachten ... Frohe Weihnachten ...",
+        "translation": {
+          "text": "Merry Christmas ... Merry Christmas ...",
+          "language": "de"
+        }
+      },
+      "entities": [
+        {
+          "name": "christmas",
+          "relevance": 0.67647425,
+          "uris": [
+            {
+              "uri": "http://dbpedia.org/resource/Christmas",
+              "source": "spotlight"
+            }
+          ]
+        },
+        {
+          "name": "Holiday greetings",
+          "relevance": 0.7476,
+          "uris": [
+            {
+              "uri": "http://dbpedia.org/resource/Holiday_greetings",
+              "source": "spotlight"
+            }
+          ]
+        }
+      ],
+      "user": "https://plus.google.com/109193268606381083733",
+      "type": "photo",
+      "timestamp": 1323940738000,
+      "published": "2011-12-15T09:18:58.000Z"
+    }
+  ]
+}
+\end{lstlisting}
 
 \subsection{Media Item Collectors}
 
