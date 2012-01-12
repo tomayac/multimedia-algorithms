@@ -1,0 +1,31 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Definitions}{section.1}% 2
+\BOOKMARK [3][-]{subsubsection.1.1.1}{Media Item}{subsection.1.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.1.2}{Micropost}{subsection.1.1}% 4
+\BOOKMARK [3][-]{subsubsection.1.1.3}{Event}{subsection.1.1}% 5
+\BOOKMARK [1][-]{section.2}{Social Networks and Media Items}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{Social Networks vs. Hosting Platforms}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.2}{Media Item Extraction}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.3}{API Access vs. Web Scraping}{section.2}% 9
+\BOOKMARK [1][-]{section.3}{Implementation Details}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Data Structure}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Media Item Collectors}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.3}{Machine Translation}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.4}{Part of Speech Tagging}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.5}{Named Entity Disambiguation}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.6}{Irrelevant Media Item Pruning}{section.3}% 16
+\BOOKMARK [1][-]{section.4}{Experiments}{}% 17
+\BOOKMARK [2][-]{subsection.4.1}{Considered Events}{section.4}% 18
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Assad Speech}{subsection.4.1}% 19
+\BOOKMARK [3][-]{subsubsection.4.1.2}{CES Las Vegas}{subsection.4.1}% 20
+\BOOKMARK [3][-]{subsubsection.4.1.3}{Christian Wulff Case}{subsection.4.1}% 21
+\BOOKMARK [3][-]{subsubsection.4.1.4}{Cut the Rope Launch}{subsection.4.1}% 22
+\BOOKMARK [3][-]{subsubsection.4.1.5}{Dixville Notch}{subsection.4.1}% 23
+\BOOKMARK [3][-]{subsubsection.4.1.6}{Free Mobile Launch}{subsection.4.1}% 24
+\BOOKMARK [3][-]{subsubsection.4.1.7}{Ubuntu TV Launch}{subsection.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.2}{Discussion}{section.4}% 26
+\BOOKMARK [1][-]{section.5}{Related Work}{}% 27
+\BOOKMARK [1][-]{section.6}{Future Work}{}% 28
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 29
+\BOOKMARK [1][-]{section.8}{Acknowledgments}{}% 30
+\BOOKMARK [1][-]{section.9}{References}{}% 31
