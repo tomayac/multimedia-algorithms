@@ -128,12 +128,16 @@ Visual clustering, photos contained in videos.
 
 \keywords{\todo{Keywords}}
 
+% Responsible: Raphaël
 \section{Introduction} \label{sec:introduction}
+Say what we do, and what we don't.
+Say that we are not competing with the TRECVID guys, as they have all the data, and we have to get it first.
 
-\subsection{Definitions}
+\subsection{Used Terms}
 In this Subsection, we provide necessary definition for the terms that we will use throughout this paper.
 
-\subsection{Social Network}
+\begin{description}
+\item[Social Network]
 A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, for example, share interests and/or activities.
 The boundary between social networks and media platforms is fluid.
 There are media platforms where people can upload their content with optionally content viewers -- in a relation to the original uploader or not -- having the possibility to react in form of comments, or in form of likes or dislikes.
@@ -143,15 +147,17 @@ An example is Facebook.
 Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media platforms.
 An example is the TweetDeck for Twitter application and their integration with TwitPic.
 
-\subsubsection{Media Item}
+\item[Media Item]
 A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network. An example can be a baby photo that someone shares on Facebook. 
 
-\subsubsection{Micropost}
+\item[Micropost]
 A \emph{micropost} is any textual status update that can -- but not has to -- accompany a media item. An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
 
-\subsubsection{Event}
+\item[Event]
 An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points. An event with a defined start (May 15, 2011), however, no concrete end, are the 2011 protests in Spain. An event with both start and end can be a concert.
+\end{description}
 
+% Responsible: Thomas
 \section{Social Networks and Media Items}
 
 \subsection{Media Item Extraction}
@@ -182,6 +188,7 @@ An example is Img.ly.
 \label{fig:DavidSimonds}
 \end{figure}
 
+% Responsible: Thomas
 \section{Implementation Details}
 
 \subsection{Data Structure}
@@ -198,6 +205,8 @@ The resulting set of metadata for a media item can be seen below:
 \end{itemize}
 \autoref{lst:media} shows the sample output of a media collector for the Google+ media provider.
 
+
+% Use a consistent example from one of the experiments
 \begin{lstlisting}[caption={Sample output of the media collector showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
 {
   "Facebook": [
@@ -240,51 +249,84 @@ The resulting set of metadata for a media item can be seen below:
 
 \subsection{Media Item Collectors}
 
-\subsection{Machine Translation}
+\subsection{Media Item Processing}
 
-\subsection{Part of Speech Tagging}
+\subsubsection{Machine Translation}
 
-\subsection{Named Entity Disambiguation}
+\subsubsection{Part of Speech Tagging}
+% Maybe remove this?
 
-\subsection{Irrelevant Media Item Pruning}
+\subsubsection{Named Entity Disambiguation}
+
+\subsubsection{Irrelevant Media Item Pruning}
+De-duplication of photos and videos.
+Detection of photos contained in videos.
+This is not about visual relevance checks => point to future work
 
 \section{Experiments}
+% Responsible: Thomas
 For our experiments, we have taken into account several events that happened on, or were still ongoing the morning of January 10, 2012, CET, and thus the subject of discussion on various social networks.
 We have captured event-related media items and microposts, and made it available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
 
 \subsection{Considered Events}
 In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
+% Add to each event some categorization: political, technical,…
+% Add to each event the duration with start and end if possible.
 
-\subsubsection{Assad Speech}
+\paragraph{Assad Speech}
 On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters\footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}. 
 
-\subsubsection{CES Las Vegas}
-The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
-Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements\footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}.
-
-\subsubsection{Christian Wulff Case}
+\paragraph{Christian Wulff Case}
 Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while governor of Lower Saxony.
 When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad.
 When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action\footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}.
 
-\subsubsection{Cut the Rope Launch}
-On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced\footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}.
-
-\subsubsection{Dixville Notch}
+\paragraph{Dixville Notch}
 Dixville Notch is an unincorporated village in Dixville township of Coos County, New Hampshire, USA, best known in connection with its longstanding middle-of-the-night vote in the U.S. presidential election.
 In a tradition that started in the 1960 election, all the eligible voters in Dixville Notch gather at midnight in the ballroom of The Balsams.
 This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later\footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}.
 
-\subsubsection{Free Mobile Launch}
+\paragraph{Free Mobile Launch}
 Free Mobile is a French mobile broadband company, part of the Iliad group.
 On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel\footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}.
 
-\subsubsection{Ubuntu TV Launch}
+\paragraph{CES Las Vegas}
+The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
+Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements\footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}.
+
+\paragraph{Cut the Rope Launch}
+% Sub-event of CES Las Vegas
+On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced\footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}.
+
+\paragraph{Ubuntu TV Launch}
+% Sub-event of CES Las Vegas
 Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}.
 
-\subsection{Discussion}
+\subsection{Dataset}
+Table with pure stats about
+- number of total media items
+- number of unique media items
+- network distribution of media items 
+- named entities
 
+\subsection{Results}
+- Visual gallery
+- What can we say about each event (networks, diversity,…)
+
+\subsection{Discussion}
+% Ranking factors:
+% Popularity [ReTweets, Likes, +1s, number of views, presence on networks]
+% User diversity [more media from more different users]
+% Media item diversity [more media that looks different]
+% Representation: feature more popular items bigger(?), or longer(?)
+
+% Responsible: Ruben
 \section{Related Work} \label{sec:relatedwork}
+% Separate related work in fields:
+% - media item collection from social networks
+% - event summarization
+% - multimedia visual analysis
+
 \cite{Fabro2012}
 Just Flickr and YouTube.
 Use clustering algorithm for textual content.
@@ -297,11 +339,11 @@ Just Flickr and YouTube, with additional media from event information sources.
 Query with "what", "where", "when", uses "title"+"time" and "geotag"+"time".
 Use machine-tagged media items to find visually similar media items.
 
-\section{Future Work}
+% Responsible: Ruben
+\section{Future Work and Conclusion}
 Privacy and licensing issues.
 Support more social networks and improve Web scrapers.
-
-\section{Conclusion}
+Visual feature relevance scoring
 
 \section{Acknowledgments}
 This work was partially supported by the European Commission under Grant No. 248296 FP7 \mbox{I-SEARCH} project.
