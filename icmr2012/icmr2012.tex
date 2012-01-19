@@ -286,13 +286,18 @@ This is not about visual relevance checks => point to future work
 
 \section{Experiments}
 % Responsible: Thomas
-For our experiments, we have taken into account several events that happened on, or were still ongoing the morning of January 10, 2012, CET, and thus the subject of discussion on various social networks.
-We have captured event-related media items and microposts, and made it available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
+For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
+We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
 
 \subsection{Considered Events}
 In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
+
+\paragraph{SOPA Blackout}
+The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods.
+On January 18, English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
+Other companies, including Google, posted links and images in an effort to raise awareness\footnote{SOPA Blackout: \url{http://sopablackout.org/learnmore/}}.
 
 \paragraph{Assad Speech}
 On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters\footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}. 
@@ -328,6 +333,50 @@ On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the 
 Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}.
 
 \subsection{Dataset}
+During the examination of our data set, we observed that the process of image de-duplication is by no means a solved issue.
+Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
+The same technique, however, can also be used for the de-duplication of photographs~\cite{Pattabhi2011}.
+We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the data set.
+For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
+The main problem with the data set is its diversity.
+It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the SOPA Blackout), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
+A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
+In the context of our data set, this approach is counterproductive, though, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) photo, which, in practice, led to incorrect results.
+
+
+448 images in total
+314.5MB in total
+0.7MB avg. file size
+
+Assad Speech:
+Total: 14 photos
+Strict Duplicates: 0
+Loose Duplicates: 2
+
+Black Out SOPA:
+Total: 58
+
+CES
+Total 58
+
+Wulff
+Total 52
+
+Costa Concordia 
+Total 80
+
+Cut the Rope
+Total 83
+
+Dixville
+27
+
+Free
+57
+
+Ubuntu
+20
+
 Table with pure stats about
 - number of total media items
 - number of unique media items
