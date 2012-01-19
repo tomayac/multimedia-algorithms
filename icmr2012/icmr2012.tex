@@ -333,49 +333,55 @@ On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the 
 Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}.
 
 \subsection{Dataset}
-During the examination of our data set, we observed that the process of image de-duplication is by no means a solved issue.
+During the examination of our dataset, we observed that the process of image de-duplication is by no means a solved issue.
 Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
 The same technique, however, can also be used for the de-duplication of photographs~\cite{Pattabhi2011}.
-We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the data set.
+We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
 For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
-The main problem with the data set is its diversity.
+The main problem with the dataset is its diversity.
 It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the SOPA Blackout), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
-In the context of our data set, this approach is counterproductive, though, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) photo, which, in practice, led to incorrect results.
-
-
-448 images in total
-314.5MB in total
-0.7MB avg. file size
+In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
+In practice, this led to many incorrect results, requiring manual de-duplication with some events.
+Our data set contained 448 images in total, with the average file size being $\sim$0.7MB (314.5MB in total).
 
 Assad Speech:
 Total: 14 photos
+videos 12
 Strict Duplicates: 0
 Loose Duplicates: 2
 
 Black Out SOPA:
 Total: 58
+video 12
 
 CES
-Total 58
+images 58
+video 20
 
 Wulff
-Total 52
+images 52
+video 12
 
 Costa Concordia 
-Total 80
+Images 80
+video 22
 
 Cut the Rope
-Total 83
+Images 83
+Video 21
 
 Dixville
-27
+27 images
+14 videos
 
 Free
-57
+57 images
+10 videos
 
 Ubuntu
-20
+20 images
+20 videos
 
 Table with pure stats about
 - number of total media items
