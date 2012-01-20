@@ -30,6 +30,7 @@
 % todo macro
 \usepackage{color}
 \newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO}: #1{\bf \}}}}
+\newenvironment{Todo}{\color{red}{\par{\bf TODO}}\everypar={\color{red}}{}}{}
 
 % listings and Verbatim environment
 \usepackage{fancyvrb}
@@ -122,11 +123,13 @@ framexbottommargin=-1em,
 \maketitle
 
 \begin{abstract}
+\todo{
 Core contributions:
 Social network and media platform agnostic media item search, and search results alignment.
 Search results semantic enrichment by putting microposts and media items in relation.
 Cross-channel popularity analysis.
 Visual clustering, photos contained in videos.
+}
 \end{abstract}
 
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
@@ -136,8 +139,10 @@ Visual clustering, photos contained in videos.
 
 % Responsible: Raphaël
 \section{Introduction} \label{sec:introduction}
+\todo{
 Say what we do, and what we don't.
 Say that we are not competing with the TRECVID guys, as they have all the data, and we have to get it first.
+}
 
 \subsection{Used Terms}
 In this Subsection, we provide necessary definition for the terms that we will use throughout this paper.
@@ -167,7 +172,9 @@ An \emph{event} is an observable occurrence, phenomenon or an extraordinary occu
 \section{Social Networks \& Media Items}
 
 \subsection{Media Item Extraction}
+\todo{
 Talk about media item recall (ratio items that match the query vs. items that match the query with media items).
+}
 
 \subsection{API Access vs. Web Scraping}
 An \emph{Application Programming Interface (API)} in the sense of Web-based API is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other.
@@ -280,9 +287,11 @@ we were forced to a two-fold approach that involves Web scraping alongside regul
 \subsubsection{Named Entity Disambiguation}
 
 \subsubsection{Irrelevant Media Item Pruning}
+\todo{
 De-duplication of photos and videos.
 Detection of photos contained in videos.
 This is not about visual relevance checks => point to future work
+}
 
 \section{Experiments}
 % Responsible: Thomas
@@ -494,15 +503,20 @@ Our data set contained 448 images in total, with the average file size being $\s
   \caption{\textbf{Ubuntu TV Launch} -- Network Distribution. \textbf{Total images:} 20. \textbf{Total videos:} 20.}
 \end{table*}
 
+\begin{Todo}
 Table with pure stats about
 - number of total media items
 - number of unique media items
 - network distribution of media items 
 - named entities
 
+\end{Todo}
+
 \subsection{Results}
+\todo{
 - Visual gallery
 - What can we say about each event (networks, diversity,…)
+}
 
 \subsection{Discussion}
 % Ranking factors:
@@ -521,26 +535,32 @@ Table with pure stats about
 % Google news top stories
 % Automatic gallery creation
 
+\todo{
 \cite{Fabro2012}
 Just Flickr and YouTube.
 Use clustering algorithm for textual content.
 Duplicate detection via Color and Edge Directivity Descriptor (CEDD).
 Restrict selection to geolocated content and time period.
+}
 
+\todo{
 \cite{Liu2011}
 Objective is to aggregate heterogeneous event information sources using Linked Data principles.
 Just Flickr and YouTube, with additional media from event information sources.
 Query with "what", "where", "when", uses "title"+"time" and "geotag"+"time".
 Use machine-tagged media items to find visually similar media items.
+}
 
 % Responsible: Ruben
 \section{Future Work and Conclusion}
 % - multimedia visual analysis
 % - named entity recognition
 % - emphasize vision
+\todo{
 Privacy and licensing issues.
 Support more social networks and improve Web scrapers.
 Visual feature relevance scoring
+}
 
 \section*{Acknowledgments}
 The research activities as described in this paper were funded by Ghent University, the Interdisciplinary Institute for Broadband Technology (IBBT), the Institute for the Promotion of Innovation by Science and Technology in Flanders (IWT), the Fund for Scientific Research Flanders (FWO Flanders), and the European Union.
