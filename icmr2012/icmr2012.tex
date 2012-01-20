@@ -345,43 +345,154 @@ In the context of our dataset, however, this approach is counterproductive, as a
 In practice, this led to many incorrect results, requiring manual de-duplication with some events.
 Our data set contained 448 images in total, with the average file size being $\sim$0.7MB (314.5MB in total).
 
-Assad Speech:
-Total: 14 photos
-videos 12
-Strict Duplicates: 0
-Loose Duplicates: 2
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \hline
+    Google+ & 3 & 2\\
+    MySpace & 0 & 0\\
+    Facebook & 0 & 0\\
+    Twitter & 2 & 0\\
+    Instagram & 0 & 0\\
+    YouTube & 0 & 10\\
+    Flickr & 10 & 0\\
+    MobyPicture & 0 & 0\\
+    TwitPic & 0 & 0\\
+    \hline
+  \end{tabular}
+  \label{tab:assad}
+  \caption{\textbf{Assad Speech} -- Network Distribution. \textbf{Total images:} 15. \textbf{Total videos:} 12.}
+\end{table*}
 
-Black Out SOPA:
-Total: 58
-video 12
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \hline
+    Google+ & 5 & 0\\
+    MySpace & 0 & 0\\
+    Facebook & 0 & 2\\
+    Twitter & 5 & 0\\
+    Instagram & 20 & 0\\
+    YouTube & 0 & 10\\
+    Flickr & 10 & 0\\
+    MobyPicture & 1 & 0\\
+    TwitPic & 19 & 0\\
+    \hline
+  \end{tabular}
+  \label{tab:sopa}
+  \caption{\textbf{Blackout SOPA} -- Network Distribution. \textbf{Total images:} 60. \textbf{Total videos:} 12.}
+\end{table*}
 
-CES
-images 58
-video 20
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \hline
+    Google+ & 5 & 3\\
+    MySpace & 0 & 0\\
+    Facebook & 0 & 1\\
+    Twitter & 2 & 0\\
+    Instagram & 20 & 0\\
+    YouTube & 0 & 10\\
+    Flickr & 10 & 6\\
+    MobyPicture & 1 & 0\\
+    TwitPic & 20 & 0\\
+    \hline
+  \end{tabular}
+  \label{tab:ces}
+  \caption{\textbf{CES Las Vegas} -- Network Distribution. \textbf{Total images:} 58. \textbf{Total videos:} 20.}
+\end{table*}
 
-Wulff
-images 52
-video 12
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \hline
+    Google+ & 7 & 0\\
+    MySpace & 8 & 0\\
+    Facebook & 0 & 0\\
+    Twitter & 2 & 0\\
+    Instagram & 2 & 0\\
+    YouTube & 0 & 10\\
+    Flickr & 10 & 2\\
+    MobyPicture & 3 & 0\\
+    TwitPic & 20 & 0\\
+    \hline
+  \end{tabular}
+  \label{tab:wulff}
+  \caption{\textbf{Christian Wulff Case} -- Network Distribution. \textbf{Total images:} 52. \textbf{Total videos:} 12.}
+\end{table*}
 
-Costa Concordia 
-Images 80
-video 22
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \hline
+    Google+ & 15 & 1\\
+    MySpace & 10 & 0\\
+    Facebook & 0 & 1\\
+    Twitter & 3 & 0\\
+    Instagram & 20 & 0\\
+    YouTube & 0 & 10\\
+    Flickr & 10 & 10\\
+    MobyPicture & 4 & 0\\
+    TwitPic & 18 & 0\\
+    \hline
+  \end{tabular}
+  \label{tab:concordia}
+  \caption{\textbf{Costa Concordia Disaster} -- Network Distribution. \textbf{Total images:} 80. \textbf{Total videos:} 22.}
+\end{table*}
 
-Cut the Rope
-Images 83
-Video 21
 
-Dixville
-27 images
-14 videos
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Google+ & MySpace & Facebook & Twitter & Instagram & YouTube & Flickr Videos & Flickr Photos & MobyPicture & TwitPic\\
+    \hline
 
-Free
-57 images
-10 videos
+    \hline
+  \end{tabular}
+  \label{tab:assad}
+  \caption{\textbf{Cut the Rope Launch} -- Network Distribution. \textbf{Total images:} 83. \textbf{Total videos:} 21.}
+\end{table*}
 
-Ubuntu
-20 images
-20 videos
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Google+ & MySpace & Facebook & Twitter & Instagram & YouTube & Flickr Videos & Flickr Photos & MobyPicture & TwitPic\\
+    \hline
+
+    \hline
+  \end{tabular}
+  \label{tab:assad}
+  \caption{\textbf{Dixville Notch} -- Network Distribution. \textbf{Total images:} 27. \textbf{Total videos:} 14.}
+\end{table*}
+
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Google+ & MySpace & Facebook & Twitter & Instagram & YouTube & Flickr Videos & Flickr Photos & MobyPicture & TwitPic\\
+    \hline
+
+    \hline
+  \end{tabular}
+  \label{tab:assad}
+  \caption{\textbf{Free Mobile Launch} -- Network Distribution. \textbf{Total images:} 57. \textbf{Total videos:} 10.}
+\end{table*}
+
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Google+ & MySpace & Facebook & Twitter & Instagram & YouTube & Flickr Videos & Flickr Photos & MobyPicture & TwitPic\\
+    \hline
+
+    \hline
+  \end{tabular}
+  \label{tab:assad}
+  \caption{\textbf{Ubuntu TV Launch} -- Network Distribution. \textbf{Total images:} 20. \textbf{Total videos:} 20.}
+\end{table*}
 
 Table with pure stats about
 - number of total media items
