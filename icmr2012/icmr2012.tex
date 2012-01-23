@@ -55,7 +55,7 @@ framexbottommargin=-1em,
 \renewcommand{\url}[1]{\inlinelistingsize\oldurl{#1}}
 
 % superscript for 1st, 2nd, etc.
-%\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 %\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 %\newcommand{\th}[0]{\superscript{th}}
 %\newcommand{\st}[0]{\superscript{st}}
@@ -294,6 +294,7 @@ This is not about visual relevance checks => point to future work
 }
 
 \section{Experiments}
+\label{sec:experiments}
 % Responsible: Thomas
 For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
 We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
@@ -342,6 +343,7 @@ On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the 
 Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}.
 
 \subsection{Dataset}
+\label{subsec:dataset}
 During the examination of our dataset, we observed that the process of image de-duplication is by no means a solved issue.
 Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
 The same technique, however, can also be used for the de-duplication of photographs~\cite{Pattabhi2011}.
@@ -581,6 +583,14 @@ Just Flickr and YouTube, with additional media from event information sources.
 Query with "what", "where", "when", uses "title"+"time" and "geotag"+"time".
 Use machine-tagged media items to find visually similar media items.
 }
+
+Another relevant work area is duplicate and near-duplicate media detection.
+As evident from several experiments and mentioned in \autoref{subsec:dataset},
+providing unique media content to users is still an unsolved problem.
+Work on ordinal measures for image correspondence started in the last decade of the 20\superscript{th}~century~\cite{Bhat}.
+Recently, Chum \emph{et al.} have proposed a near-duplicate image detection method using MinHash and tf--idf weighting~\cite{Chum}.
+A~method for both images and video has been proposed by Yang \emph{et al.}~\cite{Yang}.
+Specialized methods for video exist as well~\cite{Min, Wu}, an excellent survey of which has been conducted by Lian \emph{et al.}~\cite{Lian}.
 
 % Responsible: Ruben
 \section{Future Work and Conclusion}
