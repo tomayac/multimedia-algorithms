@@ -614,12 +614,6 @@ but today's most relevant summaries are produced by user interaction~\cite{Olsen
 
 % Future work
 % Responsible: Ruben
-
-% - multimedia visual analysis
-% - named entity recognition
-% - emphasize vision
-% - visual feature relevance scoring
-
 In this work, the focus has been on extracting visual media and associated textual messages from social networks.
 One possibility for future work would therefore be to pursue our efforts in this direction by supporting more social networks and improving our Web scrapers.
 This could significantly improve the quantity and diversity of considered media and messages,
@@ -631,6 +625,18 @@ This can start with context-independent analyses, such as the content deduplicat
 or visual quality metrics~(sharpness, contrast\ldots) to display original and high-quality media more prominent in results.
 Furthermore, this identification of original content can allow users to choose a~balance between popularity~(favor omnipresent content) and originality~(promote rare content).
 
+Much more potential, however, is expected to reside in context-aware multimedia analysis,
+since many media items contain a~message that is complementary to the text.
+For example, facial detection~\cite{ViolaJones} and eventually recognition~\cite{Wright}
+can signify the presence of specific people in a~media fragment.
+As visual recognition systems grow more powerful, more objects will eventually be recognizable by machines~\cite{Serre},
+which would allow generating \emph{visual hashtags} that describe the content \emph{inside} of the media item.
+This would positively influence the diversity of automated summarizations.
+
+It remains important, however, to view the media and the associated text as a~whole,
+since the text could convey a~sentiment about or an~explanation of the visual data.
+Using named entity recognition~\cite{NERD}, the important semantic elements in the message text can be identified to build an understanding of its meaning.
+The contents of the message could subsequently be used to narrow down the search space for visual factors, enabling cross-fertilization between the textual and visual analysis, which results in effective, context-aware analysis possibilities~\cite{verborgh_mtap_2011}.
 
 \section*{Acknowledgments}
 The research activities as described in this paper were funded by Ghent University, the Interdisciplinary Institute for Broadband Technology (IBBT), the Institute for the Promotion of Innovation by Science and Technology in Flanders (IWT), the Fund for Scientific Research Flanders (FWO Flanders), and the European Union.
