@@ -278,6 +278,7 @@ we were forced to a two-fold approach that involves Web scraping alongside regul
 \end{figure*}
 
 \subsection{Media Item Processing}
+Say we only considered 10 videos and 20 images for scalability reasons.
 
 \subsubsection{Machine Translation}
 
@@ -534,6 +535,46 @@ Our data set contained 448 images in total, with the average file size being $\s
   \end{tabular}
   \label{tab:ubuntutv}
   \caption{\textbf{Ubuntu TV Launch} -- Network Distribution. \textbf{Total images:} 20. \textbf{Total videos:} 20.}
+\end{table*}
+
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Event} & \textbf{Exact Duplicate Images} & \textbf{Loose Duplicate Videos}\\
+    \hline
+    Assad Speech & 0 photos in 0 sequences & 2 photos in 1 sequence\\
+    Blackout SOPA & 0 photos in 0 sequences & 14 photos in 4 sequences\\
+    CES Las Vegas & 0 photos in 0 sequences & 9 photos in 3 sequences\\
+    Christian Wulff Case & 4 photos in 2 sequences & 0 photos in 0 sequences\\
+    Costa Concordia & 0 photos in 0 sequences & 6 photos in 3 sequences\\
+    Cut the Rope Launch & 2 photos in 1 sequence & 15 photos in 5 sequences\\
+    Dixville Notch & 2 photos in 1 sequence & 2 photos in 1 sequence\\
+    Free Mobile Launch & 2 photos in 1 sequence & 16 photos in 7 sequences\\
+    Ubuntu TV Launch & 0 photos in 0 sequences & 5 photos in 1 sequence\\
+    \hline
+  \end{tabular}
+  \label{tab:duplicates}
+  \caption{Exact and loose duplicate images per event.}
+\end{table*}
+
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | }
+    \hline
+    \textbf{Event} & \textbf{Exact Duplicate Videos} & \textbf{Loose Duplicate Videos}\\
+    \hline
+    Assad Speech\footnote{3 videos were no longer available due to account termination by the users (two cases) and video takedown by the user (one case).}\todo{Footnote not shown. Needs manual fix?} & 0 videos in 0 sequences & 2 videos in 1 sequence\\
+    Blackout SOPA & 2 videos in 1 sequence & 0 videos in 0 sequences\\
+    CES Las Vegas & 0 videos in 0 sequences & 2 videos in 1 sequence\\
+    Christian Wulff Case & 0 videos in 0 sequences & 0 videos in 0 sequences\\
+    Costa Concordia & 0 videos in 0 sequences & 0 videos in 0 sequences\\
+    Cut the Rope Launch & 0 videos in 0 sequences & 14 videos in 3 sequences\footnote{6 videos in 2 sequences were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
+    Dixville Notch & 2 videos in 1 sequence & 0 videos in 0 sequences\footnote{1 video was no longer available due to video takedown by the user. 11 videos were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
+    Free Mobile Launch & 0 videos in 0 sequences & 0 videos in 0 sequences\footnote{5 videos were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
+    Ubuntu TV Launch & 4 videos in 1 sequence & 9 videos in 4 sequences\footnote{8 videos in 3 sequences were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
+    \hline
+  \end{tabular}
+  \label{tab:duplicates}
+  \caption{Exact and loose duplicate videos per event.}
 \end{table*}
 
 \begin{Todo}
