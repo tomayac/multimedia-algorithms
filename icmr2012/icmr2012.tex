@@ -88,18 +88,18 @@ framexbottommargin=-1em,
 	\affaddr{08034 Barcelona, Spain,}\\
 	\affaddr{tsteiner@lsi.upc.edu}
 \alignauthor
+\textbf{Ruben Verborgh}\\ 	
+	\affaddr{Ghent University -- IBBT, ELIS}\\
+	\affaddr{Multimedia Lab}\\
+	\affaddr{9050 Ghent, Belgium}\\
+	\affaddr{ruben.verborgh@ugent.be}	
+\and
+\alignauthor
 \textbf{Raphaël Troncy}\\
 	\affaddr{EURECOM}\\
 	\affaddr{06560 Sophia Antipolis}\\
 	\affaddr{France}\\
 	\affaddr{rtroncy@eurecom.fr}
-\and
-\alignauthor
-\textbf{Ruben Verborgh}\\ 	
-	\affaddr{Ghent University -- IBBT, ELIS}\\
-	\affaddr{Multimedia Lab}\\
-	\affaddr{9050 Ghent, Belgium}\\
-	\affaddr{ruben.verborgh@ugent.be}
 \alignauthor
 \textbf{Joaquim Gabarro}\\
 	\affaddr{Univ. Polit\`{e}cnica de Catalunya}\\
@@ -173,30 +173,41 @@ In the following, we introduce a media item support schema for social networks.
   \item[Third order media item support] The social network has no direct support for media items, however, lets users upload media items on third party media platforms and reference them there.
 \end{description}
 
-For this paper, we consider the following social networks and provide a categorization according to the schema defined above.
-\begin{description}
-  \item[Google+] (\url{http://google.com/+}) Second order media item support. Links to media items are returned via the Google+ API.
-  \item[MySpace] (\url{http://myspace.com}) Second order media item support. Links to media items are returned via the MySpace API.
-  \item[Facebook] (\url{http://facebook.com}) Second order media item support. Links to media items are returned via the Facebook API.
-  \item[Twitter] (http://twitter.com) Second order media item support, with many people using it in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.
-  \item[Instagram] (\url{http://instagram.com}) First order media item support. Links to media items are returned via the Instagram API.
-  \item[YouTube] (\url{http://youtube.com}) First order media item support. Links to media items are returned via the YouTube API.
-  \item[Flickr] (\url{http://flickr.com}) First order media item support. Links to media items are returned via the Flickr API.
-  \item[MobyPicture] (\url{http://mobypicture.com}) First order media item support, popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.
-  \item[Twitpic] (\url{http://twitpic.com}) First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
-  \item[img.ly] (\url{http://img.ly}) First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
-  \item[yfrog] (\url{http://yfrog.com}) First order media item support, popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.
-\end{description}
-
-This list of considered social networks is non-exhaustive.
+For this paper, we consider 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} provide a categorization according to the schema defined above.
+The list of considered social networks is non-exhaustive.
 It is compiled by overall social network popularity, technical feasibility, 
 and for media platforms partly based on a study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
 
-\subsection{Media Item Extraction}
-\todo{
-Talk about media item recall (ratio items that match the query vs. items that match the query with media items).
-}
+\begin{table*}[htbp]
+  \begin{tabular}{ | c | c | c | p{8cm} |}
+    \hline
+    \textbf{Social Network} & \textbf{URL} & \textbf{Category} & \textbf{Comment}\\
+    \hline
+	Google+ & \url{http://google.com/+} & Second order & Links to media items are returned via the Google+ API.\\\hline
+	MySpace & \url{http://myspace.com} & Second order & Links to media items are returned via the MySpace API.\\\hline
+	Facebook & \url{http://facebook.com} & Second order & Links to media items are returned via the Facebook API.\\\hline
+	Twitter & \url{http://twitter.com} & Second order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
+	Instagram & \url{http://instagram.com} & First order & Links to media items are returned via the Instagram API.\\\hline
+	YouTube & \url{http://youtube.com} & First order & Links to media items are returned via the YouTube API.\\\hline
+	Flickr & \url{http://flickr.com} & First order & Links to media items are returned via the Flickr API.\\\hline
+	MobyPicture & \url{http://mobypicture.com} & First order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
+	Twitpic & \url{http://twitpic.com} & First order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	img.ly & \url{http://img.ly} & First order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	yfrog & \url{http://yfrog.com} & First order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
+	\hline
+  \end{tabular}
+  \label{tab:networks}
+  \caption{Considered social networks and categorization according to media item support schema.}
+\end{table*}
 
+\subsection{Media Item Extraction}
+Social networks offer a search functionality that allows their content to be queried based on search terms,
+with or without more advanced search operators like exclusion, inclusion, phrase search, etc.
+Each social network has special constraints with regards to supported search operators,
+filtering options (e.g., time), or the searchable period.
+In the context of this paper, we use the term \emph{media item extraction} to describe the process of leveraging search functionalities of social networks to find references to media items,
+which allows for storing those media items in binary form,
+i.e., independent from the originating social networks.
 
 \subsection{API Access vs. Web Scraping}
 An \emph{Application Programming Interface (API)} in the sense of Web-based API is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other.
