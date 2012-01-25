@@ -6,7 +6,7 @@
 \usepackage[activate=compatibility]{microtype}
 
 % autoref command
-\usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+\usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black, draft]{hyperref}
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
 \def\subfloatautorefname{Subfigure}
@@ -73,6 +73,7 @@ framexbottommargin=-1em,
 
 % avoid LaTeX float errors
 \usepackage{morefloats}
+%\DeclareCaptionType{copyrightbox}
 
 \begin{document}
 
@@ -315,6 +316,8 @@ For this paper, we have semi-automatically deduplicated the images with the aid 
 While in future the obvious objective is to do this automatically, with this work,
 we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
 whose special requirements we describe in \autoref{subsec:dataset}.
+
+\paragraph{Image Deduplication}
 The image duplication software we used allows for different algorithms to be used.
 We have applied strict pixel-per-pixel comparison for the detection of \emph{exact duplicates}, i.e.,
 we do \emph{not} count a resized version of an image as exact duplicate.
@@ -327,7 +330,22 @@ For both similarity comparison methods, a varying threshold was used.
 In our experiments, we could not make out a clear winning setting for all events.
 Rather, even for the same event,
 only a combination of both similarity comparison methods led to satisfying results,
-i.e., a set of images showing loosely the same, as judged by a human classifier.
+i.e., a set of images showing loosely the same, as judged by human judgment.
+We would like to highlight, however, that all detected loosely similar images were detected algorithmically,
+i.e., the only human intervention was at the algorithm's parameters,
+which is an important fact for the objective of fully automating the deduplication process.
+
+\paragraph{Video Deduplication}
+We have deduplicated the videos in the dataset by first splitting them in shots~\cite{CrowdsourcingEvent}, and then manually comparing the videos shot-wise.
+We considered \emph{exact duplicates} the videos that shared the same shots, and the same length.
+For \emph{loose duplicates}, we entirely manually decided whether the videos showed loosely the same based on human judgment.
+We do, at this point, not claim that for loosely similar video detection our results are algorithmically reproducible.
+
+\paragraph{Images Contained in Videos}
+While for this paper we did not detect images contained in videos,
+the task consists of comparing relevant frames of the video with a target image.
+Especially with the focus on event summarization,
+the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
 
 \todo{
 Deduplication of photos and videos.
@@ -594,7 +612,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Ubuntu TV Launch & 0 photos in 0 sequences & 5 photos in 1 sequence\\
     \hline
   \end{tabular}
-  \label{tab:duplicates}
+  \label{tab:duplicateimages}
   \caption{Exact and loose duplicate images per event.}
 \end{table*}
 
@@ -614,7 +632,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Ubuntu TV Launch & 4 videos in 1 sequence & 9 videos in 4 sequences\footnote{8 videos in 3 sequences were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
     \hline
   \end{tabular}
-  \label{tab:duplicates}
+  \label{tab:duplicatevideos}
   \caption{Exact and loose duplicate videos per event.}
 \end{table*}
 
@@ -897,7 +915,7 @@ Methods that exploit semantic information~(\emph{e.g.}, \cite{Chen}) will likely
 but today's most relevant summaries are produced by user interaction~\cite{Olsen}.
 
 % Temporarily added to simplify writing and reading Future Work section
-\clearpage
+%\clearpage
 
 \section{Conclusion and Future Work}
 % Conclusion
