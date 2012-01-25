@@ -71,6 +71,9 @@ framexbottommargin=-1em,
 \newcommand{\newstrip}{\\[1mm]}
 \newenvironment{thumbsequence}{}{\makebox[4mm]{}}
 
+% avoid LaTeX float errors
+\usepackage{morefloats}
+
 \begin{document}
 
 \title{Getting the Bigger Picture -- Extracting Media Items Covering Events from Multiple Social Networks}
@@ -730,8 +733,6 @@ Our data set contained 448 images in total, with the average file size being $\s
 	\label{fig:concordia}
 \end{centering}
 \end{figure*}
-
-\clearpage
 
 \begin{figure*}
 \begin{centering}
