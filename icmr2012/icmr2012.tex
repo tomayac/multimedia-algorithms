@@ -315,6 +315,19 @@ For this paper, we have semi-automatically deduplicated the images with the aid 
 While in future the obvious objective is to do this automatically, with this work,
 we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
 whose special requirements we describe in \autoref{subsec:dataset}.
+The image duplication software we used allows for different algorithms to be used.
+We have applied strict pixel-per-pixel comparison for the detection of \emph{exact duplicates}, i.e.,
+we do \emph{not} count a resized version of an image as exact duplicate.
+Based on bitmap- or histogram-based similarity comparison methods, we introduce the on purpose vague term of \emph{loose duplicate}.
+Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
+For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges.
+Histogram similarity is based on comparing histograms of size-reduced bitmaps.
+This method helps find similar photos despite differences in color saturation and lighting.
+For both similarity comparison methods, a varying threshold was used.
+In our experiments, we could not make out a clear winning setting for all events.
+Rather, even for the same event,
+only a combination of both similarity comparison methods led to satisfying results,
+i.e., a set of images showing loosely the same, as judged by a human classifier.
 
 \todo{
 Deduplication of photos and videos.
