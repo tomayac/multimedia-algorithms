@@ -122,7 +122,7 @@ Core contributions:
 Social network and media platform agnostic media item search, and search results alignment.
 Search results semantic enrichment by putting microposts and media items in relation.
 Cross-channel popularity analysis.
-Visual clustering, photos contained in videos.
+Visual clustering, images contained in videos.
 }
 \end{abstract}
 
@@ -150,7 +150,7 @@ An example is YouTube.
 There are social networks where people can update their status, post links to stories, or upload their content with necessarily viewers -- standing in a relation or not -- having the option to react.
 An example is Facebook.
 Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media platforms.
-An example is the TweetDeck for Twitter application and their integration with TwitPic.
+An example is the TweetDeck for Twitter application and their integration with Twitpic.
 
 \item[Media Item]
 A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network. An example can be a baby photo that someone shares on Facebook. 
@@ -175,17 +175,17 @@ In the following, we introduce a media item support schema for social networks.
 
 For this paper, we consider the following social networks and provide a categorization according to the schema defined above.
 \begin{description}
-  \item[Google+] Second order media item support. Links to media items are returned via the Google+ API.
-  \item[MySpace] Second order media item support. Links to media items are returned via the MySpace API.
-  \item[Facebook] Second order media item support. Links to media items are returned via the Facebook API.
-  \item[Twitter] Second order media item support, with many people using it in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.
-  \item[Instagram] First order media item support. Links to media items are returned via the Instagram API.
-  \item[YouTube] First order media item support. Links to media items are returned via the YouTube API.
-  \item[Flickr] First order media item support. Links to media items are returned via the Flickr API.
-  \item[MobyPicture] First order media item support, popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.
-  \item[TwitPic] First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
-  \item[img.ly] First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
-  \item[yfrog] First order media item support, popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.
+  \item[Google+] (\url{http://google.com/+}) Second order media item support. Links to media items are returned via the Google+ API.
+  \item[MySpace] (\url{http://myspace.com}) Second order media item support. Links to media items are returned via the MySpace API.
+  \item[Facebook] (\url{http://facebook.com}) Second order media item support. Links to media items are returned via the Facebook API.
+  \item[Twitter] (http://twitter.com) Second order media item support, with many people using it in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.
+  \item[Instagram] (\url{http://instagram.com}) First order media item support. Links to media items are returned via the Instagram API.
+  \item[YouTube] (\url{http://youtube.com}) First order media item support. Links to media items are returned via the YouTube API.
+  \item[Flickr] (\url{http://flickr.com}) First order media item support. Links to media items are returned via the Flickr API.
+  \item[MobyPicture] (\url{http://mobypicture.com}) First order media item support, popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.
+  \item[Twitpic] (\url{http://twitpic.com}) First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
+  \item[img.ly] (\url{http://img.ly}) First order media item support, popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.
+  \item[yfrog] (\url{http://yfrog.com}) First order media item support, popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.
 \end{description}
 
 This list of considered social networks is non-exhaustive.
@@ -287,7 +287,7 @@ The resulting set of metadata for a media item can be seen below:
 
 \subsection{Media Item Collectors}
 In the context of this paper, we have developed media item collectors for the social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr,
-with additional support for the media platforms img.ly, yfrog, MobyPicture, and TwitPic.
+with additional support for the media platforms img.ly, yfrog, MobyPicture, and Twitpic.
 As can be seen in \autoref{fig:architecture},
 due to the lack of search APIs on some of the involved services,
 we were forced to a two-fold approach that involves Web scraping alongside regular API calls.
@@ -325,7 +325,7 @@ Based on bitmap- or histogram-based similarity comparison methods, we introduce 
 Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
 For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges.
 Histogram similarity is based on comparing histograms of size-reduced bitmaps.
-This method helps find similar photos despite differences in color saturation and lighting.
+This method helps find similar images despite differences in color saturation and lighting.
 For both similarity comparison methods, a varying threshold was used.
 In our experiments, we could not make out a clear winning setting for all events.
 Rather, even for the same event,
@@ -348,8 +348,8 @@ Especially with the focus on event summarization,
 the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
 
 \todo{
-Deduplication of photos and videos.
-Detection of photos contained in videos.
+Deduplication of images and videos.
+Detection of images contained in videos.
 This is not about visual relevance checks => point to related work
 }
 
@@ -429,7 +429,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 0\\
     MobyPicture & 0 & 0\\
-    TwitPic & 0 & 0\\
+    Twitpic & 0 & 0\\
     \hline
   \end{tabular}
   \label{tab:assad}
@@ -449,7 +449,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 0\\
     MobyPicture & 1 & 0\\
-    TwitPic & 19 & 0\\
+    Twitpic & 19 & 0\\
     \hline
   \end{tabular}
   \label{tab:sopa}
@@ -469,7 +469,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 6\\
     MobyPicture & 1 & 0\\
-    TwitPic & 20 & 0\\
+    Twitpic & 20 & 0\\
     \hline
   \end{tabular}
   \label{tab:ces}
@@ -489,7 +489,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 2\\
     MobyPicture & 3 & 0\\
-    TwitPic & 20 & 0\\
+    Twitpic & 20 & 0\\
     \hline
   \end{tabular}
   \label{tab:wulff}
@@ -509,7 +509,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 10\\
     MobyPicture & 4 & 0\\
-    TwitPic & 18 & 0\\
+    Twitpic & 18 & 0\\
     \hline
   \end{tabular}
   \label{tab:concordia}
@@ -529,7 +529,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 10\\ 
     MobyPicture & 20 & 0\\
-    TwitPic & 20 & 0\\
+    Twitpic & 20 & 0\\
     \hline
   \end{tabular}
   \label{tab:rope}
@@ -549,7 +549,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 3\\
     Flickr & 10 & 10\\ 
     MobyPicture & 0 & 0\\
-    TwitPic & 1 & 0\\
+    Twitpic & 1 & 0\\
     \hline
   \end{tabular}
   \label{tab:dixville}
@@ -569,7 +569,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 0\\ 
     MobyPicture & 2 & 0\\
-    TwitPic & 20 & 0\\
+    Twitpic & 20 & 0\\
     \hline
   \end{tabular}
   \label{tab:freemobile}
@@ -589,7 +589,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     YouTube & 0 & 10\\
     Flickr & 10 & 9\\ 
     MobyPicture & 2 & 0\\
-    TwitPic & 2 & 0\\
+    Twitpic & 2 & 0\\
     \hline
   \end{tabular}
   \label{tab:ubuntutv}
@@ -601,15 +601,15 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     \hline
     \textbf{Event} & \textbf{Exact Duplicate Images} & \textbf{Loose Duplicate Images}\\
     \hline
-    Assad Speech & 0 photos in 0 sequences & 2 photos in 1 sequence\\
-    Blackout SOPA & 0 photos in 0 sequences & 14 photos in 4 sequences\\
-    CES Las Vegas & 0 photos in 0 sequences & 9 photos in 3 sequences\\
-    Christian Wulff Case & 4 photos in 2 sequences & 0 photos in 0 sequences\\
-    Costa Concordia & 0 photos in 0 sequences & 6 photos in 3 sequences\\
-    Cut the Rope Launch & 2 photos in 1 sequence & 15 photos in 5 sequences\\
-    Dixville Notch & 2 photos in 1 sequence & 2 photos in 1 sequence\\
-    Free Mobile Launch & 2 photos in 1 sequence & 16 photos in 7 sequences\\
-    Ubuntu TV Launch & 0 photos in 0 sequences & 5 photos in 1 sequence\\
+    Assad Speech & 0 images in 0 sequences & 2 images in 1 sequence\\
+    Blackout SOPA & 0 images in 0 sequences & 14 images in 4 sequences\\
+    CES Las Vegas & 0 images in 0 sequences & 9 images in 3 sequences\\
+    Christian Wulff Case & 4 images in 2 sequences & 0 images in 0 sequences\\
+    Costa Concordia & 0 images in 0 sequences & 6 images in 3 sequences\\
+    Cut the Rope Launch & 2 images in 1 sequence & 15 images in 5 sequences\\
+    Dixville Notch & 2 images in 1 sequence & 2 images in 1 sequence\\
+    Free Mobile Launch & 2 images in 1 sequence & 16 images in 7 sequences\\
+    Ubuntu TV Launch & 0 images in 0 sequences & 5 images in 1 sequence\\
     \hline
   \end{tabular}
   \label{tab:duplicateimages}
