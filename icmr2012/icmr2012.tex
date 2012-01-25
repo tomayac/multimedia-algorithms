@@ -66,20 +66,10 @@ framexbottommargin=-1em,
 \definecolor{grey}{RGB}{130,130,130}
 \newcommand{\linewrap}{\raisebox{-.6ex}{\textcolor{grey}{$\hookleftarrow$}}}
 
-% more pleasing quote environment
-\usepackage{tikz}
-\newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-7pt,yshift=1pt]
-     \node (OQ) {\fontfamily{fxl}\fontsize{16}{16}\selectfont``};\kern0pt}
-\newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=2pt,yshift=-4.5pt]
-     \node (CQ) {\fontfamily{fxl}\fontsize{16}{16}\selectfont''};}
-\renewenvironment{quote}%
-{\setlength{\parindent}{1cm}\par\openquote}
-{\closequote\vspace{-4.5pt}
-}
-
-\makeatletter
-\let\@copyrightspace\relax
-\makeatother
+% thumbnail environment
+\newcommand{\thumbheight}{16mm}
+\newcommand{\newstrip}{\\[1mm]}
+\newenvironment{thumbsequence}{}{\makebox[4mm]{}}
 
 \begin{document}
 
@@ -577,6 +567,217 @@ Our data set contained 448 images in total, with the average file size being $\s
   \caption{Exact and loose duplicate videos per event.}
 \end{table*}
 
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate2.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate4.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate5.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate6.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate7.png}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate8.jpg}
+	\end{thumbsequence}
+	\newstrip
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate9.png}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate10.png}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate11.jpg}
+		\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate12.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\setlength\fboxsep{0pt}
+		\setlength\fboxrule{0.1mm}
+		\fbox{\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate13.png}}
+		\fbox{\includegraphics[height=\thumbheight]{resources/sopa/looseduplicate14.jpg}}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:sopa}
+\end{centering}
+\end{figure*}
+
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/assad/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/assad/looseduplicate2.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:assad}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate2.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate4.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:wulff}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate2.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/dixville/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/dixville/looseduplicate2.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:dixville}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/exactduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/exactduplicate2.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate1.png}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate2.png}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate5.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate6.jpg}
+	\end{thumbsequence}
+	\newstrip
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate7.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate8.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate9.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate10.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate11.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate4.jpg}
+	\end{thumbsequence}
+	\newstrip
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate12.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate13.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate14.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate15.jpg}
+		\includegraphics[height=\thumbheight]{resources/free/looseduplicate16.png}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:freemobile}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate2.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate4.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate5.jpg}
+		\includegraphics[height=\thumbheight]{resources/concordia/looseduplicate6.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:concordia}
+\end{centering}
+\end{figure*}
+
+\clearpage
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate2.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate4.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate5.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate6.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate7.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate8.jpg}
+		\includegraphics[height=\thumbheight]{resources/ces/looseduplicate9.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:ces}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate2.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate2.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate3.png}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate4.png}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate5.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate6.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate7.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate8.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate9.jpg}
+	\end{thumbsequence}
+	\newstrip
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate12.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate13.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate14.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate15.jpg}
+	\end{thumbsequence}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate10.jpg}
+		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate11.jpg}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:rope}
+\end{centering}
+\end{figure*}
+
+\begin{figure*}
+\begin{centering}
+	\begin{thumbsequence}
+		\includegraphics[height=\thumbheight]{resources/ubuntu/looseduplicate1.jpg}
+		\includegraphics[height=\thumbheight]{resources/ubuntu/looseduplicate2.jpg}
+		\includegraphics[height=\thumbheight]{resources/ubuntu/looseduplicate3.jpg}
+		\includegraphics[height=\thumbheight]{resources/ubuntu/looseduplicate4.jpg}
+		\includegraphics[height=\thumbheight]{resources/ubuntu/looseduplicate5.png}
+	\end{thumbsequence}
+	\caption{\todo{}}
+	\label{fig:ubuntutv}
+\end{centering}
+\end{figure*}
+
 \begin{Todo}
 Table with pure stats about
 - number of total media items
@@ -654,7 +855,7 @@ but today's most relevant summaries are produced by user interaction~\cite{Olsen
 \todo{Write conclusion}
 
 % Future work
-% Responsible: Ruben
+% Responsible: Ruben 
 In this work, the focus has been on extracting visual media and associated textual messages from social networks.
 One possibility for future work would therefore be to pursue our efforts in this direction by supporting more social networks and improving our Web scrapers.
 This could significantly improve the quantity and diversity of considered media and messages,
