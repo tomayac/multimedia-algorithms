@@ -308,9 +308,16 @@ Say we only considered 10 videos and 20 images for scalability reasons.
 
 \subsubsection{Named Entity Disambiguation}
 
-\subsubsection{Irrelevant Media Item Pruning}
+\subsubsection{Media Item Deduplication}
+Some of our long-term goals is to detect the popularity of shared media items across social networks.
+This task requires the deduplication of extracted media items.
+For this paper, we have semi-automatically deduplicated the images with the aid of a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
+While in future the obvious objective is to do this automatically, with this work,
+we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
+whose special requirements we describe in \autoref{subsec:dataset}.
+
 \todo{
-De-duplication of photos and videos.
+Deduplication of photos and videos.
 Detection of photos contained in videos.
 This is not about visual relevance checks => point to related work
 }
@@ -366,17 +373,17 @@ Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the U
 
 \subsection{Dataset}
 \label{subsec:dataset}
-During the examination of our dataset, we observed that the process of image de-duplication is by no means a solved issue.
+During the examination of our dataset, we observed that the process of image deduplication is by no means a solved issue.
 Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
-The same technique, however, can also be used for the de-duplication of photographs~\cite{Pattabhi2011}.
+The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi2011}.
 We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
 For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
 The main problem with the dataset is its diversity.
 It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the SOPA Blackout), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
-In practice, this led to many incorrect results, requiring manual de-duplication with some events.
-Our data set contained 448 images in total, with the average file size being $\sim$0.7MB (314.5MB in total).
+In practice, this led to many incorrect results, requiring manual deduplication with some events.
+Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
 
 \begin{table*}[htbp]
   \begin{tabular}{ | c | c | c | }
