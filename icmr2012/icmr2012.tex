@@ -32,6 +32,14 @@
 \newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO}: #1{\bf \}}}}
 \newenvironment{Todo}{\color{red}{\par{\bf TODO}}\everypar={\color{red}}{}}{}
 
+% superscript for 1st, 2nd, etc.
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\newcommand{\th}[0]{\superscript{th}}
+\newcommand{\st}[0]{\superscript{st}}
+\newcommand{\nd}[0]{\superscript{nd}}
+\newcommand{\rd}[0]{\superscript{rd}}
+
 % listings and Verbatim environment
 \usepackage{fancyvrb}
 \usepackage{relsize}
@@ -122,7 +130,7 @@ Core contributions:
 Social network and media platform agnostic media item search, and search results alignment.
 Search results semantic enrichment by putting microposts and media items in relation.
 Cross-channel popularity analysis.
-Visual clustering, images contained in videos.
+Visual clustering of images and videos.
 }
 \end{abstract}
 
@@ -139,61 +147,81 @@ Say that we are not competing with the TRECVID guys, as they have all the data, 
 }
 
 \subsection{Used Terms}
-In this Subsection, we provide necessary definition for the terms that we will use throughout this paper.
+In this Subsection, we provide necessary definitions for the terms that we will use throughout this paper.
 
 \begin{description}
 \item[Social Network]
-A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, for example, share interests and/or activities.
+A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, e.g., share interests and/or activities.
 The boundary between social networks and media platforms is fluid.
-There are media platforms where people can upload their content with optionally viewers of that content -- in a relation to the original uploader or not -- having the possibility to react in form of comments, or in form of likes or dislikes.
+There are media platforms where people can upload their content with optionally viewers of that content,
+standing in a relation to the original uploader or not,
+having the possibility to react in form of comments, or in form of likes or dislikes.
 An example is YouTube.
-There are social networks where people can update their status, post links to stories, or upload their content with necessarily viewers -- standing in a relation or not -- having the option to react.
+There are social networks where people can update their status, post links to stories,
+or upload their content with necessarily viewers,
+standing in a relation to the uploader or not,
+having the option to react.
 An example is Facebook.
-Finally, there are hybrid forms, where social networks -- typically via third party applications -- integrate with media platforms.
+Finally, there are hybrid forms, where social networks,
+typically via third party applications,
+integrate with media platforms.
 An example is the TweetDeck for Twitter application and their integration with Twitpic.
 
-\item[Media Item]
-A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network. An example can be a baby photo that someone shares on Facebook. 
+\paragraph{Media Item}
+A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network.
+An example can be a baby photo that a fresh parent shares on Facebook. 
 
-\item[Micropost]
-A \emph{micropost} is any textual status update that can -- but not has to -- accompany a media item. An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
+\paragraph{Micropost}
+A \emph{micropost} is any textual status update that can,
+but not has to,
+accompany a media item.
+An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
 
-\item[Event]
-An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points. An event with a defined start (May 15, 2011), however, no concrete end, are the 2011 protests in Spain. An event with both start and end can be a concert.
-\end{description}
+\paragraph{Event}
+An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
+An event with a defined start (May 15, 2011), however,
+no concrete end, are the 2011 protests in Spain.
+An event with both start and end can be a concert.
 
 % Responsible: Thomas
 \section{Social Networks \& Media Items}
 Media items play a lively role in all social networks.
 Different social networks have a different level of support for media items.
 In the following, we introduce a media item support schema for social networks.
-\begin{description}
-  \item[First order media item support] The social network is centered on media items. Posting on the social network requires inclusion of a media item.
-  \item[Second order media item support] The social network lets users upload media items, however, posting is also possible without the inclusion of a media item.
-  \item[Third order media item support] The social network has no direct support for media items, however, lets users upload media items on third party media platforms and reference them there.
-\end{description}
 
-For this paper, we consider 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} provide a categorization according to the schema defined above.
+\paragraph{1\st Order Media Item Support}
+The social network is centered on media items.
+Posting on the social network requires inclusion of a media item.
+
+\paragraph{2\nd Order Media Item Support}
+The social network lets users upload media items, however,
+posting is also possible without the inclusion of a media item.
+
+\paragraph{3\rd Order Media Item Support}
+The social network has no direct support for media items, however,
+lets users upload media items on third party media platforms and reference them there.
+
+For this paper, we considered 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} provide a categorization according to the schema defined above.
 The list of considered social networks is non-exhaustive.
-It is compiled by overall social network popularity, technical feasibility, 
-and for media platforms partly based on a study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
+Inclusion criteria were overall social network popularity, technical feasibility, 
+and for media platforms, a study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
 
 \begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | p{8cm} |}
+  \begin{tabular}{ | l | l | l | p{8cm} |}
     \hline
     \textbf{Social Network} & \textbf{URL} & \textbf{Category} & \textbf{Comment}\\
     \hline
-	Google+ & \url{http://google.com/+} & Second order & Links to media items are returned via the Google+ API.\\\hline
-	MySpace & \url{http://myspace.com} & Second order & Links to media items are returned via the MySpace API.\\\hline
-	Facebook & \url{http://facebook.com} & Second order & Links to media items are returned via the Facebook API.\\\hline
-	Twitter & \url{http://twitter.com} & Second order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
-	Instagram & \url{http://instagram.com} & First order & Links to media items are returned via the Instagram API.\\\hline
-	YouTube & \url{http://youtube.com} & First order & Links to media items are returned via the YouTube API.\\\hline
-	Flickr & \url{http://flickr.com} & First order & Links to media items are returned via the Flickr API.\\\hline
-	MobyPicture & \url{http://mobypicture.com} & First order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
-	Twitpic & \url{http://twitpic.com} & First order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	img.ly & \url{http://img.ly} & First order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	yfrog & \url{http://yfrog.com} & First order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
+	Google+ & \url{http://google.com/+} & 2\nd order & Links to media items are returned via the Google+ API.\\\hline
+	MySpace & \url{http://myspace.com} & 2\nd order & Links to media items are returned via the MySpace API.\\\hline
+	Facebook & \url{http://facebook.com} & 2\nd order & Links to media items are returned via the Facebook API.\\\hline
+	Twitter & \url{http://twitter.com} & 2\nd order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
+	Instagram & \url{http://instagram.com} & 1\st order & Links to media items are returned via the Instagram API.\\\hline
+	YouTube & \url{http://youtube.com} & 1\st order & Links to media items are returned via the YouTube API.\\\hline
+	Flickr & \url{http://flickr.com} & 1\st order & Links to media items are returned via the Flickr API.\\\hline
+	MobyPicture & \url{http://mobypicture.com} & 1\st order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
+	Twitpic & \url{http://twitpic.com} & 1\st order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	img.ly & \url{http://img.ly} & 1\st order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	yfrog & \url{http://yfrog.com} & 1\st order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
 	\hline
   \end{tabular}
   \label{tab:networks}
@@ -237,12 +265,14 @@ An example is Img.ly.
 % Responsible: Thomas
 \section{Implementation Details}
 In this Section, first, we introduce the common data format used consistently between all considered social networks,
-second, we explain the architecture for different kinds of media item collectors,
+second, we explain the architecture for different kinds of media item extractors,
 and third, show the steps in the media item processing chain.
 
 \subsection{Data Format}
-Our approach being agnostic of concrete social networks, we offer a common alignment schema for all considered social networks, which allows us to treat each social network's data the same way.
+As approach is agnostic of concrete social networks, we offer a common alignment schema for all considered social networks,
+which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
+
 \begin{itemize}
   \item	\textbf{Media URL}, the deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
   \item \textbf{Type}, the type of the media item, one out of ``photo'' or ``video''.
@@ -252,11 +282,11 @@ The resulting set of metadata for a media item can be seen below:
   \item \textbf{User}, the URL of the author of the micropost, e.g., \url{http://www.flickr.com/photos/96628098@N00/}.
   \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
 \end{itemize}
-\autoref{lst:media} shows the sample output of a media collector for the Google+ media provider.
 
+\autoref{lst:media} shows the sample output of a media extractor for the social network Google+.
 
 % Use a consistent example from one of the experiments
-\begin{lstlisting}[caption={Sample output of the media collector showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
+\begin{lstlisting}[caption={Sample output of the media exctractor showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
 {
   "Facebook": [
     {
@@ -296,8 +326,8 @@ The resulting set of metadata for a media item can be seen below:
 }
 \end{lstlisting}
 
-\subsection{Media Item Collectors}
-In the context of this paper, we have developed media item collectors for the social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr,
+\subsection{Media Item Extractors}
+In the context of this paper, we have developed media item extractors for the social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr,
 with additional support for the media platforms img.ly, yfrog, MobyPicture, and Twitpic.
 As can be seen in \autoref{fig:architecture},
 due to the lack of search APIs on some of the involved services,
@@ -306,7 +336,7 @@ we were forced to a two-fold approach that involves Web scraping alongside regul
 \begin{figure*}
 \centering
 \includegraphics[width=1.0\linewidth]{./resources/architecture.pdf}
-\caption{The media item collector architectural overview shows the hybrid approach to the media item extraction process using a combination of API access and Web scraping.}
+\caption{The media item extractor architectural overview shows the hybrid approach to the media item extraction process using a combination of API access and Web scraping.}
 \label{fig:architecture}
 \end{figure*}
 
@@ -887,22 +917,6 @@ Table with pure stats about
 % Highlight what Twitter is doing (most popular image/video)
 % Google news top stories
 % Automatic gallery creation
-
-\begin{comment}
-\cite{Fabro2012}
-Just Flickr and YouTube.
-Use clustering algorithm for textual content.
-Duplicate detection via Color and Edge Directivity Descriptor (CEDD).
-Restrict selection to geolocated content and time period.
-\end{comment}
-
-\begin{comment}
-\cite{Liu2011}
-Objective is to aggregate heterogeneous event information sources using Linked Data principles.
-Just Flickr and YouTube, with additional media from event information sources.
-Query with "what", "where", "when", uses "title"+"time" and "geotag"+"time".
-Use machine-tagged media items to find visually similar media items.
-\end{comment}
 
 A~first category of related work includes research that aims to collect, align, and organize media for trends or events.
 Liu \emph{et al.} combine semantic inferencing and visual analysis to automatically find media to illustrate events~\cite{Liu2011}.
