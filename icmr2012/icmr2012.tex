@@ -141,21 +141,17 @@ Say that we are not competing with the TRECVID guys, as they have all the data, 
 In this Subsection, we provide necessary definitions for the terms that we will use throughout this paper.
 
 \paragraph{Social Network}
-A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, e.g., share interests and/or activities.
+A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting social relations among people who share interests and/or activities.
 The boundary between social networks and media platforms is fluid.
-There are media platforms where people can upload their content with optionally viewers of that content,
-standing in a relation to the original uploader or not,
-having the possibility to react in form of comments, or in form of likes or dislikes.
-An example is YouTube.
-There are social networks where people can update their status, post links to stories,
-or upload their content with necessarily viewers,
-standing in a relation to the uploader or not,
-having the option to react.
-An example is Facebook.
-Finally, there are hybrid forms, where social networks,
+Several media platforms~(e.g., YouTube) allow people to upload content,
+and optionally allow other people, possibly related to the uploader,
+to react to this content in the form of comments, likes, dislikes, and so on.
+On other social networks~(e.g., Facebook), people can update their status, post links to stories,
+upload content and also give viewers the option to react.
+Finally, there are hybrid forms~(e.g., TweetDeck for Twitter using Twitpic) where social networks,
 typically via third party applications,
 integrate with media platforms.
-An example is the TweetDeck for Twitter application and their integration with Twitpic.
+%RV: I tried to clarify the text a little, but it's still not clear enough to me. I think the first and second types also need a name to distinguish the three forms from each other.
 
 \paragraph{Media Item}
 A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network.
@@ -166,19 +162,24 @@ A \emph{micropost} is any textual status update that can,
 but not has to,
 accompany a media item.
 An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
+%RV: aha! Could we talk about media items and microposts first, and then describe the different social network types in function of them?
+%RV: the quote could make the explanation confusing: are Microposts maybe always things that people just share? I would have a more personal message like "look at our beautiful newborn" or even describing this message instead of quoting it.
 
 \paragraph{Event}
 An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
-An event with a defined start (May 15, 2011), however,
-no concrete end, are the 2011 protests in Spain.
+An event with a defined start (May 15, 2011) but without a concrete end
+are the 2011 protests in Spain.
 An event with both start and end can be a concert.
+%RV: I don't know if the Spain protests are known enough. Maybe Occupy Wallstreet?
+% Also, this is the first time you give a concrete example.
 
 % Responsible: Thomas
 \section{Social Networks \& Media Items}
-Media items play a lively role in all social networks.
-Different social networks have a different level of support for media items.
+Media items play a lively role in all social networks,
+all of which have a different level of support for media items.
 In the following, we introduce a media item support schema for social networks.
 
+%RV: I would decapitalize and possibly add a hyphen (adjective): First-order media item support or even First-order support. Drawback: numerals are gone.
 \paragraph{1\st Order Media Item Support}
 The social network is centered on media items.
 Posting on the social network requires inclusion of a media item.
@@ -192,10 +193,11 @@ The social network has no direct support for media items, however,
 lets users upload media items on third party media platforms and reference them there.
 
 For this paper, we considered 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} provide a categorization according to the schema defined above.
-The list of considered social networks is non-exhaustive.
-Inclusion criteria were overall social network popularity, technical feasibility, 
-and for media platforms, a study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
+Therefore, the list of considered networks and platforms is necessarily non-exhaustive.
+We included those social networks with sufficient market share and popularity, offering mature API capabilities.
+For media platforms, the inclusion criterium was guided by a~study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
 
+%RV: a space between 2nd and order is missing. However, I did not correct, since it might become a hyphen (see above).
 \begin{table*}[htbp]
   \begin{tabular}{ | l | l | l | p{8cm} |}
     \hline
@@ -219,7 +221,7 @@ and for media platforms, a study by the social media monitoring and analytics fi
 \end{table*}
 
 \subsection{Media Item Extraction}
-Social networks offer a search functionality that allows their content to be queried based on search terms,
+Most social networks offer a search functionality that allows their content to be queried based on search terms,
 with or without more advanced search operators like exclusion, inclusion, phrase search, etc.
 Each social network has special constraints with regards to supported search operators,
 filtering options (e.g., time), or the searchable period.
@@ -233,17 +235,14 @@ An \emph{Application Programming Interface (API)} in the sense of Web-based API 
 \emph{Web scraping} is the process of automatically extracting information from websites.
 Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc.
 Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree.
-
 The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, whereas Web scraping relies on the textual and/or hierarchical structure of websites.
 
 Social networks today are very much perceived as ``walled gardens'', excellently illustrated by a cartoon by David Simonds~(\autoref{fig:DavidSimonds}).
+%RV: The Orwell reference comes out of the blue (although I like it).
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
-Some social networks have full read and write access via specified APIs.
-An example is Twitter.
-Other social networks have read access via APIs.
-An example is Google+.
-Interestingly, some media platforms have just write API support, however, no read support, which requires us to fall back to Web scraping the website in order to retrieve data.
-An example is Img.ly.
+Some social networks~(e.g., Twitter) have full read and write access via specified APIs.
+Other social networks~(e.g., Google+) have read access via APIs.
+Interestingly, some media platforms~(e.g., Img.ly) have only write support without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
 
 \begin{figure}
 \centering
@@ -254,8 +253,8 @@ An example is Img.ly.
 
 % Responsible: Thomas
 \section{Implementation Details}
-In this Section, first, we introduce the common data format used consistently between all considered social networks,
-second, we explain the architecture for different kinds of media item extractors,
+In this Section, we first introduce the common data format used consistently between all considered social networks.
+Second, we explain the architecture for different kinds of media item extractors,
 and third, show the steps in the media item processing chain.
 
 \subsection{Data Format}
@@ -263,6 +262,7 @@ As our approach is agnostic of concrete social networks, we offer a common align
 which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
 
+%RV: description?
 \begin{itemize}
   \item	\textbf{Media URL}, the deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
   \item \textbf{Type}, the type of the media item, one out of ``photo'' or ``video''.
@@ -344,8 +344,8 @@ rather than limiting ourselves to English-only microposts,
 we use machine translation to translate non-English microposts to English.
 We use the Google Translate API\footnote{Google Translate API: \url{http://code.google.com/apis/language/translate/v2/getting_started.html}},
 which, if the source language parameter is left blank,
-tries to first detect the source language,
-and second translates the micropost to English.
+first tries to detect the source language,
+and subsequently translates the micropost to English.
 
 \subsubsection{Part of Speech Tagging}
 Our processing chain supports part of speech tagging via an open source JavaScript library called jspos\footnote{jspos: \url{http://code.google.com/p/jspos/}},
@@ -355,24 +355,27 @@ in the longterm, we aim for leveraging the additional data for better micropost 
 
 \subsubsection{Named Entity Disambiguation}
 Despite their typical relative brevity, microposts still carry a considerable amount of information.
-In~\cite{AddingMeaningToMicroposts}, we have shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation,
-in this paper, we generalize the approach to common microposts.
+In~\cite{AddingMeaningToMicroposts}, we have shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation.
+In this paper, we generalize the approach to common microposts.
 
 \subsubsection{Media Item Deduplication} \label{sec:deduplication}
-Some of our long-term goals is to detect the popularity of shared media items across social networks.
+Some of our long-term goals are to detect the popularity of shared media items across social networks.
 This task requires the deduplication of extracted media items.
-For this paper, we have semi-automatically deduplicated the images with the aid of a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
-While in future the obvious objective is to do this automatically, with this work,
+%RV: CBIR is only defined later on.
+For this paper, we have semi-automatically deduplicated the images with the aid of CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
+While in future, the obvious objective is to do this automatically, with this work,
 we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
 whose special requirements we describe in \autoref{subsec:dataset}.
 
 \paragraph{Image Deduplication}
-The image duplication software we used allows for different algorithms to be used.
-We have applied strict pixel-per-pixel comparison for the detection of \emph{exact duplicates}, i.e.,
+The image duplication software we employed allows for different algorithms to be used.
+We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e.,
 we do \emph{not} count a resized version of an image as exact duplicate.
-Based on bitmap- or histogram-based similarity comparison methods, we introduce the on purpose vague term of \emph{loose duplicate}.
+Based on bitmap- or histogram-based similarity comparison methods, we introduce the on purpose vague term of \emph{loose} duplicate.
+%RV: Maybe not "vague" on purpose but something similar to "wide".
 Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
 For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges.
+%RV: Why?
 Histogram similarity is based on comparing histograms of size-reduced bitmaps.
 This method helps find similar images despite differences in color saturation and lighting.
 For both similarity comparison methods, a varying threshold was used.
@@ -380,21 +383,23 @@ In our experiments, we could not make out a clear winning setting for all events
 Rather, even for the same event,
 only a combination of both similarity comparison methods led to satisfying results,
 i.e., a set of images showing loosely the same, as judged by human judgment.
+%RV: This seems to conflict with the decisive 128 above.
 We would like to highlight, however, that all detected loosely similar images were detected algorithmically,
 i.e., the only human intervention was at the algorithm's parameters,
 which is an important fact for the objective of fully automating the deduplication process.
 
 \paragraph{Video Deduplication}
-We have deduplicated the videos in the dataset by first splitting them in shots~\cite{CrowdsourcingEvent}, and then manually comparing the videos shot-wise.
-We considered \emph{exact duplicates} the videos that shared the same shots, and the same length.
-For \emph{loose duplicates}, we entirely manually decided whether the videos showed loosely the same based on human judgment.
-We do, at this point, not claim that for loosely similar video detection our results are algorithmically reproducible.
+We have deduplicated the videos in the dataset by first automatically splitting them in shots~\cite{CrowdsourcingEvent}, and then manually comparing the videos shot-wise.
+We considered \emph{exact} duplicates the videos that shared the same shots and same length.
+For \emph{loose} duplicates, we manually decided whether the videos showed loosely the same based on human judgment.
+We do, at this point, not claim that our results are algorithmically reproducible for loosely similar video detection.
 
 \paragraph{Images Contained in Videos}
 While for this paper we did not detect images contained in videos,
 the task consists of comparing relevant frames of the video with a target image.
 Especially with the focus on event summarization,
 the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
+%RV: I don't entirely understand the purpose of this paragraph.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -403,13 +408,14 @@ For our experiments, we have taken into account several events that happened in 
 We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
 
 \subsection{Considered Events}
+%RV: Do we need the footnotes detailing the events?
 In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
 
 \paragraph{SOPA Blackout}
 The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods.
-On January 18, English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
+On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
 Other companies, including Google, posted links and images in an effort to raise awareness\footnote{SOPA Blackout: \url{http://sopablackout.org/learnmore/}}.
 
 \paragraph{Assad Speech}
@@ -456,6 +462,7 @@ The main problem with the dataset is its diversity.
 It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the SOPA Blackout), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
+%RV: I (it's probably just me) don't understand the problem here: isn't this same treatment what we want?
 In practice, this led to many incorrect results, requiring manual deduplication with some events.
 Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
 
