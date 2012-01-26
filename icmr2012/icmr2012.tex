@@ -890,18 +890,65 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
 \end{centering}
 \end{figure*}
 
-\subsection{Results}
-\todo{
-- Visual gallery
-- What can we say about each event (networks, diversity,…)
-}
+\subsection{Results Interpretion and Discussion}
+Looking at our dataset, it becomes evident that the amount of exact duplicate images and videos is inferior compared to the amount of loose duplicates.
+On the one hand, this is owed to applied search operators that exclude reshared microposts like, e.g., ReTweets of the same tweet.
+So in order for the same media item to appear twice in our results, two users have to author different microposts referencing the same media item\footnote{Using the same, or a different URL.} rather than just one user resharing a micropost from the other.
+On the other hand, it is also owed to our strict definition of exact duplicate, which counts resized versions of the same media item as different.
+We argue that this, while at the first sight counterintuitive,
+makes sense as someone had to actively process the media item.
+A good example is the Blackout SOPA event where the text in the first sequence in \autoref{fig:sopa} is identical, however,
+the images have different file sizes, resolutions, and paddings.
+This implies that someone has taken the initial image, processed it by, e.g.,
+cropping it, and only then used the modified version.
+A similar example is the second sequence in \autoref{fig:concordia} of the Costa Concordia Disaster, where the chimney got cut off.
 
-\subsection{Discussion}
-% Ranking factors:
-% Popularity [ReTweets, Likes, +1s, number of views, presence on networks]
-% User diversity [more media from more different users]
-% Media item diversity [more media that looks different]
-% Representation: feature more popular items bigger(?), or longer(?)
+By clustering loose duplicate media items in sequences,
+we aim at boosting diversity in the returned set of media items for a given event:
+if there are many media items for an event,
+in the long-term we try to only show the most relevant ones from each sequence.
+This will require a media item ranking formula that will include a combination of different categories of ranking criteria:
+
+\paragraph{Visual Features}
+Extracted visual features from media items can help judge their quality.
+Sharp is better than blurry, higher contrast is better than lower contrast, etc.
+An interesting observation can be made with videos: videos with less or just one camera shot are more probable to be produced by amateurs (in tendency more authentic),
+whereas videos with more shots are more probable to be produced by professionals (in tendency more official and credible).
+Depending on the event, the one might be preferred over the other.
+
+\paragraph{Low-level Features}
+Common low-level features like resolution, file size, but also the presence of Exif data for, e.g.,
+geolocation, are good quality indicators.
+Longer videos are better than shorter videos, higher resolution is better than lower resolution, etc.
+
+\paragraph{Social Features}
+Media items belonging to the same sequence can have different popularity,
+both globally across social networks, or on specific social networks.
+Combining network-specific signals,
+like number of ReTweets on Twitter, Likes on Facebook, +1s on Google+, views on YouTube;
+and generic signals, like number of comments to a micropost,
+a good social popularity indicator can be generated.
+This can also include user diversity, i.e.,
+featuring content from different users rather than just content from one user.
+
+\paragraph{Textual Features}
+Important context is available in form of microposts that accompany media items.
+Named entity disambiguation can reveal valuable insights and, in combination with advanced techniques like face recognition,
+help make the right media item choices.
+If a user sends a micropost containing a media item about a concert, and if via named entity disambiguation the singer can be mapped back to a Linked Data concept,
+the media item can be searched for potentially known objects, e.g., the singer's face.
+Applying this combination of visual and textual features,
+highly relevant media items can be selected.
+
+\subsection{Result Representation}
+Given that a media item ranking was available,
+the question of result representation raises.
+Should more popular media items be displayed bigger, longer, or with a special decoration like a thicker border in comparison to less popular media items?
+For videos, the audio part poses a challenge.
+In our experiments we have made the interesting finding that intermixing the audio of all videos of an event oftentimes generates a very characteristic ``noise cloud''.
+A good example is the Assad Speech event, where a mix of Arabic voices blends nicely with the speech of a US politician.
+A different example is the CES Las Vegas event, where the atmosphere of a big exposition with music, announcements, and technical analyses becomes alive.
+
 
 % Responsible: Ruben
 \section{Related Work} \label{sec:relatedwork}
