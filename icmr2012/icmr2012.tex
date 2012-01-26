@@ -37,7 +37,6 @@
 % superscript for 1st, 2nd, etc.
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
-\newcommand{\th}[0]{\superscript{th}}
 \newcommand{\st}[0]{\superscript{st}}
 \newcommand{\nd}[0]{\superscript{nd}}
 \newcommand{\rd}[0]{\superscript{rd}}
@@ -63,14 +62,6 @@ framexbottommargin=-1em,
 \renewcommand{\ttdefault}{pcr}
 \let\oldurl\url
 \renewcommand{\url}[1]{\inlinelistingsize\oldurl{#1}}
-
-% superscript for 1st, 2nd, etc.
-\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
-%\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
-%\newcommand{\th}[0]{\superscript{th}}
-%\newcommand{\st}[0]{\superscript{st}}
-%\newcommand{\nd}[0]{\superscript{nd}}
-%\newcommand{\rd}[0]{\superscript{rd}}
 
 % linewrap symbol
 \definecolor{grey}{RGB}{130,130,130}
@@ -151,8 +142,7 @@ Say that we are not competing with the TRECVID guys, as they have all the data, 
 \subsection{Used Terms}
 In this Subsection, we provide necessary definitions for the terms that we will use throughout this paper.
 
-\begin{description}
-\item[Social Network]
+\paragraph{Social Network}
 A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting of social relations among people, who, e.g., share interests and/or activities.
 The boundary between social networks and media platforms is fluid.
 There are media platforms where people can upload their content with optionally viewers of that content,
