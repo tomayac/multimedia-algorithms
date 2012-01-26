@@ -269,7 +269,7 @@ second, we explain the architecture for different kinds of media item extractors
 and third, show the steps in the media item processing chain.
 
 \subsection{Data Format}
-As approach is agnostic of concrete social networks, we offer a common alignment schema for all considered social networks,
+As our approach is agnostic of concrete social networks, we offer a common alignment schema for all considered social networks,
 which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
 
@@ -341,16 +341,28 @@ we were forced to a two-fold approach that involves Web scraping alongside regul
 \end{figure*}
 
 \subsection{Media Item Processing}
-Say we only considered 10 videos and 20 images for scalability reasons.
+In this Subsection, we describe our media item processing chain.
+As part of the processing chain was manual (see \autoref{sec:deduplication}),
+we limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images.
+This explains the tendency to a round number of results in Table X \todo{Reference the results table}.
 
 \subsubsection{Machine Translation}
+Social networking is happening on a global scale.
+In consequence, many microposts are authored in languages different from English.
+In order to still make sense out of those microposts,
+rather than limiting ourselves to English-only microposts,
+we use machine translation to translate non-English microposts to English.
+We use the Google Translate API\footnote{Google Translate API: \url{http://code.google.com/apis/language/translate/v2/getting_started.html}},
+which, if the source language parameter is left blank,
+tries to first detect the source language,
+and second translates the micropost to English.
 
 \subsubsection{Part of Speech Tagging}
 % Maybe remove this?
 
 \subsubsection{Named Entity Disambiguation}
 
-\subsubsection{Media Item Deduplication}
+\subsubsection{Media Item Deduplication} \label{sec:deduplication}
 Some of our long-term goals is to detect the popularity of shared media items across social networks.
 This task requires the deduplication of extracted media items.
 For this paper, we have semi-automatically deduplicated the images with the aid of a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
