@@ -240,7 +240,7 @@ For media platforms, the inclusion criterium was guided by a~study by the social
 	\hline
   \end{tabular}
   \label{tab:networks}
-  \caption{Considered social networks and categorization according to media item support schema.}
+  \caption{Considered social networks and categorization according to the media item support schema defined in Subsection X \todo{Make sure to add the reference wherever the media item support schema might end up}.}
 \end{table*}
 
 \subsection{Media Item Extraction}
@@ -264,9 +264,9 @@ Social networks today are very much perceived as ``walled gardens'', excellently
 %RV: The Orwell reference comes out of the blue (although I like it).
 %TS: I found it fun, but if it adds confusion, we remove it. Raphaël?
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
-Some social networks~(e.g., Twitter) have full read and write access via specified APIs.
-Other social networks~(e.g., Google+) have read access via APIs.
-Interestingly, some media platforms~(e.g., img.ly) have only write support without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
+Several social networks~(e.g., Twitter) have full read and write access via specified APIs.
+Others~(e.g., Google+) have read-only access via APIs.
+Interestingly, some media platforms~(e.g., img.ly) have write-only without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
 
 \begin{figure}
 \centering
@@ -281,7 +281,7 @@ In this Section, we first introduce the common data format used consistently bet
 Second, we explain the architecture for different kinds of media item extractors,
 and third, show the steps in the media item processing chain.
 
-\subsection{Data Format}
+\subsection{Data Format} \label{sec:dataformat}
 As our approach is agnostic of concrete social networks, we offer a common alignment schema for all considered social networks,
 which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
@@ -298,10 +298,10 @@ The resulting set of metadata for a media item can be seen below:
   \item[Published] The timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
 \end{description}
 
-\autoref{lst:media} shows the sample output of a media extractor for the social network Google+.
+\autoref{lst:media} shows the sample output of a media extractor for the social network Facebook.
 
 % Use a consistent example from one of the experiments
-\begin{lstlisting}[caption={Sample output of the media exctractor showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
+\begin{lstlisting}[caption={Sample output of the media extractor showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
 {
   "Facebook": [
     {
@@ -312,7 +312,7 @@ The resulting set of metadata for a media item can be seen below:
       "message": {
         "text": "Videoed between Hamburg and Sny-
             der.. Thought I would share.",
-        "clean": "Videoed between Hamburg and Sny
+        "clean": "Videoed between Hamburg and Sny-
             der.. Thought I would share.",
         "entities": [
           [
@@ -344,9 +344,18 @@ The resulting set of metadata for a media item can be seen below:
 \subsection{Media Item Extractors}
 In the context of this paper, we have developed media item extractors for the social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr,
 with additional support for the media platforms img.ly, yfrog, MobyPicture, and Twitpic.
-As can be seen in \autoref{fig:architecture},
-due to the lack of search APIs on some of the involved services,
-we were forced to a two-fold approach that involves Web scraping alongside regular API calls.
+We start with a human-chosen search term that is relevant to a known event, e.g., ``costa concordia'' for the Costa Concorida Disaster (see \autoref{sec:concordia}).
+This search term gets forwarded to the search APIs of the considered social networks in parallel.
+Each social network has a 30 seconds timeout window to deliver its results.
+When the timeout is reached, or when all social networks have responded,
+the available results are aligned according to the data format defined in \autoref{sec:dataformat}.
+Where possible, contained media items are retrieved directly,
+or else, obtained via Web scraping.
+For some social networks, e.g., MySpace, a combination of Web scraping and API access is required,
+as the API does not return all necessary fields as defined in our data format.
+In the concrete case of MySpace, albeit the API returns the media items,
+the timestamps of when they were uploaded has to be scraped.
+The complete data flow can be seen in the architectural diagram in \autoref{fig:architecture}. 
 
 \begin{figure*}
 \centering
@@ -473,7 +482,7 @@ Free Mobile is a French mobile broadband company, part of the Iliad group.
 On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel.
 % \footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}
 
-\paragraph{Costa Concordia Disaster}
+\paragraph{Costa Concordia Disaster} \label{sec:concordia}
 The Costa Concordia is an Italian cruise ship that hit a reef and partially sank on January 13, 2012 off the Italian coast.
 The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation of 4,211 people on board\footnote{Coosta Concordia Disaster: \url{http://www.costacruise.com/B2C/USA/Info/concordia_statement.htm}}.
 
