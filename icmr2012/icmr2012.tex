@@ -118,22 +118,18 @@ framexbottommargin=-1em,
 \maketitle
 
 \begin{abstract}
-\todo{
-Core contributions:
-Social network and media platform agnostic media item search, and search results alignment.
-Search results semantic enrichment by putting microposts and media items in relation.
-Cross-channel popularity analysis.
-Visual clustering of images and videos.
-===
-Problem: In the long-term, we want to summarize events based on social network data.
-Research Challenge: Media items spread over several social networks.
-Solution:
-  1) We need to extract the media items.
-  2) We need to make sense of them.
-  3) We need to rank them.
-  4) We need to represent them.
-In this paper, we address 1) and 2), discuss 3), and envision 4).  
-}
+Social networks play an increasingly important role to provide authentic and as-it-happens coverage of events.
+Representative examples are the 2011 Ut{\o}ya shootings in Norway, or the miracle on the Hudson in 2009,
+where US Airways flight 1549 ended with an emergency ditching.
+In this paper, we propose a social network agnostic approach for the extraction of videos and images covering events, which in the longterm can serve for the automatic generation of media galleries for, e.g., news websites.
+Our approach includes an alignment of the varying search results formats from different social networks,
+and puts media items and the status updates they stemmed from in relation. 
+This allows us to leverage (i) visual features from media items, (ii) textual features from status updates, and (iii) social features from social networks to interpret, deduplicate, cluster, and rank media items,
+which is an important challenge given our objective of the automatic generation of media galleries.
+We address the technical details of media item extraction and media item processing,
+discuss media item ranking criteria,
+and envision several visualization options for media items.
+Our approach can be tested online\footnote{\url{http://tomayac.com/social/}}.
 \end{abstract}
 
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
@@ -253,7 +249,7 @@ Social networks today are very much perceived as ``walled gardens'', excellently
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
 Some social networks~(e.g., Twitter) have full read and write access via specified APIs.
 Other social networks~(e.g., Google+) have read access via APIs.
-Interestingly, some media platforms~(e.g., Img.ly) have only write support without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
+Interestingly, some media platforms~(e.g., img.ly) have only write support without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
 
 \begin{figure}
 \centering
@@ -370,7 +366,7 @@ In~\cite{AddingMeaningToMicroposts}, we have shown how meaning can be added to F
 In this paper, we generalize the approach to common microposts.
 
 \subsubsection{Media Item Deduplication} \label{sec:deduplication}
-Some of our long-term goals are to detect the popularity of shared media items across social networks.
+Some of our longterm goals are to detect the popularity of shared media items across social networks.
 This task requires the deduplication of extracted media items.
 %RV: CBIR is only defined later on.
 For this paper, we have semi-automatically deduplicated the images with the aid of CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
@@ -424,10 +420,10 @@ In this Subsection, we give an objective and short overview on the context of th
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
 
-\paragraph{SOPA Blackout}
+\paragraph{Blackout SOPA}
 The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods.
 On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
-Other companies, including Google, posted links and images in an effort to raise awareness\footnote{SOPA Blackout: \url{http://sopablackout.org/learnmore/}}.
+Other companies, including Google, posted links and images in an effort to raise awareness\footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}.
 
 \paragraph{Assad Speech}
 On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters\footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}. 
@@ -470,7 +466,7 @@ The same technique, however, can also be used for the deduplication of photograp
 We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
 For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
 The main problem with the dataset is its diversity.
-It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the SOPA Blackout), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
+It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the Blackout SOPA), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
 %RV: I (it's probably just me) don't understand the problem here: isn't this same treatment what we want?
@@ -922,7 +918,7 @@ A similar example is the second sequence in \autoref{fig:concordia} of the Costa
 By clustering loose duplicate media items in sequences,
 we aim at boosting diversity in the returned set of media items for a given event:
 if there are many media items for an event,
-in the long-term we try to only show the most relevant ones from each sequence.
+in the longterm we try to only show the most relevant ones from each sequence.
 This will require a media item ranking formula that will include a combination of different categories of ranking criteria:
 
 \paragraph{Visual Features}
