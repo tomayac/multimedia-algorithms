@@ -139,13 +139,20 @@ Our approach can be tested online\footnote{\url{http://tomayac.com/social/}}.
 
 % Responsible: Raphaël
 \section{Introduction} \label{sec:introduction}
-\todo{
-Say what we do, and what we don't.
-Say that we are not competing with the TRECVID guys, as they have all the data, and we have to get it first.
-}
-
-\subsection{Used Terms}
-In this Subsection, we provide necessary definitions for the terms that we will use throughout this paper.
+Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
+With the widespread availability of mobile phones with decent cameras,
+event coverage more and more also happens on social networks,
+with sometimes news agencies featuring user-generated content from normal social network users.
+Some examples with global impact were the shootings in Ut{/o}ya (first appearance on Twitter), the capture and arrest of Muammar Gaddafi (first appearance on YouTube), and the emergency ditching of a plane in Hudson river (first appearance on Twitpic).
+However, also for events without global impact, like local concerts,
+huge potential lies in the information about such events,
+albeit distributed over potentially many social networks.
+In response to this challenge, in this paper, we propose a social network agnostic approach for the extraction of images and videos covering events.
+We want to emphasize that we do \emph{not} perform event detection, i.e.,
+we are aware of the occurrence of events and use specific human-chosen search terms to find media about them.
+Different from ImageCLEF and TRECVID, that both deal with content-based analysis of and retrieval from images and videos,
+our approach deals with the separate additional task of extracting media from social networks in the first place.
+In the following paragraphs, we provide necessary definitions for the terms that we will use throughout this paper.
 
 \paragraph{Social Network}
 A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting social relations among people who share interests and/or activities.
@@ -159,6 +166,7 @@ Finally, there are hybrid forms~(e.g., TweetDeck for Twitter using Twitpic) wher
 typically via third party applications,
 integrate with media platforms.
 %RV: I tried to clarify the text a little, but it's still not clear enough to me. I think the first and second types also need a name to distinguish the three forms from each other.
+%TS: The distinction follows later, where I introduce the 1st-3rd order networks. Helps? Has to come earlier? Raphaël? 
 
 \paragraph{Media Item}
 A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network.
@@ -168,17 +176,20 @@ An example can be a baby photo that a fresh parent shares on Facebook.
 A \emph{micropost} is any textual status update that can,
 but not has to,
 accompany a media item.
-An example can be a status update accompanying the previously mentioned baby photo saying ``life is full of wonders, and you are one of them''.
+An example can be a status update accompanying the previously mentioned baby photo. %saying ``life is full of wonders, and you are one of them''.
 %RV: aha! Could we talk about media items and microposts first, and then describe the different social network types in function of them?
+%TS: Raphaël will take care of this when he restructures (messes up) Sect. 1 and 2.
 %RV: the quote could make the explanation confusing: are Microposts maybe always things that people just share? I would have a more personal message like "look at our beautiful newborn" or even describing this message instead of quoting it.
-
+%TS: I removed the quote entirely.
 \paragraph{Event}
 An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
-An event with a defined start (May 15, 2011) but without a concrete end
-are the 2011 protests in Spain.
+An event with a defined start (September 17, 2011), but without a concrete end is the Occupy Wall Street movement.
 An event with both start and end can be a concert.
 %RV: I don't know if the Spain protests are known enough. Maybe Occupy Wallstreet?
 % Also, this is the first time you give a concrete example.
+%TS: OWS it is.
+
+The remainder of this paper is structured as follows: \todo{Outline paper structure}.
 
 % Responsible: Thomas
 \section{Social Networks \& Media Items}
@@ -187,15 +198,16 @@ all of which have a different level of support for media items.
 In the following, we introduce a media item support schema for social networks.
 
 %RV: I would decapitalize and possibly add a hyphen (adjective): First-order media item support or even First-order support. Drawback: numerals are gone.
-\paragraph{1\st Order Media Item Support}
+%TS: Raphaël, your opinion?
+\paragraph{1{\st} Order Media Item Support}
 The social network is centered on media items.
 Posting on the social network requires inclusion of a media item.
 
-\paragraph{2\nd Order Media Item Support}
+\paragraph{2{\nd} Order Media Item Support}
 The social network lets users upload media items, however,
 posting is also possible without the inclusion of a media item.
 
-\paragraph{3\rd Order Media Item Support}
+\paragraph{3{\rd} Order Media Item Support}
 The social network has no direct support for media items, however,
 lets users upload media items on third party media platforms and reference them there.
 
@@ -205,22 +217,23 @@ We included those social networks with sufficient market share and popularity, o
 For media platforms, the inclusion criterium was guided by a~study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
 
 %RV: a space between 2nd and order is missing. However, I did not correct, since it might become a hyphen (see above).
+%TS: corrected the spacing. Not sure about the hyphen. Raphaël? What do you prefer?
 \begin{table*}[htbp]
   \begin{tabular}{ | l | l | l | p{8cm} |}
     \hline
     \textbf{Social Network} & \textbf{URL} & \textbf{Category} & \textbf{Comment}\\
     \hline
-	Google+ & \url{http://google.com/+} & 2\nd order & Links to media items are returned via the Google+ API.\\\hline
-	MySpace & \url{http://myspace.com} & 2\nd order & Links to media items are returned via the MySpace API.\\\hline
-	Facebook & \url{http://facebook.com} & 2\nd order & Links to media items are returned via the Facebook API.\\\hline
-	Twitter & \url{http://twitter.com} & 2\nd order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
-	Instagram & \url{http://instagram.com} & 1\st order & Links to media items are returned via the Instagram API.\\\hline
-	YouTube & \url{http://youtube.com} & 1\st order & Links to media items are returned via the YouTube API.\\\hline
-	Flickr & \url{http://flickr.com} & 1\st order & Links to media items are returned via the Flickr API.\\\hline
-	MobyPicture & \url{http://mobypicture.com} & 1\st order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
-	Twitpic & \url{http://twitpic.com} & 1\st order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	img.ly & \url{http://img.ly} & 1\st order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	yfrog & \url{http://yfrog.com} & 1\st order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
+	Google+ & \url{http://google.com/+} & 2{\nd} order & Links to media items are returned via the Google+ API.\\\hline
+	MySpace & \url{http://myspace.com} & 2{\nd} order & Links to media items are returned via the MySpace API.\\\hline
+	Facebook & \url{http://facebook.com} & 2{\nd} order & Links to media items are returned via the Facebook API.\\\hline
+	Twitter & \url{http://twitter.com} & 2{\nd} / 3{\rd} order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
+	Instagram & \url{http://instagram.com} & 1{\st} order & Links to media items are returned via the Instagram API.\\\hline
+	YouTube & \url{http://youtube.com} & 1{\st} order & Links to media items are returned via the YouTube API.\\\hline
+	Flickr & \url{http://flickr.com} & 1{\st} order & Links to media items are returned via the Flickr API.\\\hline
+	MobyPicture & \url{http://mobypicture.com} & 1{\st} order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
+	Twitpic & \url{http://twitpic.com} & 1{\st} order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	img.ly & \url{http://img.ly} & 1{\st} order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
+	yfrog & \url{http://yfrog.com} & 1{\st} order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
 	\hline
   \end{tabular}
   \label{tab:networks}
@@ -246,6 +259,7 @@ The difference to the somewhat related concept of \emph{screen scraping} is that
 
 Social networks today are very much perceived as ``walled gardens'', excellently illustrated by a cartoon by David Simonds~(\autoref{fig:DavidSimonds}).
 %RV: The Orwell reference comes out of the blue (although I like it).
+%TS: I found it fun, but if it adds confusion, we remove it. Raphaël?
 As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
 Some social networks~(e.g., Twitter) have full read and write access via specified APIs.
 Other social networks~(e.g., Google+) have read access via APIs.
@@ -270,15 +284,16 @@ which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
 
 %RV: description?
-\begin{itemize}
-  \item	\textbf{Media URL}, the deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
-  \item \textbf{Type}, the type of the media item, one out of ``photo'' or ``video''.
-  \item \textbf{Story URL}, the URL of the micropost where the media item appeared, e.g., \url{http://www.flickr.com/photos/96628098@N00/6290784192/}.
-  \item \textbf{Message}, the concrete micropost or description text in raw format, e.g., ``Laura. \#lumixg20f17, \#iswc2011, \#internationalsemanticwebconference, \#bonn, \#germany''.
-  \item \textbf{Clean}, the concrete cleaned micropost or description text with some characters (e.g., hash sign) removed, e.g., ``Laura. lumixg20f17, iswc2011, internationalsemanticwebconference, bonn, germany''.
-  \item \textbf{User}, the URL of the author of the micropost, e.g., \url{http://www.flickr.com/photos/96628098@N00/}.
-  \item \textbf{Published}, the timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
-\end{itemize}
+%TS: Description!
+\begin{description}
+  \item[Media URL] The deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
+  \item[Type] The type of the media item, one out of ``photo'' or ``video''.
+  \item[Story URL] The URL of the micropost where the media item appeared, e.g., \url{http://www.flickr.com/photos/96628098@N00/6290784192/}.
+  \item[Message] The concrete micropost or description text in raw format, e.g., ``Laura. \#lumixg20f17, \#iswc2011, \#internationalsemanticwebconference, \#bonn, \#germany''.
+  \item[Clean] The concrete cleaned micropost or description text with some characters (e.g., hash sign) removed, e.g., ``Laura. lumixg20f17, iswc2011, internationalsemanticwebconference, bonn, germany''.
+  \item[User] The URL of the author of the micropost, e.g., \url{http://www.flickr.com/photos/96628098@N00/}.
+  \item[Published] The timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
+\end{description}
 
 \autoref{lst:media} shows the sample output of a media extractor for the social network Google+.
 
@@ -369,7 +384,8 @@ In this paper, we generalize the approach to common microposts.
 Some of our longterm goals are to detect the popularity of shared media items across social networks.
 This task requires the deduplication of extracted media items.
 %RV: CBIR is only defined later on.
-For this paper, we have semi-automatically deduplicated the images with the aid of CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
+%TS: Corrected.
+For this paper, we have semi-automatically deduplicated the images with the aid of content-based image retrieval (CBIR) image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
 While in future, the obvious objective is to do this automatically, with this work,
 we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
 whose special requirements we describe in \autoref{subsec:dataset}.
@@ -378,11 +394,13 @@ whose special requirements we describe in \autoref{subsec:dataset}.
 The image duplication software we employed allows for different algorithms to be used.
 We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e.,
 we do \emph{not} count a resized version of an image as exact duplicate.
-Based on bitmap- or histogram-based similarity comparison methods, we introduce the on purpose vague term of \emph{loose} duplicate.
+Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate.
 %RV: Maybe not "vague" on purpose but something similar to "wide".
+%TS: Corrected
 Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
-For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges.
+For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges, which corresponds to the best quality settings in the software.
 %RV: Why?
+%TS: Explained why.
 Histogram similarity is based on comparing histograms of size-reduced bitmaps.
 This method helps find similar images despite differences in color saturation and lighting.
 For both similarity comparison methods, a varying threshold was used.
@@ -391,6 +409,7 @@ Rather, even for the same event,
 only a combination of both similarity comparison methods led to satisfying results,
 i.e., a set of images showing loosely the same, as judged by human judgment.
 %RV: This seems to conflict with the decisive 128 above.
+%TS: Both methods use the same bitmap sizes. What do you mean?
 We would like to highlight, however, that all detected loosely similar images were detected algorithmically,
 i.e., the only human intervention was at the algorithm's parameters,
 which is an important fact for the objective of fully automating the deduplication process.
@@ -401,12 +420,15 @@ We considered \emph{exact} duplicates the videos that shared the same shots and 
 For \emph{loose} duplicates, we manually decided whether the videos showed loosely the same based on human judgment.
 We do, at this point, not claim that our results are algorithmically reproducible for loosely similar video detection.
 
+\begin{comment}
 \paragraph{Images Contained in Videos}
 While for this paper we did not detect images contained in videos,
 the task consists of comparing relevant frames of the video with a target image.
 Especially with the focus on event summarization,
 the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
+\end{comment}
 %RV: I don't entirely understand the purpose of this paragraph.
+%TS: Fair enough. Removed. It just says it could be done, but many things could be done.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -416,6 +438,7 @@ We have captured event-related media items and microposts, and made the data ava
 
 \subsection{Considered Events}
 %RV: Do we need the footnotes detailing the events?
+%TS: Nope. Removed.
 In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
@@ -423,24 +446,29 @@ In this Subsection, we give an objective and short overview on the context of th
 \paragraph{Blackout SOPA}
 The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods.
 On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
-Other companies, including Google, posted links and images in an effort to raise awareness\footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}.
+Other companies, including Google, posted links and images in an effort to raise awareness.
+% \footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}
 
 \paragraph{Assad Speech}
-On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters\footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}. 
+On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters. 
+% \footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}
 
 \paragraph{Christian Wulff Case}
 Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while governor of Lower Saxony.
 When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad.
-When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action\footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}.
+When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action.
+% \footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}
 
 \paragraph{Dixville Notch}
 Dixville Notch is an unincorporated village in Dixville township of Coos County, New Hampshire, USA, best known in connection with its longstanding middle-of-the-night vote in the U.S. presidential election.
 In a tradition that started in the 1960 election, all the eligible voters in Dixville Notch gather at midnight in the ballroom of The Balsams.
-This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later\footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}.
+This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later.
+% \footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}
 
 \paragraph{Free Mobile Launch}
 Free Mobile is a French mobile broadband company, part of the Iliad group.
-On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel\footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}.
+On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel.
+% \footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}
 
 \paragraph{Costa Concordia Disaster}
 The Costa Concordia is an Italian cruise ship that hit a reef and partially sank on January 13, 2012 off the Italian coast.
@@ -448,15 +476,18 @@ The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation
 
 \paragraph{CES Las Vegas}
 The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
-Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements\footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}.
+Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements.
+% \footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}
 
 \paragraph{Cut the Rope Launch}
 % Sub-event of CES Las Vegas
-On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced\footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}.
+On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced.
+% \footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}
 
 \paragraph{Ubuntu TV Launch}
 % Sub-event of CES Las Vegas
-Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}.
+Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES.
+% \footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}
 
 \subsection{Dataset}
 \label{subsec:dataset}
@@ -470,6 +501,7 @@ It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
 %RV: I (it's probably just me) don't understand the problem here: isn't this same treatment what we want?
+%TS: the point is, if you shrink a wiiiiiiiiide banner to a square, a lot of the information gets lost. Clearer now?
 In practice, this led to many incorrect results, requiring manual deduplication with some events.
 Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
 
@@ -902,7 +934,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
 \end{centering}
 \end{figure*}
 
-\subsection{Results Interpretion and Discussion}
+\subsection{Results Interpretation and Discussion}
 Looking at our dataset, it becomes evident that the amount of exact duplicate images and videos is inferior compared to the amount of loose duplicates.
 On the one hand, this is owed to applied search operators that exclude reshared microposts like, e.g., ReTweets of the same tweet.
 So in order for the same media item to appear twice in our results, two users have to author different microposts referencing the same media item\footnote{Using the same, or a different URL.} rather than just one user resharing a micropost from the other.
