@@ -181,15 +181,10 @@ accompany a media item.
 An example can be a status update accompanying the previously mentioned baby photo. %saying ``life is full of wonders, and you are one of them''.
 %RV: aha! Could we talk about media items and microposts first, and then describe the different social network types in function of them?
 %TS: Raphaël will take care of this when he restructures (messes up) Sect. 1 and 2.
-%RV: the quote could make the explanation confusing: are Microposts maybe always things that people just share? I would have a more personal message like "look at our beautiful newborn" or even describing this message instead of quoting it.
-%TS: I removed the quote entirely.
 \paragraph{Event}
 An event is here defined as an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
 An event with a defined start point (September 17, 2011), but without a concrete end point, is the Occupy Wall Street movement.
 An event with both start and end point can be a concert.
-%RV: I don't know if the Spain protests are known enough. Maybe Occupy Wallstreet?
-% Also, this is the first time you give a concrete example.
-%TS: OWS it is.
 
 The remainder of this paper is structured as follows: \todo{Outline paper structure}.
 
@@ -288,8 +283,6 @@ As our approach is agnostic of concrete social networks, we offer a common align
 which allows us to treat each social network's data the same way.
 The resulting set of metadata for a media item can be seen below:
 
-%RV: description?
-%TS: Description!
 \begin{description}
   \item[Media URL] The deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
   \item[Type] The type of the media item, one out of ``photo'' or ``video''.
@@ -399,8 +392,6 @@ based on the learnings from~\cite{NERD}.
 In order for obtaining interesting media galleries,
 the detection of the  popularity of shared media items across social networks is necessary.
 This task envolves the deduplication of extracted media items.
-%RV: CBIR is only defined later on.
-%TS: Corrected.
 For this paper, we have semi-automatically deduplicated the images with the aid of a commercial image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have manually deduplicated the videos.
 In future, the obvious objective is to do this automatically, however,
 with this work, we have created a baseline for specific future algorithms tailored to media item deduplication on social networks,
@@ -411,12 +402,8 @@ The image duplication software we employed allows for different algorithms to be
 We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e.,
 we do \emph{not} count a resized version of an image as exact duplicate.
 Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate.
-%RV: Maybe not "vague" on purpose but something similar to "wide".
-%TS: Corrected
 Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
 For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges, which corresponds to the best quality settings in the software.
-%RV: Why?
-%TS: Explained why.
 Histogram similarity is based on comparing histograms of size-reduced bitmaps.
 This method helps find similar images despite differences in color saturation and lighting.
 For both similarity comparison methods, a varying threshold was used.
@@ -426,6 +413,7 @@ only a combination of both similarity comparison methods led to satisfactory res
 i.e., to a set of loosely duplicate images that also a human being would have chosen.
 %RV: This seems to conflict with the decisive 128 above.
 %TS: Both methods use the same bitmap sizes. What do you mean?
+%RV: You say that there were no winning settings, but apparently 128 is? But it's clear now thanks to the clarification.
 We would like to highlight, however, that all detected loosely duplicate images were detected algorithmically,
 i.e., the only human intervention was when choosing the algorithm's parameters,
 which is an important fact for the objective of fully automating the deduplication process.
@@ -443,8 +431,6 @@ the task consists of comparing relevant frames of the video with a target image.
 Especially with the focus on event summarization,
 the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
 \end{comment}
-%RV: I don't entirely understand the purpose of this paragraph.
-%TS: Fair enough. Removed. It just says it could be done, but many things could be done.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -456,8 +442,6 @@ YouTube video URLs are signed with a by now expired time to live,
 they can be accessed by following the \texttt{storyurl} link.
 
 \subsection{Considered Events}
-%RV: Do we need the footnotes detailing the events?
-%TS: Nope. Removed.
 In this Subsection, we give a short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
@@ -520,8 +504,6 @@ The main problem with the dataset is its diversity.
 It ranges from entirely sharp screenshots in all sorts of formats (e.g., screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g., photos of the stage for the Free Mobile Launch event).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
-%RV: I (it's probably just me) don't understand the problem here: isn't this same treatment what we want?
-%TS: the point is, if you shrink a wiiiiiiiiide banner to a square, a lot of the information gets lost. Clearer now?
 In practice, shrinking a wide rectangular banner to a square led to many incorrect results, requiring manual deduplication with the Blackout SOPA event.
 
 \begin{table*}[htbp]
