@@ -21,6 +21,8 @@
 
 \usepackage{fmtcount}
 
+\usepackage{fancybox}
+
 % give emph a normal fontsize
 \let\oldemph\emph
 \renewcommand{\emph}[1]{\oldemph{\fontsize{9}{9}\selectfont #1}}
@@ -68,7 +70,7 @@ framexbottommargin=-1em,
 \newcommand{\linewrap}{\raisebox{-.6ex}{\textcolor{grey}{$\hookleftarrow$}}}
 
 % thumbnail environment
-\newcommand{\thumbheight}{16mm}
+\newcommand{\thumbheight}{14mm}
 \newcommand{\newstrip}{\\[1mm]}
 \newenvironment{thumbsequence}{}{\makebox[4mm]{}}
 
@@ -742,6 +744,8 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
   \caption{Exact and loose duplicate videos per event.}
 \end{table*}
 
+\clearpage
+
 \begin{figure*}
 \begin{centering}
 	\begin{thumbsequence}
@@ -789,12 +793,12 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \begin{figure*}
 \begin{centering}
 	\begin{thumbsequence}
-		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate1.jpg}
-		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate2.jpg}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate1.jpg}}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate2.jpg}}
 	\end{thumbsequence}
 	\begin{thumbsequence}
-		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate3.jpg}
-		\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate4.jpg}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate3.jpg}}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/wulff/exactduplicate4.jpg}}
 	\end{thumbsequence}
 	\caption{\textbf{Christian Wulff Case:} 4 images in 2 sequences exact duplicate.}
 	\label{fig:wulff}
@@ -804,8 +808,8 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \begin{figure*}
 \begin{centering}
 	\begin{thumbsequence}
-		\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate1.jpg}
-		\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate2.jpg}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate1.jpg}}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/dixville/exactduplicate2.jpg}}
 	\end{thumbsequence}
 	\begin{thumbsequence}
 		\includegraphics[height=\thumbheight]{resources/dixville/looseduplicate1.jpg}
@@ -819,8 +823,8 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \begin{figure*}
 \begin{centering}
 	\begin{thumbsequence}
-		\includegraphics[height=\thumbheight]{resources/free/exactduplicate1.jpg}
-		\includegraphics[height=\thumbheight]{resources/free/exactduplicate2.jpg}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/free/exactduplicate1.jpg}}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/free/exactduplicate2.jpg}}
 	\end{thumbsequence}
 	\begin{thumbsequence}
 		\includegraphics[height=\thumbheight]{resources/free/looseduplicate1.png}
@@ -903,8 +907,8 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \begin{figure*}
 \begin{centering}
 	\begin{thumbsequence}
-		\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate1.jpg}
-		\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate2.jpg}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate1.jpg}}
+		\doublebox{\includegraphics[height=\thumbheight]{resources/ropes/exactduplicate2.jpg}}
 	\end{thumbsequence}
 	\begin{thumbsequence}
 		\includegraphics[height=\thumbheight]{resources/ropes/looseduplicate1.jpg}
@@ -950,6 +954,8 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 	\label{fig:ubuntutv}
 \end{centering}
 \end{figure*}
+
+\clearpage
 
 \subsection{Results Interpretation and Discussion}
 Looking at our dataset, it becomes evident that the amount of exact duplicate images and videos is inferior compared to the amount of loose duplicates.
