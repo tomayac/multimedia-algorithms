@@ -367,15 +367,15 @@ The complete data flow can be seen in the architectural diagram in \autoref{fig:
 \subsection{Media Item Processing}
 In this Subsection, we describe our media item processing chain.
 As part of the processing chain was manual (see \autoref{sec:deduplication}),
-we limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images.
-This explains the tendency to a round number of results in Table X \todo{Reference the results table}.
+we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images.
+This explains the tendency to round numbers of results in Table X \todo{Reference the results table}, marked with $n+$.
 
 \subsubsection{Machine Translation}
 Social networking is happening at a global scale.
 In consequence, many microposts are authored in languages different from English.
 In order to still make sense out of those microposts,
 rather than limiting ourselves to English-only microposts,
-we use machine translation to translate non-English microposts to English.
+we apply machine translation to translate non-English microposts to English.
 We use the Google Translate API\footnote{Google Translate API: \url{http://code.google.com/apis/language/translate/v2/getting_started.html}},
 which, if the source language parameter is left blank,
 first tries to detect the source language,
@@ -388,18 +388,20 @@ Part of speech tagging at this point does not play an active role yet in the pro
 in the longterm, we aim for leveraging the additional data for better micropost analysis.
 
 \subsubsection{Named Entity Disambiguation}
-Despite their typical relative brevity, microposts still carry a considerable amount of information.
+Despite their typical relative brevity, microposts still carry a considerable amount of information.ficken
 In~\cite{AddingMeaningToMicroposts}, we have shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation.
-In this paper, we generalize the approach to common microposts.
+In this paper, we generalize the approach to common microposts,
+based on the learnings from~\cite{NERD}.
 
 \subsubsection{Media Item Deduplication} \label{sec:deduplication}
-Some of our longterm goals are to detect the popularity of shared media items across social networks.
-This task requires the deduplication of extracted media items.
+In order for obtaining interesting media galleries,
+the detection of the  popularity of shared media items across social networks is necessary.
+This task envolves the deduplication of extracted media items.
 %RV: CBIR is only defined later on.
 %TS: Corrected.
-For this paper, we have semi-automatically deduplicated the images with the aid of content-based image retrieval (CBIR) image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have completely manually deduplicated the videos.
-While in future, the obvious objective is to do this automatically, with this work,
-we have created a baseline for planned algorithms tailored to media item deduplication on social networks,
+For this paper, we have semi-automatically deduplicated the images with the aid of a commercial image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have manually deduplicated the videos.
+In future, the obvious objective is to do this automatically, however,
+with this work, we have created a baseline for specific future algorithms tailored to media item deduplication on social networks,
 whose special requirements we describe in \autoref{subsec:dataset}.
 
 \paragraph{Image Deduplication}
@@ -418,12 +420,12 @@ This method helps find similar images despite differences in color saturation an
 For both similarity comparison methods, a varying threshold was used.
 In our experiments, we could not make out a clear winning setting for all events.
 Rather, even for the same event,
-only a combination of both similarity comparison methods led to satisfying results,
-i.e., a set of images showing loosely the same, as judged by human judgment.
+only a combination of both similarity comparison methods led to satisfactory results,
+i.e., to a set of loosely duplicate images that also a human being would have chosen.
 %RV: This seems to conflict with the decisive 128 above.
 %TS: Both methods use the same bitmap sizes. What do you mean?
-We would like to highlight, however, that all detected loosely similar images were detected algorithmically,
-i.e., the only human intervention was at the algorithm's parameters,
+We would like to highlight, however, that all detected loosely duplicate images were detected algorithmically,
+i.e., the only human intervention was when choosing the algorithm's parameters,
 which is an important fact for the objective of fully automating the deduplication process.
 
 \paragraph{Video Deduplication}
@@ -446,12 +448,15 @@ the presence of an image in a potentially long video can be considered a signal 
 \label{sec:experiments}
 % Responsible: Thomas
 For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
-We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}. 
+We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}.
+We invite the reader to browse the data and compile a personal set of loose and exact duplicate media items.
+YouTube video URLs are signed with a by now expired time to live,
+they can be accessed by following the \texttt{storyurl} link.
 
 \subsection{Considered Events}
 %RV: Do we need the footnotes detailing the events?
 %TS: Nope. Removed.
-In this Subsection, we give an objective and short overview on the context of the considered events in order to give the reader the necessary background knowledge.
+In this Subsection, we give a short overview on the context of the considered events in order to give the reader the necessary background knowledge.
 % Add to each event some categorization: political, technical,…
 % Add to each event the duration with start and end if possible.
 
@@ -484,7 +489,8 @@ On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with ca
 
 \paragraph{Costa Concordia Disaster} \label{sec:concordia}
 The Costa Concordia is an Italian cruise ship that hit a reef and partially sank on January 13, 2012 off the Italian coast.
-The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation of 4,211 people on board\footnote{Coosta Concordia Disaster: \url{http://www.costacruise.com/B2C/USA/Info/concordia_statement.htm}}.
+The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation of 4,211 people on board.
+% \footnote{Coosta Concordia Disaster: \url{http://www.costacruise.com/B2C/USA/Info/concordia_statement.htm}}
 
 \paragraph{CES Las Vegas}
 The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
@@ -501,21 +507,20 @@ On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the 
 Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES.
 % \footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}
 
-\subsection{Dataset}
-\label{subsec:dataset}
+\subsection{Dataset} \label{subsec:dataset}
+Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
 During the examination of our dataset, we observed that the process of image deduplication is by no means a solved issue.
 Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
 The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi2011}.
 We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
 For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
 The main problem with the dataset is its diversity.
-It ranges from entirely sharp screenshots in all sorts of formats (e.g., for the Blackout SOPA), to blurry cell phone images in standard photo formats (e.g., for the Free Mobile Launch).
+It ranges from entirely sharp screenshots in all sorts of formats (e.g., screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g., photos of the stage for the Free Mobile Launch event).
 A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
 In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
 %RV: I (it's probably just me) don't understand the problem here: isn't this same treatment what we want?
 %TS: the point is, if you shrink a wiiiiiiiiide banner to a square, a lot of the information gets lost. Clearer now?
-In practice, this led to many incorrect results, requiring manual deduplication with some events.
-Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
+In practice, shrinking a wide rectangular banner to a square led to many incorrect results, requiring manual deduplication with the Blackout SOPA event.
 
 \begin{table*}[htbp]
   \begin{tabular}{ | c | c | c | }
@@ -527,8 +532,8 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Facebook & 0 & 0\\
     Twitter & 2 & 0\\
     Instagram & 0 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 0\\
     MobyPicture & 0 & 0\\
     Twitpic & 0 & 0\\
     \hline
@@ -546,9 +551,9 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     MySpace & 0 & 0\\
     Facebook & 0 & 2\\
     Twitter & 5 & 0\\
-    Instagram & 20 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 0\\
+    Instagram & 20+ & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 0\\
     MobyPicture & 1 & 0\\
     Twitpic & 19 & 0\\
     \hline
@@ -566,11 +571,11 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     MySpace & 0 & 0\\
     Facebook & 0 & 1\\
     Twitter & 2 & 0\\
-    Instagram & 20 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 6\\
+    Instagram & 20+ & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 6\\
     MobyPicture & 1 & 0\\
-    Twitpic & 20 & 0\\
+    Twitpic & 20+ & 0\\
     \hline
   \end{tabular}
   \label{tab:ces}
@@ -587,10 +592,10 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Facebook & 0 & 0\\
     Twitter & 2 & 0\\
     Instagram & 2 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 2\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 2\\
     MobyPicture & 3 & 0\\
-    Twitpic & 20 & 0\\
+    Twitpic & 20+ & 0\\
     \hline
   \end{tabular}
   \label{tab:wulff}
@@ -603,12 +608,12 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
     \hline
     Google+ & 15 & 1\\
-    MySpace & 10 & 0\\
+    MySpace & 10+ & 0\\
     Facebook & 0 & 1\\
     Twitter & 3 & 0\\
-    Instagram & 20 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 10\\
+    Instagram & 20+ & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 10+\\
     MobyPicture & 4 & 0\\
     Twitpic & 18 & 0\\
     \hline
@@ -626,11 +631,11 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     MySpace & 6 & 0\\
     Facebook & 0 & 0\\
     Twitter & 4 & 0\\
-    Instagram & 20 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 10\\ 
-    MobyPicture & 20 & 0\\
-    Twitpic & 20 & 0\\
+    Instagram & 20+ & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10 & 10+\\ 
+    MobyPicture & 20+ & 0\\
+    Twitpic & 20+ & 0\\
     \hline
   \end{tabular}
   \label{tab:rope}
@@ -648,7 +653,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Twitter & 3 & 0\\
     Instagram & 0 & 0\\
     YouTube & 0 & 3\\
-    Flickr & 10 & 10\\ 
+    Flickr & 10 & 10+\\ 
     MobyPicture & 0 & 0\\
     Twitpic & 1 & 0\\
     \hline
@@ -666,11 +671,11 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     MySpace & 1 & 0\\
     Facebook & 0 & 0\\
     Twitter & 2 & 0\\
-    Instagram & 20 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 0\\ 
+    Instagram & 20+ & 0\\
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 0\\ 
     MobyPicture & 2 & 0\\
-    Twitpic & 20 & 0\\
+    Twitpic & 20+ & 0\\
     \hline
   \end{tabular}
   \label{tab:freemobile}
@@ -687,8 +692,8 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
     Facebook & 0 & 0\\
     Twitter & 0 & 0\\
     Instagram & 0 & 0\\
-    YouTube & 0 & 10\\
-    Flickr & 10 & 9\\ 
+    YouTube & 0 & 10+\\
+    Flickr & 10+ & 9\\ 
     MobyPicture & 2 & 0\\
     Twitpic & 2 & 0\\
     \hline
