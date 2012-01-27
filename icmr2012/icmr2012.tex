@@ -135,27 +135,27 @@ Our approach can be tested online\footnote{\url{http://tomayac.com/social/}}.
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
 \category{H.3.5}{Online Information Services}{Web-based services}
 
-\keywords{\todo{Keywords}}
+\keywords{Media Item Extraction, Social Networks, Media Gallery}
 
 % Responsible: Raphaël
 \section{Introduction} \label{sec:introduction}
 Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
 With the widespread availability of mobile phones with decent cameras,
 event coverage more and more also happens on social networks,
-with sometimes news agencies featuring user-generated content from normal social network users.
-Some examples with global impact were the shootings in Ut{/o}ya (first appearance on Twitter), the capture and arrest of Muammar Gaddafi (first appearance on YouTube), and the emergency ditching of a plane in Hudson river (first appearance on Twitpic).
-However, also for events without global impact, like local concerts,
-huge potential lies in the information about such events,
+with sometimes news agencies featuring user-generated content from otherwise unknown social network users.
+Some examples with global impact were the shootings in Ut{\o}ya (first appearance on Twitter), the capture and arrest of Muammar Gaddafi (first appearance on YouTube), and the emergency ditching of a plane in Hudson river (first appearance on Twitpic).
+However, also for events without global impact like local concerts,
+interesting media items are available,
 albeit distributed over potentially many social networks.
 In response to this challenge, in this paper, we propose a social network agnostic approach for the extraction of images and videos covering events.
 We want to emphasize that we do \emph{not} perform event detection, i.e.,
 we are aware of the occurrence of events and use specific human-chosen search terms to find media about them.
-Different from ImageCLEF and TRECVID, that both deal with content-based analysis of and retrieval from images and videos,
+Different from \mbox{ImageCLEF} and \mbox{TRECVID}, that both deal with content-based analysis of and retrieval from images and videos,
 our approach deals with the separate additional task of extracting media from social networks in the first place.
 In the following paragraphs, we provide necessary definitions for the terms that we will use throughout this paper.
 
 \paragraph{Social Network}
-A \emph{social network} is an online service or \emph{media platform} that focuses on building and reflecting social relations among people who share interests and/or activities.
+A social network is an online service or media platform that focuses on building and reflecting social relations among people who share interests and/or activities.
 The boundary between social networks and media platforms is fluid.
 Several media platforms~(e.g., YouTube) allow people to upload content,
 and optionally allow other people, possibly related to the uploader,
@@ -169,11 +169,11 @@ integrate with media platforms.
 %TS: The distinction follows later, where I introduce the 1st-3rd order networks. Helps? Has to come earlier? Raphaël? 
 
 \paragraph{Media Item}
-A \emph{media item} in the context of this paper is any video or image file that gets distributed via a social network.
+A media item in the context of this paper is defined as any video or image file that gets distributed via a social network.
 An example can be a baby photo that a fresh parent shares on Facebook. 
 
 \paragraph{Micropost}
-A \emph{micropost} is any textual status update that can,
+We define the term micropost as any textual status update that can,
 but not has to,
 accompany a media item.
 An example can be a status update accompanying the previously mentioned baby photo. %saying ``life is full of wonders, and you are one of them''.
@@ -182,9 +182,9 @@ An example can be a status update accompanying the previously mentioned baby pho
 %RV: the quote could make the explanation confusing: are Microposts maybe always things that people just share? I would have a more personal message like "look at our beautiful newborn" or even describing this message instead of quoting it.
 %TS: I removed the quote entirely.
 \paragraph{Event}
-An \emph{event} is an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
-An event with a defined start (September 17, 2011), but without a concrete end is the Occupy Wall Street movement.
-An event with both start and end can be a concert.
+An event is here defined as an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
+An event with a defined start point (September 17, 2011), but without a concrete end point, is the Occupy Wall Street movement.
+An event with both start and end point can be a concert.
 %RV: I don't know if the Spain protests are known enough. Maybe Occupy Wallstreet?
 % Also, this is the first time you give a concrete example.
 %TS: OWS it is.
@@ -199,19 +199,22 @@ In the following, we introduce a media item support schema for social networks.
 
 %RV: I would decapitalize and possibly add a hyphen (adjective): First-order media item support or even First-order support. Drawback: numerals are gone.
 %TS: Raphaël, your opinion?
-\paragraph{1{\st} Order Media Item Support}
+\paragraph{1{\st} order media item support}
 The social network is centered on media items.
 Posting on the social network requires inclusion of a media item.
+An example is YouTube.
 
-\paragraph{2{\nd} Order Media Item Support}
+\paragraph{2{\nd} order media item support}
 The social network lets users upload media items, however,
 posting is also possible without the inclusion of a media item.
+An example is Facebook.
 
-\paragraph{3{\rd} Order Media Item Support}
+\paragraph{3{\rd} order media item support}
 The social network has no direct support for media items, however,
 lets users upload media items on third party media platforms and reference them there.
+An example was Twitter before the introduction of native photo support.
 
-For this paper, we considered 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} provide a categorization according to the schema defined above.
+For this paper, we considered 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} \todo{Why does this reference not work???} provide a categorization according to the schema defined above.
 Therefore, the list of considered networks and platforms is necessarily non-exhaustive.
 We included those social networks with sufficient market share and popularity, offering mature API capabilities.
 For media platforms, the inclusion criterium was guided by a~study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
