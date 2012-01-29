@@ -153,20 +153,40 @@ for media galleries. Our approach can be tested online at \url{http://tomayac.co
 %%%  1. Introduction  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Introduction} \label{sec:introduction}
+\section{Introduction}                                                      \label{sec:introduction}
 Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
-With the widespread availability of mobile phones with decent cameras,
-event coverage more and more also happens on social networks,
-with sometimes news agencies featuring user-generated content from otherwise unknown social network users.
-Some examples with global impact were the shootings in Ut{\o}ya (first appearance on Twitter), the capture and arrest of Muammar Gaddafi (first appearance on YouTube), and the emergency ditching of a plane in Hudson river (first appearance on Twitpic).
-However, also for events without global impact like local concerts,
-interesting media items are available,
-albeit distributed over potentially many social networks.
-In response to this challenge, in this paper, we propose a social network agnostic approach for the extraction of images and videos covering events.
-We want to emphasize that we do \emph{not} perform event detection, i.e.,
-we are aware of the occurrence of events and use specific human-chosen search terms to find media about them.
-Different from \mbox{ImageCLEF} and \mbox{TRECVID}, that both deal with content-based analysis of and retrieval from images and videos,
-our approach deals with the separate additional task of extracting media from social networks in the first place.
+The widespread availability of mobile phones with higher resolution cameras has transformed citizens into witnesses
+who are used to comment and share media illustrating events on social networks. Some examples with global impact 
+include the shootings in Ut{\o}ya which first appeared on Twitter, the capture and arrest of Muammar Gaddafi which 
+first appeared on YouTube, or the emergency ditching of a plane in Hudson river which first appeared on Twitpic.
+Some news agencies\footnote{\url{http://www.citizenside.com/}} have even specialized in aggregating and brokering 
+this user generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also 
+largely illustrated by social media albeit distributed over many social networks.
+
+In this paper, we tackle the challenge of reconciliating the social media that could illustrate known events but that 
+are spread over the network in order to build visual summaries of them. We propose a social network agnostic 
+approach for the extraction of images and videos covering events. We want to emphasize that we do \emph{not} perform 
+event detection: the events we are dealing with are known and we use specific human-chosen search terms to find illustrating 
+media. As opposed to \mbox{ImageCLEF} and \mbox{TRECVID} that both evaluate content-based analysis approaches for 
+multimedia information retrieval, our approach deals with the separate additional task of extracting media from social networks 
+in the first place. 
+
+The remainder of this paper is organized as follows. In section~\ref{sec:social-networks}, we provide definitions of key terms
+and we distinguish how one could access to the deep link of the media shared on social networks. In section~\ref{sec:media-collector},
+we detail our media collector that extracts and process the media items. We present an experiment on 9 known events and we 
+discussed the results we obtained in section~\ref{sec:experiments}. We describe related work in section~\ref{sec:related-work} and, 
+finally, we give our conclusions and outline future work in section~\ref{sec:conclusion}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  2. Social Networks & Media Items  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Social Networks \& Media Items}                                    \label{sec:social-networks}
+Media items play a lively role in all social networks,
+all of which have a different level of support for media items.
+In the following, we introduce a media item support schema for social networks.
+
+\subsection{Definitions}
 In the following paragraphs, we provide necessary definitions for the terms that we will use throughout this paper.
 
 \paragraph{Social Network}
@@ -199,16 +219,7 @@ An event is here defined as an observable occurrence, phenomenon or an extraordi
 An event with a defined start point (September 17, 2011), but without a concrete end point, is the Occupy Wall Street movement.
 An event with both start and end point can be a concert.
 
-The remainder of this paper is structured as follows: \todo{Outline paper structure}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  2. Social Networks & Media Items  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Social Networks \& Media Items}
-Media items play a lively role in all social networks,
-all of which have a different level of support for media items.
-In the following, we introduce a media item support schema for social networks.
+%%%%%%%%%%%%%%%%%%%%%%
 
 %RV: I would decapitalize and possibly add a hyphen (adjective): First-order media item support or even First-order support. Drawback: numerals are gone.
 %TS: Raphaël, your opinion?
@@ -292,7 +303,7 @@ Interestingly, some media platforms~(e.g., img.ly) have write-only without read 
 %%%  3. ???  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Implementation Details}
+\section{Implementation Details}                                            \label{sec:media-collector}
 In this Section, we first introduce the common data format used consistently between all considered social networks.
 Second, we explain the architecture for different kinds of media item extractors,
 and third, show the steps in the media item processing chain.
@@ -873,8 +884,11 @@ A good example is the Assad Speech event, where a mix of Arabic voices blends ni
 A different example is the CES Las Vegas event, where the atmosphere of a big exposition with music, announcements, and technical analyses becomes alive.
 
 
-% Responsible: Ruben
-\section{Related Work} \label{sec:relatedwork}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  5. Related Work  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work}                                                      \label{sec:related-work}
 % Separate related work in fields:
 % - media item collection from social networks
 % - event summarization
@@ -904,14 +918,13 @@ However, the challenge in this field is to find methods that are content-agnosti
 Methods that exploit semantic information~(\emph{e.g.}, \cite{Chen}) will likely provide high-quality results in the future,
 but today's most relevant summaries are produced by user interaction~\cite{Olsen}.
 
-% Temporarily added to simplify writing and reading Future Work section
-%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  6. Conclusion and Future Work  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Conclusion and Future Work}
-% Conclusion
+\section{Conclusion and Future Work}                                        \label{sec:conclusion}
 \todo{Write conclusion}
 
-% Future work
 % Responsible: Ruben
 In this work, the focus has been on extracting visual media and associated textual messages from social networks.
 One possibility for future work would therefore be to pursue our efforts in this direction by supporting more social networks and improving our Web scrapers.
@@ -943,11 +956,19 @@ since the text could convey a~sentiment about or an~explanation of the visual da
 Using named entity recognition~\cite{NERD,AddingMeaningToMicroposts}, the important semantic elements in the message text can be identified to build an understanding of its meaning.
 The contents of the message could subsequently be used to narrow down the search space for visual factors, enabling cross-fertilization between the textual and visual analysis, which results in effective, context-aware analysis possibilities~\cite{verborgh_mtap_2011}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Acknowledgments  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Acknowledgments}
 The research activities as described in this paper were funded by Ghent University, the Interdisciplinary Institute for Broadband Technology (IBBT), the Institute for the Promotion of Innovation by Science and Technology in Flanders (IWT), the Fund for Scientific Research Flanders (FWO Flanders), and the European Union.
 
 This work was partially supported by the European Commission under Grant No. 248296 FP7 \mbox{I-SEARCH} project.
 Joaquim Gabarr\'o is partially supported by TIN-2007-66523 (FORMALISM), and SGR 2009-2015 (\mbox{ALBCOM}).
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%%  Bibliography  %%%
+%%%%%%%%%%%%%%%%%%%%%%
 
 % back to normal size Computer Modern for URLs in bibliography
 \let\ttdefault\oldttdefault
@@ -957,4 +978,5 @@ Joaquim Gabarr\'o is partially supported by TIN-2007-66523 (FORMALISM), and SGR 
 \bibliography{icmr2012}
 
 \balancecolumns
+% That's all folks!
 \end{document} 
