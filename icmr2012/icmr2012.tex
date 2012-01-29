@@ -245,14 +245,13 @@ search functionalities of social networks to find references to media items whic
 
 An \emph{Application Programming Interface (API)} is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other. \emph{Web scraping} is the process of automatically extracting information from web sites. Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc. Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree. The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, while Web scraping relies on the textual and/or hierarchical structure of web sites.
 
-Social networks are very much perceived as ``walled gardens'' (\autoref{fig:DavidSimonds}). Several social networks (e.g. Twitter) have full read and write access via specified APIs while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
-
-\begin{figure}
- \centering
- \includegraphics[width=1.0\linewidth,trim=16px 17px 12px 15px,clip]{./resources/davidsimonds.jpg}
- \caption{David Simonds illustrates social networks as walled gardens due to their (by design) lock-in effects~\cite{DavidSimonds}}
- \label{fig:DavidSimonds}
-\end{figure}
+Social networks are very much perceived as ``walled gardens''. Several social networks (e.g. Twitter) have full read and write access via specified APIs while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
+%\begin{figure}
+% \centering
+% \includegraphics[width=1.0\linewidth,trim=16px 17px 12px 15px,clip]{./resources/davidsimonds.jpg}
+% \caption{David Simonds illustrates social networks as walled gardens due to their (by design) lock-in effects~\cite{DavidSimonds}}
+% \label{fig:DavidSimonds}
+%\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  3. Media Collector  %%%
@@ -362,79 +361,43 @@ We have deduplicated the videos in the dataset by first automatically splitting 
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Experiments}                                                       \label{sec:experiments}
-% Responsible: Thomas
-For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
-We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://webmasterapp.net/social/icmr2012/}}.
-We invite the reader to browse the data and compile a personal set of loose and exact duplicate media items.
-YouTube video URLs are signed with a by now expired time to live,
-they can be accessed by following the \texttt{storyurl} link.
+We run experiments during the period of January 10 to 19, 2012 in which we have selected 9 events. For those events, we collected media items and microposts using our media collector (the dataset as well as the visual summaries are available at \url{http://webmasterapp.net/social/icmr2012/}. We invite the reader to browse the dataset and compile a personal set of loose and exact duplicate media items. YouTube video URLs are signed with a token that expires but they can be accessed by following the \texttt{storyurl} link.
 
-\subsection{Considered Events}
-In this Subsection, we give a short overview on the context of the considered events in order to give the reader the necessary background knowledge.
-% Add to each event some categorization: political, technical,…
-% Add to each event the duration with start and end if possible.
-
-\paragraph{Blackout SOPA}
-The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods.
-On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act.
-Other companies, including Google, posted links and images in an effort to raise awareness.
-% \footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}
-
-\paragraph{Assad Speech}
-On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters.
+%%%  4.1 Events Considered  %%%
+\subsection{Events Considered}
+We give a short overview of the 9 selected events in order to give the reader the necessary background knowledge.
+\newline
+\textbf{Assad Speech.} On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters.
 % \footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}
-
-\paragraph{Christian Wulff Case}
-Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while governor of Lower Saxony.
-When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad.
-When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action.
-% \footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}
-
-\paragraph{Dixville Notch}
-Dixville Notch is an unincorporated village in Dixville township of Coos County, New Hampshire, USA, best known in connection with its longstanding middle-of-the-night vote in the U.S. presidential election.
-In a tradition that started in the 1960 election, all the eligible voters in Dixville Notch gather at midnight in the ballroom of The Balsams.
-This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later.
-% \footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}
-
-\paragraph{Free Mobile Launch}
-Free Mobile is a French mobile broadband company, part of the Iliad group.
-On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel.
-% \footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}
-
-\paragraph{Costa Concordia Disaster} \label{sec:concordia}
-The Costa Concordia is an Italian cruise ship that hit a reef and partially sank on January 13, 2012 off the Italian coast.
+\newline
+\textbf{CES Las Vegas.} The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center. Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements.
+%\footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}
+\newline
+\textbf{Costa Concordia Disaster.} The Costa Concordia is an Italian cruise ship that hit a reef and partially sank on January 13, 2012 off the Italian coast.
 The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation of 4,211 people on board.
-% \footnote{Coosta Concordia Disaster: \url{http://www.costacruise.com/B2C/USA/Info/concordia_statement.htm}}
+%\footnote{Coosta Concordia Disaster: \url{http://www.costacruise.com/B2C/USA/Info/concordia_statement.htm}}
+\newline
+\textbf{Cut the Rope Launch.} On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced. This is a sub-event of CES Las Vegas.
+%\footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}
+\newline
+\textbf{Dixville Notch.} Dixville Notch is an unincorporated village in Dixville township of Coos County, New Hampshire, USA, best known in connection with its longstanding middle-of-the-night vote in the U.S. presidential election. In a tradition that started in the 1960 election, all the eligible voters in Dixville Notch gather at midnight in the ballroom of The Balsams. This year, on January 10, 2012, the voters cast their ballots and the polls officially closed one minute later.
+%\footnote{Dixville Notch: \url{http://www.washingtonpost.com/2012/01/09/gIQANslKnP_story.html}}
+\newline
+\textbf{Free Mobile Launch.} Free Mobile is a French mobile broadband company, part of the Iliad group. On January 10, 2012, a long-awaited mobile phone package for \EUR{19.99} with calls included to 40 countries, texts, multimedia messages and Internet was announced by the Iliad group's Chief Strategy Officer, Xavier Niel.
+%\footnote{Free Mobile Launch: \url{http://www.nytimes.com/2012/01/11/technology/iliad-takes-aim-at-top-mobile-operators-in-france.html}}
+\newline
+\textbf{Blackout SOPA.} The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods. On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act. Other companies, including Google, posted links and images in an effort to raise awareness.
+%\footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}
+\newline
+\textbf{Ubuntu TV Launch.} Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES. 
+%\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}
+\newline
+\textbf{Christian Wulff Case.} Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while being governor of Lower Saxony. When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad. When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action.
+%\footnote{Christian Wulff Case: \url{http://www.spiegel.de/international/germany/0,1518,804631,00.html}}
 
-\paragraph{CES Las Vegas}
-The International Consumer Electronics Show (CES) is a major technology-related trade show held each January in the Las Vegas Convention Center.
-Not open to the public, the Consumer Electronics Association-sponsored show typically hosts previews of products and new product announcements.
-% \footnote{CES Las Vegas: \url{http://www.cesweb.org/aboutcea.asp}}
-
-\paragraph{Cut the Rope Launch}
-% Sub-event of CES Las Vegas
-On January 10, 2012 during Microsoft's keynote at CES, the HTML5 version of the popular mobile game \textit{Cut the Rope} was announced.
-% \footnote{Cut the Rope Launch: \url{http://ces.cnet.com/8301-33377_1-57356403/}}
-
-\paragraph{Ubuntu TV Launch}
-% Sub-event of CES Las Vegas
-Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES.
-% \footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}
-
-\subsection{Dataset} \label{subsec:dataset}
-Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
-During the examination of our dataset, we observed that the process of image deduplication is by no means a solved issue.
-Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
-The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi:RAICS11}.
-We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
-For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
-The main problem with the dataset is its diversity.
-It ranges from entirely sharp screenshots in all sorts of formats (e.g., screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g., photos of the stage for the Free Mobile Launch event).
-A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps.
-In the context of our dataset, however, this approach is counterproductive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo.
-In practice, shrinking a wide rectangular banner to a square led to many incorrect results, requiring manual deduplication with the Blackout SOPA event.
-
-\begin{table*}[htbp]
+%%%  4.2 Dataset  %%%
+\subsection{Dataset}
+Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos (Table~\ref{tab:number-media}). Some videos are no longer available due to either an account termination or a video takedown by the user (Assad, Dixville). We observed that the process of image deduplication is by no means a solved issue. Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases. The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi:RAICS11}. We used the PhotoSweeper CBIR-based image duplication detection software that allows for manual algorithm and threshold selection to detect duplicates in the dataset (Table~\ref{tab:duplicate-media}). \begin{table*}[htbp]
   \centering{
   \small{
   \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -466,46 +429,46 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
   \caption{Number of images and videos collected for the 9 events (resp. \textbf{Assad Speech}, \textbf{CES Las Vegas}, \textbf{Costa Concordia Disaster}, \textbf{Dixville Notch}, \textbf{Free Mobile Launch}, \textbf{Cut the Rope Launch}, \textbf{Blackout SOPA}, \textbf{Ubuntu TV Launch} and \textbf{Christian Wulff Case}) grouped by social networks}
   }
 \end{table*}
-
+For each event, we manually select the best settings to limit the number of duplicate misses and false positives. The main problem with the dataset is its diversity. It ranges from entirely sharp screenshots in all sorts of formats (e.g. screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g. photos of the stage for the Free Mobile Launch event). A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps. In the context of our dataset, however, this approach is counter productive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo. In practice, shrinking a wide rectangular banner to a square led to many incorrect results requiring manual deduplication with the Blackout SOPA event.
 \begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
+  \begin{tabular}{|c|c|c||c|c|}
     \hline
-    \textbf{Event} & \textbf{Exact Duplicate Images} & \textbf{Loose Duplicate Images}\\
+    \textbf{Event} & \textbf{Exact Duplicate I} & \textbf{Loose Duplicate I} & \textbf{Exact Duplicate V} & \textbf{Loose Duplicate V}\\
     \hline
-    Assad Speech & 0 images in 0 sequences & 2 images in 1 sequence\\
-    Blackout SOPA & 0 images in 0 sequences & 14 images in 4 sequences\\
-    CES Las Vegas & 0 images in 0 sequences & 9 images in 3 sequences\\
-    Christian Wulff Case & 4 images in 2 sequences & 0 images in 0 sequences\\
-    Costa Concordia & 0 images in 0 sequences & 6 images in 3 sequences\\
-    Cut the Rope Launch & 2 images in 1 sequence & 15 images in 5 sequences\\
-    Dixville Notch & 2 images in 1 sequence & 2 images in 1 sequence\\
-    Free Mobile Launch & 2 images in 1 sequence & 16 images in 7 sequences\\
-    Ubuntu TV Launch & 0 images in 0 sequences & 5 images in 1 sequence\\
+    Assad Speech & 0 image in 0 seq & 2 images in 1 seq & 0 video in 0 seq & 2 videos in 1 seq\\
+    CES Las Vegas & 0 image in 0 seq & 9 images in 3 seq & 0 video in 0 seq & 2 videos in 1 seq\\
+    Costa Concordia & 0 image in 0 seq & 6 images in 3 seq & 0 video in 0 seq & 0 video in 0 seq\\
+    Cut the Rope Launch & 2 images in 1 seq & 15 images in 5 seq & 0 video in 0 seq & 14 videos in 3 seq\\
+    Dixville Notch & 2 images in 1 seq & 2 images in 1 seq & 2 videos in 1 seq & 0 video in 0 seq\\
+    Free Mobile Launch & 2 images in 1 seq & 16 images in 7 seq & 0 video in 0 seq & 0 video in 0 seq\\
+    Blackout SOPA & 0 image in 0 seq & 14 images in 4 seq & 2 videos in 1 seq & 0 video in 0 seq\\
+    Ubuntu TV Launch & 0 image in 0 seq & 5 images in 1 seq & 4 videos in 1 seq & 9 videos in 4 seq\\
+    Christian Wulff Case & 4 images in 2 seq & 0 image in 0 seq & 0 video in 0 seq & 0 video in 0 seq\\
     \hline
   \end{tabular}
-  \label{tab:duplicateimages}
-  \caption{Exact and loose duplicate images per event.}
+  \label{tab:duplicate-media}
+  \caption{Exact and loose duplicate images (I) and videos (V) per event}
 \end{table*}
+%Some videos are false positives (Cut the rope launch, Dixville, Free mobile, Ubuntu).
 
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Event} & \textbf{Exact Duplicate Videos} & \textbf{Loose Duplicate Videos}\\
-    \hline
-    Assad Speech\footnote{3 videos were no longer available due to account termination by the users (two cases) and video takedown by the user (one case).}\todo{Footnote not shown. Needs manual fix?} & 0 videos in 0 sequences & 2 videos in 1 sequence\\
-    Blackout SOPA & 2 videos in 1 sequence & 0 videos in 0 sequences\\
-    CES Las Vegas & 0 videos in 0 sequences & 2 videos in 1 sequence\\
-    Christian Wulff Case & 0 videos in 0 sequences & 0 videos in 0 sequences\\
-    Costa Concordia & 0 videos in 0 sequences & 0 videos in 0 sequences\\
-    Cut the Rope Launch & 0 videos in 0 sequences & 14 videos in 3 sequences\footnote{6 videos in 2 sequences were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
-    Dixville Notch & 2 videos in 1 sequence & 0 videos in 0 sequences\footnote{1 video was no longer available due to video takedown by the user. 11 videos were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
-    Free Mobile Launch & 0 videos in 0 sequences & 0 videos in 0 sequences\footnote{5 videos were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
-    Ubuntu TV Launch & 4 videos in 1 sequence & 9 videos in 4 sequences\footnote{8 videos in 3 sequences were false positives.}\todo{Footnote not shown. Needs manual fix?}\\
-    \hline
-  \end{tabular}
-  \label{tab:duplicatevideos}
-  \caption{Exact and loose duplicate videos per event.}
-\end{table*}
+%%%  4.3 Ranking Media Items  %%%
+\subsection{Ranking Media Items}
+Looking at our dataset, it is obvious that the amount of exact duplicate images and videos is largely inferior compared to the amount of loose duplicates. On the one hand, this is owed to applied search operators that exclude re-shared microposts such as Re-Tweets of the same tweet. Hence, the same media item can appear twice in our results only if two users authored different microposts referencing the same media item. On the other hand, it is also owed to our strict definition of exact duplicate which counts resized versions of the same media item as different. We argue that this makes sense as someone had to actively process the media item. A good example is the Blackout SOPA event where the text in the first sequence in \autoref{fig:sequences} is identical while the images have different file sizes, resolutions and paddings. This implies that someone has taken the initial image and applied some post-processing (e.g. cropping) before re-sharing it. A similar example is the second sequence in \autoref{fig:sequences} of the Costa Concordia Disaster where the chimney got cut off.
+
+Long term access to the media items that have been extracted is fragile if only the reference is kept. Users can terminate their accounts on social networks,
+delete media items, or change their privacy settings at any time. In addition, social networks can themselves remove media items according to their policies or government order. Hence, in the context of the Assad Speech event, we experienced media items that were quickly no longer available.
+%To be on the safe side, only media items where explicitly the media item owner as well as the social network permit storage by third parties should be stored.
+%We did not consider legal requirements, however, do note that for potential future exploitation this is indispensable.
+
+By clustering loose duplicate media items in sequences, we aim at boosting diversity in the returned set of media items for a given event: if there are many media items for an event, in the long term we try to only show the most relevant ones from each sequence. This will require a media item ranking formula that will include a combination of different categories of ranking criteria:
+\newline
+\textbf{Visual Features.} Extracted visual features from media items can help judge their quality. Sharp is better than blurry, higher contrast is better than lower contrast, etc. Interestingly, we observe that videos with less or just one camera shot are more likely produced by amateurs, while videos with more shots are more likely produced by professionals. Depending on the event, one might be preferred over the other.
+\newline
+\textbf{Low-level Features.} Common low-level features such as resolution, file size, but also the presence of EXIF metadata or geolocation are good quality indicators. Longer videos are better than shorter videos, higher resolution is better than lower resolution, etc.
+\newline
+\textbf{Social Features.} Media items belonging to the same sequence can have different popularity, either globally across social networks, or on specific social networks. Combining network-specific signals (e.g. number of Re-Tweet on Twitter, Like on Facebook, +1 on Google+, views on YouTube) and generic signals (e.g. number of comments to a micropost) help to generate a good social popularity indicator. This can also include user diversity by featuring content from different users rather than just content from one user.
+\newline
+\textbf{Textual Features.} Media items are often surrounded by a textual description in a micropost. Named entity disambiguation can reveal valuable insights which can be further combined with face recognition techniques in order to select media items. Let's assume that a user sends a micropost containing a media item about a concert while mentioning the name of a singer. A framework such as NERD can map the singer's name to a Linked Data concept and help searching for known objects such as the singer's face.
 
 \begin{figure*}
 \begin{tabular}{p{\textwidth}}
@@ -704,74 +667,9 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \label{fig:sequences}
 \end{figure*}
 
-\subsection{Results Interpretation and Discussion}
-Looking at our dataset, it becomes evident that the amount of exact duplicate images and videos is inferior compared to the amount of loose duplicates.
-On the one hand, this is owed to applied search operators that exclude reshared microposts like, e.g., ReTweets of the same tweet.
-So in order for the same media item to appear twice in our results, two users have to author different microposts referencing the same media item\footnote{Using the same, or a different URL.} rather than just one user resharing a micropost from the other.
-On the other hand, it is also owed to our strict definition of exact duplicate, which counts resized versions of the same media item as different.
-We argue that this, while at the first sight counterintuitive,
-makes sense as someone had to actively process the media item.
-A good example is the Blackout SOPA event where the text in the first sequence in \autoref{fig:sequences} is identical, however,
-the images have different file sizes, resolutions, and paddings.
-This implies that someone has taken the initial image, processed it by, e.g.,
-cropping it, and only then used the modified version.
-A similar example is the second sequence in \autoref{fig:sequences} of the Costa Concordia Disaster, where the chimney got cut off.
-
-In order to access extracted media items in the future,
-it may not be necessary to just store their references.
-Users can at any time terminate their accounts on social networks,
-delete media items, or change their privacy settings.
-In addition to that, social networks themselves can take media items down on government order or enforcing own policies.
-We experienced no longer accessible media items in the context of the Assad Speech event.
-To be on the safe side, only media items where explicitly the media item owner as well as the social network permit storage by third parties should be stored.
-We did, at this point, not consider legal requirements, however,
-do note that for potential future exploitation this is indispensable.
-
-By clustering loose duplicate media items in sequences,
-we aim at boosting diversity in the returned set of media items for a given event:
-if there are many media items for an event,
-in the longterm we try to only show the most relevant ones from each sequence.
-This will require a media item ranking formula that will include a combination of different categories of ranking criteria:
-
-\paragraph{Visual Features}
-Extracted visual features from media items can help judge their quality.
-Sharp is better than blurry, higher contrast is better than lower contrast, etc.
-An interesting observation can be made with videos: videos with less or just one camera shot are more probable to be produced by amateurs (in tendency more authentic),
-whereas videos with more shots are more probable to be produced by professionals (in tendency more official and credible).
-Depending on the event, the one might be preferred over the other.
-
-\paragraph{Low-level Features}
-Common low-level features like resolution, file size, but also the presence of Exif data for, e.g.,
-geolocation, are good quality indicators.
-Longer videos are better than shorter videos, higher resolution is better than lower resolution, etc.
-
-\paragraph{Social Features}
-Media items belonging to the same sequence can have different popularity,
-both globally across social networks, or on specific social networks.
-Combining network-specific signals,
-like number of ReTweets on Twitter, Likes on Facebook, +1s on Google+, views on YouTube;
-and generic signals, like number of comments to a micropost,
-a good social popularity indicator can be generated.
-This can also include user diversity, i.e.,
-featuring content from different users rather than just content from one user.
-
-\paragraph{Textual Features}
-Important context is available in form of microposts that accompany media items.
-Named entity disambiguation can reveal valuable insights and, in combination with advanced techniques like face recognition,
-help make the right media item choices.
-If a user sends a micropost containing a media item about a concert, and if via named entity disambiguation the singer can be mapped back to a Linked Data concept,
-the media item can be searched for potentially known objects, e.g., the singer's face.
-Applying this combination of visual and textual features,
-highly relevant media items can be selected.
-
-\subsection{Result Representation}
-Given that a media item ranking was available,
-the question of result representation raises.
-Should more popular media items be displayed bigger, longer, or with a special decoration like a thicker border in comparison to less popular media items?
-For videos, the audio part poses a challenge.
-In our experiments we have made the interesting finding that intermixing the audio of all videos of an event oftentimes generates a very characteristic ``noise cloud''.
-A good example is the Assad Speech event, where a mix of Arabic voices blends nicely with the speech of a US politician.
-A different example is the CES Las Vegas event, where the atmosphere of a big exposition with music, announcements, and technical analyses becomes alive.
+%%%  4.4 Generating Media Galleries  %%%
+\subsection{Generating Media Galleries}
+Once the media items are ranked, it is possible to generate media galleries and build visual summaries. Popular media items can be displayed bigger, longer, or with a special decoration like a thicker border in comparison to less popular media items. For videos, the audio part poses a challenge. In our experiments, we observe that intermixing the audio of all videos of an event often generates a very characteristic ``noise cloud''. A good example is the Assad Speech event, where a mix of Arabic voices blends nicely with the speech of a US politician. A different example is the CES Las Vegas event, where the atmosphere of a big exposition with music, announcements, and technical analysis becomes alive.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  5. Related Work  %%%
