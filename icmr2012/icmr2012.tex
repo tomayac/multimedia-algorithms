@@ -1,3 +1,7 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Getting the Bigger Picture -- Extracting Media Items Covering Events from Multiple Social Networks  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \documentclass{acm_proc_article-sp}
 
 \usepackage[utf8]{inputenc}
@@ -12,15 +16,10 @@
 \def\subfloatautorefname{Subfigure}
 
 \usepackage[lofdepth,lotdepth]{subfig}
-
 \usepackage{enumitem}
-
 \usepackage{mathtools}
-
 \usepackage{eurosym}
-
 \usepackage{fmtcount}
-
 \usepackage{fancybox}
 
 % give emph a normal fontsize
@@ -77,13 +76,17 @@ framexbottommargin=-1em,
 
 % avoid LaTeX float errors
 \usepackage{morefloats}
-%\DeclareCaptionType{copyrightbox}
+\DeclareCaptionType{copyrightbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Beginning of document  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
 \title{Getting the Bigger Picture -- Extracting Media Items Covering Events from Multiple Social Networks}
 
-\numberofauthors{3}
+\numberofauthors{5}
 \author{
 \alignauthor
 \textbf{Thomas Steiner}\\
@@ -97,13 +100,13 @@ framexbottommargin=-1em,
 	\affaddr{Multimedia Lab}\\
 	\affaddr{9050 Ghent, Belgium}\\
 	\affaddr{ruben.verborgh@ugent.be}	
-\and
 \alignauthor
 \textbf{Raphaël Troncy}\\
 	\affaddr{EURECOM}\\
 	\affaddr{06560 Sophia Antipolis}\\
 	\affaddr{France}\\
 	\affaddr{rtroncy@eurecom.fr}
+\and
 \alignauthor
 \textbf{Joaquim Gabarro}\\
 	\affaddr{Univ. Polit\`{e}cnica de Catalunya}\\
@@ -120,27 +123,34 @@ framexbottommargin=-1em,
 
 \maketitle
 
+%%%%%%%%%%%%%%%%%%
+%%%  Abstract  %%%
+%%%%%%%%%%%%%%%%%%
+
 \begin{abstract}
 Social networks play an increasingly important role to provide authentic and as-it-happens coverage of events.
-Representative examples are the 2011 Ut{\o}ya shootings in Norway, or the miracle on the Hudson in 2009,
-where US Airways flight 1549 ended with an emergency ditching.
-In this paper, we propose a social network agnostic approach for the extraction of videos and images covering events, which in the longterm can serve for the automatic generation of media galleries for, e.g., news websites.
-Our approach includes an alignment of the varying search results formats from different social networks,
-and puts media items and the status updates they stemmed from in relation. 
-This allows us to leverage (i) visual features from media items, (ii) textual features from status updates, and (iii) social features from social networks to interpret, deduplicate, cluster, and rank media items,
-which is an important challenge given our objective of the automatic generation of media galleries.
-We address the technical details of media item extraction and media item processing,
-discuss media item ranking criteria,
-and envision several visualization options for media items.
-Our approach can be tested online\footnote{\url{http://tomayac.com/social/}}.
+Representative examples are the 2011 Ut{\o}ya shootings in Norway, or the miracle on the Hudson river in 2009,
+where the US Airways flight 1549 ended with an emergency ditching. One of the problem is that media and testimonial
+captured by witnesses of those events are spread among multiple social networks. In this paper, we propose a social network 
+agnostic approach for the extraction of images and videos covering events, which can be later on processed for the 
+automatic generation of visual summaries in the form of media galleries. Our approach includes the alignment of the 
+varying search results formats from these social networks while putting the media items in correspondence with the 
+status updates and stories they are related to. More precisely, we leverage (i) visual features from media items, 
+(ii) textual features from status updates, and (iii) social features from social networks to interpret, de-duplicate, 
+cluster and rank media items in order to generate automatically media galleries. We address the technical details of media 
+item extraction and media item processing, discuss criteria for media item ranking and envision several visualization options 
+for media galleries. Our approach can be tested online at \url{http://tomayac.com/social/}.
 \end{abstract}
 
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
 \category{H.3.5}{Online Information Services}{Web-based services}
 
-\keywords{Media Item Extraction, Social Networks, Media Gallery}
+\keywords{Media Collector, Social Networks, Events, Media Gallery}
 
-% Responsible: Raphaël
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  1. Introduction  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction} \label{sec:introduction}
 Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
 With the widespread availability of mobile phones with decent cameras,
@@ -169,11 +179,11 @@ Finally, there are hybrid forms~(e.g., TweetDeck for Twitter using Twitpic) wher
 typically via third party applications,
 integrate with media platforms.
 %RV: I tried to clarify the text a little, but it's still not clear enough to me. I think the first and second types also need a name to distinguish the three forms from each other.
-%TS: The distinction follows later, where I introduce the 1st-3rd order networks. Helps? Has to come earlier? Raphaël? 
+%TS: The distinction follows later, where I introduce the 1st-3rd order networks. Helps? Has to come earlier? Raphaël?
 
 \paragraph{Media Item}
 A media item in the context of this paper is defined as any video or image file that gets distributed via a social network.
-An example can be a baby photo that a fresh parent shares on Facebook. 
+An example can be a baby photo that a fresh parent shares on Facebook.
 
 \paragraph{Micropost}
 We define the term micropost as any textual status update that can,
@@ -351,7 +361,7 @@ For some social networks, e.g., MySpace, a combination of Web scraping and API a
 as the API does not return all necessary fields as defined in our data format.
 In the concrete case of MySpace, albeit the API returns the media items,
 the timestamps of when they were uploaded has to be scraped.
-The complete data flow can be seen in the architectural diagram in \autoref{fig:architecture}. 
+The complete data flow can be seen in the architectural diagram in \autoref{fig:architecture}.
 
 \begin{figure*}
 \centering
@@ -454,7 +464,7 @@ Other companies, including Google, posted links and images in an effort to raise
 % \footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}
 
 \paragraph{Assad Speech}
-On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters. 
+On January 10, 2012, Syrian President Bashar al-Assad delivered a lengthy televised talk strongly defending his government's actions and motivations, despite world pressure on his embattled government for its 10-month crackdown on protesters.
 % \footnote{Assad Speech: \url{http://www.cnn.com/2012/01/10/world/meast/syria-unrest/}}
 
 \paragraph{Christian Wulff Case}
@@ -618,7 +628,7 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
     Twitter & 4 & 0\\
     Instagram & 20+ & 0\\
     YouTube & 0 & 10+\\
-    Flickr & 10 & 10+\\ 
+    Flickr & 10 & 10+\\
     MobyPicture & 20+ & 0\\
     Twitpic & 20+ & 0\\
     \hline
@@ -638,7 +648,7 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
     Twitter & 3 & 0\\
     Instagram & 0 & 0\\
     YouTube & 0 & 3\\
-    Flickr & 10 & 10+\\ 
+    Flickr & 10 & 10+\\
     MobyPicture & 0 & 0\\
     Twitpic & 1 & 0\\
     \hline
@@ -658,7 +668,7 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
     Twitter & 2 & 0\\
     Instagram & 20+ & 0\\
     YouTube & 0 & 10+\\
-    Flickr & 10+ & 0\\ 
+    Flickr & 10+ & 0\\
     MobyPicture & 2 & 0\\
     Twitpic & 20+ & 0\\
     \hline
@@ -678,7 +688,7 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
     Twitter & 0 & 0\\
     Instagram & 0 & 0\\
     YouTube & 0 & 10+\\
-    Flickr & 10+ & 9\\ 
+    Flickr & 10+ & 9\\
     MobyPicture & 2 & 0\\
     Twitpic & 2 & 0\\
     \hline
@@ -1037,7 +1047,7 @@ but today's most relevant summaries are produced by user interaction~\cite{Olsen
 \todo{Write conclusion}
 
 % Future work
-% Responsible: Ruben 
+% Responsible: Ruben
 In this work, the focus has been on extracting visual media and associated textual messages from social networks.
 One possibility for future work would therefore be to pursue our efforts in this direction by supporting more social networks and improving our Web scrapers.
 This could significantly improve the quantity and diversity of considered media and messages,
@@ -1082,4 +1092,4 @@ Joaquim Gabarr\'o is partially supported by TIN-2007-66523 (FORMALISM), and SGR 
 \bibliography{icmr2012}
 
 \balancecolumns
-\end{document}
+\end{document} 
