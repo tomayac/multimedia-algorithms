@@ -265,7 +265,7 @@ we describe the various processing steps applied to each media item collected.
 
 %%%  3.1 Data Format  %%%
 \subsection{Data Format}                                                    \label{sec:data-format}
-We propose a common alignment schema for all social networks considered in the Table~1 in order to be
+We propose a common alignment schema for all social networks considered in Table~1 in order to be
 agnostic of concrete social networks. The resulting set of metadata for a media item is detailed below:
 \begin{description}
   \item[Media URL] Deep link to the media item (\url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}).
@@ -320,18 +320,18 @@ agnostic of concrete social networks. The resulting set of metadata for a media 
 
 %%%  3.2 Media Item Extractors  %%%
 \subsection{Media Item Extractors}
-We have developed a media collector composed of media item extractors for the 7 social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube and Flickr with additional support for the 4 media sharing platforms img.ly, yfrog, MobyPicture and Twitpic. The media collector takes as input a search term that is relevant to a known event, e.g. ``costa concordia'' for the Costa Concordia Disaster. This search term gets forwarded to the search APIs of the social networks in parallel. Each social network has a 30 seconds timeout window to deliver its results. When the timeout is reached or when all social networks have responded,
-the available results are aligned according to the data format defined in Section~\ref{sec:data-format}. Media items are retrieved either directly or via web scraping. For some social networks, e.g. MySpace, a combination of web scraping and API access is required since the API does not return all necessary fields of our data format. Hence, the timestamp of when a media item is uploaded on MySpace can be obtained only via web scraping. The complete data flow is illustrated in the architectural diagram (\autoref{fig:architecture}).
+We have developed a media collector composed of media item extractors for the seven social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr with additional support for the four media sharing platforms img.ly, yfrog, MobyPicture, and Twitpic. The media collector takes as input a search term that is relevant to a known event, e.g. ``costa concordia'' for the Costa Concordia Disaster. This search term gets forwarded to the search APIs of the social networks in parallel. Each social network has a 30 seconds timeout window to deliver its results. When the timeout is reached, or when all social networks have responded,
+the available results are aligned according to the data format defined in \autoref{sec:data-format}. Media items are retrieved either directly or via Web scraping. For some social networks, e.g. MySpace, a combination of Web scraping and API access is required since the API does not return all necessary fields of our data format. Hence, the timestamp of when a media item is uploaded on MySpace can be obtained only via Web scraping. The complete data flow is illustrated in the architectural diagram (\autoref{fig:architecture}).
 \begin{figure*}
 \centering
 \includegraphics[width=1.0\linewidth]{./resources/architecture.pdf}
-\caption{Overview of the media collector: hybrid approach for the media item extraction process using a combination of API access and web scraping}
+\caption{Overview of the media collector: hybrid approach for the media item extraction process using a combination of API access and Web scraping}
 \label{fig:architecture}
 \end{figure*}
 
 %%%  3.3 Media Item Processing  %%%
 \subsection{Media Item Processing}
-As part of the processing chain, we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images. This explains the tendency to round numbers of results in Table~\ref{tab:number-media} marked with $n+$.
+As part of the processing chain, we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images. This explains the tendency to round numbers of results in Table~\ref{tab:number-media}, marked with $n+$.
 
 \subsubsection{Machine Translation}
 Social networking is happening at a global scale. In consequence, many microposts are authored in languages different from English. In order to still make sense out of those microposts, we apply machine translation to translate non-English microposts to English. We use the Google Translate API\footnote{\url{http://code.google.com/apis/language/translate/v2/getting_started.html}} which, if the source language parameter is left blank, tries first to detect the source language and subsequently translates the micropost to English.
@@ -347,7 +347,7 @@ using the NERD framework~\cite{NERD}.
 
 \subsubsection{Media Item Deduplication}
 We try to evaluate the popularity of the media items shared across social networks. This task involves the deduplication of extracted media items.
-We use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image duplication detection software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
+For images, we use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image deduplication software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
 
 \paragraph{Image Deduplication}
 The image duplication software we employed allows for different algorithms to be used. We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e. we do \emph{not} count a resized version of an image as exact duplicate. Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate. Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
