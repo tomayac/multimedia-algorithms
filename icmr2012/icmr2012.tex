@@ -245,7 +245,9 @@ search functionalities of social networks to find references to media items whic
 
 An \emph{Application Programming Interface (API)} is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other. \emph{Web scraping} is the process of automatically extracting information from web sites. Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc. Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree. The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, while Web scraping relies on the textual and/or hierarchical structure of web sites.
 
+\begin{comment}
 Social networks are very much perceived as ``walled gardens''. Several social networks (e.g. Twitter) have full read and write access via specified APIs while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
+\end{comment}
 %\begin{figure}
 % \centering
 % \includegraphics[width=1.0\linewidth,trim=16px 17px 12px 15px,clip]{./resources/davidsimonds.jpg}
@@ -361,7 +363,7 @@ We have deduplicated the videos in the dataset by first automatically splitting 
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Experiments}                                                       \label{sec:experiments}
-We run experiments during the period of January 10 to 19, 2012 in which we have selected 9 events. For those events, we collected media items and microposts using our media collector (the dataset as well as the visual summaries are available at \url{http://webmasterapp.net/social/icmr2012/}. We invite the reader to browse the dataset and compile a personal set of loose and exact duplicate media items. YouTube video URLs are signed with a token that expires but they can be accessed by following the \texttt{storyurl} link.
+We run experiments during the period of January 10 to 19, 2012 in which we have selected nine events. For those events, we collected media items and microposts using our media collector (the dataset as well as the visual summaries are available at \url{http://webmasterapp.net/social/icmr2012/}. We invite the reader to browse the dataset and compile a personal set of loose and exact duplicate media items. YouTube video URLs are signed with a token that expires but they can be accessed by following the \texttt{storyurl} link.
 
 %%%  4.1 Events Considered  %%%
 \subsection{Events Considered}
@@ -429,7 +431,7 @@ Our data set contained 448 images with an average file size of $\sim$0.7MB and 1
   \caption{Number of images and videos collected for the 9 events (resp. \textbf{Assad Speech}, \textbf{CES Las Vegas}, \textbf{Costa Concordia Disaster}, \textbf{Dixville Notch}, \textbf{Free Mobile Launch}, \textbf{Cut the Rope Launch}, \textbf{Blackout SOPA}, \textbf{Ubuntu TV Launch} and \textbf{Christian Wulff Case}) grouped by social networks}
   }
 \end{table*}
-For each event, we manually select the best settings to limit the number of duplicate misses and false positives. The main problem with the dataset is its diversity. It ranges from entirely sharp screenshots in all sorts of formats (e.g. screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g. photos of the stage for the Free Mobile Launch event). A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps. In the context of our dataset, however, this approach is counter productive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo. In practice, shrinking a wide rectangular banner to a square led to many incorrect results requiring manual deduplication with the Blackout SOPA event.
+For each event, we have manually selected the best settings to limit the number of duplicate misses and false positives. The main problem with the dataset is its diversity. It ranges from entirely sharp screenshots in all sorts of formats (e.g. screenshots of the Google homepage for the Blackout SOPA event), to blurry cell phone images in standard photo formats (e.g. photos of the stage for the Free Mobile Launch event). A common performance tweak to speed up the duplication detection process is to shrink images to quadratic bitmaps. In the context of our dataset, however, this approach is counter productive, as a screenshot of a rectangular IAB $728 \times 90$ ``leaderboard'' banner is treated the same as a standard 3.1 megapixels ($2048 \times 1536$) cell phone photo. In practice, shrinking a wide rectangular banner to a square led to many incorrect results requiring manual deduplication with the Blackout SOPA event.
 \begin{table*}[htbp]
   \begin{tabular}{|c|c|c||c|c|}
     \hline
@@ -466,9 +468,9 @@ By clustering loose duplicate media items in sequences, we aim at boosting diver
 \newline
 \textbf{Low-level Features.} Common low-level features such as resolution, file size, but also the presence of EXIF metadata or geolocation are good quality indicators. Longer videos are better than shorter videos, higher resolution is better than lower resolution, etc.
 \newline
-\textbf{Social Features.} Media items belonging to the same sequence can have different popularity, either globally across social networks, or on specific social networks. Combining network-specific signals (e.g. number of Re-Tweet on Twitter, Like on Facebook, +1 on Google+, views on YouTube) and generic signals (e.g. number of comments to a micropost) help to generate a good social popularity indicator. This can also include user diversity by featuring content from different users rather than just content from one user.
+\textbf{Social Features.} Media items belonging to the same sequence can have different popularity, either globally across social networks, or on specific social networks. Combining network-specific signals (e.g. number of Re-Tweets on Twitter, Likes on Facebook, +1s on Google+, views on YouTube) and generic signals (e.g. number of comments to a micropost) help to generate a good social popularity indicator. This can also include user diversity by featuring content from different users rather than just content from one user.
 \newline
-\textbf{Textual Features.} Media items are often surrounded by a textual description in a micropost. Named entity disambiguation can reveal valuable insights which can be further combined with face recognition techniques in order to select media items. Let's assume that a user sends a micropost containing a media item about a concert while mentioning the name of a singer. A framework such as NERD can map the singer's name to a Linked Data concept and help searching for known objects such as the singer's face.
+\textbf{Textual Features.} Media items are often surrounded by a textual description in a micropost. Named entity disambiguation can reveal valuable insights which can be further combined with face recognition techniques in order to select media items. Assuming that a user sends a micropost containing a media item about a concert while mentioning the name of a singer. A framework such as NERD can map the singer's name to a Linked Data concept and help searching for known objects such as the singer's face.
 
 \begin{figure*}
 \begin{tabular}{p{\textwidth}}
