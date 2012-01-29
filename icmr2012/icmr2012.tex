@@ -22,6 +22,8 @@
 \usepackage{fmtcount}
 \usepackage{fancybox}
 
+\usepackage{multirow}
+
 % give emph a normal fontsize
 \let\oldemph\emph
 \renewcommand{\emph}[1]{\oldemph{\fontsize{9}{9}\selectfont #1}}
@@ -199,7 +201,10 @@ An event with both start and end point can be a concert.
 
 The remainder of this paper is structured as follows: \todo{Outline paper structure}.
 
-% Responsible: Thomas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  2. Social Networks & Media Items  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Social Networks \& Media Items}
 Media items play a lively role in all social networks,
 all of which have a different level of support for media items.
@@ -283,7 +288,10 @@ Interestingly, some media platforms~(e.g., img.ly) have write-only without read 
 \label{fig:DavidSimonds}
 \end{figure}
 
-% Responsible: Thomas
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  3. ???  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Implementation Details}
 In this Section, we first introduce the common data format used consistently between all considered social networks.
 Second, we explain the architecture for different kinds of media item extractors,
@@ -443,6 +451,10 @@ Especially with the focus on event summarization,
 the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
 \end{comment}
 
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  4. Experiments  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Experiments}
 \label{sec:experiments}
 % Responsible: Thomas
@@ -518,183 +530,36 @@ In the context of our dataset, however, this approach is counterproductive, as a
 In practice, shrinking a wide rectangular banner to a square led to many incorrect results, requiring manual deduplication with the Blackout SOPA event.
 
 \begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
+  \centering{
+  \small{
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
     \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
+    \multicolumn{1}{|c|}{\textbf{Social}} & \multicolumn{2}{c|}{\textbf{Assad}} & \multicolumn{2}{c|}{\textbf{CES}} & 
+    \multicolumn{2}{c|}{\textbf{Concordia}} & \multicolumn{2}{c|}{\textbf{Dixville}} & \multicolumn{2}{c|}{\textbf{Free}} &
+    \multicolumn{2}{c|}{\textbf{Ropes}} & \multicolumn{2}{c|}{\textbf{SOPA}} & \multicolumn{2}{c|}{\textbf{Ubuntu}} &
+    \multicolumn{2}{c|}{\textbf{Wulf}} \\
+    \cline{2-19}
+    \multicolumn{1}{|c|}{\textbf{Network}} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & 
+    \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & 
+    \textbf{V} & \textbf{I} & \textbf{V} \\
     \hline
-    Google+ & 3 & 2\\
-    MySpace & 0 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 2 & 0\\
-    Instagram & 0 & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 0\\
-    MobyPicture & 0 & 0\\
-    Twitpic & 0 & 0\\
+    \textbf{Google+} & 3 & 2 & 5 & 3 & 15 & 1 & 4 & 1 & 6 & 0 & 5 & 1 & 5 & 0 & 6 & 1 & 7 & 0\\
+    \textbf{MySpace} & 0 & 0 & 0 & 0 & 10+ & 0 & 9 & 0 & 1 & 0 & 6 & 0 & 0 & 0 & 0 & 0 & 8 & 0\\
+    \textbf{Facebook} & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 & 0 & 0\\
+    \textbf{Twitter} & 2 & 0 & 2 & 0 & 3 & 0 & 3 & 0 & 2 & 0 & 4 & 0 & 5 & 0 & 0 & 0 & 2 & 0\\
+    \textbf{Instagram} & 0 & 0 & 20+ & 0 & 20+ & 0 & 0 & 0 & 20+ & 0 & 20+ & 0 & 20+ & 0 & 0 & 0 & 2 & 0\\
+    \textbf{YouTube} & 0 & 10+ & 0 & 10+ & 0 & 10+ & 0 & 3 & 0 & 10+ & 0 & 10+ & 0 & 10+ & 0 & 10+ & 0 & 10+\\
+    \textbf{Flickr} & 10+ & 0 & 10+ & 6 & 10+ & 10+ & 10+ & 10+ & 10+ & 0 & 10+ & 10+ & 10+ & 0 & 10+ & 9 & 10+ & 2\\
+    \textbf{MobyPicture} & 0 & 0 & 1 & 0 & 4 & 0 & 0 & 0 & 2 & 0 & 20+ & 0 & 1 & 0 & 2 & 0 & 3 & 0\\
+    \textbf{Twitpic} & 0 & 0 & 20+ & 0 & 18 & 0 & 1 & 0 & 20+ & 0 & 20+ & 0 & 19 & 0 & 2 & 0 & 20+ & 0\\
     \hline
-  \end{tabular}
-  \label{tab:assad}
-  \caption{\textbf{Assad Speech} -- Network Distribution. \textbf{Total images:} 15. \textbf{Total videos:} 12.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 5 & 0\\
-    MySpace & 0 & 0\\
-    Facebook & 0 & 2\\
-    Twitter & 5 & 0\\
-    Instagram & 20+ & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 0\\
-    MobyPicture & 1 & 0\\
-    Twitpic & 19 & 0\\
+    \textbf{Total} & 15 & 12 & 58 & 20 & 80 & 22 & 27 & 14 & 61 & 10 & 85 & 21 & 60 & 12 & 20 & 20 & 52 & 12\\
     \hline
   \end{tabular}
-  \label{tab:sopa}
-  \caption{\textbf{Blackout SOPA} -- Network Distribution. \textbf{Total images:} 60. \textbf{Total videos:} 12.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 5 & 3\\
-    MySpace & 0 & 0\\
-    Facebook & 0 & 1\\
-    Twitter & 2 & 0\\
-    Instagram & 20+ & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 6\\
-    MobyPicture & 1 & 0\\
-    Twitpic & 20+ & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:ces}
-  \caption{\textbf{CES Las Vegas} -- Network Distribution. \textbf{Total images:} 58. \textbf{Total videos:} 20.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 7 & 0\\
-    MySpace & 8 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 2 & 0\\
-    Instagram & 2 & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 2\\
-    MobyPicture & 3 & 0\\
-    Twitpic & 20+ & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:wulff}
-  \caption{\textbf{Christian Wulff Case} -- Network Distribution. \textbf{Total images:} 52. \textbf{Total videos:} 12.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 15 & 1\\
-    MySpace & 10+ & 0\\
-    Facebook & 0 & 1\\
-    Twitter & 3 & 0\\
-    Instagram & 20+ & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 10+\\
-    MobyPicture & 4 & 0\\
-    Twitpic & 18 & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:concordia}
-  \caption{\textbf{Costa Concordia Disaster} -- Network Distribution. \textbf{Total images:} 80. \textbf{Total videos:} 22.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 5 & 1\\
-    MySpace & 6 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 4 & 0\\
-    Instagram & 20+ & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10 & 10+\\
-    MobyPicture & 20+ & 0\\
-    Twitpic & 20+ & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:rope}
-  \caption{\textbf{Cut the Rope Launch} -- Network Distribution. \textbf{Total images:} 85. \textbf{Total videos:} 21.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 4 & 1\\
-    MySpace & 9 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 3 & 0\\
-    Instagram & 0 & 0\\
-    YouTube & 0 & 3\\
-    Flickr & 10 & 10+\\
-    MobyPicture & 0 & 0\\
-    Twitpic & 1 & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:dixville}
-  \caption{\textbf{Dixville Notch} -- Network Distribution. \textbf{Total images:} 27. \textbf{Total videos:} 14.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 6 & 0\\
-    MySpace & 1 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 2 & 0\\
-    Instagram & 20+ & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 0\\
-    MobyPicture & 2 & 0\\
-    Twitpic & 20+ & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:freemobile}
-  \caption{\textbf{Free Mobile Launch} -- Network Distribution. \textbf{Total images:} 61. \textbf{Total videos:} 10.}
-\end{table*}
-
-\begin{table*}[htbp]
-  \begin{tabular}{ | c | c | c | }
-    \hline
-    \textbf{Social Network} & \textbf{Images} & \textbf{Videos}\\
-    \hline
-    Google+ & 6 & 1\\
-    MySpace & 0 & 0\\
-    Facebook & 0 & 0\\
-    Twitter & 0 & 0\\
-    Instagram & 0 & 0\\
-    YouTube & 0 & 10+\\
-    Flickr & 10+ & 9\\
-    MobyPicture & 2 & 0\\
-    Twitpic & 2 & 0\\
-    \hline
-  \end{tabular}
-  \label{tab:ubuntutv}
-  \caption{\textbf{Ubuntu TV Launch} -- Network Distribution. \textbf{Total images:} 20. \textbf{Total videos:} 20.}
+  }
+  \label{tab:number-media}
+  \caption{Number of images and videos collected for the 9 events (resp. \textbf{Assad Speech}, \textbf{CES Las Vegas}, \textbf{Costa Concordia Disaster}, \textbf{Dixville Notch}, \textbf{Free Mobile Launch}, \textbf{Cut the Rope Launch}, \textbf{Blackout SOPA}, \textbf{Ubuntu TV Launch} and \textbf{Christian Wulff Case}) grouped by social networks}
+  }
 \end{table*}
 
 \begin{table*}[htbp]
