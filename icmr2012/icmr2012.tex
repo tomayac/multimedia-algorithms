@@ -131,14 +131,14 @@
 \begin{abstract}
 Social networks play an increasingly important role to provide authentic and as-it-happens coverage of events.
 Representative examples are the 2011 Ut{\o}ya shootings in Norway, or the miracle on the Hudson river in 2009,
-where the US Airways flight 1549 ended with an emergency ditching. One of the problem is that media and testimonial
-captured by witnesses of those events are spread among multiple social networks. In this paper, we propose a social network
+where US Airways flight 1549 ended with an emergency ditching. One of the problems is that media and testimonials
+captured by witnesses of those events are spread over multiple social networks. In this paper, we propose a social network
 agnostic approach for the extraction of images and videos covering events, which can be later on processed for the
 automatic generation of visual summaries in the form of media galleries. Our approach includes the alignment of the
 varying search results formats from these social networks while putting the media items in correspondence with the
 status updates and stories they are related to. More precisely, we leverage (i) visual features from media items,
 (ii) textual features from status updates, and (iii) social features from social networks to interpret, deduplicate,
-cluster and rank media items in order to generate automatically media galleries. We address the technical details of media
+cluster, and rank media items in order to automatically generate media galleries. We address the technical details of media
 item extraction and media item processing, discuss criteria for media item ranking and envision several visualization options
 for media galleries. Our approach can be tested online at \url{http://webmasterapp.net/social/}.
 \end{abstract}
@@ -156,13 +156,13 @@ for media galleries. Our approach can be tested online at \url{http://webmastera
 Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
 The widespread availability of mobile phones with higher resolution cameras has transformed citizens into witnesses
 who are used to comment and share media illustrating events on social networks. Some examples with global impact
-include the shootings in Ut{\o}ya which first appeared on Twitter, the capture and arrest of Muammar Gaddafi which
-first appeared on YouTube, or the emergency ditching of a plane in Hudson river which first appeared on Twitpic.
+include the shootings in Ut{\o}ya, which first appeared on Twitter, the capture and arrest of Muammar Gaddafi, which
+first appeared on YouTube, or the emergency ditching of a plane in the Hudson river, which first appeared on Twitpic.
 Some news agencies\footnote{\url{http://www.citizenside.com/}} have even specialized in aggregating and brokering
-this user generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also
-largely illustrated by social media albeit distributed over many social networks.
+this user-generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also
+largely illustrated by social media, albeit distributed over many social networks.
 
-In this paper, we tackle the challenge of reconciliating the social media that could illustrate known events but that
+In this paper, we tackle the challenge of reconciling the social media that could illustrate known events but that
 are spread over the network in order to build visual summaries of them. We propose a social network agnostic
 approach for the extraction of images and videos covering events. We want to emphasize that we do \emph{not} perform
 event detection: the events we are dealing with are known and we use specific human-chosen search terms to find illustrating
@@ -170,24 +170,24 @@ media. As opposed to \mbox{ImageCLEF} and \mbox{TRECVID} that both evaluate cont
 multimedia information retrieval, our approach deals with the separate additional task of extracting media from social networks
 in the first place.
 
-The remainder of this paper is organized as follows. In section~\ref{sec:social-networks}, we provide definitions of key terms
-and we distinguish how one could access to the deep link of the media shared on social networks. In section~\ref{sec:media-collector},
-we detail our media collector that extracts and process the media items. We present an experiment on 9 known events and we
-discussed the results we obtained in section~\ref{sec:experiments}. We describe related work in section~\ref{sec:related-work} and,
-finally, we give our conclusions and outline future work in section~\ref{sec:conclusion}.
+The remainder of this paper is organized as follows. In \autoref{sec:social-networks}, we provide definitions of key terms
+and distinguish how one could access the deep links of the media shared on social networks. In \autoref{sec:media-collector},
+we detail our media collectors that extract and process the media items. We present an experiment on nine known events and
+discuss the obtained results in \autoref{sec:experiments}. We describe related work in \autoref{sec:related-work} and,
+finally, give our conclusions and outline future work in \autoref{sec:conclusion}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  2. Social Networks & Media Items  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Social Networks \& Media Items}                                    \label{sec:social-networks}
-In this section, we first define the terms that we will use throughout this paper in order to avoid any ambiguity. In particular, we show that social networks have different level of support for media items. Then, we describe how media items can be extracted from social networks.
+In this Section, we first define the terms that we will use throughout this paper in order to avoid any ambiguity. In particular, we show that social networks have different levels of support for media items. Then, we describe how media items can be extracted from social networks.
 
 %%%  2.1 Definitions  %%%
 \subsection{Definitions}
 \textbf{Event}: An event is defined as a phenomenon that has happened or that is scheduled to happen. It is an observable occurrence grouping
 persons, places, times and activities while being often documented by people through different media~\cite{Liu:ICMR11}. Some events
-are ongoing such as the Occupy movement.
+are ongoing such as the Occupy (Wall Street) movement.
 
 \textbf{Media Item}: A media item is defined as an image or video file that gets distributed via a social network. An example can be a photo of a baby that
 a parent shares on Instagram.
@@ -206,12 +206,12 @@ Therefore, we consider three types of support of media items with social network
 \begin{itemize}
   \item \emph{First-order support}: The social network is centered on media items and posting requires the inclusion of a media item (e.g. YouTube, Flickr);
   \item \emph{Second-order support}: The social network lets users upload media items but it is also possible to post only textual messages (e.g. Facebook);
-  \item \emph{Third-order support}: The social network has no direct support for media items but relies on third party application to host media items
-  which are linked to the status update (e.g. Twitter before the introduction of native photo support).
+  \item \emph{Third-order support}: The social network has no direct support for media items but relies on third party application to host media items,
+which are linked to the status update (e.g. Twitter before the introduction of native photo support).
 \end{itemize}
 
 In this paper, we consider 11 different social networks that represent all together most of the market share while offering mature API capabilities.
-The criteria for including the media sharing platforms follow the study performed by Sysomos specialized in social media monitoring and analytic~\cite{Sysomos2011}. Table~1 lists these platforms according to the categorization defined above.
+The criteria for including the media sharing platforms follow a study performed by the company Sysomos, specialized in social media monitoring and analytics~\cite{Sysomos2011}. Table~1 lists these platforms according to the categorization defined above.
 \begin{table*}[htbp]
   {\small
   \begin{tabular}{|l|l|l|p{8cm}|}
@@ -264,7 +264,7 @@ we describe the various processing steps applied to each media item collected.
 
 %%%  3.1 Data Format  %%%
 \subsection{Data Format}                                                    \label{sec:data-format}
-We propose a common alignment schema for all social networks considered in the Table~1 in order to be
+We propose a common alignment schema for all social networks considered in Table~1 in order to be
 agnostic of concrete social networks. The resulting set of metadata for a media item is detailed below:
 \begin{description}
   \item[Media URL] Deep link to the media item (\url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}).
@@ -319,18 +319,18 @@ agnostic of concrete social networks. The resulting set of metadata for a media 
 
 %%%  3.2 Media Item Extractors  %%%
 \subsection{Media Item Extractors}
-We have developed a media collector composed of media item extractors for the 7 social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube and Flickr with additional support for the 4 media sharing platforms img.ly, yfrog, MobyPicture and Twitpic. The media collector takes as input a search term that is relevant to a known event, e.g. ``costa concordia'' for the Costa Concordia Disaster. This search term gets forwarded to the search APIs of the social networks in parallel. Each social network has a 30 seconds timeout window to deliver its results. When the timeout is reached or when all social networks have responded,
-the available results are aligned according to the data format defined in Section~\ref{sec:data-format}. Media items are retrieved either directly or via web scraping. For some social networks, e.g. MySpace, a combination of web scraping and API access is required since the API does not return all necessary fields of our data format. Hence, the timestamp of when a media item is uploaded on MySpace can be obtained only via web scraping. The complete data flow is illustrated in the architectural diagram (\autoref{fig:architecture}).
+We have developed a media collector composed of media item extractors for the seven social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr with additional support for the four media sharing platforms img.ly, yfrog, MobyPicture, and Twitpic. The media collector takes as input a search term that is relevant to a known event, e.g. ``costa concordia'' for the Costa Concordia Disaster. This search term gets forwarded to the search APIs of the social networks in parallel. Each social network has a 30 seconds timeout window to deliver its results. When the timeout is reached, or when all social networks have responded,
+the available results are aligned according to the data format defined in \autoref{sec:data-format}. Media items are retrieved either directly or via Web scraping. For some social networks, e.g. MySpace, a combination of Web scraping and API access is required since the API does not return all necessary fields of our data format. Hence, the timestamp of when a media item is uploaded on MySpace can be obtained only via Web scraping. The complete data flow is illustrated in the architectural diagram (\autoref{fig:architecture}).
 \begin{figure*}
 \centering
 \includegraphics[width=1.0\linewidth]{./resources/architecture.pdf}
-\caption{Overview of the media collector: hybrid approach for the media item extraction process using a combination of API access and web scraping}
+\caption{Overview of the media collector: hybrid approach for the media item extraction process using a combination of API access and Web scraping}
 \label{fig:architecture}
 \end{figure*}
 
 %%%  3.3 Media Item Processing  %%%
 \subsection{Media Item Processing}
-As part of the processing chain, we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images. This explains the tendency to round numbers of results in Table~\ref{tab:number-media} marked with $n+$.
+As part of the processing chain, we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images. This explains the tendency to round numbers of results in Table~\ref{tab:number-media}, marked with $n+$.
 
 \subsubsection{Machine Translation}
 Social networking is happening at a global scale. In consequence, many microposts are authored in languages different from English. In order to still make sense out of those microposts, we apply machine translation to translate non-English microposts to English. We use the Google Translate API\footnote{\url{http://code.google.com/apis/language/translate/v2/getting_started.html}} which, if the source language parameter is left blank, tries first to detect the source language and subsequently translates the micropost to English.
@@ -346,7 +346,7 @@ using the NERD framework~\cite{NERD}.
 
 \subsubsection{Media Item Deduplication}
 We try to evaluate the popularity of the media items shared across social networks. This task involves the deduplication of extracted media items.
-We use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image duplication detection software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
+For images, we use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image deduplication software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
 
 \paragraph{Image Deduplication}
 The image duplication software we employed allows for different algorithms to be used. We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e. we do \emph{not} count a resized version of an image as exact duplicate. Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate. Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
@@ -389,7 +389,7 @@ The vessel ran aground at Isola del Giglio, Tuscany, resulting in the evacuation
 \textbf{Blackout SOPA.} The Stop Online Piracy Act (SOPA) is a bill of the United States proposed in 2011 to fight online trafficking in copyrighted intellectual property and counterfeit goods. On January 18, the English Wikipedia, Reddit, and several other Internet companies coordinated a service blackout to protest SOPA and its sister bill, the Protect IP Act. Other companies, including Google, posted links and images in an effort to raise awareness.
 %\footnote{Blackout SOPA: \url{http://sopablackout.org/learnmore/}}
 \newline
-\textbf{Ubuntu TV Launch.} Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES. 
+\textbf{Ubuntu TV Launch.} Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the Ubuntu operating system, designed to be a Linux distribution specially adapted for embedded systems in televisions. It was announced by Canonical on January 10, 2012, at CES.
 %\footnote{Ubuntu TV: \url{http://www.theverge.com/2012/1/9/2695387/ubuntu-tv-video-hands-on}}
 \newline
 \textbf{Christian Wulff Case.} Since December 2011, German President Christian Wulff faces controversy over discrepancies in statements about a loan while being governor of Lower Saxony. When the affair settled down, it was revealed that he had applied pressure on Springer Press to delay revelations on the issue until he was back from a visit abroad. When Wulff found out that a tabloid was going to break the story, he left a message on the voice mail of the editor-in-chief in which he threatened to take legal action.
