@@ -141,7 +141,7 @@ status updates and stories they are related to. More precisely, we leverage (i) 
 (ii) textual features from status updates, and (iii) social features from social networks to interpret, de-duplicate, 
 cluster and rank media items in order to generate automatically media galleries. We address the technical details of media 
 item extraction and media item processing, discuss criteria for media item ranking and envision several visualization options 
-for media galleries. Our approach can be tested online at \url{http://tomayac.com/social/}.
+for media galleries. Our approach can be tested online at \url{http://webmasterapp.net/social/}.
 \end{abstract}
 
 \category{H.3.4}{Information Systems}{Information Storage and Retrieval}[World Wide Web]
@@ -487,7 +487,7 @@ Ubuntu TV by Canonical, based on the user interface Unity, is a variant of the U
 Our data set contained 448 images with an average file size of $\sim$0.7MB and 143 videos.
 During the examination of our dataset, we observed that the process of image deduplication is by no means a solved issue.
 Content-based image retrieval (CBIR) uses features like color, texture, and shape to search images from large-scale databases.
-The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi2011}.
+The same technique, however, can also be used for the deduplication of photographs~\cite{Pattabhi:RAICS11}.
 We used a CBIR-based image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}} that allows for manual algorithm and threshold selection to detect duplicates in the dataset.
 For each considered event, we manually selected the best settings to limit the number of duplicate misses and false positives.
 The main problem with the dataset is its diversity.
@@ -854,7 +854,7 @@ A different example is the CES Las Vegas event, where the atmosphere of a big ex
 % Automatic gallery creation
 
 A~first category of related work includes research that aims to collect, align, and organize media for trends or events.
-Liu \emph{et al.} combine semantic inferencing and visual analysis to automatically find media to illustrate events~\cite{Liu2011}.
+Liu \emph{et al.} combine semantic inferencing and visual analysis to automatically find media to illustrate events~\cite{Liu:ICMR11}.
 They interlink large datasets of event metadata and media with the Linking Open Data Cloud~\cite{LODcloud}.
 Approaches for alignment use visual, temporal, and spacial similarity measures to map multiple photo streams of the same events~\cite{Yang2011}.
 Other ways to collect and order media from social networks use user-driven metadata such as geospatial information~\cite{Crandall}.
@@ -868,7 +868,7 @@ A~method for both images and video has been proposed by Yang \emph{et al.}~\cite
 Specialized methods for video exist as well~\cite{Min, Wu}, an excellent survey of which has been conducted by Lian \emph{et al.}~\cite{Lian}.
 
 When unique media items have been collected, the remaining task is to summarize events by selecting the most relevant media fragments.
-An article by Fabro and B\"osz\"orm\'enyi~\cite{Fabro2012} details the summarization and presentation of events from content retrieved from social media.
+An article by Fabro and B\"osz\"orm\'enyi~\cite{Fabro:MMM12} details the summarization and presentation of events from content retrieved from social media.
 Nowadays, many domain-specific methods already exhibit good accuracy, for example in the sports domain~\cite{Li1,Li2}.
 However, the challenge in this field is to find methods that are content-agnostic.
 Methods that exploit semantic information~(\emph{e.g.}, \cite{Chen}) will likely provide high-quality results in the future,
@@ -885,7 +885,8 @@ but today's most relevant summaries are produced by user interaction~\cite{Olsen
 In this work, the focus has been on extracting visual media and associated textual messages from social networks.
 One possibility for future work would therefore be to pursue our efforts in this direction by supporting more social networks and improving our Web scrapers.
 This could significantly improve the quantity and diversity of considered media and messages,
-given the fact that different kinds of information are shared to different networks~\cite{ConsumersLook}.
+given the fact that different kinds of information are shared to different networks.
+%~\cite{ConsumersLook}
 
 A~more innovative direction is to incorporate techniques from multimedia analysis into the process,
 as this will create a~multi-modal environment where different factors are used to organize social content.
