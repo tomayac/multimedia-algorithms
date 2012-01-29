@@ -56,8 +56,7 @@
 \RecustomVerbatimCommand{\Verb}{Verb}{fontsize=\inlinelistingsize}
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}{fontsize=\defaultlistingsize}
 \lstset{frame=lines,captionpos=b,numberbychapter=false,escapechar=§,
-        aboveskip=0.5em,belowskip=0em,abovecaptionskip=0em,belowcaptionskip=0em,
-framexbottommargin=-1em,
+        aboveskip=0.5em,belowskip=0em,abovecaptionskip=0em,belowcaptionskip=0em,framexbottommargin=-1em,
         basicstyle=\ttfamily\listingsize\selectfont}
 
 % use Courier from this point onward
@@ -133,14 +132,14 @@ framexbottommargin=-1em,
 Social networks play an increasingly important role to provide authentic and as-it-happens coverage of events.
 Representative examples are the 2011 Ut{\o}ya shootings in Norway, or the miracle on the Hudson river in 2009,
 where the US Airways flight 1549 ended with an emergency ditching. One of the problem is that media and testimonial
-captured by witnesses of those events are spread among multiple social networks. In this paper, we propose a social network 
-agnostic approach for the extraction of images and videos covering events, which can be later on processed for the 
-automatic generation of visual summaries in the form of media galleries. Our approach includes the alignment of the 
-varying search results formats from these social networks while putting the media items in correspondence with the 
-status updates and stories they are related to. More precisely, we leverage (i) visual features from media items, 
-(ii) textual features from status updates, and (iii) social features from social networks to interpret, deduplicate, 
-cluster and rank media items in order to generate automatically media galleries. We address the technical details of media 
-item extraction and media item processing, discuss criteria for media item ranking and envision several visualization options 
+captured by witnesses of those events are spread among multiple social networks. In this paper, we propose a social network
+agnostic approach for the extraction of images and videos covering events, which can be later on processed for the
+automatic generation of visual summaries in the form of media galleries. Our approach includes the alignment of the
+varying search results formats from these social networks while putting the media items in correspondence with the
+status updates and stories they are related to. More precisely, we leverage (i) visual features from media items,
+(ii) textual features from status updates, and (iii) social features from social networks to interpret, deduplicate,
+cluster and rank media items in order to generate automatically media galleries. We address the technical details of media
+item extraction and media item processing, discuss criteria for media item ranking and envision several visualization options
 for media galleries. Our approach can be tested online at \url{http://webmasterapp.net/social/}.
 \end{abstract}
 
@@ -156,25 +155,25 @@ for media galleries. Our approach can be tested online at \url{http://webmastera
 \section{Introduction}                                                      \label{sec:introduction}
 Before the rise of social networks, event coverage was mostly an affair of professional news agencies.
 The widespread availability of mobile phones with higher resolution cameras has transformed citizens into witnesses
-who are used to comment and share media illustrating events on social networks. Some examples with global impact 
-include the shootings in Ut{\o}ya which first appeared on Twitter, the capture and arrest of Muammar Gaddafi which 
+who are used to comment and share media illustrating events on social networks. Some examples with global impact
+include the shootings in Ut{\o}ya which first appeared on Twitter, the capture and arrest of Muammar Gaddafi which
 first appeared on YouTube, or the emergency ditching of a plane in Hudson river which first appeared on Twitpic.
-Some news agencies\footnote{\url{http://www.citizenside.com/}} have even specialized in aggregating and brokering 
-this user generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also 
+Some news agencies\footnote{\url{http://www.citizenside.com/}} have even specialized in aggregating and brokering
+this user generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also
 largely illustrated by social media albeit distributed over many social networks.
 
-In this paper, we tackle the challenge of reconciliating the social media that could illustrate known events but that 
-are spread over the network in order to build visual summaries of them. We propose a social network agnostic 
-approach for the extraction of images and videos covering events. We want to emphasize that we do \emph{not} perform 
-event detection: the events we are dealing with are known and we use specific human-chosen search terms to find illustrating 
-media. As opposed to \mbox{ImageCLEF} and \mbox{TRECVID} that both evaluate content-based analysis approaches for 
-multimedia information retrieval, our approach deals with the separate additional task of extracting media from social networks 
-in the first place. 
+In this paper, we tackle the challenge of reconciliating the social media that could illustrate known events but that
+are spread over the network in order to build visual summaries of them. We propose a social network agnostic
+approach for the extraction of images and videos covering events. We want to emphasize that we do \emph{not} perform
+event detection: the events we are dealing with are known and we use specific human-chosen search terms to find illustrating
+media. As opposed to \mbox{ImageCLEF} and \mbox{TRECVID} that both evaluate content-based analysis approaches for
+multimedia information retrieval, our approach deals with the separate additional task of extracting media from social networks
+in the first place.
 
 The remainder of this paper is organized as follows. In section~\ref{sec:social-networks}, we provide definitions of key terms
 and we distinguish how one could access to the deep link of the media shared on social networks. In section~\ref{sec:media-collector},
-we detail our media collector that extracts and process the media items. We present an experiment on 9 known events and we 
-discussed the results we obtained in section~\ref{sec:experiments}. We describe related work in section~\ref{sec:related-work} and, 
+we detail our media collector that extracts and process the media items. We present an experiment on 9 known events and we
+discussed the results we obtained in section~\ref{sec:experiments}. We describe related work in section~\ref{sec:related-work} and,
 finally, we give our conclusions and outline future work in section~\ref{sec:conclusion}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -190,7 +189,7 @@ In this section, we first define the terms that we will use throughout this pape
 persons, places, times and activities while being often documented by people through different media~\cite{Liu:ICMR11}. Some events
 are ongoing such as the Occupy movement.
 
-\textbf{Media Item}: A media item is defined as an image or video file that gets distributed via a social network. An example can be a photo of a baby that 
+\textbf{Media Item}: A media item is defined as an image or video file that gets distributed via a social network. An example can be a photo of a baby that
 a parent shares on Instagram.
 
 \textbf{Micropost}: A micropost is defined as a textual status message that can optionally accompany a media item. An example can be the status update
@@ -202,7 +201,7 @@ people who share interests and/or activities. The boundary between social networ
 Several media sharing platforms~(e.g. YouTube) enable people to upload content and optionally allow other people to react
 to this content in the form of comments, likes or dislikes. On other social networks~(e.g. Facebook), users can update their status,
 post links to stories, upload media content and also give readers the option to react. Finally, there are hybrid clients~(e.g. TweetDeck
-for Twitter using Twitpic) where social networks integrate with media platforms typically via third party applications. 
+for Twitter using Twitpic) where social networks integrate with media platforms typically via third party applications.
 Therefore, we consider three types of support of media items with social networks:
 \begin{itemize}
   \item \emph{First-order support}: The social network is centered on media items and posting requires the inclusion of a media item (e.g. YouTube, Flickr);
@@ -212,7 +211,7 @@ Therefore, we consider three types of support of media items with social network
 \end{itemize}
 
 In this paper, we consider 11 different social networks that represent all together most of the market share while offering mature API capabilities.
-The criteria for including the media sharing platforms follow the study performed by Sysomos specialized in social media monitoring and analytic~\cite{Sysomos2011}. Table~\ref{tab:platforms} lists these platforms according to the categorization defined above.
+The criteria for including the media sharing platforms follow the study performed by Sysomos specialized in social media monitoring and analytic~\cite{Sysomos2011}. Table~1 lists these platforms according to the categorization defined above.
 \begin{table*}[htbp]
   {\small
   \begin{tabular}{|l|l|l|p{8cm}|}
@@ -239,9 +238,9 @@ The criteria for including the media sharing platforms follow the study performe
 
 %%%  2.2 Media Item Extraction  %%%
 \subsection{Media Item Extraction}
-Most social networks offer a search functionality that allows content to be retrieved based on search terms, with or without more advanced 
-search operators such as exclusion, inclusion, phrase search, etc. Each social network has special constraints regarding the search operators 
-supported or the filtering options available (e.g. time). We define the term \emph{media item extraction} as the process of leveraging 
+Most social networks offer a search functionality that allows content to be retrieved based on search terms, with or without more advanced
+search operators such as exclusion, inclusion, phrase search, etc. Each social network has special constraints regarding the search operators
+supported or the filtering options available (e.g. time). We define the term \emph{media item extraction} as the process of leveraging
 search functionalities of social networks to find references to media items which allows for storing those media items in a binary form.
 
 An \emph{Application Programming Interface (API)} is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other. \emph{Web scraping} is the process of automatically extracting information from web sites. Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc. Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree. The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, while Web scraping relies on the textual and/or hierarchical structure of web sites.
@@ -255,175 +254,114 @@ Social networks are very much perceived as ``walled gardens'' (\autoref{fig:Davi
  \label{fig:DavidSimonds}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%  3. ???  %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  3. Media Collector  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Implementation Details}                                            \label{sec:media-collector}
-In this Section, we first introduce the common data format used consistently between all considered social networks.
-Second, we explain the architecture for different kinds of media item extractors,
-and third, show the steps in the media item processing chain.
+\section{Media Collector}                                                   \label{sec:media-collector}
+First, we introduce a common data format used consistently between all social networks considered.
+Second, we explain the architecture for different kinds of media item extractors. Finally,
+we describe the various processing steps applied to each media item collected.
 
-\subsection{Data Format} \label{sec:dataformat}
-As our approach is agnostic of concrete social networks, we offer a common alignment schema for all considered social networks,
-which allows us to treat each social network's data the same way.
-The resulting set of metadata for a media item can be seen below:
-
+%%%  3.1 Data Format  %%%
+\subsection{Data Format}                                                    \label{sec:data-format}
+We propose a common alignment schema for all social networks considered in the Table~1 in order to be 
+agnostic of concrete social networks. The resulting set of metadata for a media item is detailed below:
 \begin{description}
-  \item[Media URL] The deep link to the media item, e.g., \url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}.
-  \item[Type] The type of the media item, one out of ``photo'' or ``video''.
-  \item[Story URL] The URL of the micropost where the media item appeared, e.g., \url{http://www.flickr.com/photos/96628098@N00/6290784192/}.
-  \item[Message] The concrete micropost or description text in raw format, e.g., ``Laura. \#lumixg20f17, \#iswc2011, \#internationalsemanticwebconference, \#bonn, \#germany''.
-  \item[Clean] The concrete cleaned micropost or description text with some characters (e.g., hash sign) removed, e.g., ``Laura. lumixg20f17, iswc2011, internationalsemanticwebconference, bonn, germany''.
-  \item[User] The URL of the author of the micropost, e.g., \url{http://www.flickr.com/photos/96628098@N00/}.
-  \item[Published] The timestamp of when the micropost was authored, or the media item was uploaded, e.g., \texttt{2011\-10\-27T12:24:41Z}.
+  \item[Media URL] Deep link to the media item (\url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}).
+  \item[Type] Type of the media item (``photo'' or ``video'').
+  \item[Story URL] URL of the micropost where the media item appeared (\url{http://www.flickr.com/photos/96628098@N00/6290784192/}).
+  \item[Message] Text Description of the micropost in raw format (\texttt{``Laura. \#lumixg20f17, \#iswc2011, \#international\-semanticwebconference, \#bonn, \#germany''}).
+  \item[Clean] Cleaned text description of the micropost where some characters are removed (\texttt{``Laura. lumixg20f17, iswc2011, internationalsemanticwebconference, bonn, germany''}).
+  \item[User] URL of the micropost author (\url{http://www.flickr.com/photos/96628098@N00/}).
+  \item[Published] Timestamp when the micropost was authored or the media item was uploaded (\texttt{2011\-10\-27T12:24:41Z}).
 \end{description}
 
-\autoref{lst:media} shows the sample output of a media extractor for the social network Facebook.
-
 % Use a consistent example from one of the experiments
+\autoref{lst:media} shows the sample output of a media extractor for the social network Facebook.
+{\footnotesize
 \begin{lstlisting}[caption={Sample output of the media extractor showing a Facebook post processed with named entity extraction and disambiguation (slightly edited for legibility).},label={lst:media}]
 {
-  "Facebook": [
-    {
-      "mediaurl": "http://video.ak.fbcdn.net/...",
-      "storyurl": "https://www.facebook.com/perma-
-          link.php?story_fbid=231781590231029&id=
-          1254772464",
-      "message": {
-        "text": "Videoed between Hamburg and Sny-
-            der.. Thought I would share.",
-        "clean": "Videoed between Hamburg and Sny-
-            der.. Thought I would share.",
-        "entities": [
-          [
-            {
-              "name": "Hamburg",
-              "relevance": 0.82274,
-              "uri": "http://dbpedia.org/resource/
-                  Hamburg"
-            },
-            {
-              "name": "Snyder",
-              "relevance": 0.857,
-              "uri": "http://dbpedia.org/resource/
-                  Snyder,_Texas"
-            }
-          ]
-        ]
+ "Facebook": [
+  {
+   "mediaurl": "http://video.ak.fbcdn.net/...",
+   "storyurl": "https://www.facebook.com/permalink.
+   php?story_fbid=231781590231029&id=1254772464",
+   "message": {
+    "text": "Videoed between Hamburg and Snyder. 
+      Thought I would share.",
+    "clean": "Videoed between Hamburg and Snyder. 
+      Thought I would share.",
+    "entities": [
+     [
+      {
+       "name": "Hamburg",
+       "relevance": 0.82274,
+       "uri": "http://dbpedia.org/resource/Hamburg"
       },
-      "user": "https://www.facebook.com/
-          profile.php?id=1254772464",
-      "type": "video",
-      "timestamp": 1326371479000,
-      "published": "2012-01-12T12:31:19Z"
-    }
-  ]
+      {
+       "name": "Snyder",
+       "relevance": 0.857,
+       "uri": "http://dbpedia.org/resource/
+         Snyder,_Texas"
+      }
+     ]
+    ]
+   },
+   "user": "https://www.facebook.com/profile.php?
+     id=1254772464",
+   "type": "video",
+   "timestamp": 1326371479000,
+   "published": "2012-01-12T12:31:19Z"
+  }
+ ]
 }
-\end{lstlisting}
+\end{lstlisting}}
 
+%%%  3.2 Media Item Extractors  %%%
 \subsection{Media Item Extractors}
-In the context of this paper, we have developed media item extractors for the social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube, and Flickr,
-with additional support for the media platforms img.ly, yfrog, MobyPicture, and Twitpic.
-We start with a human-chosen search term that is relevant to a known event, e.g., ``costa concordia'' for the Costa Concorida Disaster (see \autoref{sec:concordia}).
-This search term gets forwarded to the search APIs of the considered social networks in parallel.
-Each social network has a 30 seconds timeout window to deliver its results.
-When the timeout is reached, or when all social networks have responded,
-the available results are aligned according to the data format defined in \autoref{sec:dataformat}.
-Where possible, contained media items are retrieved directly,
-or else, obtained via Web scraping.
-For some social networks, e.g., MySpace, a combination of Web scraping and API access is required,
-as the API does not return all necessary fields as defined in our data format.
-In the concrete case of MySpace, albeit the API returns the media items,
-the timestamps of when they were uploaded has to be scraped.
-The complete data flow can be seen in the architectural diagram in \autoref{fig:architecture}.
-
+We have developed a media collector composed of media item extractors for the 7 social networks Google+, MySpace, Facebook, Twitter, Instagram, YouTube and Flickr with additional support for the 4 media sharing platforms img.ly, yfrog, MobyPicture and Twitpic. The media collector takes as input a search term that is relevant to a known event, e.g. ``costa concordia'' for the Costa Concordia Disaster. This search term gets forwarded to the search APIs of the social networks in parallel. Each social network has a 30 seconds timeout window to deliver its results. When the timeout is reached or when all social networks have responded,
+the available results are aligned according to the data format defined in Section~\ref{sec:data-format}. Media items are retrieved either directly or via web scraping. For some social networks, e.g. MySpace, a combination of web scraping and API access is required since the API does not return all necessary fields of our data format. Hence, the timestamp of when a media item is uploaded on MySpace can be obtained only via web scraping. The complete data flow is illustrated in the architectural diagram (\autoref{fig:architecture}).
 \begin{figure*}
 \centering
 \includegraphics[width=1.0\linewidth]{./resources/architecture.pdf}
-\caption{The media item extractor architectural overview shows the hybrid approach to the media item extraction process using a combination of API access and Web scraping.}
+\caption{Overview of the media collector: hybrid approach for the media item extraction process using a combination of API access and web scraping}
 \label{fig:architecture}
 \end{figure*}
 
+%%%  3.3 Media Item Processing  %%%
 \subsection{Media Item Processing}
-In this Subsection, we describe our media item processing chain.
-As part of the processing chain was manual (see \autoref{sec:deduplication}),
-we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images.
-This explains the tendency to round numbers of results in Table X \todo{Reference the results table}, marked with $n+$.
+As part of the processing chain, we have limited the number of returned results for each media item extractor to 10 items for videos, and 20 items for images. This explains the tendency to round numbers of results in Table~\ref{tab:number-media} marked with $n+$.
 
 \subsubsection{Machine Translation}
-Social networking is happening at a global scale.
-In consequence, many microposts are authored in languages different from English.
-In order to still make sense out of those microposts,
-rather than limiting ourselves to English-only microposts,
-we apply machine translation to translate non-English microposts to English.
-We use the Google Translate API\footnote{Google Translate API: \url{http://code.google.com/apis/language/translate/v2/getting_started.html}},
-which, if the source language parameter is left blank,
-first tries to detect the source language,
-and subsequently translates the micropost to English.
+Social networking is happening at a global scale. In consequence, many microposts are authored in languages different from English. In order to still make sense out of those microposts, we apply machine translation to translate non-English microposts to English. We use the Google Translate API\footnote{\url{http://code.google.com/apis/language/translate/v2/getting_started.html}} which, if the source language parameter is left blank, tries first to detect the source language and subsequently translates the micropost to English.
 
 \subsubsection{Part of Speech Tagging}
-Our processing chain supports part of speech tagging via an open source JavaScript library called jspos\footnote{jspos: \url{http://code.google.com/p/jspos/}},
-eventually based on Eric Brill's part of speech tagger~\cite{brill1992simple}.
-Part of speech tagging at this point does not play an active role yet in the processing chain, however,
-in the longterm, we aim for leveraging the additional data for better micropost analysis.
+Our processing chain supports part of speech tagging via an open source JavaScript library called jspos\footnote{\url{http://code.google.com/p/jspos/}},
+eventually based on Eric Brill's POS tagger~\cite{brill1992simple}. Part of speech tagging does not yet play an active role in the processing chain. However,
+we aim for leveraging the additional data for better micropost analysis in the future.
 
 \subsubsection{Named Entity Disambiguation}
-Despite their typical relative brevity, microposts still carry a considerable amount of information.ficken
-In~\cite{AddingMeaningToMicroposts}, we have shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation.
-In this paper, we generalize the approach to common microposts,
-based on the learnings from~\cite{NERD}.
+Despite their typical relative brevity, microposts still carry a considerable amount of information. It has been shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation~\cite{AddingMeaningToMicroposts}. In this paper, we generalize the approach to common microposts,
+using the NERD framework~\cite{NERD}.
 
 \subsubsection{Media Item Deduplication} \label{sec:deduplication}
-In order for obtaining interesting media galleries,
-the detection of the  popularity of shared media items across social networks is necessary.
-This task envolves the deduplication of extracted media items.
-For this paper, we have semi-automatically deduplicated the images with the aid of a commercial image duplication detection software\footnote{PhotoSweeper: \url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, and have manually deduplicated the videos.
-In future, the obvious objective is to do this automatically, however,
-with this work, we have created a baseline for specific future algorithms tailored to media item deduplication on social networks,
-whose special requirements we describe in \autoref{subsec:dataset}.
+We try to evaluate the popularity of the media items shared across social networks. This task involves the deduplication of extracted media items.
+We use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image duplication detection software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
 
 \paragraph{Image Deduplication}
-The image duplication software we employed allows for different algorithms to be used.
-We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e.,
-we do \emph{not} count a resized version of an image as exact duplicate.
-Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate.
-Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
+The image duplication software we employed allows for different algorithms to be used. We have applied strict pixel-per-pixel comparison for the detection of \emph{exact} duplicates, i.e. we do \emph{not} count a resized version of an image as exact duplicate. Based on bitmap- or histogram-based similarity comparison methods, we introduce the relatively wide term of \emph{loose} duplicate. Bitmap similarity is based on comparing pixels of size-reduced bitmaps.
 For our comparison, we used bitmaps of the size $128 \times 128$ pixels without smoothed edges, which corresponds to the best quality settings in the software.
-Histogram similarity is based on comparing histograms of size-reduced bitmaps.
-This method helps find similar images despite differences in color saturation and lighting.
-For both similarity comparison methods, a varying threshold was used.
-In our experiments, we could not make out a clear winning setting for all events.
-Rather, even for the same event,
-only a combination of both similarity comparison methods led to satisfactory results,
-i.e., to a set of loosely duplicate images that also a human being would have chosen.
-%RV: This seems to conflict with the decisive 128 above.
-%TS: Both methods use the same bitmap sizes. What do you mean?
-%RV: You say that there were no winning settings, but apparently 128 is? But it's clear now thanks to the clarification.
-We would like to highlight, however, that all detected loosely duplicate images were detected algorithmically,
-i.e., the only human intervention was when choosing the algorithm's parameters,
-which is an important fact for the objective of fully automating the deduplication process.
+Histogram similarity is based on comparing histograms of size-reduced bitmaps. This method helps finding similar images despite differences in color saturation and lighting. For both similarity comparison methods, a varying threshold was used. In our experiments, we could not make out a clear winning setting for all events. Rather, even for the same event, only a combination of both similarity comparison methods led to satisfactory results, i.e. to a set of loosely duplicate images that also a human being would have chosen. We would like to highlight, however, that all detected loosely duplicate images were detected algorithmically, which is an important fact for the objective of fully automating the deduplication process.
 
 \paragraph{Video Deduplication}
-We have deduplicated the videos in the dataset by first automatically splitting them in shots~\cite{CrowdsourcingEvent}, and then manually comparing the videos shot-wise.
-We considered \emph{exact} duplicates the videos that shared the same shots and same length.
-For \emph{loose} duplicates, we manually decided whether the videos showed loosely the same based on human judgment.
-We do, at this point, not claim that our results are algorithmically reproducible for loosely similar video detection.
-
-\begin{comment}
-\paragraph{Images Contained in Videos}
-While for this paper we did not detect images contained in videos,
-the task consists of comparing relevant frames of the video with a target image.
-Especially with the focus on event summarization,
-the presence of an image in a potentially long video can be considered a signal for the relevance of the corresponding shot of the video.
-\end{comment}
+We have deduplicated the videos in the dataset by first automatically splitting them in shots~\cite{CrowdsourcingEvent}, and then manually comparing the videos shot-wise. We considered \emph{exact} duplicates the videos that shared the same shots and same length. For \emph{loose} duplicates, we manually decided whether the videos showed loosely the same based on human judgment. We do not claim that our results are algorithmically reproducible for loosely similar video detection.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%  4. Experiments  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Experiments}
-\label{sec:experiments}
+\section{Experiments}                                                       \label{sec:experiments}
 % Responsible: Thomas
 For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
 We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}.
@@ -501,13 +439,13 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
   \small{
   \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{Social}} & \multicolumn{2}{c|}{\textbf{Assad}} & \multicolumn{2}{c|}{\textbf{CES}} & 
+    \multicolumn{1}{|c|}{\textbf{Social}} & \multicolumn{2}{c|}{\textbf{Assad}} & \multicolumn{2}{c|}{\textbf{CES}} &
     \multicolumn{2}{c|}{\textbf{Concordia}} & \multicolumn{2}{c|}{\textbf{Dixville}} & \multicolumn{2}{c|}{\textbf{Free}} &
     \multicolumn{2}{c|}{\textbf{Ropes}} & \multicolumn{2}{c|}{\textbf{SOPA}} & \multicolumn{2}{c|}{\textbf{Ubuntu}} &
     \multicolumn{2}{c|}{\textbf{Wulff}} \\
     \cline{2-19}
-    \multicolumn{1}{|c|}{\textbf{Network}} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & 
-    \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & 
+    \multicolumn{1}{|c|}{\textbf{Network}} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} &
+    \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} & \textbf{V} & \textbf{I} &
     \textbf{V} & \textbf{I} & \textbf{V} \\
     \hline
     \textbf{Google+} & 3 & 2 & 5 & 3 & 15 & 1 & 4 & 1 & 6 & 0 & 5 & 1 & 5 & 0 & 6 & 1 & 7 & 0\\
@@ -568,8 +506,6 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
   \label{tab:duplicatevideos}
   \caption{Exact and loose duplicate videos per event.}
 \end{table*}
-
-\clearpage
 
 \begin{figure*}
 \begin{tabular}{p{\textwidth}}
@@ -768,8 +704,6 @@ In practice, shrinking a wide rectangular banner to a square led to many incorre
 \label{fig:sequences}
 \end{figure*}
 
-\clearpage
-
 \subsection{Results Interpretation and Discussion}
 Looking at our dataset, it becomes evident that the amount of exact duplicate images and videos is inferior compared to the amount of loose duplicates.
 On the one hand, this is owed to applied search operators that exclude reshared microposts like, e.g., ReTweets of the same tweet.
@@ -838,7 +772,6 @@ For videos, the audio part poses a challenge.
 In our experiments we have made the interesting finding that intermixing the audio of all videos of an event oftentimes generates a very characteristic ``noise cloud''.
 A good example is the Assad Speech event, where a mix of Arabic voices blends nicely with the speech of a US politician.
 A different example is the CES Las Vegas event, where the atmosphere of a big exposition with music, announcements, and technical analyses becomes alive.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%  5. Related Work  %%%
