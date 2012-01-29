@@ -182,121 +182,77 @@ finally, we give our conclusions and outline future work in section~\ref{sec:con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Social Networks \& Media Items}                                    \label{sec:social-networks}
-Media items play a lively role in all social networks,
-all of which have a different level of support for media items.
-In the following, we introduce a media item support schema for social networks.
+In this section, we first define the terms that we will use throughout this paper in order to avoid any ambiguity. In particular, we show that social networks have different level of support for media items. Then, we describe how media items can be extracted from social networks.
 
+%%%  2.1 Definitions  %%%
 \subsection{Definitions}
-In the following paragraphs, we provide necessary definitions for the terms that we will use throughout this paper.
+\textbf{Event}: An event is defined as a phenomenon that has happened or that is scheduled to happen. It is an observable occurrence grouping
+persons, places, times and activities while being often documented by people through different media~\cite{Liu:ICMR11}. Some events
+are ongoing such as the Occupy movement.
 
-\paragraph{Social Network}
-A social network is an online service or media platform that focuses on building and reflecting social relations among people who share interests and/or activities.
-The boundary between social networks and media platforms is fluid.
-Several media platforms~(e.g., YouTube) allow people to upload content,
-and optionally allow other people, possibly related to the uploader,
-to react to this content in the form of comments, likes, dislikes, and so on.
-On other social networks~(e.g., Facebook), people can update their status, post links to stories,
-upload content and also give viewers the option to react.
-Finally, there are hybrid forms~(e.g., TweetDeck for Twitter using Twitpic) where social networks,
-typically via third party applications,
-integrate with media platforms.
-%RV: I tried to clarify the text a little, but it's still not clear enough to me. I think the first and second types also need a name to distinguish the three forms from each other.
-%TS: The distinction follows later, where I introduce the 1st-3rd order networks. Helps? Has to come earlier? Raphaël?
+\textbf{Media Item}: A media item is defined as an image or video file that gets distributed via a social network. An example can be a photo of a baby that 
+a parent shares on Instagram.
 
-\paragraph{Media Item}
-A media item in the context of this paper is defined as any video or image file that gets distributed via a social network.
-An example can be a baby photo that a fresh parent shares on Facebook.
+\textbf{Micropost}: A micropost is defined as a textual status message that can optionally accompany a media item. An example can be the status update
+\emph{``life is full of wonders, and you are one of them''} posted on Facebook that contains the previously shared photo of the baby.
 
-\paragraph{Micropost}
-We define the term micropost as any textual status update that can,
-but not has to,
-accompany a media item.
-An example can be a status update accompanying the previously mentioned baby photo. %saying ``life is full of wonders, and you are one of them''.
-%RV: aha! Could we talk about media items and microposts first, and then describe the different social network types in function of them?
-%TS: Raphaël will take care of this when he restructures (messes up) Sect. 1 and 2.
-\paragraph{Event}
-An event is here defined as an observable occurrence, phenomenon or an extraordinary occurrence with not necessarily defined start and/or end points.
-An event with a defined start point (September 17, 2011), but without a concrete end point, is the Occupy Wall Street movement.
-An event with both start and end point can be a concert.
+% RT: for me the boundary between social networks and media sharing platforms is NOT fluid but blurred. Is this not what you mean?
+\textbf{Social Network}: A social network is an online service or media platform that focuses on building and reflecting social relationships among
+people who share interests and/or activities. The boundary between social networks and media platforms is blurred.
+Several media sharing platforms~(e.g. YouTube) enable people to upload content and optionally allow other people to react
+to this content in the form of comments, likes or dislikes. On other social networks~(e.g. Facebook), users can update their status,
+post links to stories, upload media content and also give readers the option to react. Finally, there are hybrid clients~(e.g. TweetDeck
+for Twitter using Twitpic) where social networks integrate with media platforms typically via third party applications. 
+Therefore, we consider three types of support of media items with social networks:
+\begin{itemize}
+  \item \emph{First-order support}: The social network is centered on media items and posting requires the inclusion of a media item (e.g. YouTube, Flickr);
+  \item \emph{Second-order support}: The social network lets users upload media items but it is also possible to post only textual messages (e.g. Facebook);
+  \item \emph{Third-order support}: The social network has no direct support for media items but relies on third party application to host media items
+  which are linked to the status update (e.g. Twitter before the introduction of native photo support).
+\end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%
-
-%RV: I would decapitalize and possibly add a hyphen (adjective): First-order media item support or even First-order support. Drawback: numerals are gone.
-%TS: Raphaël, your opinion?
-\paragraph{1{\st} order media item support}
-The social network is centered on media items.
-Posting on the social network requires inclusion of a media item.
-An example is YouTube.
-
-\paragraph{2{\nd} order media item support}
-The social network lets users upload media items, however,
-posting is also possible without the inclusion of a media item.
-An example is Facebook.
-
-\paragraph{3{\rd} order media item support}
-The social network has no direct support for media items, however,
-lets users upload media items on third party media platforms and reference them there.
-An example was Twitter before the introduction of native photo support.
-
-For this paper, we considered 11 \todo{make sure final number is correct} social networks and in \autoref{tab:networks} \todo{Why does this reference not work???} provide a categorization according to the schema defined above.
-Therefore, the list of considered networks and platforms is necessarily non-exhaustive.
-We included those social networks with sufficient market share and popularity, offering mature API capabilities.
-For media platforms, the inclusion criterium was guided by a~study by the social media monitoring and analytics firm Sysomos~\cite{Sysomos2011}.
-
-%RV: a space between 2nd and order is missing. However, I did not correct, since it might become a hyphen (see above).
-%TS: corrected the spacing. Not sure about the hyphen. Raphaël? What do you prefer?
+In this paper, we consider 11 different social networks that represent all together most of the market share while offering mature API capabilities.
+The criteria for including the media sharing platforms follow the study performed by Sysomos specialized in social media monitoring and analytic~\cite{Sysomos2011}. Table~\ref{tab:platforms} lists these platforms according to the categorization defined above.
 \begin{table*}[htbp]
-  \begin{tabular}{ | l | l | l | p{8cm} |}
+  {\small
+  \begin{tabular}{|l|l|l|p{8cm}|}
     \hline
     \textbf{Social Network} & \textbf{URL} & \textbf{Category} & \textbf{Comment}\\
     \hline
-	Google+ & \url{http://google.com/+} & 2{\nd} order & Links to media items are returned via the Google+ API.\\\hline
-	MySpace & \url{http://myspace.com} & 2{\nd} order & Links to media items are returned via the MySpace API.\\\hline
-	Facebook & \url{http://facebook.com} & 2{\nd} order & Links to media items are returned via the Facebook API.\\\hline
-	Twitter & \url{http://twitter.com} & 2{\nd} / 3{\rd} order & Many people use Twitter in third order mode with other media platforms. In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items.\\\hline
-	Instagram & \url{http://instagram.com} & 1{\st} order & Links to media items are returned via the Instagram API.\\\hline
-	YouTube & \url{http://youtube.com} & 1{\st} order & Links to media items are returned via the YouTube API.\\\hline
-	Flickr & \url{http://flickr.com} & 1{\st} order & Links to media items are returned via the Flickr API.\\\hline
-	MobyPicture & \url{http://mobypicture.com} & 1{\st} order & Popular as media platform for Twitter. Links to media items are returned via the MobyPicture API.\\\hline
-	Twitpic & \url{http://twitpic.com} & 1{\st} order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	img.ly & \url{http://img.ly} & 1{\st} order & Popular as media platform for Twitter. Links to media items must be retrieved via Web scraping.\\\hline
-	yfrog & \url{http://yfrog.com} & 1{\st} order & Popular as media platform for Twitter.   Links to media items must be retrieved via Web scraping.\\
+	Google+ & \url{http://google.com/+} & second-order & Links to media items are returned via the Google+ API.\\
+	MySpace & \url{http://myspace.com} & second-order & Links to media items are returned via the MySpace API.\\
+	Facebook & \url{http://facebook.com} & second-order & Links to media items are returned via the Facebook API.\\
+	Twitter & \url{http://twitter.com} & second-/third-order & In second order mode, links to media items are returned via the Twitter API. In third order mode, Web scraping or media platform API usage are necessary to retrieve links to media items. Many people use Twitter in third order mode with other media platforms.\\\hline
+	Instagram & \url{http://instagram.com} & first-order & Links to media items are returned via the Instagram API.\\
+	YouTube & \url{http://youtube.com} & first-order & Links to media items are returned via the YouTube API.\\
+	Flickr & \url{http://flickr.com} & first-order & Links to media items are returned via the Flickr API.\\
+	MobyPicture & \url{http://mobypicture.com} & first-order & Media platform for Twitter. Links to media items are returned via the MobyPicture API.\\
+	Twitpic & \url{http://twitpic.com} & first-order & Media platform for Twitter. Links to media items must be retrieved via Web scraping.\\
+	img.ly & \url{http://img.ly} & first-order & Media platform for Twitter. Links to media items must be retrieved via Web scraping.\\
+	yfrog & \url{http://yfrog.com} & first-order & Media platform for Twitter. Links to media items must be retrieved via Web scraping.\\
 	\hline
   \end{tabular}
-  \label{tab:networks}
-  \caption{Considered social networks and categorization according to the media item support schema defined in Subsection X \todo{Make sure to add the reference wherever the media item support schema might end up}.}
+  }
+  \label{tab:platforms}
+  \caption{11 social networks with different level of support for media items and techniques needed to retrieve them}
 \end{table*}
 
+%%%  2.2 Media Item Extraction  %%%
 \subsection{Media Item Extraction}
-Most social networks offer a search functionality that allows their content to be queried based on search terms,
-with or without more advanced search operators like exclusion, inclusion, phrase search, etc.
-Each social network has special constraints with regards to supported search operators,
-filtering options (e.g., time), or the searchable period.
-In the context of this paper, we use the term \emph{media item extraction} to describe the process of leveraging search functionalities of social networks to find references to media items,
-which allows for storing those media items in binary form,
-i.e., independent from the originating social networks.
+Most social networks offer a search functionality that allows content to be retrieved based on search terms, with or without more advanced 
+search operators such as exclusion, inclusion, phrase search, etc. Each social network has special constraints regarding the search operators 
+supported or the filtering options available (e.g. time). We define the term \emph{media item extraction} as the process of leveraging 
+search functionalities of social networks to find references to media items which allows for storing those media items in a binary form.
 
-\subsection{API Access vs. Web Scraping}
-An \emph{Application Programming Interface (API)} in the sense of Web-based API is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other.
+An \emph{Application Programming Interface (API)} is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other. \emph{Web scraping} is the process of automatically extracting information from web sites. Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc. Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree. The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, while Web scraping relies on the textual and/or hierarchical structure of web sites.
 
-\emph{Web scraping} is the process of automatically extracting information from websites.
-Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc.
-Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree.
-The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, whereas Web scraping relies on the textual and/or hierarchical structure of websites.
-
-Social networks today are very much perceived as ``walled gardens'', excellently illustrated by a cartoon by David Simonds~(\autoref{fig:DavidSimonds}).
-%RV: The Orwell reference comes out of the blue (although I like it).
-%TS: I found it fun, but if it adds confusion, we remove it. Raphaël?
-As with Orwell, where some animals are more equal than others, some social networks are more walled than others.
-Several social networks~(e.g., Twitter) have full read and write access via specified APIs.
-Others~(e.g., Google+) have read-only access via APIs.
-Interestingly, some media platforms~(e.g., img.ly) have write-only without read support, which requires us to fall back to Web scraping the website in order to retrieve data.
+Social networks are very much perceived as ``walled gardens'' (\autoref{fig:DavidSimonds}). Several social networks (e.g. Twitter) have full read and write access via specified APIs while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
 
 \begin{figure}
-\centering
-\includegraphics[width=1.0\linewidth,trim=16px 17px 12px 15px,clip]{./resources/davidsimonds.jpg}
-\caption{David Simonds illustrates social networks as walled gardens due to their (by design) lock-in effects~\cite{DavidSimonds}.}
-\label{fig:DavidSimonds}
+ \centering
+ \includegraphics[width=1.0\linewidth,trim=16px 17px 12px 15px,clip]{./resources/davidsimonds.jpg}
+ \caption{David Simonds illustrates social networks as walled gardens due to their (by design) lock-in effects~\cite{DavidSimonds}}
+ \label{fig:DavidSimonds}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
