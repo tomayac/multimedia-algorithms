@@ -265,7 +265,7 @@ we describe the various processing steps applied to each media item collected.
 
 %%%  3.1 Data Format  %%%
 \subsection{Data Format}                                                    \label{sec:data-format}
-We propose a common alignment schema for all social networks considered in the Table~1 in order to be 
+We propose a common alignment schema for all social networks considered in the Table~1 in order to be
 agnostic of concrete social networks. The resulting set of metadata for a media item is detailed below:
 \begin{description}
   \item[Media URL] Deep link to the media item (\url{http://farm7.staticflickr.com/6059/6290784192_567346ba6a_o.jpg}).
@@ -288,9 +288,9 @@ agnostic of concrete social networks. The resulting set of metadata for a media 
    "storyurl": "https://www.facebook.com/permalink.
    php?story_fbid=231781590231029&id=1254772464",
    "message": {
-    "text": "Videoed between Hamburg and Snyder. 
+    "text": "Videoed between Hamburg and Snyder.
       Thought I would share.",
-    "clean": "Videoed between Hamburg and Snyder. 
+    "clean": "Videoed between Hamburg and Snyder.
       Thought I would share.",
     "entities": [
      [
@@ -345,7 +345,7 @@ we aim for leveraging the additional data for better micropost analysis in the f
 Despite their typical relative brevity, microposts still carry a considerable amount of information. It has been shown how meaning can be added to Facebook microposts through named entity recognition and disambiguation~\cite{AddingMeaningToMicroposts}. In this paper, we generalize the approach to common microposts,
 using the NERD framework~\cite{NERD}.
 
-\subsubsection{Media Item Deduplication} \label{sec:deduplication}
+\subsubsection{Media Item Deduplication}
 We try to evaluate the popularity of the media items shared across social networks. This task involves the deduplication of extracted media items.
 We use PhotoSweeper\footnote{\url{http://itunes.apple.com/us/app/photosweeper/id463362050?mt=12}}, a commercial image duplication detection software and we have manually deduplicated videos. In the future, we aim to perform this task fully automatically but with this work, we have already created a baseline for specific future algorithms tailored to media item deduplication on social networks.
 
@@ -364,7 +364,7 @@ We have deduplicated the videos in the dataset by first automatically splitting 
 \section{Experiments}                                                       \label{sec:experiments}
 % Responsible: Thomas
 For our experiments, we have taken into account several events that happened in the period of January 10 to 19, 2012, and thus were the subject of discussion on various social networks.
-We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://www.lsi.upc.edu/~tsteiner/experiments/icmr2012/}}.
+We have captured event-related media items and microposts, and made the data available online\footnote{Event-related media items and microposts: \url{http://webmasterapp.net/social/icmr2012/}}.
 We invite the reader to browse the data and compile a personal set of loose and exact duplicate media items.
 YouTube video URLs are signed with a by now expired time to live,
 they can be accessed by following the \texttt{storyurl} link.
