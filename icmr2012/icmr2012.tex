@@ -162,7 +162,7 @@ Some news agencies\footnote{\url{http://www.citizenside.com/}} have even special
 this user-generated content. Scheduled events (as opposed to breaking events) such as sports games or concerts are also
 largely illustrated by social media, albeit distributed over many social networks.
 
-In this paper, we tackle the challenge of reconciliating the social media that could illustrate known events but that
+In this paper, we tackle the challenge of reconciling the social media that could illustrate known events but that
 are spread over the network in order to build visual summaries of them. We propose a social network agnostic
 approach for the extraction of images and videos covering events. We want to emphasize that we do \emph{not} perform
 event detection: the events we are dealing with are known and we use specific human-chosen search terms to find illustrating
@@ -181,13 +181,13 @@ finally, give our conclusions and outline future work in \autoref{sec:conclusion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Social Networks \& Media Items}                                    \label{sec:social-networks}
-In this section, we first define the terms that we will use throughout this paper in order to avoid any ambiguity. In particular, we show that social networks have different level of support for media items. Then, we describe how media items can be extracted from social networks.
+In this Section, we first define the terms that we will use throughout this paper in order to avoid any ambiguity. In particular, we show that social networks have different levels of support for media items. Then, we describe how media items can be extracted from social networks.
 
 %%%  2.1 Definitions  %%%
 \subsection{Definitions}
 \textbf{Event}: An event is defined as a phenomenon that has happened or that is scheduled to happen. It is an observable occurrence grouping
 persons, places, times and activities while being often documented by people through different media~\cite{Liu:ICMR11}. Some events
-are ongoing such as the Occupy movement.
+are ongoing such as the Occupy (Wall Street) movement.
 
 \textbf{Media Item}: A media item is defined as an image or video file that gets distributed via a social network. An example can be a photo of a baby that
 a parent shares on Instagram.
@@ -206,12 +206,12 @@ Therefore, we consider three types of support of media items with social network
 \begin{itemize}
   \item \emph{First-order support}: The social network is centered on media items and posting requires the inclusion of a media item (e.g. YouTube, Flickr);
   \item \emph{Second-order support}: The social network lets users upload media items but it is also possible to post only textual messages (e.g. Facebook);
-  \item \emph{Third-order support}: The social network has no direct support for media items but relies on third party application to host media items
-  which are linked to the status update (e.g. Twitter before the introduction of native photo support).
+  \item \emph{Third-order support}: The social network has no direct support for media items but relies on third party application to host media items,
+which are linked to the status update (e.g. Twitter before the introduction of native photo support).
 \end{itemize}
 
 In this paper, we consider 11 different social networks that represent all together most of the market share while offering mature API capabilities.
-The criteria for including the media sharing platforms follow the study performed by Sysomos specialized in social media monitoring and analytic~\cite{Sysomos2011}. Table~1 lists these platforms according to the categorization defined above.
+The criteria for including the media sharing platforms follow a study performed by the company Sysomos, specialized in social media monitoring and analytics~\cite{Sysomos2011}. Table~1 lists these platforms according to the categorization defined above.
 \begin{table*}[htbp]
   {\small
   \begin{tabular}{|l|l|l|p{8cm}|}
@@ -245,7 +245,7 @@ search functionalities of social networks to find references to media items whic
 
 An \emph{Application Programming Interface (API)} is a programmatic specification intended to be used as an interface by software components on client and server to communicate with each other. \emph{Web scraping} is the process of automatically extracting information from web sites. Web scraping involves practical solutions based on existing technologies that are often entirely ad hoc. Examples of such technologies are regular expressions or DOM parsing of Web pages into a DOM tree. The difference to the somewhat related concept of \emph{screen scraping} is that screen scraping relies on the visual layout of a website, while Web scraping relies on the textual and/or hierarchical structure of web sites.
 
-Social networks are very much perceived as ``walled gardens'' (\autoref{fig:DavidSimonds}). Several social networks (e.g. Twitter) have full read and write access via specified APIs while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
+Social networks are very much perceived as ``walled gardens'' (\autoref{fig:DavidSimonds}). Several social networks (e.g. Twitter) have full read and write access via specified APIs, while others (e.g. Google+) have read-only APIs access. Interestingly, some media platforms (e.g. img.ly) have write-only without read support which requires to fall back to Web scraping in order to retrieve data.
 
 \begin{figure}
  \centering
