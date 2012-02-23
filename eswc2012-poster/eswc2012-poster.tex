@@ -89,7 +89,7 @@ that illustrate events from the view of event attendants and
 that convey at least part of the atmosphere to those who did not attend the event.
 In this paper, we present and discuss several ranking criteria that can help
 triage and prune the potentially huge amount of available media items for a~given event.
-A key feature for this task is the semantic enrichment of media items and the related metadata.
+A~key feature for this task is the semantic enrichment of media items and the related metadata.
 Besides high- and low-level \emph{visual} ranking criteria
 such as contained objects or pixel resolution---and,
 in consequence, leveraging the additional information coming from social networks---we introduce
@@ -117,7 +117,7 @@ The given contexts of the known artists, sports teams, or speakers
 allow for leveraging knowledge from the
 Linked Open Data (LOD) cloud\footnote{Linked Open Data cloud: \url{http://lod-cloud.net/}}.
 This can be data about faces, names, or related concepts,
-which, given semantic enrichment of the metadata through, e.g.,
+which, given semantic enrichment of the metadata through, \emph{e.g.},
 named entity disambiguation, can serve to prune the set of media items
 through face detection and recognition.
 More concretely, a~video of the former German President \emph{Christian Wulff}
@@ -137,34 +137,41 @@ which we discuss and classify in the upcoming Section.
 As outlined before, ranking criteria fall in different categories,
 which we present in the following.
 
-\paragraph{Visual high-level:}
+\begin{description}
+\item[Visual high-level:]
 this category regards the actual contents of media items.
-Examples are the detection of logos, the recognition of faces, or, on a more abstract level,
+Examples are the detection of logos, the recognition of faces, or, on a~more abstract level,
 the detection of camera shots~\cite{Crowdsourcing2011}.
 
-\paragraph{Visual low-level:}
+\item[Visual low-level:]
 this category regards metadata about the raw binary media items.
 Examples are file size, pixel resolution, video duration, geolocation,
 date and time information, etc.
 It is to be noted that for privacy reasons some social networks
-remove such potentially identifying information,
-this holds especially true for GPS coordinates.
+remove such potentially identifying information.
 
-\paragraph{Textual:}
+\item[Textual:]
 this category regards the microposts that accompany media items.
-Typically, microposts provide a textual description of the media item(s) in question.
+Typically, microposts provide a~textual description of the media item(s) in question.
 Using named entity extraction and disambiguation tools,
 this textual content can be linked to concepts in the LOD cloud~\cite{Facebook2011}.
 
-\paragraph{Social:}
+\item[Social:]
 this category regards social networking effects such as shares, mentions,
 number of views, expressions of likes and dislikes, user diversity, etc.
-We want to highlight that our previous work allows us
-to not only examine these effects within one social network (e.g., ReTweets on Twitter),
-but in a \emph{network-agnostic} way for a given query allows us
-to examine the overall popularity of a media item.
+We emphasize that our previous work allows us
+to not only examine these effects within one social network (\emph{e.g.}, ReTweets on Twitter),
+but in a~\emph{network-agnostic} way for a~given query allows us
+to examine the overall popularity of media items.
 
-\paragraph{Aesthetic:}
+\item[Aesthetic:]
+this category regards the desired final outcome after the ranking process, \emph{i.e.},
+the media gallery that illustrates an event from the view of event attendants and
+that conveys at least part of the atmosphere to those who did not attend the event.
+Sandhaus \emph{et al.} have studied the aesthetics of
+automatic photo book layout~\cite{Photo2011}, which is valuable related work, however,
+our requirements involve the aesthetic layout of a~mix of video and image media items.
+\end{description}
 
 \section{Conclusion and Future Work}
 
