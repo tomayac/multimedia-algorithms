@@ -90,7 +90,8 @@ that convey at least part of the atmosphere to those who did not attend the even
 In this paper, we present and discuss several ranking criteria that can help
 triage and prune the potentially huge amount of available media items for a~given event.
 A key feature for this task is the semantic enrichment of media items and the related metadata.
-Besides obvious low-level \emph{visual} ranking criteria such as image or video resolution---and
+Besides high- and low-level \emph{visual} ranking criteria
+such as contained objects or pixel resolution---and,
 in consequence, leveraging the additional information coming from social networks---we introduce
 \emph{textual} ranking criteria from associated microposts that accompany media items and
 \emph{social} ranking criteria from social networking effects such as shares, mentions,
@@ -122,14 +123,38 @@ through face detection and recognition.
 More concretely, a~video of the former German President \emph{Christian Wulff}
 retrieved from a~social network through a~keyword search for \emph{``christian wulff''},
 can be considered relevant for the---at time of writing---recent
-event of his resignation speech\footnote{Christian Wulff's resignation speech: \url{http://www.youtube.com/watch?v=PWJxM0d0NNQ}},
+event of his resignation speech\footnote{Christian Wulff's resignation speech:
+\url{http://www.youtube.com/watch?v=PWJxM0d0NNQ}},
 if (i), in the accompanying micropost the named entity represented by the DBpedia URI
 \url{http://dbpedia.org/resource/Resignation_speech} is detected,
 and if (ii), his face is recognized in the video.
-In the given example, this video might outrank a~video of an anchorman or journalist commenting on the case.
-We note, however, that many more ranking criteria exist, which we discuss and classify in the upcoming Section.
+In the given example, this video might outrank a~video
+of an anchorman or journalist commenting on the case.
+We note, however, that many more ranking criteria exist,
+which we discuss and classify in the upcoming Section.
 
 \section{Classification and Discussion of Ranking Criteria}
+As outlined before, ranking criteria fall in different categories,
+which we present in the following.
+
+\paragraph{Visual high-level:}
+this category regards the actual contents of media items.
+Examples are the detection of logos, the recognition of faces, or, on a more abstract level,
+the detection of camera shots~\cite{Steiner2001}.
+
+\paragraph{Visual low-level:}
+this category regards metadata about the raw binary media items.
+Examples are file size, pixel resolution, video duration, geolocation,
+date and time information, etc.
+It is to be noted that for privacy reasons some social networks
+remove such potentially identifying information,
+this holds especially true for GPS coordinates.
+
+\paragraph{Textual:}
+
+\paragraph{Social:}
+
+\paragraph{Aesthetic:}
 
 \section{Conclusion and Future Work}
 
