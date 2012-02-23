@@ -1,0 +1,108 @@
+\documentclass[runningheads,a4paper,11pt]{llncs}
+\usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subfig}
+
+% proper encoding
+\usepackage[T1]{fontenc}
+% use Times
+\usepackage{mathptmx}
+
+% autoref command
+\usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+\def\figureautorefname{Fig.}
+\def\subfigureautorefname{Fig.}
+
+% proper typography
+\usepackage[protrusion,expansion,kerning,spacing,tracking]{microtype}
+
+% URLs
+\usepackage{url}
+
+% todo macro
+\usepackage{color}
+\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO} #1{\bf \}}}}
+
+% listings and Verbatim environment
+\usepackage{fancyvrb}
+\usepackage{relsize}
+\RecustomVerbatimCommand{\Verb}{Verb}{fontsize=\fontsize{9pt}{11pt}}
+\RecustomVerbatimEnvironment{Verbatim}{Verbatim}{fontsize=\fontsize{9pt}{12pt}}
+\usepackage{listings}
+\lstset{frame=lines,captionpos=b,numberbychapter=false,escapechar=§,
+        aboveskip=0em,belowskip=0em,abovecaptionskip=.3em,belowcaptionskip=0em,
+        basicstyle=\ttfamily\fontsize{8.5pt}{9.5pt}\selectfont}
+
+% linewrap symbol
+\definecolor{grey}{RGB}{160,160,160}
+\newcommand{\linewrap}{\raisebox{-.6ex}{\textcolor{grey}{$\hookleftarrow$}}}
+
+% keywords command
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+
+\mainmatter
+
+\title{Ranking Criteria for Media Items Illustrating Events\\ Stemming from Multiple Social Networks}
+
+% use Courier from this point onward (used CM for author e-mails), and smaller in-text URIs
+%\renewcommand{\ttdefault}{pcr}
+%\renewcommand\UrlFont{\smaller\tt}
+
+\author{Thomas Steiner\inst{1} \and Ruben Verborgh\inst{2} \and Rik Van de Walle\inst{2} \and Joaquim Gabarro\inst{1}}
+
+\institute{Universitat Politècnica de Catalunya -- Department LSI\\
+08034 Barcelona, Spain\\
+\email{\{tsteiner, gabarro\}@lsi.upc.edu}
+\and Ghent University -- IBBT, ELIS -- Multimedia Lab\\Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium\\
+\email{\{ruben.verborgh, rik.vandewalle\}@ugent.be}
+}
+
+\authorrunning{Ranking Criteria for Media Items Illustrating Events}
+% (feature abused for this document to repeat the title also on left hand pages)
+% a short form should be given in case it is too long for the running head
+\titlerunning{Ranking Criteria for Media Items Illustrating Events}
+
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+Mobile devices such as smartphones or digital cameras together with social networks
+enable people to create, share, and consume enormous amounts of media items
+like videos or photos, both \textit{en route} or at home.
+Such mobile devices---by pure definition---accompany their owners almost wherever they may go.
+In consequence, mobile devices are omnipresent at all sorts of events
+like keynote speeches at conferences, music concerts in stadiums,
+or even natural catastrophes affecting whole areas or countries.
+At such events---given a~stable network connection---media items are published
+on social networks both as the event happens and afterwards.
+Media items stemming from multiple social networks can serve to create authentic media galleries
+that illustrate events from the view of event attendants and
+that convey at least part of the atmosphere to those who did not attend the event.
+In this paper, we present and discuss several ranking criteria that can help
+triage and prune the potentially huge amount of available media items for a given event.
+Besides obvious low-level \emph{visual} ranking criteria such as image or video resolution---and
+in consequence leveraging the additional information coming from social networks---we introduce
+\emph{textual} ranking criteria from associated microposts that accompany media items and
+\emph{social} ranking criteria from social networking effects such as shares, mentions,
+number of views, expressions of likes and dislikes, user diversity, etc.
+Finally, we discuss media gallery specific \emph{aesthetic} ranking criteria such as
+variety of the included media items and the balance of video \emph{vs.} image media items.
+\end{abstract}
+
+% back to normal size Computer Modern for URLs in bibliography
+\renewcommand{\ttdefault}{cmvtt}
+\renewcommand\UrlFont\tt
+
+\bibliographystyle{splncs03}
+\bibliography{eswc2012-poster}
+
+\end{document}
