@@ -89,6 +89,7 @@ that illustrate events from the view of event attendants and
 that convey at least part of the atmosphere to those who did not attend the event.
 In this paper, we present and discuss several ranking criteria that can help
 triage and prune the potentially huge amount of available media items for a~given event.
+The final ranked list of media items can then serve as the contents for a media gallery.
 A~key feature for this task is the semantic enrichment of media items and the related metadata.
 Besides high- and low-level \emph{visual} ranking criteria
 such as contained objects or pixel resolution---and,
@@ -168,10 +169,18 @@ to examine the overall popularity of media items.
 this category regards the desired final outcome after the ranking process, \emph{i.e.},
 the media gallery that illustrates an event from the view of event attendants and
 that conveys at least part of the atmosphere to those who did not attend the event.
-Sandhaus \emph{et al.} have studied the aesthetics of
-automatic photo book layout~\cite{Photo2011}, which is valuable related work, however,
+Sandhaus \emph{et al.} and Obrador \emph{et al.} have studied the aesthetics of
+automatic photo book layout~\cite{Photo2011}
+and photo aesthetics \emph{per se}~\cite{Photo2012}, which is valuable related work, however,
 our requirements involve the aesthetic layout of a~mix of video and image media items.
 \end{description}
+
+\noindent At the current state of our research, we have run first tests of different combinations
+of ranking criteria, and also of ranking criteria in isolation.
+While for some ranking criteria the preferences are straightforward
+(\emph{e.g.}, higher pixel resolution is usually preferred over lower pixel resolution),
+for others, the preferences are not that clear (\emph{e.g.}, video duration).
+
 
 \section{Conclusion and Future Work}
 
