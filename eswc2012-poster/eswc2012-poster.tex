@@ -54,8 +54,8 @@
 \title{Ranking Criteria for Media Items Illustrating Events\\ Stemming from Multiple Social Networks}
 
 % use Courier from this point onward (used CM for author e-mails), and smaller in-text URIs
-%\renewcommand{\ttdefault}{pcr}
-%\renewcommand\UrlFont{\smaller\tt}
+\renewcommand{\ttdefault}{pcr}
+\renewcommand\UrlFont{\smaller\tt}
 
 \author{Thomas Steiner\inst{1} \and Ruben Verborgh\inst{2} \and Rik Van de Walle\inst{2} \and Joaquim Gabarro\inst{1}}
 
@@ -77,7 +77,7 @@
 \begin{abstract}
 Mobile devices such as smartphones or digital cameras together with social networks
 enable people to create, share, and consume enormous amounts of media items
-like videos or photos, both \textit{en route} or at home.
+like videos or images, both \textit{en route} or at home.
 Such mobile devices---by pure definition---accompany their owners almost wherever they may go.
 In consequence, mobile devices are omnipresent at all sorts of events
 like keynote speeches at conferences, music concerts in stadiums,
@@ -88,7 +88,8 @@ Media items stemming from multiple social networks can serve to create authentic
 that illustrate events from the view of event attendants and
 that convey at least part of the atmosphere to those who did not attend the event.
 In this paper, we present and discuss several ranking criteria that can help
-triage and prune the potentially huge amount of available media items for a given event.
+triage and prune the potentially huge amount of available media items for a~given event.
+A key feature for this task is the semantic enrichment of media items and the related metadata.
 Besides obvious low-level \emph{visual} ranking criteria such as image or video resolution---and
 in consequence leveraging the additional information coming from social networks---we introduce
 \emph{textual} ranking criteria from associated microposts that accompany media items and
@@ -97,6 +98,40 @@ number of views, expressions of likes and dislikes, user diversity, etc.
 Finally, we discuss media gallery specific \emph{aesthetic} ranking criteria such as
 variety of the included media items and the balance of video \emph{vs.} image media items.
 \end{abstract}
+
+\section{Motivational Event Scenarios}
+In this Section, we discuss common event scenarios that serve to motivate the need
+for ranking criteria for media items stemming from multiple social networks.
+We assume (and are currently working on) a~set of functioning media item extractors
+for multiple social networks that, given a~set of event-related search terms,
+extract raw binary media items together with their accompanying metadata
+like microposts, tags, descriptions, etc. from social networks like
+Twitter, Facebook, Google+, Instagram, MySpace, YouTube, Flickr, etc.
+In consequence, for the event scenario discussed below,
+we take a~set of related media items like images or videos for granted.
+
+Events like music concerts, sports matches, or keynote speeches
+are typically very well covered social media wise.
+The given contexts of the known artists, sports teams, or speakers
+allow for leveraging knowledge from the
+Linked Open Data cloud\footnote{Linked Open Data cloud: \url{http://lod-cloud.net/}}.
+This can be data about faces, names, or related concepts,
+which, given semantic enrichment of the metadata through, e.g.,
+named entity disambiguation, can serve to prune the set of media items
+through face detection and recognition.
+More concretely, a~video of the former German President \emph{Christian Wulff}
+retrieved from a~social network through a~keyword search for \emph{``christian wulff''},
+can be considered relevant for the---at time of writing---recent
+event of his resignation speech\footnote{Christian Wulff's resignation speech: \url{http://www.youtube.com/watch?v=PWJxM0d0NNQ}},
+if (i), in the accompanying micropost the named entity represented by the DBpedia URI
+\url{http://dbpedia.org/resource/Resignation_speech} is detected,
+and if (ii), his face is recognized in the video.
+In the given example, this video might outrank a~video of an anchorman or journalist commenting on the case.
+We note, however, that many more ranking criteria exist, which we discuss and classify in the upcoming Section.
+
+\section{Classification and Discussion of Ranking Criteria}
+
+\section{Conclusion and Future Work}
 
 % back to normal size Computer Modern for URLs in bibliography
 \renewcommand{\ttdefault}{cmvtt}
