@@ -113,22 +113,23 @@ In consequence, for the event scenario discussed below,
 we take a~set of related media items like images or videos for granted.
 
 Events like music concerts, sports matches, or keynote speeches
-are typically very well covered social media wise.
+are typically very well covered social-media-wise.
 The given contexts of the known artists, sports teams, or speakers
 allow for leveraging knowledge from the
 Linked Open Data (LOD) cloud\footnote{Linked Open Data cloud: \url{http://lod-cloud.net/}}.
 This can be data about faces, names, or related concepts,
-which, given semantic enrichment of the metadata through, \emph{e.g.},
-named entity disambiguation, can serve to prune the set of media items
+which, given semantic enrichment of the metadata
+(\emph{e.g.}, through named entity disambiguation),
+can serve to prune the set of media items
 through face detection and recognition.
 More concretely, a~video of the former German President \emph{Christian Wulff}
 retrieved from a~social network through a~keyword search for \emph{``christian wulff''},
 can be considered relevant for the---at time of writing---recent
 event of his resignation speech\footnote{Christian Wulff's resignation speech:
 \url{http://www.youtube.com/watch?v=PWJxM0d0NNQ}},
-if (i), in the accompanying micropost the named entity represented by the DBpedia URI
+if (i)~in the accompanying micropost the named entity represented by the DBpedia URI
 \url{http://dbpedia.org/resource/Resignation_speech} is detected,
-and if (ii), his face is recognized in the video.
+and (ii)~his face is recognized in the video.
 In the given example, this video might outrank a~video
 of an anchorman or journalist commenting on the case.
 We note, however, that many more ranking criteria exist,
@@ -138,41 +139,43 @@ which we discuss and classify in the upcoming Section.
 As outlined before, ranking criteria fall in different categories,
 which we present in the following.
 
+\todo{The structure and category distinction might maybe become clearer if "visual high-level" and "visual low-level" are merged to "visual". In the description, you could then talk about high-level on the one hand and low-level on the other.}
+
 \begin{description}
-\item[Visual high-level:]
-this category regards the actual contents of media items.
+\item[Visual high-level]
+This category regards the actual contents of media items.
 Examples are the detection of logos, the recognition of faces, or, on a~more abstract level,
 the detection of camera shots~\cite{Crowdsourcing2011}.
 
-\item[Visual low-level:]
-this category regards metadata about the raw binary media items.
+\item[Visual low-level]
+This category regards metadata about the raw binary media items.
 Examples are file size, pixel resolution, video duration, geolocation,
 date and time information, etc.
 It is to be noted that for privacy reasons some social networks
 remove such potentially identifying information.
 
-\item[Textual:]
-this category regards the microposts that accompany media items.
+\item[Textual]
+This category regards the microposts that accompany media items.
 Typically, microposts provide a~textual description of the media item(s) in question.
 Using named entity extraction and disambiguation tools,
 this textual content can be linked to concepts in the LOD cloud~\cite{Facebook2011}.
 
-\item[Social:]
-this category regards social networking effects such as shares, mentions,
+\item[Social]
+This category regards social networking effects such as shares, mentions,
 number of views, expressions of likes and dislikes, user diversity, etc.
 We emphasize that our previous work allows us
-to not only examine these effects within one social network (\emph{e.g.}, ReTweets on Twitter),
-but in a~\emph{network-agnostic} way for a~given query allows us
+to not only examine these effects within a~\emph{single} social network (\emph{e.g.}, ReTweets on Twitter),
+but in a~\emph{network-agnostic} way, allowing us
 to examine the overall popularity of media items.
 
-\item[Aesthetic:]
-this category regards the desired final outcome after the ranking process, \emph{i.e.},
+\item[Aesthetic]
+This category regards the desired final outcome after the ranking process, \emph{i.e.},
 the media gallery that illustrates an event from the view of event attendants and
 that conveys at least part of the atmosphere to those who did not attend the event.
 Sandhaus \emph{et al.} and Obrador \emph{et al.} have studied the aesthetics of
 automatic photo book layout~\cite{Photo2011}
-and photo aesthetics \emph{per se}~\cite{Photo2012}, which is valuable related work, however,
-our requirements involve the aesthetic layout of a~mix of video and image media items.
+and photo aesthetics \emph{per se}~\cite{Photo2012}.
+However, our requirements involve the aesthetic layout of a~mix of video and image media items.
 \end{description}
 
 \noindent At the current state of our research, we have run first tests of different combinations
@@ -180,6 +183,7 @@ of ranking criteria, and also of ranking criteria in isolation.
 While for some ranking criteria the preferences are straightforward
 (\emph{e.g.}, higher pixel resolution is usually preferred over lower pixel resolution),
 for others, the preferences are not that clear (\emph{e.g.}, video duration).
+\todo{Any (preliminary) results here?}
 
 \section{Conclusion and Future Work}
 In this paper, we have presented and discussed ranking criteria for media items
