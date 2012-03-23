@@ -1,11 +1,8 @@
-% Template for QoMEX'12 paper; to be used with:
-%          spconf.sty  - ICASSP/ICIP LaTeX style file, and
-%          IEEEbib.bst - IEEE bibliography style file.
-% --------------------------------------------------------------------------
 \documentclass{article}
 \usepackage{spconf,amsmath,epsfig}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+
 % autoref command
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
 \def\sectionautorefname{Section}
@@ -13,18 +10,9 @@
 \def\figureautorefname{Fig.}
 \def\subfigureautorefname{Fig.}
 
-% Example definitions.
-% --------------------
-\def\x{{\mathbf x}}
-\def\L{{\cal L}}
-
-% Title.
-% ------
 \title{DEFINING AESTHETIC PRINCIPLES FOR AUTOMATIC MEDIA GALLERY LAYOUT\\
 FOR VISUAL AND AUDIAL EVENT SUMMARIZATION BASED ON SOCIAL NETWORKS}
-%
-% Two addresses (uncomment and modify for two-address case).
-% ----------------------------------------------------------
+
 \twoauthors
   {Thomas Steiner$^1$, Ruben Verborgh$^2$}
 	{$^1$Universitat Politècnica de Catalunya\\
@@ -38,31 +26,33 @@ FOR VISUAL AND AUDIAL EVENT SUMMARIZATION BASED ON SOCIAL NETWORKS}
 	B-9050 Ledeberg-Ghent, Belgium\\
 	\texttt{ruben.verborgh@ugent.be},\\
 	\texttt{rik.vandewalle@ugent.be}}
-%
+
+\let\oldsection\section
+\renewcommand{\section}[1]{\oldsection{#1}\vspace{-1em}}
+
 \begin{document}
-%\ninept
-%
+
 \maketitle
-%
+
 \begin{abstract}
 In this paper, we present and define aesthetic principles
 for the automatic generation of media galleries
 based on media items retrieved from social networks
 that---after a ranking and pruning step---can serve to authentically
 summarize events and their atmosphere from a visual
-and from an audial standpoint. 
+and an audial standpoint.
 \end{abstract}
-%
+
 \begin{keywords}
 event summarization, media galleries, social networks,
 media item ranking, media layout, aesthetics
 \end{keywords}
-%
+
 \section{Introduction}
 Mobile devices such as smartphones, together with social networks,
 enable people to create, share, and consume media items
 like videos or images.
-They accompany their owners almost everywhere they go
+They accompany their owners almost everywhere
 and are thus omnipresent at all sorts of events.
 Given a~stable network connection, event-related media items
 and microposts are published on social networks
@@ -74,6 +64,7 @@ A~key feature for this task is the semantic enrichment
 of media items and associated microposts
 and the extraction of \textbf{visual}, \textbf{audial},
 \textbf{textual}, \textbf{social}, and \textbf{aesthetic} features.
+% How to extract aesthetic features? Aren't aesthetics part of the visual, audial, and textual components?
 
 \begin{figure}[htb]
 \centering
@@ -85,29 +76,29 @@ and the extraction of \textbf{visual}, \textbf{audial},
 \section{Related Work}
 While enormous efforts have been made to extract those features
 from media items and microposts on social networks in \emph{isolation},
-to the best knowledge of the authors, remarkably less efforts 
-can be detected for the extraction and the application
-of \emph{all} those features in \emph{combination}
-for \emph{all} types of media items including microposts.
-In~\cite{Photo2011}, Sandhaus \emph{et al.} consider visual and
+to the best knowledge of the authors, remarkably less initiatives 
+concern the extraction and the application
+of all those features \emph{in combination}
+for \emph{all} types of media items, including microposts.
+In~\cite{Photo2011}, Sandhaus \emph{et al.}\ consider visual and
 aesthetic features for the automatic creation of photo books.
-Obrador \emph{et al.} use visual and aesthetic features
+Obrador \emph{et al.}\ use visual and aesthetic features
 for a category-based approach to automatically assess
 the aesthetic appeal of photographs~\cite{Photo2012}.
-In~\cite{Playlist2006}, Knees \emph{et al.} use audial and textual
+In~\cite{Playlist2006}, Knees \emph{et al.}\ use audial and textual
 features for the automatic generation of music playlists.
-Choudhury \emph{et al.} show in \cite{Sports2011} how social and textual
+Choudhury \emph{et al.}\ show in \cite{Sports2011} how social and textual
 features can be used to achieve precise detection results 
 of named entities and significant events in sports-related microposts.
-In~\cite{YouTube2010}, Davidson \emph{et al.} show how visual,
+In~\cite{YouTube2010}, Davidson \emph{et al.}\ show how visual,
 textual, and social features can be used for personalized video recommendations.
 A service called Storify~\cite{Storify2011} lets users manually combine
 microposts, images, videos, and other elements onto one page for the purpose
 of storytelling or summarizing an event,
 and share stories permanently on the Web.
 Finally, social networks present images and videos
-often in grid-like galleries, sometimes resized
-based on the amount of comments\footnote{http://twitpic.com/904yka/full}.
+often in grid-like galleries\footnote{\url{http://twitpic.com/904yka/full}}, sometimes resized
+based on the amount of comments.
 
 \section{Media Item Ranking Criteria}
 In this section, we describe several feature categories that can serve to rank
@@ -121,19 +112,19 @@ from multiple social networks.
 This category regards the contents of images and videos.
 We distinguish \emph{low-} and \emph{high-level} visual ranking criteria.
 High-level ranking criteria are, \emph{e.g.}, logo detection,
-face recognition, or the separation in camera shots.
+face recognition, and camera shot separation.
 Low-level criteria are, \emph{e.g.}, file size, resolution,
-video duration, geolocation, timestamp, etc.
+video duration, geolocation, and timestamp.
 Via optical character recognition,
 text in media items can be converted to a textual feature.
 
 \noindent \textbf{Audial}
 This category regards the audio track of videos.
 \emph{High-level} ranking criteria are the presence or absence
-of silence, music, speech, or a mixture of the prior.
+of silence, music, speech, or a mixture thereof.
 Similar to visual features before,
-audial \emph{low-level}  features are the average bit rate,
-whether the audio is overdriven, volume, etc.
+audial \emph{low-level} features are the average bit rate,
+volume, possibly distorted areas, \emph{etc}.
 Through audio-transcription, speech can be converted to a textual feature.
 
 \noindent \textbf{Textual}
@@ -144,10 +135,12 @@ textual content can be linked to LOD cloud concepts~\cite{Facebook2011}.
 
 \noindent \textbf{Social}
 This category regards social network effects like shares, mentions,
-view counts, expressions of (dis)likes, user diversity, etc.
+view counts, expressions of (dis)likes, user diversity, \emph{etc}.
 Our previous work allows us to not only examine these effects
 on a~\emph{single} social network,
 but in a~\emph{network-agnostic} way across multiple social networks.
+% Damn, I'd want a reference for "previous work", but we're running out of space.
+% An option is to typeset references in small (and to undo the vspace fix I did that currently shortens the paper length).
 
 \noindent \textbf{Aesthetic}
 This category regards the desired outcome after the ranking, \emph{i.e.},
@@ -158,38 +151,40 @@ photo aesthetics \emph{per se}~\cite{Photo2012},
 video and music playlist generation~\cite{YouTube2010,Playlist2006},
 however media gallery composition requires mixing video
 \emph{and} image media items.
+% Now it becomes indeed clear that aesthetics is not an extracted feature, but a post-factum criterium, right?
 
 \section{Media Gallery Aesthetics}
 
 \noindent \textbf{Definition}
 A media gallery in our context is a compilation of images or videos
 retrieved from social networks that are related to a given event.
-Given a set $M = \{m_1,..., m_n\}$ of media items related to a certain event $e$,
+Given a set $M = \{m_1,..., m_n\}$ of media items related to a certain event,
 and given a ranking formula $f$,
-the set $M^\prime$ is the subset $M^\prime \subset M$
-resulting after the application of $f$ to $M$: $f(M)=M^\prime$.
+the subset $M^\prime \subset M$
+is the result after the application of $f$ to $M$: $f(M)=M^\prime$.
 Each media item $m_i$ can either be an instance of video or image.
-For each point $t_j$ on a timeline $T$, the state of the media gallery
-at $t_j$ is defined for each media item $m_i$
-as a set $S_j$ of $n$ tuples $s_{j,i}$, where
-$s_{j,i}=\langle left, top, width, height, alpha, z-index, playing,
-volume, start, animation \rangle$.
-The properties follow the definitions of CSS, the $animation$ property
+For each point $t_x$ on a timeline $T$, the state of the media gallery
+at $t_x$ is defined for each media item $m_i$
+as a set $S_x$ of $n$ tuples $s_{x,i}$, where
+$s_{x,i}=\langle \mathit{left}$, $\mathit{top}$, $\mathit{width}$, $\mathit{height}$,
+$\mathit{alpha}$, $\mathit{z\mbox{-}index}$, $\mathit{animation}$,
+$\mathit{start}$, $\mathit{playing}$, $\mathit{volume} \rangle$.
+The first 5~properties follow the definitions of CSS, the $\mathit{animation}$ property
 allows for the definition of CSS transitions
 and transformations as defined in~\cite{CSSTransitions2009,CSSTransforms2012},
-the $start$ property defines the start time in a video. 
-A schematic media gallery at $t_j$ can be seen in \autoref{fig:media-gallery}.
+the $\mathit{start}$ property defines the start time in a video.
+A schematic media gallery at $t_x$ can be seen in \autoref{fig:media-gallery}.
 
-\noindent \textbf{Audial Aesthetics}
+\noindent \textbf{Audial aesthetics}
 We recall the purpose of our media galleries:
 to illustrate an event and its atmosphere.
 Audial aesthetics thus consist of aspects like volume level normalization,
-avoiding multiple videos playing music in parallel, smooth transitions, etc.
+avoiding multiple videos playing music in parallel, smooth transitions, \emph{etc}.
 We remark that through selective mixing of audio tracks
 of event-related videos, ``noise clouds'' very characteristic
 for the event atmosphere can be observed.
 
-\noindent \textbf{Visual Aesthetics}
+\noindent \textbf{Visual aesthetics}
 Visual aesthetics are determined by the composition, \emph{i.e.},
 the relation of images to videos \emph{globally}, \emph{per coherent scene},
 and per \emph{point in time}.
@@ -197,21 +192,16 @@ In order not to overcharge the perceptive capacity
 of viewers, the number of visible (moving) media items
 at a time should be limited.
 Depending on the event, a consistent or a contrasty overall
-appearance of media items may be desired, also for transitions.
+appearance of items may be desired, also for transitions.
 
 \section{Conclusion}
-We have introduced media item ranking criteria and
+We have introduced media item ranking criteria, and
 aesthetic audial and visual principles for media galleries.
 In the coming months, we will apply those principles
 to a large collection of media items related to events,
 and, via multivariate tests, measure user engagement
 for different feature configurations.
 
-
-% References should be produced using the bibtex program from suitable
-% BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
-% style file from IEEE produces unsorted bibliography list.
-% -------------------------------------------------------------------------
 \bibliographystyle{IEEEbib}
 \bibliography{steiner.bib}
 
