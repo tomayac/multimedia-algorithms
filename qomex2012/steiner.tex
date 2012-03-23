@@ -164,6 +164,18 @@ however media gallery composition requires mixing video
 \section{Media Gallery Aesthetics}
 
 \subsection{Definition}
+A media gallery in our context is a combination of different media items
+of type image or video related to a given event.
+Given a set $M = \{m_1,..., m_n\}$ of media items related to a certain event $e$,
+and given a ranking formula $f$,
+the set $M^\prime = \{m_1,..., m_m\} | m<n$ is the subset $M^\prime \subset M$
+resulting after the application of $f$ to $M$: $f(M)=M^\prime$.
+Each media item $m_i$ can either be an instance of video or image.
+For each point $t_i$ on a timeline $T$, the state of the media gallery is defined
+for each media item $m_i$ as a state tuple
+$s_i=\langle left, right, width, height, alpha, playing, volume \rangle$.
+A schematic media gallery in a certain state in time
+can be seen in \autoref{fig:media-gallery}.
 
 \subsection{Audial Aesthetics}
 
