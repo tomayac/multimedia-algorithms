@@ -78,7 +78,7 @@ and the extraction of \textbf{visual}, \textbf{audial},
 \begin{figure}[htb]
 \centering
 \includegraphics[trim=20mm 40mm 20mm 10mm, clip, width=0.75\columnwidth]{media-gallery.pdf}
-\caption{Schematic media gallery with 4 images and 2 videos.}
+\caption{Schematic media gallery with 5 images and 2 videos.}
 \label{fig:media-gallery}
 \end{figure}
 
@@ -105,6 +105,9 @@ A service called Storify~\cite{Storify2011} lets users manually combine
 microposts, images, videos, and other elements onto one page for the purpose
 of storytelling or summarizing an event,
 and share stories permanently on the Web.
+Finally, social networks present images and videos
+often in grid-like galleries, sometimes resized
+based on the amount of comments\footnote{http://twitpic.com/904yka/full}.
 
 \section{Media Item Ranking Criteria}
 In this section, we describe several feature categories that can serve to rank
@@ -145,11 +148,6 @@ number of views, expressions of (dis)likes, user diversity, etc.
 Our previous work allows us to not only examine these effects
 on a~\emph{single} social network (\emph{e.g.}, ReTweets on Twitter),
 but in a~\emph{network-agnostic} way across multiple social networks.
-On social networks, media items are often shared for their funniness,
-% Citation needed?
-an aspect that besides looking for textual features
-like \texttt{\#LOL} tags is hard to detect.
-% I'm not sure where you're going with this argument. Does it matter that it is oftentimes funny? And what about content that is not?
 
 \noindent \textbf{Aesthetic}
 This category regards the desired outcome after the ranking, \emph{i.e.},
@@ -164,18 +162,23 @@ however media gallery composition requires mixing video
 \section{Media Gallery Aesthetics}
 
 \subsection{Definition}
-A media gallery in our context is a combination of different media items
-of type image or video related to a given event.
+A media gallery in our context is a compilation of images or videos
+retrieved from social networks that are related to a given event.
 Given a set $M = \{m_1,..., m_n\}$ of media items related to a certain event $e$,
 and given a ranking formula $f$,
-the set $M^\prime = \{m_1,..., m_m\} | m<n$ is the subset $M^\prime \subset M$
+the set $M^\prime$ is the subset $M^\prime \subset M$
 resulting after the application of $f$ to $M$: $f(M)=M^\prime$.
 Each media item $m_i$ can either be an instance of video or image.
-For each point $t_i$ on a timeline $T$, the state of the media gallery is defined
-for each media item $m_i$ as a state tuple
-$s_i=\langle left, right, width, height, alpha, playing, volume \rangle$.
-A schematic media gallery in a certain state in time
-can be seen in \autoref{fig:media-gallery}.
+For each point $t_j$ on a timeline $T$, the state of the media gallery
+at $t_j$ is defined for each media item $m_i$
+as a set $S_j$ of $n$ tuples $s_{j,i}$, where
+$s_{j,i}=\langle left, top, width, height, alpha, z-index, playing,
+volume, start, animation \rangle$.
+The properties follow the definitions of CSS, the $animation$ property
+allows for the definition of CSS transitions
+and transformations as defined in~\cite{CSSTransitions2009,CSSTransforms2012},
+the $start$ property defines the start time in a video. 
+A schematic media gallery at $t_j$ can be seen in \autoref{fig:media-gallery}.
 
 \subsection{Audial Aesthetics}
 
