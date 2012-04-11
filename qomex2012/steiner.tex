@@ -63,8 +63,13 @@ that illustrate events and their atmosphere.
 A~key feature for this task is the semantic enrichment
 of media items and associated microposts
 and the extraction of \textbf{visual}, \textbf{audial},
-\textbf{textual}, \textbf{social}, and \textbf{aesthetic} features.
-% How to extract aesthetic features? Aren't aesthetics part of the visual, audial, and textual components?
+\textbf{textual}, and \textbf{social} features.
+Based on this set of features,
+additional \textbf{aesthetic} features
+can be defined and exploited to obtain appealing
+and harmonic media galleries.
+% RV: How to extract aesthetic features? Aren't aesthetics part of the visual, audial, and textual components?
+% TS: Added an additional sentence to clarify.
 
 \begin{figure}[htb]
 \centering
@@ -97,7 +102,7 @@ microposts, images, videos, and other elements onto one page for the purpose
 of storytelling or summarizing an event,
 and share stories permanently on the Web.
 Finally, social networks present images and videos
-often in grid-like galleries\footnote{\url{http://twitpic.com/904yka/full}}, sometimes resized
+often in grid-like galleries\footnote{\url{http://twitpic.com/904yka/full}}, sometimes scaled
 based on the amount of comments.
 
 \section{Media Item Ranking Criteria}
@@ -111,12 +116,11 @@ from multiple social networks.
 \noindent \textbf{Visual}
 This category regards the contents of images and videos.
 We distinguish \emph{low-} and \emph{high-level} visual ranking criteria.
-High-level ranking criteria are, \emph{e.g.}, logo detection,
+High-level criteria are, \emph{e.g.}, logo detection,
 face recognition, and camera shot separation.
-Low-level criteria are, \emph{e.g.}, file size, resolution,
-video duration, geolocation, and timestamp.
-Via optical character recognition,
-text in media items can be converted to a textual feature.
+Low-level criteria are, \emph{e.g.}, size, resolution,
+duration, geolocation, and time.
+Via OCR, contained characters can be treated as textual features.
 
 \noindent \textbf{Audial}
 This category regards the audio track of videos.
@@ -136,11 +140,12 @@ textual content can be linked to LOD cloud concepts~\cite{Facebook2011}.
 \noindent \textbf{Social}
 This category regards social network effects like shares, mentions,
 view counts, expressions of (dis)likes, user diversity, \emph{etc}.
-Our previous work allows us to not only examine these effects
+Prior work~\cite{RAMSS2012} allows us to not only examine these effects
 on a~\emph{single} social network,
 but in a~\emph{network-agnostic} way across multiple social networks.
-% Damn, I'd want a reference for "previous work", but we're running out of space.
+% RV: Damn, I'd want a reference for "previous work", but we're running out of space.
 % An option is to typeset references in small (and to undo the vspace fix I did that currently shortens the paper length).
+% TS: The problem is that the ICMR paper was rejected. 
 
 \noindent \textbf{Aesthetic}
 This category regards the desired outcome after the ranking, \emph{i.e.},
@@ -151,7 +156,8 @@ photo aesthetics \emph{per se}~\cite{Photo2012},
 video and music playlist generation~\cite{YouTube2010,Playlist2006},
 however media gallery composition requires mixing video
 \emph{and} image media items.
-% Now it becomes indeed clear that aesthetics is not an extracted feature, but a post-factum criterium, right?
+% RV: Now it becomes indeed clear that aesthetics is not an extracted feature, but a post-factum criterium, right?
+% TS: Hopefully.
 
 \section{Media Gallery Aesthetics}
 
@@ -169,7 +175,7 @@ as a set $S_x$ of $n$ tuples $s_{x,i}$, where
 $s_{x,i}=\langle \mathit{left}$, $\mathit{top}$, $\mathit{width}$, $\mathit{height}$,
 $\mathit{alpha}$, $\mathit{z\mbox{-}index}$, $\mathit{animation}$,
 $\mathit{start}$, $\mathit{playing}$, $\mathit{volume} \rangle$.
-The first 5~properties follow the definitions of CSS, the $\mathit{animation}$ property
+The first 6~properties are defined as in CSS, the $\mathit{animation}$ property
 allows for the definition of CSS transitions
 and transformations as defined in~\cite{CSSTransitions2009,CSSTransforms2012},
 the $\mathit{start}$ property defines the start time in a video.
