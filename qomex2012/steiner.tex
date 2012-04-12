@@ -208,6 +208,17 @@ to a large collection of media items related to events,
 and, via multivariate tests, measure user engagement
 for different feature configurations.
 
+% decrease space between bibliographic references
+\let\oldbibitem\bibitem
+\renewcommand{\bibitem}[1]{%
+	\ifx\bibstarted\undefined
+		\def\bibstarted{1}
+		\vspace{.1em}
+	\else
+		\vspace{-.2em plus .1em minus .1em}
+	\fi
+\oldbibitem{#1}}
+
 \bibliographystyle{IEEEbib}
 \bibliography{steiner.bib}
 
