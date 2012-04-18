@@ -10,6 +10,29 @@
     html5: false    
   };
   
+  if (!window.location.getParameter) {
+    window.location.getParameter = function(key) {
+      function parseParams() {
+        var params = {},
+            e,
+            a = /\+/g,  // Regex for replacing addition symbol with a space
+            r = /([^&=]+)=?([^&]*)/g,
+            d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+            q = window.location.search.substring(1);
+
+        while (e = r.exec(q)) {
+          params[d(e[1])] = d(e[2]);
+        }
+        return params;
+      }
+
+      if (!this.queryStringParams) {
+        this.queryStringParams = parseParams(); 
+      }
+      return this.queryStringParams[key];
+    };
+  }  
+  
   var interval = setInterval(function () {
     var videoElement =
         document.querySelector('embed') || document.querySelector('video');
@@ -119,15 +142,16 @@
   function replaceVideoElement(videoContainer, videoElement, sources, videoId) {     
     var placeholder = document.createElement('div');
     placeholder.id = 'filmstrip_placeholder';
-    placeholder.style.width = (videoElement.width - 2 /*border width*/) + 'px';
-    placeholder.style.height = videoElement.height + 'px';     
+    placeholder.style.width = (videoElement.width - 2 /*border width*/) + 'px !important';
+    placeholder.style.height = videoElement.height + 'px !important';     
+    placeholder.style.display = 'block !important';
     var nativeWidth = videoElement.width;
     var nativeHeight = videoElement.height;
 
     videoContainer.replaceChild(placeholder, videoElement);
     videoElement = null;
     delete videoElement;
-            
+          
     var video = document.createElement('video');
     video.id = 'filmstrip_video'
     video.width = nativeWidth;
@@ -147,8 +171,8 @@
     var fullscreen = false;
     var fullScreenDiv = document.createElement('div');
     fullScreenDiv.id = 'filmstrip_fullscreen';
-    fullScreenDiv.style.width = window.innerWidth + 'px';
-    fullScreenDiv.style.height = window.innerHeight + 'px';          
+    fullScreenDiv.style.width = window.innerWidth + 'px !important';
+    fullScreenDiv.style.height = window.innerHeight + 'px !important';          
     
     video.addEventListener('mousemove', function (e) {
       video.controls = 'controls';
@@ -182,10 +206,10 @@
         fullscreen = true;
         document.body.appendChild(fullScreenDiv);
         document.body.style.overflow = 'hidden !important';
-        fullScreenDiv.style.width = window.innerWidth + 'px';
-        fullScreenDiv.style.height = window.innerHeight + 'px';          
+        fullScreenDiv.style.width = window.innerWidth + 'px !important';
+        fullScreenDiv.style.height = window.innerHeight + 'px !important';          
         video.width = window.innerWidth;
-        video.style.width = window.innerWidth + 'px';
+        video.style.width = window.innerWidth + 'px !important';
         video.height = window.innerHeight - GLOBAL_config.controlsOffset;
         videoContainer.removeChild(video);
         fullScreenDiv.appendChild(video);                
@@ -197,7 +221,7 @@
         document.body.removeChild(fullScreenDiv);        
         document.body.style.overflow = 'auto !important';                
         video.width = nativeWidth;
-        video.style.width = nativeWidth + 'px';
+        video.style.width = nativeWidth + 'px !important';
         video.height = nativeHeight;
         fullScreenDiv.removeChild(video);
         videoContainer.insertBefore(video, videoContainer.firstChild);        
@@ -210,13 +234,23 @@
     videoContainer.appendChild(placeholder);    
     placeholder.style.height =
         GLOBAL_config.placeholderHeight + 'px !important';    
+    placeholder.style.position = 'absolute !important';
+    placeholder.style.top = '0px !important';
+    placeholder.style.left = '0px !important';    
+    placeholder.style.border = 'none';
+        
     placeholder.innerHTML = '<small id="filmstrip_progress">0%</small>';
     
     var iframe = document.createElement('iframe');    
     iframe.id = 'filmstrip_iframe';
+    videoContainer.appendChild(iframe);
+    document.getElementById('watch-player').style.height = '600px';
     iframe.src = GLOBAL_config.proxy + '/youpr0n/youtube.html?v=' + videoId;
-    videoContainer.appendChild(iframe);        
-
+    iframe.style.display = 'block !important';    
+    iframe.style.position = 'absolute !important';
+    iframe.style.top = '0px !important';
+    iframe.style.left = '0px !important';    
+    iframe.style.display = 'block !important';
     var watchSidebar = document.getElementById('watch-sidebar');
     if (watchSidebar) {
       watchSidebar.style.position = 'relative !important';
@@ -266,11 +300,11 @@
         "}, false);\n");            
 
     window.addEventListener('resize', function (e) {
-      fullScreenDiv.style.width = window.innerWidth + 'px';
-      fullScreenDiv.style.height = window.innerHeight + 'px';
+      fullScreenDiv.style.width = window.innerWidth + 'px !important';
+      fullScreenDiv.style.height = window.innerHeight + 'px !important';
       if (fullscreen) {
         video.width = window.innerWidth;
-        video.style.width = window.innerWidth + 'px';
+        video.style.width = window.innerWidth + 'px !important';
         video.height = window.innerHeight;              
       }
     }, false);    
@@ -283,7 +317,7 @@
         var data = e.data.progress;
         if (data === 100) {
           placeholder.parentNode.removeChild(placeholder);
-          iframe.style.display = 'block !important';      
+          iframe.setAttribute('style', 'display:block !important;');
         } else {
           placeholder.innerHTML =
               '<small id="filmstrip_progress">' + data + '%</small>';
