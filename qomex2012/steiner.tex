@@ -2,6 +2,7 @@
 \usepackage{spconf,amsmath,epsfig}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{verbatim}
 
 % autoref command
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
@@ -48,6 +49,7 @@ event summarization, media galleries, social networks,
 media item ranking, media layout, aesthetics
 \end{keywords}
 
+\vspace{-0.4em}
 \section{Introduction}
 Mobile devices such as smartphones, together with social networks,
 enable people to create, share, and consume media items
@@ -71,13 +73,16 @@ and harmonic media galleries.
 % RV: How to extract aesthetic features? Aren't aesthetics part of the visual, audial, and textual components?
 % TS: Added an additional sentence to clarify.
 
+\begin{comment}
 \begin{figure}[htb]
 \centering
 \includegraphics[trim=20mm 40mm 20mm 10mm, clip, width=0.75\columnwidth]{media-gallery.pdf}
 \caption{Schematic media gallery with 4 images and 2 videos.}
 \label{fig:media-gallery}
 \end{figure}
+\end{comment}
 
+\vspace{-0.4em}
 \section{Related Work}
 While enormous efforts have been made to extract those features
 from media items and microposts on social networks in \emph{isolation},
@@ -105,6 +110,7 @@ Finally, social networks present images and videos
 often in grid-like galleries\footnote{\url{http://twitpic.com/904yka/full}}, sometimes scaled
 based on the amount of comments.
 
+\vspace{-0.4em}
 \section{Media Item Ranking Criteria}
 In this section, we describe several feature categories that can serve to rank
 media items retrieved from social networks. 
@@ -159,6 +165,7 @@ however media gallery composition requires mixing video
 % RV: Now it becomes indeed clear that aesthetics is not an extracted feature, but a post-factum criterium, right?
 % TS: Hopefully.
 
+\vspace{-0.4em}
 \section{Media Gallery Aesthetics}
 
 \noindent \textbf{Definition}
@@ -179,7 +186,7 @@ The first 6~properties are defined as in CSS, the $\mathit{animation}$ property
 allows for the definition of CSS transitions
 and transformations as defined in~\cite{CSSTransitions2009,CSSTransforms2012},
 the $\mathit{start}$ property defines the start time in a video.
-A schematic media gallery at $t_x$ can be seen in \autoref{fig:media-gallery}.
+A schematic media gallery at $t_x$ can be seen online\footnote{\url{http://twitpic.com/9je27h/full}}.
 
 \noindent \textbf{Audial aesthetics}
 We recall the purpose of our media galleries:
@@ -200,13 +207,25 @@ at a time should be limited.
 Depending on the event, a consistent or a contrasty overall
 appearance of items may be desired, also for transitions.
 
-\section{Conclusion}
-We have introduced media item ranking criteria, and
-aesthetic audial and visual principles for media galleries.
+\vspace{-0.4em}
+\section{Preliminary Results and Conclusion}
+We have introduced media item ranking criteria and
+aesthetic audial and visual principles for media galleries
+and, during first experiments, have manually evaluated them
+with positive results on a~set of images and videos
+that were collected for events in recent history
+(among others the \textit{Costa Concordia} disaster in Italy,
+the \textit{Consumer Electronics Show} in Las Vegas,
+the global \textit{Blackout SOPA} campaign).
+Especially when combining mixed content, \emph{i.e.}, videos and images,
+users expressed they preferred images and videos to crossfade smoothly 
+rather than having sharp contrasts between transitions.
+In consequence, we will put special emphasis on shot detection with video content
+to ensure a~harmonic holistic perception of mixed content in media galleries.
 In the coming months, we will apply those principles
 to a large collection of media items related to events,
-and, via multivariate tests, measure user engagement
-for different feature configurations.
+and, via automatic multivariate blind tests, measure user engagement
+for different feature configurations on both desktop and mobile.
 
 % decrease space between bibliographic references
 \let\oldbibitem\bibitem
