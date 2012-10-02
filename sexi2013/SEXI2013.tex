@@ -1,0 +1,78 @@
+% ----------------------------- %
+% Paper for SEXI2013            %
+% http://sexi2013.org/          %
+% ----------------------------- %
+% Full paper:     Nov 30, 2012  %
+% Notification:   Dec 17, 2012  %
+% Camera-ready:   Feb  5, 2013  %
+% ----------------------------- %
+% Maximum pages: 2              %
+% ----------------------------- %
+
+\documentclass[runningheads,a4paper]{llncs}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+% References
+\usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+\crefname{subsection}{Subsection}{Subsections}
+
+% Better typography
+\usepackage[activate=compatibility]{microtype}
+
+% Todo macro
+\usepackage{color}
+\newcommand{\todo}[1]{\noindent\textcolor{red}{{\bf \{TODO} #1{\bf \}}}}
+
+% Keywords command
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+
+\mainmatter
+
+\title{Distinguishing professional from amateur content using scene detection and histograms}
+
+\author{Thomas Steiner\inst{1} \and
+        Seth van Hooland\inst{2} \and
+        Ruben Verborgh\inst{3}}
+
+\institute{
+Universitat Polit\'ecnica de Catalunya -- Department {\scshape lsi},
+  08034 Barcelona, Spain\\
+  \urldef{\emails}\path|tsteiner@lsi.upc.edu|\emails\\
+\and
+Université Libre de Bruxelles\\ Information and Communication Science Department\\
+     Avenue F.\ D.\ Roosevelt, 50 CP 123\\ B-1050 Brussels, Belgium\\
+     \urldef{\emails}\path|svhooland@ulb.ac.be|\emails\\
+\and
+Ghent University -- {\scshape ibbt}, {\scshape elis} -- Multimedia Lab\\
+  Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium\\
+  \urldef{\emails}\path|ruben.verborgh@ugent.be|\emails\\
+}
+
+\maketitle
+
+% Ignore affiliation note numbers: start footnotes from the beginning.
+\setcounter{footnote}{0}
+
+\begin{abstract}
+% Context
+% Need
+% Task
+% Findings
+% Conclusion
+% Perspectives
+\keywords{\todo{keywords}}
+\end{abstract}
+
+\section{Introduction}
+\section{Conclusion}
+
+\bibliographystyle{splncs03}
+%\bibliography{references}
+
+\end{document}
