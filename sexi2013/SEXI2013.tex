@@ -34,7 +34,8 @@
 
 \mainmatter
 
-\title{Distinguishing professional from amateur content using scene detection and histograms}
+\title{Identifying Analogue Recording Artifacts\\
+In the Age of Online Video Platforms}
 
 \author{Thomas Steiner\inst{1} \and
         Seth van Hooland\inst{2} \and
@@ -60,16 +61,49 @@ Ghent University -- {\scshape ibbt}, {\scshape elis} -- Multimedia Lab\\
 \setcounter{footnote}{0}
 
 \begin{abstract}
-% Context
-% Need
-% Task
-% Findings
-% Conclusion
-% Perspectives
-\keywords{\todo{keywords}}
+In this position paper, we describe how analogue recording artifacts
+stemming from digitalized VHS tapes such as
+grainy noises, ghosting, or synchronization problems
+can be identified at Web-scale in order to
+allow for filtering out content of low recording quality.
 \end{abstract}
 
+\keywords{Video Digitalization, VHS, Online Video}
+
 \section{Introduction}
+
+Online video is one of the fastest growing Internet industries.
+With the latest statistics of a~well-known online video
+platform\footnote{\url{http://www.youtube.com/t/press_statistics}}
+of 72 uploaded hours of video per minute,
+it becomes evident that efficient search, recommendation, and
+navigation capabilities are required in order to use 
+video platforms in a~meaningful way. 
+Common online video platforms typically allow their users
+(i)~to search for content based on full-text query terms
+that are matched against textual descriptions
+of the video like title or description,
+or (ii)~to browse the archive of a~platform by category or channel,
+usually based on video tags.
+Users then retrieve a~top-$n$ ranked list of videos
+that match a~given categorization
+or query term, ranked by ranking criteria such as
+\emph{relevancy}, \emph{view count},
+\emph{user rating}, or \emph{upload date}.
+The default ranking criteria normally being
+\emph{relevancy}---a~platform-specific \emph{black box}
+ranking criterium---advanced and frequently returning power-users
+may prefer more transparent and traceable ranking criteria
+such as the popularity-based \emph{view count}
+and \emph{user rating}, or the stack-based
+LIFO (last in, first out) ranking criterium \emph{upload date}.
+In this position paper, we suggest a~computer vision-based
+approach to a~problem with content uploaded a~long time ago
+that occurs when users rank content
+by the popularity-based ranking criterium \emph{view count}.
+
+\section{Problem Statement}
+
 \section{Conclusion}
 
 \bibliographystyle{splncs03}
