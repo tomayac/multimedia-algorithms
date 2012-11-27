@@ -20,6 +20,8 @@
 \crefname{subsection}{Subsection}{Subsections}
 
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 
 % Better typography
 \usepackage[activate=compatibility]{microtype}
@@ -39,21 +41,21 @@
 \title{Identifying Analogue Recording Artifacts\\
 In the Age of Online Video Platforms}
 
+\titlerunning{Identifying Analogue Recording Artifacts}
+\authorrunning{Thomas Steiner, Seth van Hooland, and Ruben Verborgh}
+
 \author{Thomas Steiner\inst{1} \and
         Seth van Hooland\inst{2} \and
         Ruben Verborgh\inst{3}}
 
 \institute{
-Universitat Polit\'ecnica de Catalunya -- Department {\scshape lsi},
-  08034 Barcelona, Spain\\
+Universitat Politècnica de Catalunya -- Department {\scshape lsi}\\
   \urldef{\emails}\path|tsteiner@lsi.upc.edu|\emails\\
 \and
-Université Libre de Bruxelles\\ Information and Communication Science Department\\
-     Avenue F.\ D.\ Roosevelt, 50 CP 123\\ B-1050 Brussels, Belgium\\
+Université Libre de Bruxelles -- Information and Communication Science Dept.\\
      \urldef{\emails}\path|svhooland@ulb.ac.be|\emails\\
 \and
-Ghent University -- {\scshape ibbt}, {\scshape elis} -- Multimedia Lab\\
-  Gaston Crommenlaan 8 bus 201, B-9050 Ledeberg-Ghent, Belgium\\
+Ghent University -- iMinds -- Multimedia Lab\\
   \urldef{\emails}\path|ruben.verborgh@ugent.be|\emails\\
 }
 
@@ -70,7 +72,7 @@ can be identified at Web-scale in order to
 allow for filtering out content of low recording quality.
 \end{abstract}
 
-\keywords{Video Digitalization, Video Home System~(VHS), Online Video}
+\keywords{Video Digitalization, Video Digitation, Video Home System~(VHS)}
 
 \section{Introduction}
 
@@ -100,22 +102,54 @@ such as the popularity-based \emph{view count}
 and \emph{user rating}, or the stack-based
 LIFO (last in, first out) ranking criterium \emph{upload date}.
 In this position paper, we suggest a~computer vision-based
-approach to a~problem with content uploaded a~long time ago
-that occurs when users rank content
+approach to a~problem with digitalized VHS content,
+typically uploaded a~long time ago and thus having many views,
+however, due to the oftentimes amateurish digitalization process
+are of inferior quality and greatly limit the viewing experience,
+albeit the poster preview may seem acceptable.
+Such videos often appear prominently when users rank content
 by the popularity-based ranking criterium \emph{view count}.
 
 \section{Problem Statement}
 
+Video denoising is the process of removing noise from a~video signal.
+Typical issues with digitalized VHS videos include 
+ghosting (\autoref{fig:ghosting}),
+color-specific degradation,
+brightness and color channel interferences,
+chaotic line shift at the end of frames,
+and wide horizontal noise strips (\autoref{fig:distortion}).
+Such distortions can seriously limit the viewing experience
+on video platforms.
+In consequence, we highlight a~scalable, crowdsourced way
+to identify poorly digitalized videos.
+
 \begin{figure}
   \centering
-  \includegraphics[width=0.3\textwidth]{ghosting.png} 
-  \caption{Ghosting artifact in a~digitalized VHS tape.}
-  \label{fig:ghosting}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{ghosting.png} 
+    \caption{Ghosting
+    [\url{http://goo.gl/NXJzw}]}
+     \label{fig:ghosting}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{distortion.png} 
+    \caption{Distortion
+    [\url{http://goo.gl/zRiEQ}]}
+     \label{fig:distortion}
+  \end{subfigure}  
+  \label{fig:artifacts}
+  \caption{VHS artifacts after digitalization.}
 \end{figure}
 
+\section{Approach}
+\cite{steiner2011crowdsourcing}
+\cite{yang2009videonoise}
 \section{Conclusion}
 
 \bibliographystyle{splncs03}
-%\bibliography{references}
+\bibliography{references}
 
 \end{document}
