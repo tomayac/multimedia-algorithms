@@ -38,11 +38,11 @@
 
 \mainmatter
 
-\title{Identifying Analogue Recording Artifacts\\
-In the Age of Online Video Platforms}
+\title{Identifying {\scshape vhs} Recording Artifacts\\
+in the Age of Online Video Platforms}
 
-\titlerunning{Identifying Analogue Recording Artifacts}
-\authorrunning{Thomas Steiner, Seth van Hooland, and Ruben Verborgh}
+\titlerunning{Identifying {\scshape vhs} Recording Artifacts}
+\authorrunning{Identifying {\scshape vhs} Recording Artifacts}
 
 \author{Thomas Steiner\inst{1} \and
         Seth van Hooland\inst{2} \and
@@ -66,13 +66,13 @@ Ghent University -- iMinds -- Multimedia Lab\\
 
 \begin{abstract}
 In this position paper, we describe how analogue recording artifacts
-stemming from digitalized VHS tapes such as
-grainy noises, ghosting, or synchronization problems
-can be identified at Web-scale in order to
-allow for filtering out content of low recording quality.
+stemming from amateurishly digitalized {\scshape vhs} tapes like
+grainy noises, ghosting, or synchronization issues
+can be identified at Web-scale via crowdsourcing
+in order to filter out content of low recording quality.
 \end{abstract}
 
-\keywords{Video Digitalization, Video Digitation, Video Home System~(VHS)}
+\keywords{Video Digitalization, Video Digitation, Video Home System~({\scshape vhs})}
 
 \section{Introduction}
 
@@ -86,11 +86,11 @@ video platforms in a~meaningful way.
 Common online video platforms typically allow their users
 (i)~to search for content based on full-text query terms
 that are matched against textual descriptions
-of the video like title or description,
+of the video like its title or description,
 or (ii)~to browse the archive of a~platform by category or channel,
 usually based on video tags.
-Users then retrieve a~top-$n$ ranked list of videos
-that match a~given categorization
+Users are presented a~top-$n$ ranked list of videos
+that match a~given category
 or query term, ranked by ranking criteria such as
 \emph{relevancy}, \emph{view count},
 \emph{user rating}, or \emph{upload date}.
@@ -100,20 +100,23 @@ ranking criterium---advanced and frequently returning power-users
 may prefer more transparent and traceable ranking criteria
 such as the popularity-based \emph{view count}
 and \emph{user rating}, or the stack-based
-LIFO (last in, first out) ranking criterium \emph{upload date}.
+{\scshape lifo} (last in, first out) ranking criterium \emph{upload date}.
+
 In this position paper, we suggest a~computer vision-based
-approach to a~problem with digitalized VHS content,
-typically uploaded a~long time ago and thus having many views,
-however, due to the oftentimes amateurish digitalization process
+approach to a~problem with digitalized {\scshape vhs} content.
+Typically, such videos were uploaded in the early to mid 2000s
+and thus have accumulated many views,
+however, due to the oftentimes amateurish digitalization process,
 are of inferior quality and greatly limit the viewing experience,
-albeit the poster preview may seem acceptable.
-Such videos often appear prominently when users rank content
-by the popularity-based ranking criterium \emph{view count}.
+albeit the poster preview of such videos may seem acceptable.
+Digitalized {\scshape vhs} videos often appear prominently
+when users rank content by the popularity-based
+ranking criterium \emph{view count}.
 
 \section{Problem Statement}
 
 Video denoising is the process of removing noise from a~video signal.
-Typical issues with digitalized VHS videos include 
+Typical issues with digitalized {\scshape vhs} videos include 
 ghosting (\autoref{fig:ghosting}),
 color-specific degradation,
 brightness and color channel interferences,
@@ -121,8 +124,10 @@ chaotic line shift at the end of frames,
 and wide horizontal noise strips (\autoref{fig:distortion}).
 Such distortions can seriously limit the viewing experience
 on video platforms.
-In consequence, we highlight a~scalable, crowdsourced way
+In consequence, we propose a~scalable, crowdsourced way
 to identify poorly digitalized videos.
+
+\vspace{-1em}
 
 \begin{figure}
   \centering
@@ -141,14 +146,42 @@ to identify poorly digitalized videos.
      \label{fig:distortion}
   \end{subfigure}  
   \label{fig:artifacts}
-  \caption{VHS artifacts after digitalization.}
+  \caption{Typical {\scshape vhs} artifacts after amateurish digitalization.}
 \end{figure}
 
+\vspace{-3em}
+
 \section{Approach}
-\cite{steiner2011crowdsourcing}
-\cite{yang2009videonoise}
+
+In~\cite{steiner2011crowdsourcing}, we have introduced
+a~generic crowdsourcing framework for the automatic and scalable
+annotation of HTML5 video:
+while a~user watches a~video, the framework in the background
+unobtrusively annotates it, \emph{e.g.}, as demonstrated
+in the concrete case, to extract events.
+The annotation framework being generic,
+we can imagine a~video denoising algorithm
+as presented by Yang in~\cite{yang2009videonoise}
+being applied to a~video that is currently played
+to detect if it suffers from {\scshape vhs} artifacts.
+Over time, \emph{individual} users watching low quality videos
+create enough signals to eventually down-rank them
+\emph{globally} for quality issues despite their view count.
+
+\vspace{-0.5em}
+
 \section{Conclusion}
 
+In this position paper, we have presented a~crowdsourced,
+scalable approach to detect {\scshape vhs} digitalization artifacts,
+where users by watching videos do useful work such as 
+detecting {\scshape vhs} artifacts as a~by-product,
+and thus over time allowing video platforms to rank down
+low quality content by leveraging the crowd.
+
+\vspace{-0.5em}
+
+\footnotesize
 \bibliographystyle{splncs03}
 \bibliography{references}
 
