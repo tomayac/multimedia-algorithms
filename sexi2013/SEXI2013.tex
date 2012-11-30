@@ -46,7 +46,8 @@ in the Age of Online Video Platforms}
 
 \author{Thomas Steiner\inst{1} \and
         Seth van Hooland\inst{2} \and
-        Ruben Verborgh\inst{3}}
+        Ruben Verborgh\inst{3}\and
+        Joseph Tennis\inst{4}}
 
 \institute{
 Universitat Politècnica de Catalunya -- Department {\scshape lsi}\\
@@ -57,6 +58,10 @@ Université Libre de Bruxelles -- Information and Communication Science Dept.\\
 \and
 Ghent University -- iMinds -- Multimedia Lab\\
   \urldef{\emails}\path|ruben.verborgh@ugent.be|\emails\\
+\and
+Information School -- University of Washington\\
+  \urldef{\emails}\path|jtennis@uw.edu|\emails\\
+
 }
 
 \maketitle
@@ -66,16 +71,15 @@ Ghent University -- iMinds -- Multimedia Lab\\
 
 \begin{abstract}
 In this position paper, we describe how analogue recording artifacts
-stemming from amateurishly digitalized {\scshape vhs} tapes like
+stemming from digitized {\scshape vhs} tapes such as
 grainy noises, ghosting, or synchronization issues
 can be identified at Web-scale via crowdsourcing
-in order to filter out content of low recording quality.
+in order to filter out content digitized by amateurs.
 \end{abstract}
 
-\keywords{Video Digitalization, Video Digitation, Video Home System~({\scshape vhs})}
+\keywords{Amateur Video Digitization, Video Home System~({\scshape vhs}), Long tail of niche content}
 
 \section{Introduction}
-
 Online video is one of the fastest growing Internet industries.
 With the latest statistics of a~well-known online video
 platform\footnote{\url{http://www.youtube.com/t/press_statistics}}
@@ -103,29 +107,34 @@ and \emph{user rating}, or the stack-based
 {\scshape lifo} (last in, first out) ranking criterium \emph{upload date}.
 
 In this position paper, we suggest a~computer vision-based
-approach to a~problem with digitalized {\scshape vhs} content.
-Typically, such videos were uploaded in the early to mid 2000s
-and thus have accumulated many views,
-however, due to the oftentimes amateurish digitalization process,
-are of inferior quality and greatly limit the viewing experience,
-albeit the poster preview of such videos may seem acceptable.
-Digitalized {\scshape vhs} videos often appear prominently
-when users rank content by the popularity-based
-ranking criterium \emph{view count}.
-
-\section{Problem Statement}
-
-Video denoising is the process of removing noise from a~video signal.
-Typical issues with digitalized {\scshape vhs} videos include 
+approach to automatically filter out {\scshape vhs} content 
+which has been digitized in a non-professional manner. 
+Typically, this type of niche content was uploaded to the web
+in the early to mid 2000s and is formally characterized by 
+analogue recording artifacts stemming from {\scshape vhs} tapes. 
+Common issues with digitized {\scshape vhs} videos include 
 ghosting (\autoref{fig:ghosting}),
 color-specific degradation,
 brightness and color channel interferences,
 chaotic line shift at the end of frames,
 and wide horizontal noise strips (\autoref{fig:distortion}).
-Such distortions can seriously limit the viewing experience
-on video platforms.
-In consequence, we propose a~scalable, crowdsourced way
-to identify poorly digitalized videos.
+
+\section{Problem Statement}
+The publication of online content produced by amateurs has received a substantial amount 
+of attention. This position papers wants to raise the question to what extent 
+the identification of content {\scshape digitized by amateurs} can offer a useful parameter 
+to make sense out of the fast-paced growing corpus of online video. 
+Exploiting the fact that an individual invested time and resources into the 
+digitization of content from a {\scshape vhs} tape can hold a unique value 
+both for information retrieval and research purposes. 
+Especially in the context of the long tail of niche content,
+automatically identifying {\scshape vhs content digitized by amateurs}     
+can help to identify more quickly unique content items.
+Uploaders of this type of content occasionally add tags 
+such as "vintage" or "retro" but these practices are incoherent. 
+Automated means to aggregate this type of content are needed 
+and therefore this position paper propose a~scalable, crowdsourced way
+to identify amateurishly digitized videos.
 
 \vspace{-1em}
 
@@ -151,7 +160,7 @@ to identify poorly digitalized videos.
 
 \vspace{-3em}
 
-\section{Approach}
+\section{Methodology}
 
 In~\cite{steiner2011crowdsourcing}, we have introduced
 a~generic crowdsourcing framework for the automatic and scalable
@@ -164,20 +173,20 @@ we can imagine a~video denoising algorithm
 as presented by Yang in~\cite{yang2009videonoise}
 being applied to a~video that is currently played
 to detect if it suffers from {\scshape vhs} artifacts.
-Over time, \emph{individual} users watching low quality videos
-create enough signals to eventually down-rank them
-\emph{globally} for quality issues despite their view count.
+Over time, \emph{individual} users watching low quality digitized videos
+create enough signals to eventually filter out the corpus of 
+content digitized by amateurs.
 
 \vspace{-0.5em}
 
 \section{Conclusion}
 
 In this position paper, we have presented a~crowdsourced,
-scalable approach to detect {\scshape vhs} digitalization artifacts,
+scalable approach to detect {\scshape vhs} digitization artifacts,
 where users by watching videos do useful work such as 
 detecting {\scshape vhs} artifacts as a~by-product,
-and thus over time allowing video platforms to rank down
-low quality content by leveraging the crowd.
+and thus over time allowing video platforms to filter out
+a specific type of niche content by leveraging the crowd.
 
 \vspace{-0.5em}
 
