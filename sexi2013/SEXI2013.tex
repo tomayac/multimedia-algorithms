@@ -24,7 +24,7 @@
 \usepackage{subcaption}
 
 % Better typography
-\usepackage[activate=compatibility]{microtype}
+\usepackage[activate]{microtype}
 
 % Todo macro
 \usepackage{color}
@@ -68,6 +68,7 @@ Information School -- University of Washington\\
 % Ignore affiliation note numbers: start footnotes from the beginning.
 \setcounter{footnote}{0}
 
+\vspace{-1em}
 \begin{abstract}
 In this position paper, we describe how analogue recording artifacts
 stemming from digitized {\scshape vhs} tapes such as
@@ -76,9 +77,11 @@ can be identified at Web-scale via crowdsourcing
 in order to filter out content digitized by amateurs.
 \end{abstract}
 
-\keywords{Amateur Video Digitization, Video Home System~({\scshape vhs}), Long tail of niche content}
+\vspace{-2em}
+\keywords{Amateur Video Digitization, Video Home System, Long tail}
 
 \section{Introduction}
+\vspace{-.5em}
 Online video is one of the fastest growing Internet industries, with popular sites recording
 72 uploaded hours of video per minute\footnote{\url{http://www.youtube.com/t/press_statistics}},
 it becomes evident that efficient search, recommendation, and
@@ -116,7 +119,8 @@ brightness and color channel interferences,
 chaotic line shift at the end of frames,
 and wide horizontal noise strips (\autoref{fig:distortion}).
 
-\section{Problem Statement}
+\section{Problem Statement and Methodology}
+\vspace{-.7em}
 The publication of online content produced by non-professionals,
 what we call \emph{amateurs},
 has received a substantial amount of attention.
@@ -134,31 +138,27 @@ Automated means to aggregate this type of content are needed
 and therefore this position paper proposes a~scalable, crowdsourced way
 to identify videos digitized by amateurs.
 
-\vspace{-1em}
-
-\begin{figure}
+\begin{figure}[float=t]
   \centering
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[width=\textwidth]{ghosting.png}
     \caption{Ghosting
-    [\url{http://goo.gl/NXJzw}]}
+    \scriptsize[\url{http://goo.gl/NXJzw}]}
      \label{fig:ghosting}
   \end{subfigure}
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[width=\textwidth]{distortion.png}
     \caption{Distortion
-    [\url{http://goo.gl/zRiEQ}]}
+    \scriptsize[\url{http://goo.gl/zRiEQ}]}
      \label{fig:distortion}
   \end{subfigure}
   \label{fig:artifacts}
+  \vspace{-.7em}
   \caption{Typical {\scshape vhs} artifacts after amateurish digitalization.}
+  \vspace{-1em}
 \end{figure}
-
-\vspace{-3em}
-
-\section{Methodology}
 
 In~\cite{steiner2011crowdsourcing}, we have introduced
 a~generic crowdsourcing framework for the automatic and scalable
@@ -175,9 +175,9 @@ Over time, \emph{individual} users watching low quality digitized videos
 create enough signals to eventually filter out the corpus of
 content digitized by amateurs.
 
-\vspace{-0.5em}
-
+\vspace{-1em}
 \section{Conclusion}
+\vspace{-.7em}
 
 In this position paper, we have presented a~crowdsourced,
 scalable approach to detect {\scshape vhs} digitization artifacts,
@@ -186,10 +186,12 @@ detecting {\scshape vhs} artifacts as a~by-product of viewing and commenting,
 and thus over time allowing video platforms to filter out
 a specific type of niche content by leveraging the crowd.
 
-\vspace{-0.5em}
+\vspace{-1em}
 
 \footnotesize
 \bibliographystyle{splncs03}
+\renewcommand\refname{}
+\vspace{-2em}
 \bibliography{references}
 
 \end{document}
