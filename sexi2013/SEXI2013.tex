@@ -13,6 +13,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\def\baselinestretch{0.97}
 
 % References
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
@@ -46,8 +47,9 @@ in the Age of Online Video Platforms}
 
 \author{Thomas Steiner\inst{1} \and
         Seth van Hooland\inst{2} \and
-        Ruben Verborgh\inst{3}\and
-        Joseph Tennis\inst{4}}
+        Ruben Verborgh\inst{3}\and \\
+        Joseph Tennis\inst{4}\and
+        Rik Van de Walle\inst{3}}
 
 \institute{
 Universitat Politècnica de Catalunya -- Department {\scshape lsi}\\
@@ -57,7 +59,7 @@ Université Libre de Bruxelles -- Information and Communication Science Dept.\\
      \urldef{\emails}\path|svhooland@ulb.ac.be|\emails\\
 \and
 Ghent University -- iMinds -- Multimedia Lab\\
-  \urldef{\emails}\path|ruben.verborgh@ugent.be|\emails\\
+  \urldef{\emails}\path|{ruben.verborgh,rik.vandewalle}@ugent.be|\emails\\
 \and
 Information School -- University of Washington\\
   \urldef{\emails}\path|jtennis@uw.edu|\emails\\
@@ -68,26 +70,32 @@ Information School -- University of Washington\\
 % Ignore affiliation note numbers: start footnotes from the beginning.
 \setcounter{footnote}{0}
 
-\vspace{-1em}
+\vspace{-2.7em}
 \begin{abstract}
 In this position paper, we describe how analogue recording artifacts
-stemming from digitized {\scshape vhs} tapes such as
+stemming from digitalized {\scshape vhs} tapes such as
 grainy noises, ghosting, or synchronization issues
 can be identified at Web-scale via crowdsourcing
-in order to filter out content digitized by amateurs.
+in order to identify adult content digitalized by amateurs.
 \end{abstract}
 
-\vspace{-2em}
-\keywords{Amateur Video Digitization, Video Home System, Long tail}
+%\vspace{-2.5em}
+%\keywords{Amateur Video Digitalization, Video Home System, Long tail}
 
+\vspace{-4em}
 \section{Introduction}
-\vspace{-.5em}
-Online video is one of the fastest growing Internet industries, with popular sites recording
-72 uploaded hours of video per minute\footnote{\url{http://www.youtube.com/t/press_statistics}},
-it becomes evident that efficient search, recommendation, and
+\vspace{-1.5em}
+Online adult video is one of the fastest growing Internet industries
+as recent statistics of a~large meta search engine for adult content
+show\footnote{\url{http://www.pornwatchers.com/content/statistics11-2012/}}.
+Since its launch in 2006, the search engine has indexed
+the amount of overall 735,000 videos at a~growth rate of 22,000 videos per month
+with overall 93 billion views.
+Over this period, 158 million user ratings were collected.
+It becomes evident that efficient search, recommendation, and
 navigation capabilities are required in order to use
-video platforms in a~meaningful way.
-Online video platforms typically allow their users
+adult video platforms in a~meaningful way.
+Online adult video platforms typically allow their users
 (i)~to search for content based on full-text query terms
 that are matched against textual descriptions
 of the video like its title or description,
@@ -98,8 +106,8 @@ that match a~given category
 or query term, ranked by criteria such as
 \emph{relevancy}, \emph{view count},
 \emph{user rating}, or \emph{upload date}.
-The default ranking criteria normally being
-\emph{relevancy}---a~platform-specific \emph{black box} ranking criterion.
+The default ranking criterion normally is
+\emph{relevancy}---a~platform-specific \emph{black box} concept.
 Advanced and frequently returning power-users
 may prefer more transparent and traceable ranking criteria
 such as the popularity-based \emph{view count}
@@ -107,51 +115,51 @@ and \emph{user rating}, or the stack-based
 {\scshape lifo} (last in, first out) ranking criterion \emph{upload date}.
 
 In this position paper, we suggest a~computer vision-based
-approach to automatically filter out {\scshape vhs} content
-which has been digitized in a non-professional manner.
-Typically, this type of niche content was uploaded to the web
-in the early to mid 2000s and is formally characterized by
+approach to automatically identify {\scshape vhs} adult content
+that has been digitalized in a~non-professional manner.
+This type of niche adult content is characterized by
 analogue recording artifacts stemming from {\scshape vhs} tapes.
-Common issues with digitized {\scshape vhs} videos include
-ghosting (\autoref{fig:ghosting}),
-color-specific degradation,
-brightness and color channel interferences,
-chaotic line shift at the end of frames,
+Common issues include
+ghosting, brightness and color channel interferences,
+chaotic line shift at the end of frames (\autoref{fig:ghosting}),
 and wide horizontal noise strips (\autoref{fig:distortion}).
 
+
 \section{Problem Statement and Methodology}
-\vspace{-.7em}
-The publication of online content produced by non-professionals,
-what we call \emph{amateurs},
-has received a substantial amount of attention.
-This position paper raises the question: to what extent
-the identification of content as {\scshape digitized by amateurs} can offer a useful parameter?
-Exploiting the fact that an individual invested time and resources into the
-digitization of content from a {\scshape vhs} tape can hold a unique value
+\vspace{-0.9em}
+The publication of online content produced by
+non-professionals---what we call \emph{amateurs}---has
+received a~substantial amount of attention.
+%This position paper raises the question: to what extent
+%can the identification of content as {\scshape vhs adult content digitalized by amateurs}
+%offer a~useful parameter?
+Exploiting the fact that an individual invested time and resources for the
+digitalization of content from a~{\scshape vhs} tape can hold a~unique value
 both for information retrieval and research purposes.
 Especially in the context of the long tail of niche content,
-automatically identifying {\scshape vhs content digitized by amateurs}
-can help to identify more quickly unique content items.
+automatically identifying {\scshape vhs adult content digitalized by amateurs}
+can help identify more quickly unique content items.
 Uploaders of this type of content occasionally add tags
-such as "vintage" or "retro" but these practices are not standardized.
+such as ``vintage'' or ``retro'' but these practices are not standardized and sparse.
+On the aforementioned adult content platform, out of overall 735,000 videos,
+there were 23.427 tagged as ``vintage'', 95 as ``vhs'',
+and only 50 as ``vintage'' \emph{and} ``vhs''.
 Automated means to aggregate this type of content are needed
 and therefore this position paper proposes a~scalable, crowdsourced way
-to identify videos digitized by amateurs.
+to identify adult content digitalized by amateurs.
 
 \begin{figure}[float=t]
   \centering
-  \begin{subfigure}[b]{0.4\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{ghosting.png}
-    \caption{Ghosting
-    \scriptsize[\url{http://goo.gl/NXJzw}]}
+    \includegraphics[width=\textwidth]{lineshift.png}
+    \caption{Chaotic line shift at the bottom of frames (green)}
      \label{fig:ghosting}
   \end{subfigure}
-  \begin{subfigure}[b]{0.4\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{distortion.png}
-    \caption{Distortion
-    \scriptsize[\url{http://goo.gl/zRiEQ}]}
+    \caption{Wide horizontal noise strip distortions}
      \label{fig:distortion}
   \end{subfigure}
   \label{fig:artifacts}
@@ -162,7 +170,7 @@ to identify videos digitized by amateurs.
 
 In~\cite{steiner2011crowdsourcing}, we have introduced
 a~generic crowdsourcing framework for the automatic and scalable
-annotation of HTML5 video.
+annotation of {\scshape html5} video.
 While a~user watches a~video, the framework in the background
 unobtrusively annotates it, \emph{e.g.}, as demonstrated
 in the concrete case, to extract events.
@@ -171,22 +179,22 @@ we can imagine a~video denoising algorithm
 as presented by Yang in~\cite{yang2009videonoise}
 being applied to a~video that is currently played
 to detect if it suffers from {\scshape vhs} artifacts.
-Over time, \emph{individual} users watching low quality digitized videos
+Over time, \emph{individual} users watching low quality digitalized videos
 create enough signals to eventually filter out the corpus of
-content digitized by amateurs.
+content digitalized by amateurs.
 
 \vspace{-1em}
 \section{Conclusion}
-\vspace{-.7em}
+\vspace{-0.9em}
 
 In this position paper, we have presented a~crowdsourced,
-scalable approach to detect {\scshape vhs} digitization artifacts,
+scalable approach to detect {\scshape vhs} digitalization artifacts,
 where users by watching videos do useful work such as
-detecting {\scshape vhs} artifacts as a~by-product of viewing and commenting,
-and thus over time allowing video platforms to filter out
-a specific type of niche content by leveraging the crowd.
+detecting {\scshape vhs} artifacts as a~by-product of viewing,
+and thus over time allowing video platforms to identify
+a~specific type of niche content.
 
-\vspace{-1em}
+\vspace{-1.3em}
 
 \footnotesize
 \bibliographystyle{splncs03}
