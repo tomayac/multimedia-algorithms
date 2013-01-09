@@ -1,21 +1,7 @@
-% ----------------------------- %
-% Paper for SEXI2013            %
-% http://sexi2013.org/          %
-% ----------------------------- %
-% Full paper:     Nov 30, 2012  %
-% Notification:   Dec 17, 2012  %
-% Camera-ready:   Feb  5, 2013  %
-% ----------------------------- %
-% Maximum pages: 2              %
-% ----------------------------- %
+\documentclass{sig-alternate}
 
-\documentclass[runningheads,a4paper]{llncs}
-\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
-\def\baselinestretch{0.97}
-
-% References
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
 \usepackage[capitalise,nameinlink]{cleveref}
 \crefname{subsection}{Subsection}{Subsections}
@@ -36,41 +22,82 @@
 \noindent\keywordname\enspace\ignorespaces#1}
 
 \begin{document}
+%
+% --- Author Metadata here ---
+\conferenceinfo{SEXI}{'13 Rome, Italy}
+\CopyrightYear{2013} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+\crdata{}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
 
-\mainmatter
-
-\title{Identifying {\scshape vhs} Recording Artifacts\\
+\title{Identifying VHS Recording Artifacts\\
 in the Age of Online Video Platforms}
+\subtitle{[Position Paper]
+}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
 
-\titlerunning{Identifying {\scshape vhs} Recording Artifacts}
-\authorrunning{Identifying {\scshape vhs} Recording Artifacts}
-
-\author{Thomas Steiner\inst{1} \and
-        Seth van Hooland\inst{2} \and
-        Ruben Verborgh\inst{3}\and \\
-        Joseph Tennis\inst{4}\and
-        Rik Van de Walle\inst{3}}
-
-\institute{
-Universitat Politècnica de Catalunya -- Department {\scshape lsi}\\
-  \urldef{\emails}\path|tsteiner@lsi.upc.edu|\emails\\
-\and
-Université Libre de Bruxelles -- Information and Communication Science Dept.\\
-     \urldef{\emails}\path|svhooland@ulb.ac.be|\emails\\
-\and
-Ghent University -- iMinds -- Multimedia Lab\\
-  \urldef{\emails}\path|{ruben.verborgh,rik.vandewalle}@ugent.be|\emails\\
-\and
-Information School -- University of Washington\\
-  \urldef{\emails}\path|jtennis@uw.edu|\emails\\
+\numberofauthors{5}
+\author{
+\alignauthor
+Thomas Steiner\\
+       \affaddr{Univ. Politècnica de Catalunya}\\
+       \affaddr{Department LSI}\\
+       \affaddr{Barcelona, Spain}\\
+       \email{tsteiner@lsi.upc.edu}
+% 2nd. author
+\alignauthor
+Seth van Hooland\\
+       \affaddr{Université Libre de Bruxelles}\\
+       \affaddr{Information and C.S. Dept.}\\
+       \affaddr{Brussels, Belgium}\\
+       \email{svhooland@ulb.ac.be}
+% 3rd. author
+\alignauthor
+Ruben Verborgh\\
+       \affaddr{Ghent University}\\
+       \affaddr{iMinds -- Multimedia Lab}\\
+       \affaddr{Ghent, Belgium}\\
+       \email{ruben.verborgh@ugent.be}
+\and  % use '\and' if you need 'another row' of author names
+% 4th. author
+\alignauthor
+Joseph Tennis\\
+       \affaddr{Information School}\\
+       \affaddr{University of Washington}\\
+       \affaddr{Washington, D.C., USA}\\
+       \email{jtennis@uw.edu}
+% 5th. author
+\alignauthor
+Rik Van de Walle\\
+       \affaddr{Ghent University}\\
+       \affaddr{iMinds -- Multimedia Lab}\\
+       \affaddr{Ghent, Belgium}\\
+       \email{rik.vandewalle@ugent.be}
 }
 
 \maketitle
-
-% Ignore affiliation note numbers: start footnotes from the beginning.
-\setcounter{footnote}{0}
-
-\vspace{-2.7em}
 \begin{abstract}
 In this position paper, we describe how analogue recording artifacts
 stemming from digitalized {\scshape vhs} tapes such as
@@ -79,12 +106,17 @@ can be identified at Web-scale via crowdsourcing
 in order to identify adult content digitalized by amateurs.
 \end{abstract}
 
-%\vspace{-2.5em}
-%\keywords{Amateur Video Digitalization, Video Home System, Long tail}
+% A category with the (minimum) three required fields
+\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
 
-\vspace{-4em}
+%\terms{Theory}
+
+\keywords{Amateur Video Digitalization, Video Home System, Long Tail, Online Video Platforms}
+
 \section{Introduction}
-\vspace{-1.5em}
+
 Online adult video is one of the fastest growing Internet industries
 as recent statistics of a~large meta search engine for adult content
 show\footnote{\url{http://www.pornwatchers.com/content/statistics11-2012/}}.
@@ -124,21 +156,39 @@ ghosting, brightness and color channel interferences,
 chaotic line shift at the end of frames (\autoref{fig:ghosting}),
 and wide horizontal noise strips (\autoref{fig:distortion}).
 
+\begin{figure}[b!]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{lineshift.png}
+    \caption{Chaotic line shift at the bottom of frames (green)}
+     \label{fig:ghosting}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{distortion.png}
+    \caption{Wide horizontal noise strip distortions}
+     \label{fig:distortion}
+  \end{subfigure}
+  \label{fig:artifacts}
+  \caption{Typical {\scshape vhs} artifacts and distortions after amateurish digitalization.}
+\end{figure}
 
-\section{Problem Statement and Methodology}
-\vspace{-0.9em}
+\section{Problem Statement}
+
 The publication of online content produced by
-non-professionals---what we call \emph{amateurs}---has
+\emph{amateurs}, or non-professionals, has
 received a~substantial amount of attention.
-%This position paper raises the question: to what extent
-%can the identification of content as {\scshape vhs adult content digitalized by amateurs}
-%offer a~useful parameter?
+This position paper raises the question: to what extent
+can the identification of content as {\scshape vhs adult content digitalized by amateurs}
+offer a~useful parameter?
 Exploiting the fact that an individual invested time and resources for the
 digitalization of content from a~{\scshape vhs} tape can hold a~unique value
 both for information retrieval and research purposes.
 Especially in the context of the long tail of niche content,
 automatically identifying {\scshape vhs adult content digitalized by amateurs}
 can help identify more quickly unique content items.
+
 Uploaders of this type of content occasionally add tags
 such as ``vintage'' or ``retro'' but these practices are not standardized and sparse.
 On the aforementioned adult content platform, out of overall 735,000 videos,
@@ -148,25 +198,7 @@ Automated means to aggregate this type of content are needed
 and therefore this position paper proposes a~scalable, crowdsourced way
 to identify adult content digitalized by amateurs.
 
-\begin{figure}[float=t]
-  \centering
-  \begin{subfigure}[b]{0.3\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{lineshift.png}
-    \caption{Chaotic line shift at the bottom of frames (green)}
-     \label{fig:ghosting}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.3\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{distortion.png}
-    \caption{Wide horizontal noise strip distortions}
-     \label{fig:distortion}
-  \end{subfigure}
-  \label{fig:artifacts}
-  \vspace{-.7em}
-  \caption{Typical {\scshape vhs} artifacts after amateurish digitalization.}
-  \vspace{-1em}
-\end{figure}
+\section{Proposed Methodology}
 
 In~\cite{steiner2011crowdsourcing}, we have introduced
 a~generic crowdsourcing framework for the automatic and scalable
@@ -183,23 +215,16 @@ Over time, \emph{individual} users watching low quality digitalized videos
 create enough signals to eventually filter out the corpus of
 content digitalized by amateurs.
 
-\vspace{-1em}
 \section{Conclusion}
-\vspace{-0.9em}
 
 In this position paper, we have presented a~crowdsourced,
 scalable approach to detect {\scshape vhs} digitalization artifacts,
 where users by watching videos do useful work such as
 detecting {\scshape vhs} artifacts as a~by-product of viewing,
 and thus over time allowing video platforms to identify
-a~specific type of niche content.
+a~specific type of niche content for further processing or filtering purposes.
 
-\vspace{-1.3em}
-
-\footnotesize
 \bibliographystyle{splncs03}
-\renewcommand\refname{}
-\vspace{-2em}
 \bibliography{references}
 
 \end{document}
