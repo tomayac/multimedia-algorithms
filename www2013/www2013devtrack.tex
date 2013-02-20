@@ -13,7 +13,7 @@
 \def\subsectionautorefname{Subsection}
 
 \usepackage{enumitem}
-
+\usepackage{pbox}
 \usepackage{color}
 \definecolor{light-gray}{gray}{0.8}
 
@@ -24,6 +24,8 @@
 % nicer looking Google+
 \usepackage{xspace}
 \DeclareRobustCommand{\googleplus}{\mbox{Google\hspace{0em}\raisebox{.28ex}{\tiny\bf +}\kern-0.2ex}\xspace}
+
+\DeclareRobustCommand{\plusone}{\mbox{\hspace{0em}\raisebox{.28ex}{\tiny\bf +}\kern-0.2ex 1}\xspace}
 
 % listings and Verbatim environment
 \usepackage{fancyvrb}
@@ -78,7 +80,7 @@
 % --- End of Author Metadata ---
 
 
-\title{A Meteoroid on Steroids: Ranking Media Items\\ Stemming from Social Networks}
+\title{A Meteoroid on Steroids: Ranking Media Items\\ Stemming from Multiple Social Networks}
 
 \numberofauthors{1}\author{
 \alignauthor
@@ -104,7 +106,7 @@ which takes social network interactions into account.
 While the ranking formula is not universally applicable,
 it can serve as a~good starting point to an individually adapted formula,
 all within the context of Social Media Illustrator.
-The application is available publicly online at \url{http://social-media-illustrator.herokuapp.com/}.
+The application is available publicly online at the URL \url{http://social-media-illustrator.herokuapp.com/}.
 \end{abstract}
 
 \category{H.3.3}{Information Search and Retrieval}{Clustering}
@@ -153,6 +155,99 @@ video quality, user specificity, and diversification
 that determine the video ranking in the YouTube recommendation system.
 These criteria include view count, the ratings of the video, commenting, favoriting,
 and sharing activity around the video.
+Finally, Wiyartanti \emph{et~al.} introduce in~\cite{wiyartanti2008ranking}
+a~ranking algorithm for user-generated videos based on social activities.
+
+\begin{table*}[t!]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    Likes & Shares & Comments & Views\\ \hline
+    \pbox[t][2.5cm]{0.5\columnwidth}{Facebook Like\\ \googleplus \plusone\\ Instagram Like\\ Flickr Favorite\\ YouTube Like\\ YouTube Favorite\\ Twitter Favorite} & \pbox[t][2.5cm]{0.5\columnwidth}{Facebook Share\\ \googleplus Share\\ Twitter native ReTweet} & \pbox[t][2.5cm]{0.5\columnwidth}{Facebook Comments\\ \googleplus Comments\\ Instagram Comments\\ Twitter manual RT, @Replies\\ Twitpic Comments\\ MobyPicture Comments\\ Flickr Comments} & \pbox[t][2.5cm]{0.5\columnwidth}{YouTube Views\\ Flickr Views\\ Twitpic Views\\ Mobypicture Views}\\
+      \hline
+    \end{tabular}
+    \caption{Abstract social network interaction paradigms
+      and their underlying native counterparts}
+  \label{table:social-interactions}
+\end{table*}
+
+\section{Social Network Interactions}
+
+Social networks have different paradigms of social interactions.
+In~\cite{rizzo2012whatfresh}, we have introduced an
+abstraction layer on top of the native data formats
+of all considered social networks in order to gain
+an agnostic view on the underlying social networks.
+To clarify this aspect, regardless of the native data representation format
+of the social network of origin, the abstraction layer unifies and streamlines
+the available data for each media item
+to a~greatest common divisor of all social networks.
+In this section, we detail the part of the abstraction layer
+that models the network-specific social interaction paradigms.
+These interaction paradigms must be exposed by the social networks 
+via specific API calls in order to be considered,
+which is the case for only a~subset of the social networks we deal with.
+In \autoref{table:social-interactions}, we detail
+how we abstract the social interactions in question on each social network.
+In the concrete implementation, we differentiate between unknown values
+that are returned as \texttt{null}, \emph{i.e.},
+where the information is not exposed,
+and \texttt{0} values, where the value is known to be zero.
+The social interactions part of the abstraction layer's data format is as follows.
+
+\begin{itemize}  
+  \itemsep0em
+  \item \textbf{Likes:} \# likes, or \texttt{null}
+  \item \textbf{Shares:} \# shares, or \texttt{null}
+  \item \textbf{Comments:} \# comments, or \texttt{null}
+  \item \textbf{Views:} \# views, or \texttt{null}
+\end{itemize}
+
+\section{Merging Social Interactions}
+
+If a~set of media items is visually similar enough to be clustered
+under the criteria detailed in~\cite{rizzo2012whatfresh},
+we treat the whole of the cluster
+as if it were just one media item.
+Therefore, we specify a~merging strategy
+for the associated social interactions of the individual media items
+in the particular cluster.
+\autoref{code:merging} shows the pseudocode of the merging algorithm.
+We treat unknown values represented as \texttt{null} as \texttt{0}.
+The algorithm accumulates individual social interactions
+and returns the accumulated social interactions.
+
+\begin{lstlisting}[caption=The social interactions merging algorithm,
+  label=code:merging, float=b!]
+§\textbf{Input: cluster, cluster of visually similar media items}§ 
+§\textbf{Output: socialInteractions, merged social interactions}§ 
+
+§\textbf{init:}§
+
+likes = shares = views = comments = 0
+socialInteractions = {}
+
+§\textbf{for}§ item §\textbf{in}§ cluster
+  likes += item.likes ? item.likes : 0
+  shares += item.shares ? item.shares : 0
+  comments += item.comments ? item.comments : 0
+  views += item.views ? item.views : 0
+§\textbf{end for}§
+socialInteractions.likes = likes
+socialInteractions.shares = shares
+socialInteractions.comments = comments
+socialInteractions.views = views
+
+§\textbf{return}§ socialInteractions
+\end{lstlisting}
+
+\section{Implementation Details}
+
+The application has been implemented in Node.js,
+a~server side JavaScript software system
+designed for writing scalable Internet applications.
+Programs are created using event-driven, asynchronous input/output operations
+to minimize overhead and maximize scalability.
 
 \begin{figure*}[t!]
   \centering
