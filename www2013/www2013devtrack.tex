@@ -12,6 +12,7 @@
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
 
+\usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{pbox}
 \usepackage{color}
@@ -173,37 +174,29 @@ a~ranking algorithm for user-generated videos based on social activities.
 
 \section{Social Network Interactions}
 
+\subsection{Abstraction Layer}
+\label{sec:social-network-interactions}
+
 Social networks have different paradigms of social interactions.
 In~\cite{rizzo2012whatfresh}, we have introduced an
 abstraction layer on top of the native data formats
 of all considered social networks in order to gain
-an agnostic view on the underlying social networks.
-To clarify this aspect, regardless of the native data representation format
+an agnostic view on them.
+Regardless of the native data representation format
 of the social network of origin, the abstraction layer unifies and streamlines
 the available data for each media item
 to a~greatest common divisor of all social networks.
-In this section, we detail the part of the abstraction layer
-that models the network-specific social interaction paradigms.
 These interaction paradigms must be exposed by the social networks 
-via specific API calls in order to be considered,
-which is the case for only a~subset of the social networks we deal with.
+via specific API calls in order to be considered.
 In \autoref{table:social-interactions}, we detail
 how we abstract the social interactions in question on each social network.
-In the concrete implementation, we differentiate between unknown values
+We differentiate between unknown values
 that are returned as \texttt{null}, \emph{i.e.},
 where the information is not exposed,
 and \texttt{0} values, where the value is known to be zero.
-The social interactions part of the abstraction layer's data format is as follows.
 
-\begin{itemize}  
-  \itemsep0em
-  \item \textbf{Likes:} \# likes, or \texttt{null}
-  \item \textbf{Shares:} \# shares, or \texttt{null}
-  \item \textbf{Comments:} \# comments, or \texttt{null}
-  \item \textbf{Views:} \# views, or \texttt{null}
-\end{itemize}
-
-\section{Merging Social Interactions}
+\subsection{Merging Social Interactions}
+\label{sec:merging-social-interactions}
 
 If a~set of media items is visually similar enough to be clustered
 under the criteria detailed in~\cite{rizzo2012whatfresh},
@@ -222,8 +215,6 @@ and returns the accumulated social interactions.
 §\textbf{Input: cluster, cluster of visually similar media items}§ 
 §\textbf{Output: socialInteractions, merged social interactions}§ 
 
-§\textbf{init:}§
-
 likes = shares = views = comments = 0
 socialInteractions = {}
 
@@ -241,6 +232,38 @@ socialInteractions.views = views
 §\textbf{return}§ socialInteractions
 \end{lstlisting}
 
+\section{Ranking Media Item Clusters}
+
+In this section, we describe a~ranking formula to rank
+a~set of media clusters that match a~given query.
+In the ranking formula, we consider several well-defined ranking criteria~%
+\cite{steiner2012definingaesthetic},
+namely these are visual, audial, textual, temporal, social, and aesthetic.
+For a~given set of media item clusters, a~ranking is calculated as follows.
+
+\begin{gather}
+  \alpha \times \mathit{likes} + \beta \times \mathit{shares} +
+  \gamma \times \mathit{comments} + \delta \times \mathit{views} + \nonumber\\
+  \epsilon \times \mathit{crossNetwork} + \zeta \times \mathit{recency} +
+  \eta \times \mathit{quality}
+\end{gather}
+
+The factors $ \mathit{likes}, \mathit{shares}, \mathit{comments},$ and $ \mathit{views} $
+stem from the individual media items as described in \autoref{sec:social-network-interactions}
+and \autoref{sec:merging-social-interactions}.
+The factor $ \mathit{crossNetwork} $ corresponds to the size of the current cluster. 
+The factor $ \mathit{recency} $ is calculated as follows.
+If the youngest media item in the cluster is less than or exactly one day old,
+the value is 8, for two days it is 4, for three days it is 2,
+and for each day more, the value is 1.
+The factor $ \mathit{quality} $ is a~representation of the
+presence of faces and a~media item's photo/video quality.
+Empirically optimized default values
+that can be fine-tuned to a~concrete media item set
+were determined as follows:
+$ \alpha = 2 $, $ \beta = 4 $ , $ \gamma = 8 $, $ \delta = 1 $,
+$ \epsilon = 32 $, $ \zeta = 2 $, and $ \eta = 8 $.
+
 \section{Implementation Details}
 
 The application has been implemented in Node.js,
@@ -248,11 +271,50 @@ a~server side JavaScript software system
 designed for writing scalable Internet applications.
 Programs are created using event-driven, asynchronous input/output operations
 to minimize overhead and maximize scalability.
+The clustering and ranking logic is kept on the client side,
+while the media item retrieval logic is kept on the server side.
+As the clustering logic needs read access to the pixel data of media items via
+the \texttt{canvas} element's \texttt{getImageData} function,
+all media items need to be proxied locally.
+Face detection works fully on the client side based on a~library
+made available by Liu.%
+\footnote{\url{http://liuliu.me/eyes/javascript-face-detection-explained/},
+accessed 02/21/2013}
+\autoref{fig:application} and \autoref{fig:media-gallery} show screenshots
+of the deployed application.
+
+\section{Conclusions and Future Work}
+
+In this paper, we have presented an application called Social Media Illustrator with
+a~special focus on its social interactions abstraction layer and ranking capacities.
+The application has been successfully evaluated to produce both meaningful and beautiful
+visual and audial summaries for recent events.
+The majority of these summaries were made available online.%
+\footnote{\url{http://twitpic.com/photos/tomayac}, accessed 02/21/2013}
+One example of such can be seen in \autoref{fig:media-gallery},
+which shows popular social media reactions for the meteoroid impact event
+on 15 February 2013, when a~small asteroid entered the atmosphere of Earth,
+became visible as a~bright fireball
+and exploded in an air burst over Chelyabinsk Oblast.
+Future work will focus on adding more visualization formats that will support
+text-to-speech once the text synthesis part
+of the Web Speech API~\cite{shires2012webspeech} will have landed in Web browsers.
+This will allow for true story-\emph{telling}, where the associated microposts
+for a~media item can be read as it is shown,
+potentially in an interactive slideshow format.
+Further, we plan to add more clustering options
+that will allow for also clustering by extracted named entities~%
+\cite{steiner2011addingmeaning} besides the currently visual clustering.
+Concluding, with our Social Media Illustrator application, 
+we have contributed an effective and efficient tool
+to deal with social media overload
+and to identify the few needles in the social network haystack. 
 
 \begin{figure*}[t!]
   \centering
+  \setlength{\fboxsep}{1pt}
   \fcolorbox{light-gray}{white}{
-  \includegraphics[width=\linewidth]{./application.png}}
+  \includegraphics[width=0.57\linewidth]{./application.png}}
   \caption{Media Item Clusters tab of the Social Media Illustrator application
   with individual and clustered (bottom middle) media items from Facebook and YouTube,
   ranked by popularity for the Russian query
@@ -262,8 +324,9 @@ to minimize overhead and maximize scalability.
 
 \begin{figure*}[t!]
   \centering
+  \setlength{\fboxsep}{1pt}
   \fcolorbox{light-gray}{white}{
-  \includegraphics[width=\linewidth]{./media-gallery.png}}
+  \includegraphics[width=0.57\linewidth]{./media-gallery.png}}
   \caption{Zoomed view of the Media Gallery tab of the application
     showing an automatically generated media gallery in \emph{loose order, varying size} style
     featuring ranked media items stemming from Facebook and YouTube for the query
