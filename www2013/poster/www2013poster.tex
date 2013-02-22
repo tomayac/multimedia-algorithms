@@ -8,6 +8,7 @@
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
+\def\subfigureautorefname{Subfigure}
 
 % Graphics
 \usepackage{graphicx}
@@ -125,6 +126,7 @@ A~demo is available at
 \keywords{Media Galleries, Event Summarization, Social Networks}
 
 \section{Introduction}
+\label{sec:introduction}
 
 Media galleries (see \autoref{fig:media-gallery} for two examples)
 help people consume larger, however not overwhelmingly huge,
@@ -150,18 +152,62 @@ which we now apply to different media gallery types.
 \section{Media Gallery Styles}
 
 Media galleries---in contrast to free-form digital media collages---%
-necessarily display media items in a~grid-like manner.
+necessarily display media items in a~grid-like way.
 The crucial question is thus, whether the media items' aspect ratios
 should be respected, or whether they should be cropped to square,
 or other aspect ratios (\emph{e.g.}, 4:3 or 16:9).
-Respecting the aspect ratio has the obvious advantage that the media items
+Respecting the aspect ratio has the advantage that media items
 do not need to be potentially lossily cropped,
-however, makes the creation of a~media gallery
-that does not look ragged or frayed harder.
+however, due to the unpredictable media item formats,
+layouting of media galleries
+that do not look frayed is harder.
+The advantage of cropping is that media gallery layout is easier,
+as the media item formats are predictably the same,
+at the cost of having to decide where to crop.
+Different algorithms (\emph{e.g.},~\cite{suh2003thumbnail})
+beyond this paper's scope exist to aid this decision.
+A~media gallery is \emph{balanced}, if its shape is rectangular,
+\emph{hole-free} if there are no gaps from missing media items,
+and \emph{order-respecting},
+if media items appear in insertion order.
+
+\subsection{Non-Order-Respecting Styles}
+
+An interesting technique for arranging media items is dividing.
+Every media item with an aspect ratio of $ \sqrt2 $ can be divided
+into two media items with the same aspect ratio.%
+\footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox-android.html},
+accessed 02/22/2013}
+This works for portrait and landscape orientations,
+however, is not order-respecting.
+Two other non-order-respecting techniques are working
+with pre-defined placeholder patterns
+(small and big squares, portrait and landscape rectangles)
+and then filling the placeholder shapes with media items,%
+\footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-500px.html},
+accessed 02/22/2013}
+or working with columns of pre-defined widths
+and then iteratively inserting in the smallest column.%
+\footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html},
+accessed 02/22/2013}
+As outlined in \autoref{sec:introduction},
+we need (loosely) order-respecting media galleries.
 
 \subsection{Strict Order, Equal Size}
 
+A~media gallery style that we call \emph{Strict Order, Equal Size},
+which strictly respects the ranking-implied order is presented in~%
+\cite{chedeau2012googleplus}.
+An example can be seen in \autoref{fig:a}.
+It works by resizing all media items in a~row to have the same height
+and adjusting the widths so that the aspect ratios are maintained.
+A~row is filled until a~maximum row height is reached,
+then a~new row (with a~typically different height) starts, \emph{etc.}
+This media gallery style is order-respecting, hole-free,
+and can be effortlessly balanced by adjusting the number
+of media items in the media gallery accordingly.
 \subsection{Loose Order, Varying Size}
+\cite{chedeau2012facebook}
 
 \section{Discussion}
 
