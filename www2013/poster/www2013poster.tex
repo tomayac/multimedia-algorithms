@@ -10,6 +10,8 @@
 \def\subsectionautorefname{Subsection}
 \def\subfigureautorefname{Subfigure}
 
+\usepackage{setspace}
+
 % Graphics
 \usepackage{graphicx}
 \usepackage{subfig}
@@ -86,7 +88,7 @@
 % --- End of Author Metadata ---
 
 
-\title{To Crop, Or Not to Crop: Creating Online Media Galleries}
+\title{To Crop, Or Not to Crop: Compiling Online Media Galleries}
 
 \numberofauthors{2}\author{
 \alignauthor
@@ -128,14 +130,14 @@ A~demo is available at
 \section{Introduction}
 \label{sec:introduction}
 
-Media galleries (see \autoref{fig:media-gallery} for four examples)
+Media galleries (see \autoref{fig:media-gallery} for examples)
 help users consume larger, however not overwhelmingly huge,
 amounts of media items in an ideally pleasing and aesthetic way.
 These media items may, or, more commonly, may not be ordered,
 besides an intrinsic chronologic order.
 In the context of our work on summarizing events
 based on microposts and media items stemming from
-multiple social networks, we have created means
+multiple social networks, we have created methods
 to first \emph{extract} event-related media items
 from multiple social networks, second, to
 \emph{deduplicate} near- and exact-duplicate media items,
@@ -144,10 +146,10 @@ finally, to \emph{rank} the resulting media item clusters
 according to well-defined ranking criteria.
 In this paper, we treat the challenge of \emph{compiling}
 ranked media item clusters in media galleries in ways
-such that the ranking-implied order is respected.
+such that the ranking-implied order is (loosely) respected.
 Previously, we have defined~\cite{steiner2012definingaesthetic}
 aesthetic principles for automatic media gallery layout,
-which we now apply to different media gallery styles.
+which we now apply to media gallery styles.
 
 \section{Media Gallery Styles}
 
@@ -159,14 +161,13 @@ or other aspect ratios (\emph{e.g.}, 4:3 or 16:9).
 Respecting the aspect ratio has the advantage that media items
 do not need to be potentially lossily cropped,
 however, due to the unpredictable media item formats,
-layouting of media galleries
-that do not look frayed is harder.
+compiling media galleries that do not look frayed is harder.
 The advantage of cropping is that media gallery layout is easier,
 as the media item formats are predictably the same,
 at the cost of having to decide where to crop.
 Different algorithms (\emph{e.g.},~\cite{suh2003thumbnail})
 beyond this paper's scope exist to aid this decision.
-A~media gallery is \emph{balanced}, if its shape is rectangular,
+A~media gallery is called \emph{balanced}, if its shape is rectangular,
 \emph{hole-free} if there are no gaps from missing media items,
 and \emph{order-respecting},
 if media items appear in insertion order.
@@ -180,13 +181,13 @@ into two media items with the same aspect ratio.%
 as~of 02/22/2013}
 This works for portrait and landscape orientations,
 however, is not order-respecting.
-Two other non-order-respecting techniques are working
-with pre-defined placeholder patterns
+Two other non-order-respecting techniques are (i),~%
+working with pre-defined placeholder patterns
 (small and big squares, portrait and landscape rectangles)
 and then filling the placeholder shapes with media items,%
 \footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-500px.html},
 as~of 02/22/2013}
-or working with columns of pre-defined widths
+or (ii),~working with columns of pre-defined widths
 and then iteratively inserting in the smallest column.%
 \footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html},
 as~of 02/22/2013}
@@ -200,7 +201,7 @@ which strictly respects the ranking-implied order is presented in~%
 \cite{chedeau2012googleplus}.
 Examples can be seen in \autoref{fig:a} and \autoref{fig:c}.
 The algorithm works by resizing all media items in a~row to the same height
-and adjusting the widths so that the aspect ratios are maintained.
+and adjusting the widths in a~way that the aspect ratios are maintained.
 A~row is filled until a~maximum row height is reached,
 then a~new row (with potentially different height) starts, \emph{etc.}
 This media gallery style is order-respecting, hole-free,
@@ -236,16 +237,16 @@ that we call \emph{Loose Order, Varying Size (LOVS)}
 can be seen in \autoref{fig:b} and \autoref{fig:d},
 with the details explained in~\cite{chedeau2012facebook}.
 The algorithm works by cropping all images to a~square aspect ratio,
-which allows organizing media items such that one big square
-contains two horizontal lines of two small squares each.
-The media gallery is formed by iteratively filling
+which allows for organizing media items such that one big square always
+contains two horizontal blocks, each with two pairs of small squares.
+The media gallery is then formed by iteratively filling
 big or small squares until a~square is full,
 and then adding it to the smallest column.
 This media gallery style allows any media item to become big,
 while still being loosely order-respecting and always hole-free.
 Balancing the gallery is slightly harder,
-as up to $ (\mathit{bigBlocksPerRow} - 1) \times 2 $ media items
-may be required in the worst case.
+as in the worst case up to $ (\mathit{bigBlocksPerRow} - 1) \times 2 $
+media items may be required.
 
 \section{Discussion}
 
@@ -253,17 +254,17 @@ The main motivation for the \emph{Loose Order, Varying Size} style
 is that certain media items can be featured more prominently
 by making them big, while still loosely respecting the ranking-implied order.
 Examples of to-be-featured media items can be videos,
-media items with faces, media items available in high density quality,
+media items with faces, media items available in High-Density quality,
 or media items with interesting details~%
 \cite{suh2003thumbnail}.
-Users, too, could decide what media items to feature,
-albeit we aim at a~fully automatized solution.
+Users may want to decide what media items to feature,
+albeit we aim for an automatized solution.
 
 \section{Preliminary Evaluation}
 
 Evaluating subjective data like \emph{the} correct presentation form
 for a~set of media items is a~challenging task.
-For different users there may be different optimal settings.
+For different users, there may be different optimal settings.
 A~common subjective evaluation technique
 is the Mean~Opinion Score (MOS),
 used for decades in telephony networks to
@@ -282,7 +283,7 @@ and/or comment on their favorite style of media gallery,
 and Survey~B via email to a~company-internal ``miscellaneous'' mailing list,
 where we asked people to rate media galleries via MOS, with optional comments. 
 Survey~A and Survey~B used different media items in the media galleries,
-as to have some measure in how far content had an impact.
+as to have some measure in how far content has an impact.
 
 For Survey~A on the social networks Twitter, Facebook,
 and \googleplus, we had overall 16~participants (7~female, 8~male, 1~unknown).
@@ -293,20 +294,20 @@ Users who commented on why they liked \emph{LOVS} more mentioned
 they liked the additional structure and tidiness,
 the fact that some media items were bigger,
 the fact that it was easier to identify individual media items,
-and the fact that important media items got featured.
+and the fact that important media items were highlighted.
 
-For Survey~B via email with full MOS ratings,
+For Survey~B via email with MOS ratings,
 we had 19~participants (6~female, 13~male).
 The majority of users who liked \emph{LOVS} more
 mentioned that the different sizes
 gave the eye focal points and orientation,
-whereas one user explicitly disliked the guidance.
+whereas one user explicitly disliked this guidance.
 Users liked the harmony and the structure.
-Two users mentioned the small media items were proportionally too small.
-Users felt overloaded by \emph{SOES} and did not know where to start.
-Some users said the layout was boring and that
+Two users mentioned that small media items were proportionally too small.
+Regarding \emph{SOES}, users felt overloaded and did not know where to start.
+Some users said the layout was boring and that,
 while they liked the outer framing,
-they were confused by the missing inner grid.
+they were confused by the irregular inner grid.
 The MOS for \emph{SOES} was $2.39$ (variance $0.68$),
 the MOS for \emph{LOVS} was $4.17$ (variance $0.47$).
 The data of Survey~B is available.%
@@ -316,15 +317,17 @@ as~of 02/22/2013}
 \section{Conclusions and Future Work}
 
 We have created an application that auto-generates 
-two styles of media galleries, \emph{SOES} and \emph{LOVS},
-and evaluated users' perceived quality with two surveys. 
-Albeit the data is not significant, the trend is that users
+two media gallery styles, \emph{SOES} and \emph{LOVS},
+and evaluated users' perceived quality with two separate surveys. 
+While the data is not significant, the trend is that users
 seem to prefer \emph{LOVS}.
-Future work will focus on evaluating further media gallery styles.
+Future work will be on evaluating more media gallery styles.
 Concluding, we have learned that eyes need focal points
 to spot the needles in the media gallery haystack.
 
-\footnotesize{\bibliographystyle{abbrv}
-\bibliography{www2013poster}}
+\begin{spacing}{0.9}
+\bibliographystyle{abbrv}
+\bibliography{www2013poster}
+\end{spacing}
 
 \end{document}
