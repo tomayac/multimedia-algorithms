@@ -126,32 +126,37 @@ A~demo is available at
 
 \section{Introduction}
 
-Media galleries help users consume larger amounts of media items,
-which may, or may not be ordered.
+Media galleries (see \autoref{fig:media-gallery} for two examples)
+help people consume larger, however not overwhelmingly huge,
+amounts of media items in an ideally pleasing and aesthetic way.
+These media items may, or, more commonly, may not be ordered,
+besides an intrinsic chronologic order.
 In the context of our work on summarizing events
-based on social networks, we have created means
+based on microposts and media items stemming from
+multiple social networks, we have created means
 to first \emph{extract} event-related media items
-from multiple social networks, second to
+from multiple social networks, second, to
 \emph{deduplicate} near- and exact-duplicate media items,
-and third to \emph{cluster} them by visual similarity.
-Finally, the resulting media item clusters are \emph{ranked}
+third, to \emph{cluster} them by visual similarity, and
+finally, to \emph{rank} the resulting media item clusters
 according to well-defined ranking criteria.
-In this paper, we treat the challenge of presenting
-ranked media item clusters in a~way
+In this paper, we treat the challenge of \emph{compiling}
+ranked media item clusters in media galleries in ways
 such that the ranking-implied order is respected.
 Previously, we have defined~\cite{steiner2012definingaesthetic}
 aesthetic principles for automatic media gallery layout,
-which we will apply to two different media gallery types.
+which we now apply to different media gallery types.
 
 \section{Media Gallery Styles}
 
-Media galleries---in contrast to free-form media collages---%
+Media galleries---in contrast to free-form digital media collages---%
 necessarily display media items in a~grid-like manner.
 The crucial question is thus, whether the media items' aspect ratios
 should be respected, or whether they should be cropped to square,
 or other aspect ratios (\emph{e.g.}, 4:3 or 16:9).
 Respecting the aspect ratio has the obvious advantage that the media items
-do not need to be modified, however, makes the creation of a~media gallery
+do not need to be potentially lossily cropped,
+however, makes the creation of a~media gallery
 that does not look ragged or frayed harder.
 
 \subsection{Strict Order, Equal Size}
@@ -191,7 +196,7 @@ The actual MOS is then the arithmetic mean of all individual scores.
     \label{fig:b}
   }
   \caption{Two different kinds of media galleries visualizing a~gathering at Times Square, New York on February 8, 2013}
-  \label{fig:m}  
+  \label{fig:media-gallery}  
 \end{figure*}
 
 
