@@ -129,7 +129,7 @@ A~demo is available at
 \label{sec:introduction}
 
 Media galleries (see \autoref{fig:media-gallery} for two examples)
-help people consume larger, however not overwhelmingly huge,
+help users consume larger, however not overwhelmingly huge,
 amounts of media items in an ideally pleasing and aesthetic way.
 These media items may, or, more commonly, may not be ordered,
 besides an intrinsic chronologic order.
@@ -205,7 +205,7 @@ A~row is filled until a~maximum row height is reached,
 then a~new row (with a~typically different height) starts, \emph{etc.}
 This media gallery style is order-respecting, hole-free,
 and can be easily balanced by adjusting the number
-of media items in the gallery accordingly.
+of media items in $+1$ steps.
 
 \begin{figure*}[t!]
   \centering
@@ -235,11 +235,21 @@ big or small squares until a~square is full,
 and then adding it to the smallest column.
 This media gallery style allows any media item to become big,
 while still being loosely order-respecting and always hole-free.
-Balancing the gallery is harder,
+Balancing the gallery is slightly harder,
 as up to $ (\mathit{bigBlocksPerRow} - 1) \times 2 $ media items
 may be required in the worst case.
 
 \section{Discussion}
+
+The main motivation for the \emph{Loose Order, Varying Size} style
+is that certain media items can be featured more prominently
+by making them big, while still loosely respecting the ranking-implied order.
+Examples of to-be-featured media items can be videos,
+media items with faces, media items available in high density quality,
+or media items with interesting details~%
+\cite{suh2003thumbnail}.
+Users, too, could decide what media items to feature,
+albeit we aim at a~fully automatized solution.
 
 \section{Evaluation}
 
