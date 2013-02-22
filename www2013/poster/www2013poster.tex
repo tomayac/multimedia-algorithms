@@ -195,7 +195,7 @@ we need (loosely) order-respecting media galleries.
 
 \subsection{Strict Order, Equal Size}
 
-A~media gallery style that we call \emph{Strict Order, Equal Size},
+A~media gallery style that we call \emph{Strict Order, Equal Size (SOES)},
 which strictly respects the ranking-implied order is presented in~%
 \cite{chedeau2012googleplus}.
 An example can be seen in \autoref{fig:a}.
@@ -224,7 +224,7 @@ of media items in $+1$ steps.
 \subsection{Loose Order, Varying Size}
 
 An example of a~media gallery style
-that we call \emph{Loose Order, Varying Size}
+that we call \emph{Loose Order, Varying Size (LOVS)}
 can be seen in \autoref{fig:b},
 with the details explained in~\cite{chedeau2012facebook}.
 The algorithm works by cropping all images to a~square aspect ratio,
@@ -251,23 +251,39 @@ or media items with interesting details~%
 Users, too, could decide what media items to feature,
 albeit we aim at a~fully automatized solution.
 
-\section{Evaluation}
+\section{Preliminary Evaluation}
 
 Evaluating subjective data, like \emph{the} correct presentation form
 for a~set of media items, is a~challenging task.
-For different users, there may be different optimal settings.
+For different users there may be different optimal settings.
 A~common subjective evaluation technique
-is the Mean~Opinion Score (MOS,~\cite{itu1998mos}).
-Traditionally, MOS is used for conducting subjective evaluations
-of telephony network transmission quality,
-however, recently MOS has also found
-wider usage in the multimedia community
-for evaluating \emph{per se} subjective things
-like perceived quality from a~user perspective. 
+is the Mean~Opinion Score (MOS,~\cite{itu1998mos}),
+used for decades in telephony networks to
+obtain the human user's view of the quality of a~network.
+Recently, MOS has also found wider usage in the multimedia community.
 Therefore, a~set of standard subjective tests are conducted,
-where a~number of users rate the quality of test samples
-with scores ranging from 1 (worst) to 5 (best).
-The actual MOS is then the arithmetic mean of all individual scores.
+where users rate the perceived quality of test samples
+with scores from 1 (worst) to 5 (best).
+The actual MOS is the arithmetic mean of all individual scores.
+
+We have conducted two types of surveys. 
+One via multiple social networks, where we simply asked people to ``Like''
+and/or comment on their favorite type of media gallery,
+and one via email to a~company-internal ``miscellaneous'' mailing list,
+where we asked people to rate media galleries via MOS, with optional comments. 
+For the short surveys on the three social networks Twitter, Facebook,
+and \googleplus, we had overall 16 participants (7~female, 8~male, 1~N/A).
+7 users liked \emph{SOES} more,
+whereas 9 users liked \emph{LOVS} more.
+Interestingly, no user commented on why they liked \emph{SOES} more.
+The users who commented on why they liked \emph{LOVS} more mentioned
+they liked the additional structure and tidyness,
+the fact that some media items are bigger,
+the fact that it is easier to identify individual media items,
+and the fact that important media items get featured.
+For the email survey with full MOS ratings, we equally had 16 participants
+(5~female, 11~male).
+
 
 \section{Conclusions and Future Work}
 
