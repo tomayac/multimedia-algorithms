@@ -199,15 +199,45 @@ A~media gallery style that we call \emph{Strict Order, Equal Size},
 which strictly respects the ranking-implied order is presented in~%
 \cite{chedeau2012googleplus}.
 An example can be seen in \autoref{fig:a}.
-It works by resizing all media items in a~row to have the same height
+The algorithm works by resizing all media items in a~row to have the same height
 and adjusting the widths so that the aspect ratios are maintained.
 A~row is filled until a~maximum row height is reached,
 then a~new row (with a~typically different height) starts, \emph{etc.}
 This media gallery style is order-respecting, hole-free,
-and can be effortlessly balanced by adjusting the number
-of media items in the media gallery accordingly.
+and can be easily balanced by adjusting the number
+of media items in the gallery accordingly.
+
+\begin{figure*}[t!]
+  \centering
+  \subfloat[Strict order, equal size]{
+    \includegraphics[height=4.5cm]{equal-size.png}
+    \label{fig:a}
+  }                
+  \subfloat[Loose order, varying size (cropped)]{
+    \includegraphics[height=4.5cm]{different-size.png}
+    \label{fig:b}
+  }
+  \caption{Two different kinds of media galleries visualizing a~gathering at Times Square, New York on February 8, 2013}
+  \label{fig:media-gallery}  
+\end{figure*}
+
 \subsection{Loose Order, Varying Size}
-\cite{chedeau2012facebook}
+
+An example of a~media gallery style
+that we call \emph{Loose Order, Varying Size}
+can be seen in \autoref{fig:b},
+with the details explained in~\cite{chedeau2012facebook}.
+The algorithm works by cropping all images to a~square aspect ratio,
+which allows organizing media items such that one big square
+contains two horizontal lines of two small squares each.
+The media gallery is formed by iteratively filling
+big or small squares until a~square is full,
+and then adding it to the smallest column.
+This media gallery style allows any media item to become big,
+while still being loosely order-respecting and always hole-free.
+Balancing the gallery is harder,
+as up to $ (\mathit{bigBlocksPerRow} - 1) \times 2 $ media items
+may be required in the worst case.
 
 \section{Discussion}
 
@@ -230,22 +260,6 @@ with scores ranging from 1 (worst) to 5 (best).
 The actual MOS is then the arithmetic mean of all individual scores.
 
 \section{Conclusions and Future Work}
-
-\begin{figure*}[t!]
-  \centering
-  \subfloat[Strict order, equal size]{
-    \includegraphics[height=5cm]{equal-size.png}
-    \label{fig:a}
-  }                
-  \subfloat[Loose order, varying size (cropped)]{
-    \includegraphics[height=5cm]{different-size.png}
-    \label{fig:b}
-  }
-  \caption{Two different kinds of media galleries visualizing a~gathering at Times Square, New York on February 8, 2013}
-  \label{fig:media-gallery}  
-\end{figure*}
-
-
 
 \bibliographystyle{abbrv}
 \bibliography{www2013poster}
