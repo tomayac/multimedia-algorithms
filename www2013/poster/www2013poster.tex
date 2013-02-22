@@ -9,6 +9,13 @@
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
 
+% Graphics
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[font=small]{caption}
+\captionsetup[figure]{name=Figure}
+\usepackage{subcaption}
+
 \usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{pbox}
@@ -78,20 +85,34 @@
 % --- End of Author Metadata ---
 
 
-\title{On Media Galleries Summarizing Events}
+\title{To Crop, Or Not to Crop: Creating Online Media Galleries}
 
-\numberofauthors{1}\author{
+\numberofauthors{2}\author{
 \alignauthor
 Thomas Steiner\\
 	\affaddr{Google Germany GmbH}\\
 	\affaddr{ABC-Str. 19}\\
 	\affaddr{20354 Hamburg, Germany}\\
 	\email{tomac@google.com} 
+\alignauthor
+Christopher Chedeau\\
+	\affaddr{Facebook, Inc.}\\
+	\affaddr{1601 Willow Road}\\
+	\affaddr{Menlo Park, CA, 94025, USA}\\
+	\email{vjeux@facebook.com} 
 }
 \maketitle
 
 \begin{abstract}
-
+We have developed an application for the automatic generation of
+media galleries that visually and audibly summarize events
+based on media items like videos and photos from multiple social networks.
+We have evaluated different media gallery styles with online surveys 
+and examined their pros and cons.
+Besides the survey results, our contribution is also the application itself,
+where media galleries of different styles can be created on-the-fly.
+A~demo is available at
+\url{http://social-media-illustrator.herokuapp.com/}.
 \end{abstract}
 
 \vspace{-1mm}
@@ -104,6 +125,75 @@ Thomas Steiner\\
 \keywords{Media Galleries, Event Summarization, Social Networks}
 
 \section{Introduction}
+
+Media galleries help users consume larger amounts of media items,
+which may, or may not be ordered.
+In the context of our work on summarizing events
+based on social networks, we have created means
+to first \emph{extract} event-related media items
+from multiple social networks, second to
+\emph{deduplicate} near- and exact-duplicate media items,
+and third to \emph{cluster} them by visual similarity.
+Finally, the resulting media item clusters are \emph{ranked}
+according to well-defined ranking criteria.
+In this paper, we treat the challenge of presenting
+ranked media item clusters in a~way
+such that the ranking-implied order is respected.
+Previously, we have defined~\cite{steiner2012definingaesthetic}
+aesthetic principles for automatic media gallery layout,
+which we will apply to two different media gallery types.
+
+\section{Media Gallery Styles}
+
+Media galleries---in contrast to free-form media collages---%
+necessarily display media items in a~grid-like manner.
+The crucial question is thus, whether the media items' aspect ratios
+should be respected, or whether they should be cropped to square,
+or other aspect ratios (\emph{e.g.}, 4:3 or 16:9).
+Respecting the aspect ratio has the obvious advantage that the media items
+do not need to be modified, however, makes the creation of a~media gallery
+that does not look ragged or frayed harder.
+
+\subsection{Strict Order, Equal Size}
+
+\subsection{Loose Order, Varying Size}
+
+\section{Discussion}
+
+\section{Evaluation}
+
+Evaluating subjective data, like \emph{the} correct presentation form
+for a~set of media items, is a~challenging task.
+For different users, there may be different optimal settings.
+A~common subjective evaluation technique
+is the Mean~Opinion Score (MOS,~\cite{itu1998mos}).
+Traditionally, MOS is used for conducting subjective evaluations
+of telephony network transmission quality,
+however, recently MOS has also found
+wider usage in the multimedia community
+for evaluating \emph{per se} subjective things
+like perceived quality from a~user perspective. 
+Therefore, a~set of standard subjective tests are conducted,
+where a~number of users rate the quality of test samples
+with scores ranging from 1 (worst) to 5 (best).
+The actual MOS is then the arithmetic mean of all individual scores.
+
+\section{Conclusions and Future Work}
+
+\begin{figure*}[t!]
+  \centering
+  \subfloat[Strict order, equal size]{
+    \includegraphics[height=5cm]{equal-size.png}
+    \label{fig:a}
+  }                
+  \subfloat[Loose order, varying size (cropped)]{
+    \includegraphics[height=5cm]{different-size.png}
+    \label{fig:b}
+  }
+  \caption{Two different kinds of media galleries visualizing a~gathering at Times Square, New York on February 8, 2013}
+  \label{fig:m}  
+\end{figure*}
+
 
 
 \bibliographystyle{abbrv}
