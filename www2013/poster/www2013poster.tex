@@ -108,7 +108,7 @@ Christopher Chedeau\\
 We have developed an application for the automatic generation of
 media galleries that visually and audibly summarize events
 based on media items like videos and photos from multiple social networks.
-We have evaluated different media gallery styles with online surveys 
+Further, we have evaluated different media gallery styles with online surveys 
 and examined their pros and cons.
 Besides the survey results, our contribution is also the application itself,
 where media galleries of different styles can be created on-the-fly.
@@ -128,7 +128,7 @@ A~demo is available at
 \section{Introduction}
 \label{sec:introduction}
 
-Media galleries (see \autoref{fig:media-gallery} for two examples)
+Media galleries (see \autoref{fig:media-gallery} for four examples)
 help users consume larger, however not overwhelmingly huge,
 amounts of media items in an ideally pleasing and aesthetic way.
 These media items may, or, more commonly, may not be ordered,
@@ -147,7 +147,7 @@ ranked media item clusters in media galleries in ways
 such that the ranking-implied order is respected.
 Previously, we have defined~\cite{steiner2012definingaesthetic}
 aesthetic principles for automatic media gallery layout,
-which we now apply to different media gallery types.
+which we now apply to different media gallery styles.
 
 \section{Media Gallery Styles}
 
@@ -177,7 +177,7 @@ An interesting technique for arranging media items is dividing.
 Every media item with an aspect ratio of $ \sqrt2 $ can be divided
 into two media items with the same aspect ratio.%
 \footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox-android.html},
-accessed 02/22/2013}
+as~of 02/22/2013}
 This works for portrait and landscape orientations,
 however, is not order-respecting.
 Two other non-order-respecting techniques are working
@@ -185,47 +185,55 @@ with pre-defined placeholder patterns
 (small and big squares, portrait and landscape rectangles)
 and then filling the placeholder shapes with media items,%
 \footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-500px.html},
-accessed 02/22/2013}
+as~of 02/22/2013}
 or working with columns of pre-defined widths
 and then iteratively inserting in the smallest column.%
 \footnote{\url{http://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html},
-accessed 02/22/2013}
+as~of 02/22/2013}
 As outlined in \autoref{sec:introduction},
 we need (loosely) order-respecting media galleries.
 
-\subsection{Strict Order, Equal Size}
+\subsection{Strict Order, Equal Size (SOES)}
 
 A~media gallery style that we call \emph{Strict Order, Equal Size (SOES)},
 which strictly respects the ranking-implied order is presented in~%
 \cite{chedeau2012googleplus}.
-An example can be seen in \autoref{fig:a}.
-The algorithm works by resizing all media items in a~row to have the same height
+Examples can be seen in \autoref{fig:a} and \autoref{fig:c}.
+The algorithm works by resizing all media items in a~row to the same height
 and adjusting the widths so that the aspect ratios are maintained.
 A~row is filled until a~maximum row height is reached,
-then a~new row (with a~typically different height) starts, \emph{etc.}
+then a~new row (with potentially different height) starts, \emph{etc.}
 This media gallery style is order-respecting, hole-free,
-and can be easily balanced by adjusting the number
+and can be balanced by adjusting the number
 of media items in $+1$ steps.
 
 \begin{figure*}[t!]
   \centering
-  \subfloat[Strict order, equal size]{
-    \includegraphics[height=4.5cm]{equal-size.png}
+  \subfloat[\emph{SOES}, Survey~A]{
+    \includegraphics[height=3.1cm]{equal-size.png}
     \label{fig:a}
   }                
-  \subfloat[Loose order, varying size (cropped)]{
-    \includegraphics[height=4.5cm]{different-size.png}
+  \subfloat[\emph{LOVS}, Survey~A]{
+    \includegraphics[height=3.1cm]{different-size.png}
     \label{fig:b}
+  }
+  \subfloat[\emph{SOES}, Survey~B]{
+    \includegraphics[height=3.1cm]{timessquare_2.png}
+    \label{fig:c}
+  }                
+  \subfloat[\emph{LOVS}, Survey~B]{
+    \includegraphics[height=3.1cm]{timessquare_1.png}
+    \label{fig:d}
   }
   \caption{Two different kinds of media galleries visualizing a~gathering at Times Square, New York on February 8, 2013}
   \label{fig:media-gallery}  
 \end{figure*}
 
-\subsection{Loose Order, Varying Size}
+\subsection{Loose Order, Varying Size (LOVS)}
 
-An example of a~media gallery style
+Examples of a~media gallery style
 that we call \emph{Loose Order, Varying Size (LOVS)}
-can be seen in \autoref{fig:b},
+can be seen in \autoref{fig:b} and \autoref{fig:d},
 with the details explained in~\cite{chedeau2012facebook}.
 The algorithm works by cropping all images to a~square aspect ratio,
 which allows organizing media items such that one big square
@@ -253,41 +261,70 @@ albeit we aim at a~fully automatized solution.
 
 \section{Preliminary Evaluation}
 
-Evaluating subjective data, like \emph{the} correct presentation form
-for a~set of media items, is a~challenging task.
+Evaluating subjective data like \emph{the} correct presentation form
+for a~set of media items is a~challenging task.
 For different users there may be different optimal settings.
 A~common subjective evaluation technique
-is the Mean~Opinion Score (MOS,~\cite{itu1998mos}),
+is the Mean~Opinion Score (MOS),
 used for decades in telephony networks to
-obtain the human user's view of the quality of a~network.
+obtain the human user's view of the quality of a~network.%
+\footnote{\url{http://www.itu.int/rec/T-REC-P.800-199608-I/en},
+as~of 02/21/2013}
 Recently, MOS has also found wider usage in the multimedia community.
 Therefore, a~set of standard subjective tests are conducted,
 where users rate the perceived quality of test samples
 with scores from 1 (worst) to 5 (best).
-The actual MOS is the arithmetic mean of all individual scores.
+The actual MOS is then the arithmetic mean of all individual scores.
 
 We have conducted two types of surveys. 
-One via multiple social networks, where we simply asked people to ``Like''
-and/or comment on their favorite type of media gallery,
-and one via email to a~company-internal ``miscellaneous'' mailing list,
+Survey~A via multiple social networks, where we simply asked people to ``Like''
+and/or comment on their favorite style of media gallery,
+and Survey~B via email to a~company-internal ``miscellaneous'' mailing list,
 where we asked people to rate media galleries via MOS, with optional comments. 
-For the short surveys on the three social networks Twitter, Facebook,
-and \googleplus, we had overall 16 participants (7~female, 8~male, 1~N/A).
-7 users liked \emph{SOES} more,
-whereas 9 users liked \emph{LOVS} more.
-Interestingly, no user commented on why they liked \emph{SOES} more.
-The users who commented on why they liked \emph{LOVS} more mentioned
-they liked the additional structure and tidyness,
-the fact that some media items are bigger,
-the fact that it is easier to identify individual media items,
-and the fact that important media items get featured.
-For the email survey with full MOS ratings, we equally had 16 participants
-(5~female, 11~male).
+Survey~A and Survey~B used different media items in the media galleries,
+as to have some measure in how far content had an impact.
 
+For Survey~A on the social networks Twitter, Facebook,
+and \googleplus, we had overall 16~participants (7~female, 8~male, 1~unknown).
+7~users liked \emph{SOES} more,
+whereas 9~users liked \emph{LOVS} more.
+Interestingly, no user commented on why they liked \emph{SOES} more.
+Users who commented on why they liked \emph{LOVS} more mentioned
+they liked the additional structure and tidiness,
+the fact that some media items were bigger,
+the fact that it was easier to identify individual media items,
+and the fact that important media items got featured.
+
+For Survey~B via email with full MOS ratings,
+we had 19~participants (6~female, 13~male).
+The majority of users who liked \emph{LOVS} more
+mentioned that the different sizes
+gave the eye focal points and orientation,
+whereas one user explicitly disliked the guidance.
+Users liked the harmony and the structure.
+Two users mentioned the small media items were proportionally too small.
+Users felt overloaded by \emph{SOES} and did not know where to start.
+Some users said the layout was boring and that
+while they liked the outer framing,
+they were confused by the missing inner grid.
+The MOS for \emph{SOES} was $2.39$ (variance $0.68$),
+the MOS for \emph{LOVS} was $4.17$ (variance $0.47$).
+The data of Survey~B is available.%
+\footnote{\url{http://bit.ly/media-gallery-survey},
+as~of 02/22/2013}
 
 \section{Conclusions and Future Work}
 
-\bibliographystyle{abbrv}
-\bibliography{www2013poster}
+We have created an application that auto-generates 
+two styles of media galleries, \emph{SOES} and \emph{LOVS},
+and evaluated users' perceived quality with two surveys. 
+Albeit the data is not significant, the trend is that users
+seem to prefer \emph{LOVS}.
+Future work will focus on evaluating further media gallery styles.
+Concluding, we have learned that eyes need focal points
+to spot the needles in the media gallery haystack.
+
+\footnotesize{\bibliographystyle{abbrv}
+\bibliography{www2013poster}}
 
 \end{document}
