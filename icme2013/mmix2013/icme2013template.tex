@@ -7,12 +7,29 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{subfig}
+
 % autoref command
 \usepackage[hyphens]{url}
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Subsection}
 \def\subfigureautorefname{Subfigure}
+
+% listings and Verbatim environment
+\usepackage{fancyvrb}
+\usepackage{relsize}
+\usepackage{listings}
+\usepackage{verbatim}
+\newcommand{\defaultlistingsize}{\fontsize{8pt}{9.5pt}}
+\newcommand{\inlinelistingsize}{\fontsize{8pt}{11pt}}
+\newcommand{\smalllistingsize}{\fontsize{7.5pt}{9.5pt}}
+\newcommand{\listingsize}{\defaultlistingsize}
+\RecustomVerbatimCommand{\Verb}{Verb}{fontsize=\inlinelistingsize}
+\RecustomVerbatimEnvironment{Verbatim}{Verbatim}{fontsize=\defaultlistingsize}
+\lstset{frame=lines,captionpos=b,numberbychapter=false,escapechar=§,
+        aboveskip=2em,belowskip=1em,abovecaptionskip=0.5em,belowcaptionskip=0.5em,
+        framexbottommargin=-1em,basicstyle=\ttfamily\listingsize\selectfont}
 
 \pagestyle{empty}
 
@@ -162,6 +179,42 @@ to digital stories.
 
 \section{Media Item Deduplication Algorithm}
 \label{sec:media-item-deduplication-algorithm}
+
+Our near-duplicate media item clustering algorithm belongs to the family of
+tile-wise histogram-based clustering algorithms.
+As an additional semantic feature, the algorithm considers detected faces.
+For two media items to be clustered,
+the following conditions have to be fulfilled.
+
+\begin{enumerate}
+  \item Out of $m$ tiles of a~media item with $n$ tiles ($m \leq n$),
+    at most $\textit{tiles\_threshold}$ tiles may differ not more than $\textit{similarity\_threshold}$
+    from their counterpart~tiles.
+  \item The numbers $f_1$ and $f_2$ of detected faces in both media items
+    have to be the same.
+    We note that we do not \emph{recognize} faces, but only \emph{detect} them.
+\end{enumerate}
+
+In order to illustrate the way the algorithm deduplicates media items,
+\autoref{fig:algorithmdebug} shows a~debug view of the algorithm
+for the two clustered media items related to the 
+\emph{Backstreet Boys} music video.
+Independent from the actual media item's aspect ratio,
+the tile-wise comparison always happens based on a~potentially squeezed
+square aspect ratio version.
+
+\begin{figure}[b!]
+  \centering
+  \subfloat[From Facebook user]{
+    \includegraphics[width=0.3\linewidth]{debug1.png}
+  }                
+  \subfloat[From Google+ user]{
+    \includegraphics[width=0.3\linewidth]{debug2.png}
+  }
+  \caption{}
+  \label{fig:algorithmdebug}  
+\end{figure}
+
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
