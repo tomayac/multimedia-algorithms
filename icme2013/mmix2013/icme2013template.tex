@@ -38,19 +38,19 @@ We have developed a~tile-wise histogram-based
 media item deduplication and clustering algorithm
 with additional high-level semantic matching criteria.
 In this paper, we investigate whether the addressing scheme
-Media Fragments URI provides a~feasible and practicable way
+Media Fragments  {\sc uri} provides a~feasible and practicable way
 to describe media item differences
 between media items of type photo and/or video.
 \end{abstract}
 %
 \begin{keywords}
-Media Fragments URI, Media Fragments, Media Items, Deduplication, Social Networks
+Media Fragments {\sc uri}, Media Fragments, Media Items, Deduplication, Social Networks
 \end{keywords}
 %
 \section{Introduction}
 \label{sec:introduction}
 
-The \emph{Backstreet Boys}~(BSB) are a~boy band
+The \emph{Backstreet Boys}~({\sc bsb}) are a~boy band
 formed in~1993 in Orlando,~FL
 that has sold over 130~million records worldwide,
 making them the best-selling boy band of all time.
@@ -61,7 +61,7 @@ with their hit song \emph{I~Want It That Way}
 from the album \emph{Millennium}.
 While the spike of their career was in the late 90s,
 even today, people still actively share,%
-\footnote{BSB on social networks: \url{http://bit.ly/backstreet-gplus}
+\footnote{{\sc bsb} on social networks: \url{http://bit.ly/backstreet-gplus}
 and \url{http://bit.ly/backstreet-fb},
 both accessed 03/04/2013}
 publish, and follow the group on \emph{social networks}.
@@ -92,7 +92,7 @@ that in previous work was shown to work effectively for several events.
 
 \begin{figure}[b!]
   \centering
-  \includegraphics[width=0.5\linewidth]{./backstreetboys.png}
+  \includegraphics[width=0.75\linewidth]{./backstreetboys.png}
   \caption{\emph{Near-duplicate} music video \emph{Everybody}
     by the \emph{Backstreet Boys} shared
     independently on Facebook and Google+}
@@ -107,7 +107,7 @@ we noticed that human raters wanted to know \emph{why}%
 \footnote{Tell me why! Ain't nothin' but a mistake?}
 certain media items were clustered as \emph{exact-} or \emph{near-duplicates}.
 In consequence, in this paper, we investigate in how far
-Media Fragments URI~\cite{troncy2012mediafragments}
+Media Fragments {\sc uri}~\cite{troncy2012mediafragments}
 provides a~feasible and practicable way
 to tell raters why media items were clustered.
 As we deal with media items of type photo and/or video,
@@ -118,7 +118,50 @@ the temporal dimension and the spatial dimension.
 \label{sec:paper-structure}
 
 The remainder of this paper is structured as follows.
+In \autoref{sec:related-work}, we report on related work
+on media fragments and digital storytelling.
+In \autoref{sec:media-item-deduplication-algorithm},
+we describe the tile-wise histogram-based
+media item deduplication and clustering algorithm.
 
+
+\section{Related Work}
+\label{sec:related-work}
+
+\noindent \textit{Media Fragments:}
+Media Fragments {\sc uri}~\cite{troncy2012mediafragments} specifies
+the syntax for constructing media fragment {\sc uri}s
+and explains how to handle them
+when used over the {\sc http} protocol~\cite{fielding1999http}.
+The syntax is based on the specification of particular name-value pairs
+that can be used in {\sc uri} fragment and {\sc uri} query requests
+to restrict a~media resource to a~certain fragment.
+Currently supported media fragment {\sc uri}s in the basic version
+cover the temporal and the spatial dimension.
+The temporal dimension denotes a~specific time range in the original media,
+such as ``starting at second 10, continuing until second 20.''
+The spatial dimension denotes a~specific range of pixels in the original media,
+such as ``a~rectangle of size $ 100 \times 100 $
+with its top-left at the coordinates $ (10, 10) $,''
+where combinations of both dimensions are possible.
+
+\noindent \textit{Digital Storytelling:}
+Pizzi and Cavazza report in~\cite{pizzi2008debugging} on the development of
+an authoring technology on top of an interactive storytelling system
+that originated as a~debugging%
+\footnote{Note, Pizzi and Cavazza use the term \emph{debugging} in the non-IT sense:
+to check for redundancy, dead-ends, consistency, \emph{etc.} in authored stories}
+tool for a~planning system.
+Alexander and Levine define in~\cite{alexander2008storytelling}
+the term \emph{Web~2.0 storytelling}, where people create \emph{microcontent}---%
+small chunks of content, with each chunk conveying a primary idea or concept---%
+that gets combined with social media to form coherent stories.
+We use Media Fragments {\sc uri}s to help raters understand
+the results of an algorithm by converting dry software debugging data
+to digital stories.
+
+\section{Media Item Deduplication Algorithm}
+\label{sec:media-item-deduplication-algorithm}
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
