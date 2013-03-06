@@ -207,7 +207,7 @@ Independent of the actual media item's aspect ratio,
 the tile-wise comparison always happens based on a~potentially squeezed
 square aspect ratio version.
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
   \subfloat[From Facebook user]{
     \includegraphics[width=0.3\linewidth]{debug1.png}
@@ -216,7 +216,7 @@ square aspect ratio version.
     \includegraphics[width=0.3\linewidth]{debug2.png}
   }
   \caption{Debug view of the media item deduplication algorithm
-    (as in the concrete case no faces were detected,
+    (as in the concrete case from \autoref{fig:near-duplicate} no faces were detected,
     the match happens solely based on tile similarity)}
   \label{fig:algorithmdebug}  
 \end{figure}
@@ -268,6 +268,21 @@ $ x $ and $ width $ are interpreted as a~percentage
 of the width of the original media item,
 while $ y $ and $ height $ are interpreted as a~percentage
 of the original height.
+
+The intent of the Ontology for Media Resources~\cite{lee2012mediaontology}
+by Lee \emph{et~al.} is to bridge the different descriptions of media resources
+and to provide a~core set of descriptive properties.
+This allows for making statements about media items and fragments thereof.
+An example in RDF Turtle syntax~\cite{prudhommeaux2013turtle}
+is given in \autoref{code:media-fragment}.
+
+\begin{lstlisting}[caption={Media fragment consisting of rectangular tile with dimensions $ 40 \times 30 $ pixels starting at pixel coordinates $ (0, 0) $ for a~10 sec video subsegment of a~given video media item},
+  label=code:media-fragment, float=t!]
+@prefix ma: <http://www.w3.org/ns/ma-ont> .
+
+<vid.ogv> a ma:MediaResource ;
+<vid.ogv#t=,10&xywh=0,0,40,30> a ma:MediaFragment ;
+\end{lstlisting}
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
