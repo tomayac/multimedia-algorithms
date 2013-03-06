@@ -41,7 +41,7 @@
 
 % Title.
 % ------
-\title{Tell me why! Ain't nothin' but a mistake?\\ Describing Media Item Differences with Media Fragments URI}
+\title{Tell me why! Ain't nothin' but a~mistake?\\ Describing Media Item Differences with Media Fragments URI}
 %
 % Single address.
 % ---------------
@@ -122,7 +122,7 @@ that was shown to work effectively and efficiently for several events.
 
 During previous experiments on clustering event-related media items,
 we noticed that human raters wanted to know \emph{why}%
-\footnote{Tell me why! Ain't nothin' but a mistake?}
+\footnote{Tell me why! Ain't nothin' but a~mistake?}
 certain media items were clustered as \emph{exact-} or \emph{near-duplicates}.
 In consequence, in this paper, we investigate in how far
 Media Fragments {\sc uri}~\cite{troncy2012mediafragments}
@@ -173,7 +173,7 @@ to check for redundancy, dead-ends, consistency, \emph{etc.} in authored stories
 tool for a~planning system.
 Alexander and Levine define in~\cite{alexander2008storytelling}
 the term \emph{Web~2.0 storytelling}, where people create \emph{microcontent}---%
-small chunks of content, with each chunk conveying a primary idea or concept---%
+small chunks of content, with each chunk conveying a~primary idea or concept---%
 that gets combined with social media to form coherent stories.
 We use Media Fragments {\sc uri}s to help raters understand
 the results of an algorithm by converting dry software debugging data
@@ -235,10 +235,39 @@ a~media fragment identifier needs to be capable of expressing the following conc
     express that these bounding rectangles are within the dimensions
     of the original media item.
   \item Requirements \textit{i} and \textit{ii} need to be fulfilled for both
-    still media items of type photo and moving media items of type video;
+    types of media items, photos and videos;
     where in case of the latter, video subsegments of any length---%
     including video still frames---need to be supported.
 \end{enumerate}
+
+Media Fragment {\sc uri}~\cite{troncy2012mediafragments} as described in
+the basic version of the specification supports all three requirements.
+The \emph{temporal dimension} is denoted by the parameter name \texttt{t}
+and specified as an interval with a~begin time and an end time.
+Either one or both parameters may be omitted,
+with the begin time defaulting to 0 seconds
+and the end time defaulting to the duration of the source media item.
+The interval is half-open: the begin time is considered part of the interval,
+whereas the end time is considered to be the first time point
+that is not part of the interval.
+If only a~single value is present, it corresponds to the begin time,
+except for when it is preceded by a~comma, which indicates the end time.
+The temporal dimension is specified as Normal Play Time ({\sc npt},~\cite{schulzrinne1998realtime}).
+
+The \emph{spatial dimension} selects an area of pixels from media items.
+In the current version of the specification,
+only rectangular selections are supported.
+Rectangles can be specified as pixel coordinates or percentages.
+Rectangle selection is denoted by the parameter name \texttt{xywh}.
+The value is either \texttt{pixel:} or \texttt{percent:}
+(defaulting to \texttt{pixel:}) and four comma-separated integers.
+The integers denote $ x $, $ y $, $ width $, and $ height $ respectively,
+with $ x = 0 $ and $ y = 0 $ being the top left corner of the media item.
+If \texttt{percent:} is used,
+$ x $ and $ width $ are interpreted as a~percentage
+of the width of the original media item,
+while $ y $ and $ height $ are interpreted as a~percentage
+of the original height.
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
