@@ -160,13 +160,13 @@ There are many online video hosting platforms
 that have some sort of media fragment support.
 In the following, we present two representative ones.
 The video hosting platform YouTube%
-\footnote{\url{http://www.youtube.com/}}
+\footnote{YouTube: \url{http://www.youtube.com/}}
 allows for deep-linking into videos
 via a~proprietary {\sc url} parameter \texttt{t},
 whose value has to match the regular expression
 \texttt{\textbackslash d+m\textbackslash d+s} (for minutes and seconds),
 as documented in~\cite{youtube2008link}.
-Dailymotion\footnote{http://www.dailymotion.com/}
+Dailymotion\footnote{Dailymotion: \url{http://www.dailymotion.com/}}
 has a~similar, albeit undocumented, {\sc url} parameter \texttt{start},
 whose value has to match the regular expression
 \texttt{\textbackslash d+} (for seconds).
@@ -214,6 +214,7 @@ In the context of our research on media item deduplication,
 a~media fragment identifier needs to be capable of expressing the following concepts.
 
 \begin{enumerate}[i]
+  \itemsep0em 
   \item Given a~rectangular media item with the dimensions $ width \times height $,
     express that in turn rectangular tiles
     of smaller dimensions are part of the original media item.
@@ -300,6 +301,7 @@ For two media items to be clustered,
 the following conditions have to be fulfilled.
 
 \begin{description}
+  \itemsep0em 
   \item[Cond.~1] Out of $m$ tiles of a~media item with $n$ tiles ($m \leq n$),
     at most $\textit{tiles\_threshold}$ tiles may differ not more than $\textit{similarity\_threshold}$
     from their counterpart tiles.
@@ -309,7 +311,7 @@ the following conditions have to be fulfilled.
   \item[Cond.~3] If the colors of a~tile and its counterpart tile are within the
   $\textit{bw\_tolerance}$, these tiles are not considered
   and $\textit{tiles\_threshold}$ is decreased accordingly
-  (we speak of \texttt{effective tiles threshold} in
+  (we speak of $\textit{effective\_tiles\_threshold}$ in
   \autoref{sec:debugging-the-algorithm}).
 \end{description}
 
@@ -335,9 +337,9 @@ square aspect ratio version.
     \includegraphics[width=0.3\linewidth]{debug2.png}
   }
   \caption{Debug view of the media item deduplication algorithm
-    (as in the concrete case from \autoref{fig:near-duplicate} no faces were detected,
-    the clustering happens solely based on tile similarity;
-    black tiles are not considered)}
+    (as in the case of \autoref{fig:near-duplicate} no faces were detected,
+    clustering happens based on tile similarity;
+    black tiles not considered)}
   \label{fig:algorithmdebug}  
 \end{figure}
 
@@ -348,6 +350,7 @@ In this section, we consider the following debug scenarios
 that during our previous experiments occurred most frequently.
 
 \begin{description}
+  \itemsep0em 
   \item[Clustering Consent]
     Two or more media items are clustered by the algorithm
     and the human rater agrees.
@@ -388,26 +391,40 @@ and the number of under the present $\textit{bw\_tolerance}$
 not considered tiles, which implies fulfillment of \textbf{Cond.~3}
 and potentially impacts \textbf{Cond.~1}
 in form of the $\textit{effective\_tiles\_threshold}$.
-The exemplary low-level debug output for the media items
-from \autoref{fig:near-duplicate} looks as follows.
+The low-level debug output for the media items
+from \autoref{fig:near-duplicate} and \autoref{fig:algorithmdebug}
+looks as follows.
 
 \begin{verbatim}
-Cond. 1) Similarity threshold: 15
-Cond. 1) Tiles threshold: 67
-Cond. 1) Similar tiles: 53
-Cond. 2) Faces left: 0, faces right: 0
-Cond. 3) BW tolerance: 1
-Cond. 3) Not considered tiles: 23
-Cond. 3) Effective tiles threshold: 44
+  Cond. 1) Similarity threshold: 15
+  Cond. 1) Tiles threshold: 67
+  Cond. 1) Similar tiles: 53
+  Cond. 2) Faces left: 0. Faces right: 0
+  Cond. 3) BW tolerance: 1
+  Cond. 3) Not considered tiles: 23
+  Cond. 3) Effective tiles threshold: 44
 \end{verbatim}
 
 While this low-level debug output is sufficient to respond to the polar question
 (yes--no question) whether media items are clustered or not,
 it does not help with the non-polar \emph{why} question
-(the linguistic term is \emph{wh-question}).
+(the linguistic term is \emph{wh--question}).
 
 \section{From Debug Output to Story}
 \label{sec:from-debug-output-to-story}
+
+In order for human raters to get answers to the wh--question
+on \emph{why} media items are clustered,
+we need to lift the low-level debug output
+to a~high-level natural language story
+for the previously defined debug scenarios
+\textbf{Clustering Consent}, \textbf{Clustering Dissent},
+and \textbf{Non-Clustering Dissent}.
+
+We use the eSpeak~\cite{duddington2012espeak}
+speech synthesizer developed by Jonathan Duddington
+in a~JavaScript port made available by Alon Zakai.%
+\footnote{Speak.js: \url{https://github.com/kripken/speak.js}}
 
 \section{Evaluation}
 \label{sec:evaluation}
