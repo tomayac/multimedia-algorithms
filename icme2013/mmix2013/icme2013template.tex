@@ -272,16 +272,31 @@ of the original height.
 The intent of the Ontology for Media Resources~\cite{lee2012mediaontology}
 by Lee \emph{et~al.} is to bridge the different descriptions of media resources
 and to provide a~core set of descriptive properties.
-This allows for making statements about media items and fragments thereof.
+Combined with Media Fragments {\sc uri},
+this allows for making statements about media items and fragments thereof.
 An example in RDF Turtle syntax~\cite{prudhommeaux2013turtle}
 is given in \autoref{code:media-fragment}.
 
-\begin{lstlisting}[caption={Media fragment consisting of rectangular tile with dimensions $ 40 \times 30 $ pixels starting at pixel coordinates $ (0, 0) $ for a~10 sec video subsegment of a~given video media item},
+\begin{lstlisting}[caption={Description of two 10~sec long media fragments:
+  \textit{(i)}~a~tile of dimensions $ 30 \times 40 $ pixels
+  starting at pixel coordinates $ (0, 0) $
+  that contains a~face; and
+  \textit{(ii)}~a~tile of dimensions $ 10 \times 10 $ pixels
+  starting at pixel coordinates $ (0, 0) $ of red color},
   label=code:media-fragment, float=t!]
+@base <http://example.org/> .
 @prefix ma: <http://www.w3.org/ns/ma-ont> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix db: <http://dbpedia.org/resource/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix col: <http://purl.org/colors/rgb/> .
 
-<vid.ogv> a ma:MediaResource ;
-<vid.ogv#t=,10&xywh=0,0,40,30> a ma:MediaFragment ;
+<video>                      a ma:MediaResource .
+
+<video#t=,10&xywh=0,0,30,40> a ma:MediaFragment ;
+                             foaf:depicts db:Face .
+                             
+<video#t=,10&xywh=0,0,10,10> dbo:colour col:f00 .
 \end{lstlisting}
 
 % References should be produced using the bibtex program from suitable
