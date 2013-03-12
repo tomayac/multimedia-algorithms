@@ -57,7 +57,7 @@ media item deduplication and clustering algorithm
 with additional high-level semantic matching criteria
 that is tailored to photos and videos stemming from multiple social networks.
 In this paper, we investigate whether the addressing scheme
-Media Fragments  {\sc uri} provides a~feasible and practicable way
+Media Fragments {\sc uri} provides a~feasible and practicable way
 to vividly and graphically describe media item differences
 between media items of type photo and/or video.
 \end{abstract}
@@ -110,7 +110,8 @@ that was shown to work effectively and efficiently for several events.
 
 \begin{figure}[b!]
   \centering
-  \includegraphics[width=0.796\linewidth]{./backstreetboys.png}
+  \includegraphics[width=1\linewidth]{./backstreetboys.png}
+  %\includegraphics[width=0.796\linewidth]{./backstreetboys.png}  
   \caption{\emph{Near-duplicate} music video \emph{Everybody}
     by the \emph{Backstreet Boys} shared
     independently on Facebook and Google+}
@@ -137,7 +138,7 @@ the temporal dimension and the spatial dimension.
 
 The remainder of this paper is structured as follows.
 In \autoref{sec:related-work}, we report on related work
-on media fragments and digital storytelling.
+on media fragments, digital storytelling, and natural language generation.
 In \autoref{sec:media-fragment-requirements}, we describe
 our requirements on media fragments identifiers.
 In \autoref{sec:media-item-deduplication-algorithm},
@@ -172,7 +173,7 @@ whose value has to match the regular expression
 \texttt{\textbackslash d+} (for seconds).
 The {\sc css} Backgrounds and Borders Module Level~3 specification~\cite{bos2012css3}
 defines the \texttt{background-size} property
-that, combined with a wrapping element,
+that---combined with a wrapping element---%
 can be used to crop media items visually
 and thus create the illusion of a~spatial media fragment.
 Media Fragments {\sc uri}~\cite{troncy2012mediafragments} specifies
@@ -182,7 +183,7 @@ when used over the {\sc http} protocol~\cite{fielding1999http}.
 The syntax is based on the specification of particular name-value pairs
 that can be used in {\sc uri} query strings and {\sc uri} fragment identifiers
 to restrict a~media resource to a~certain fragment.
-Currently supported media fragments {\sc uri}s in the basic version
+Currently supported Media Fragments {\sc uri}s in the basic version
 cover the temporal and the spatial dimension.
 The temporal dimension denotes a~specific time range in the original media,
 such as ``starting at second 10, ending at second 20.''
@@ -190,7 +191,7 @@ The spatial dimension denotes a~specific range of pixels in the original media,
 such as ``a~rectangle of size $ 100 \times 100 $ pixels
 with its top-left at the pixel coordinates $ (10, 10) $.''
 Combinations of both dimensions are possible,
-as well as combining media fragments {\sc uri} query strings
+as well as combining Media Fragments {\sc uri} query strings
 and {\sc uri} fragment identifiers.
 
 \noindent \textit{Digital Storytelling:}
@@ -207,6 +208,19 @@ that gets combined with social media to form coherent stories.
 We use Media Fragments {\sc uri}s to help raters understand
 the results of an algorithm by converting dry software debugging data
 to digital stories.
+
+\noindent \textit{Natural Language Generation:}
+Natural language generation is the natural language processing task
+of generating natural language from a~machine representation system.
+The field is covered in great detail
+by Reiter and Dale in~\cite{reiter2000building}.
+They divide the task into three stages:
+document planning, microplanning, and realization.
+\emph{Document planning} determines the content and structure of a~document.
+\emph{Microplanning} decides which words, syntactic structures, \emph{etc.}
+will be used to communicate the chosen content and structure.
+\emph{Realization} maps the abstract representations
+used by microplanning into actual text.
 
 \section{Media Fragments Requirements}
 \label{sec:media-fragment-requirements}
@@ -461,7 +475,7 @@ made available by Thomas Steiner.%
 \footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}
 In Web development, a~polyfill is downloadable code
 that provides facilities that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
-Steiner's polyfill---in contrast to a~different spatial Media Fragments {\sc uri}
+Steiner's polyfill---in contrast to an additional spatial Media Fragments {\sc uri}
 polyfill implementation by Weinberg~\cite{weinberg2013polyfill}---%
 supports more browsers and both image \emph{and} video.
 
