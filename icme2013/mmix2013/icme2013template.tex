@@ -461,16 +461,38 @@ whose three stages according to Reiter's and Dale's architecture~%
 \subsubsection{Document Planning}
 
 In our context, the document is a~set of low-level debug data 
-as illustrated in \autoref{sec:low-level-debug-output}.
+as illustrated in \autoref{sec:low-level-debug-output},
+so the natural language generation task is manageable.
+We need to convey the currently selected $\textit{tiles\_threshold}$
+and $\textit{similarity\_threshold}$,
+the number of detected faces $f_1$ and $f_2$ in each media item,
+and the number of under the present $\textit{bw\_tolerance}$
+not considered tiles.
 
 \subsubsection{Microplanning}
 
 The microplanning task is driven by the previously described debug scenarios.
-
+Initially, we need to decide on a~matching condition aspect
+that is to be highlighted first,
+which is overall tiles statistics.
+Afterwards, we need to elaborate on secondary matching conditions
+like detected faces and black--and--white tolerance.
+The grammatical number (plural or singular) needs to be taken into account
+when statements about tile(s) or face(s) are made.
+Exactness and approximation of calculated values needs to be expressed.
+Finally, judgements in appositions have to be carefully balanced.
 
 \subsubsection{Realization}
 
-\begin{quotation}
+In the following quotes, we show some examples of actual generated texts
+for different debug scenarios. 
+The running example of the \emph{Backstreet Boys}
+music video \emph{Everybody} media items
+is the first example below.
+
+\noindent \textbf{Clustering Consent}
+
+\begin{quote}
   \textit{``The two media items are near-duplicates.
   Out of overall 100 tiles, 52 from the minimum required 45 tiles
   were similar enough to be clustered.
@@ -479,7 +501,47 @@ The microplanning task is driven by the previously described debug scenarios.
   as they are either too bright or too dark,
   which is a common source of clustering issues.
   Neither the left, nor the right media item contain detected faces.''}
-\end{quotation}
+\end{quote}
+
+\begin{quote}
+  \textit{``The two media items are exact duplicates.
+  Out of overall 100 tiles, 100 from the minimum required 67 tiles
+  were similar enough to be clustered.
+  This corresponds to 100 percent of all tiles.
+  Neither the left, nor the right media item contain detected faces.''}
+\end{quote}
+
+\noindent \textbf{Clustering Dissent}
+
+\begin{quote}
+  \textit{``The two media items are near-duplicates.
+  Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
+  enough to be clustered.
+  This corresponds to 41 percent of all tiles.
+  However, 26 tiles were not considered, as they are either too bright
+  or too dark, which is a common source of clustering issues.
+  Neither the left, nor the right media item contain detected faces.''}
+\end{quote}
+
+\noindent \textbf{Non-Clustering Dissent}
+
+\begin{quote}
+  \textit{``The two media items are different.
+  Out of overall 100 tiles, only 8 from the minimum required 67 tiles
+  were similar enough to be clustered.
+  This corresponds to 8 percent of all tiles.
+  The left media item contains 2 detected faces,
+  while the right media item contains 1 detected face.''}
+\end{quote}
+
+\noindent \textbf{(Non-Clustering Consent)}
+
+\begin{quote}
+  \textit{``The two media items are different.
+  Out of overall 100 tiles, not a single one was similar enough
+  to be clustered.
+  Neither the left, nor the right media item contain detected faces.''}
+\end{quote}
 
 \subsection{Technical Implementation}
 
@@ -518,6 +580,41 @@ supports more browsers and both image \emph{and} video.
 
 \section{Evaluation}
 \label{sec:evaluation}
+
+For the evaluation of natural language generating systems,
+there are three basic techniques.
+First, the \emph{task-based} or \emph{extrinsic} evaluation,
+where the generated text is given to a~person
+who evaluates how well it helps with performing a~given task
+(\emph{e.g.},~\cite{portet2009nlg}).
+Second, there are \emph{automatic metrics}
+(\emph{e.g.}, BLEU~\cite{papineni2002bleu}),
+where the generated text is compared to texts written by people
+based on the same input data.
+Finally, there are \emph{human ratings}, where the generated text
+is given to a~person who is asked to rate
+the quality and usefulness of the text.
+
+For our evaluation, we chose the third approach of human ratings,
+as we do not evaluate the natural language generating system in isolation,
+but in combination with a~visual representation
+that makes use of spatial Media Fragments {\sc uri}s,
+as can be seen in \autoref{fig:similar-different}.
+Evaluating subjective data like the quality and usefulness 
+of an auto-generated textual, visual, and audial description
+of the results of a~deduplication algorithm
+is a~challenging task.
+For different users, there may be different emphases.
+A~common subjective evaluation technique
+is the Mean~Opinion Score~(MOS,~\cite{itu1998mos}),
+used for decades in telephony networks to
+obtain the human user's view of the quality of a~network.
+Recently, MOS has also found wider usage in the multimedia community.
+Therefore, a~set of standard subjective tests are conducted,
+where users rate the perceived quality of test samples
+with scores from 1 (worst) to 5 (best).
+The actual MOS is then the arithmetic mean of all individual scores.
+
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions-and-future-work}
