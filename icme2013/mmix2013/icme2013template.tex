@@ -71,7 +71,7 @@ Media Fragments {\sc uri}, Media Fragments, Media Items, Deduplication, Social N
 
 The \emph{Backstreet Boys}~({\sc bsb}) are a~boy band
 formed in~1993 in Orlando,~FL
-that has sold over 130~million records worldwide,
+that have sold over 130~million records worldwide,
 making them the best-selling boy band of all time.
 In~2013, the band will celebrate their 20\ts{th}~anniversary
 with a~new album and a~world tour.
@@ -79,7 +79,7 @@ Reason enough for us to make them titular saint of this paper
 with their hit song \emph{I~Want It That Way}
 from the album \emph{Millennium}.
 While the spike of their career was in the late 90s,
-even today, people still actively share,%
+even today people still actively share,%
 \footnote{{\sc bsb} on social networks: \url{http://bit.ly/backstreet-gplus}
 and \url{http://bit.ly/backstreet-fb},
 both accessed 03/04/2013}
@@ -110,7 +110,7 @@ that was shown to work effectively and efficiently for several events.
 
 \begin{figure}[b!]
   \centering
-  \includegraphics[width=0.75\linewidth]{./backstreetboys.png}
+  \includegraphics[width=0.796\linewidth]{./backstreetboys.png}
   \caption{\emph{Near-duplicate} music video \emph{Everybody}
     by the \emph{Backstreet Boys} shared
     independently on Facebook and Google+}
@@ -120,7 +120,7 @@ that was shown to work effectively and efficiently for several events.
 \subsection{Motivation and Research Question}
 \label{sec:motivation-and-research-question}
 
-During previous experiments on clustering event-related media items,
+During previous experiments on deduplicating event-related media items,
 we noticed that human raters wanted to know \emph{why}%
 \footnote{Tell me why! Ain't nothin' but a~mistake?}
 certain media items were clustered as \emph{exact-} or \emph{near-duplicates}.
@@ -129,7 +129,7 @@ Media Fragments {\sc uri}~\cite{troncy2012mediafragments}
 provides a~feasible and practicable way
 to tell raters why media items were clustered.
 As we deal with media items of type photo and/or video,
-we make simultaneous use of two types of media fragment dimensions,
+we make simultaneous use of two types of media fragments dimensions,
 the temporal dimension and the spatial dimension.
 
 \subsection{Paper Structure}
@@ -139,7 +139,7 @@ The remainder of this paper is structured as follows.
 In \autoref{sec:related-work}, we report on related work
 on media fragments and digital storytelling.
 In \autoref{sec:media-fragment-requirements}, we describe
-our requirements on media fragment identifiers.
+our requirements on media fragments identifiers.
 In \autoref{sec:media-item-deduplication-algorithm},
 we detail how the media item deduplication algorithm works
 and show low-level debugging approaches to check
@@ -157,7 +157,7 @@ and give an outlook on future work.
 
 \noindent \textit{Media Fragments:}
 There are many online video hosting platforms
-that have some sort of media fragment support.
+that have some sort of media fragments support.
 In the following, we present two representative ones.
 The video hosting platform YouTube%
 \footnote{YouTube: \url{http://www.youtube.com/}}
@@ -176,21 +176,22 @@ that, combined with a wrapping element,
 can be used to crop media items visually
 and thus create the illusion of a~spatial media fragment.
 Media Fragments {\sc uri}~\cite{troncy2012mediafragments} specifies
-a~syntax for constructing media fragment {\sc uri}s
+a~syntax for constructing media fragments {\sc uri}s
 and explains how to handle them
 when used over the {\sc http} protocol~\cite{fielding1999http}.
 The syntax is based on the specification of particular name-value pairs
-that can be used in {\sc uri} fragment and {\sc uri} query requests
+that can be used in {\sc uri} query strings and {\sc uri} fragment identifiers
 to restrict a~media resource to a~certain fragment.
-Currently supported media fragment {\sc uri}s in the basic version
+Currently supported media fragments {\sc uri}s in the basic version
 cover the temporal and the spatial dimension.
 The temporal dimension denotes a~specific time range in the original media,
-such as ``starting at second 10, continuing until second 20.''
+such as ``starting at second 10, ending at second 20.''
 The spatial dimension denotes a~specific range of pixels in the original media,
-such as ``a~rectangle of size $ 100 \times 100 $
-with its top-left at the coordinates $ (10, 10) $.''
+such as ``a~rectangle of size $ 100 \times 100 $ pixels
+with its top-left at the pixel coordinates $ (10, 10) $.''
 Combinations of both dimensions are possible,
-as is combining {\sc uri} fragment and query requests.
+as well as combining media fragments {\sc uri} query strings
+and {\sc uri} fragment identifiers.
 
 \noindent \textit{Digital Storytelling:}
 Pizzi and Cavazza report in~\cite{pizzi2008debugging} on the development of
@@ -207,11 +208,11 @@ We use Media Fragments {\sc uri}s to help raters understand
 the results of an algorithm by converting dry software debugging data
 to digital stories.
 
-\section{Media Fragment Requirements}
+\section{Media Fragments Requirements}
 \label{sec:media-fragment-requirements}
 
-In the context of our research on media item deduplication,
-a~media fragment identifier needs to be capable of expressing the following concepts.
+In the context of our research on media item deduplication and clustering,
+media fragments identifiers need to be capable of expressing the following concepts.
 
 \begin{enumerate}[i]
   \itemsep0em 
@@ -220,14 +221,14 @@ a~media fragment identifier needs to be capable of expressing the following conc
     of smaller dimensions are part of the original media item.
   \item Given detected faces at the granularity level of bounding rectangles,
     express that these bounding rectangles are within the dimensions
-    of the original media item.
+    of the original media item and that each bounding rectangle contains a~face.
   \item Requirements \textit{i} and \textit{ii} need to be fulfilled for both
     types of media items, photos and videos;
     where in case of the latter, video subsegments of any length---%
     including video still frames---need to be supported.
 \end{enumerate}
 
-Media Fragment {\sc uri}~\cite{troncy2012mediafragments} as described in
+Media Fragments {\sc uri}~\cite{troncy2012mediafragments} as described in
 the basic version of the specification supports all three requirements.
 The \emph{temporal dimension} is denoted by the parameter name \texttt{t}
 and specified as an interval with a~begin time and an end time.
@@ -257,7 +258,7 @@ while $ y $ and $ height $ are interpreted as a~percentage
 of the original height.
 
 The intent of the Ontology for Media Resources~\cite{lee2012mediaontology}
-by Lee \emph{et~al.} is to bridge the different descriptions of media resources
+by Lee \emph{et~al.} is to bridge different description methods of media resources
 and to provide a~core set of descriptive properties.
 Combined with Media Fragments {\sc uri},
 this allows for making statements about media items and fragments thereof.
@@ -270,7 +271,7 @@ is given in \autoref{code:media-fragment}.
   that contains a~face; and
   \textit{(ii)}~a~tile of dimensions $ 10 \times 10 $ pixels
   starting at pixel coordinates $ (0, 0) $ of red color},
-  label=code:media-fragment, float=b!]
+  label=code:media-fragment, float=t!]
 @base <http://example.org/> .
 @prefix ma: <http://www.w3.org/ns/ma-ont> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -292,34 +293,40 @@ is given in \autoref{code:media-fragment}.
 
 \subsection{Algorithm Description}
 
-Our near-duplicate media item clustering algorithm belongs to the family of
-tile-wise histogram-based clustering algorithms.
+In order for the reader to follow the arguments in the rest of this paper,
+an at least basic understanding of the deduplication and clustering algorithm
+and its matching conditions is required, which we briefly provide in this section.
+The deduplication algorithm described in this paper
+belongs to the family of tile-wise histogram-based clustering algorithms.
 As an additional semantic feature, the algorithm considers detected faces.
-It is capable of deduplicating both media items of type video and photo.
+It is capable of deduplicating media items of type video and/or photo.
 In the case of video, frames at camera shot boundaries are used. % insert citation
+A~camera shot in video production and filmmaking
+is a~series of frames that runs for an uninterrupted period of time.
 For two media items to be clustered,
-the following conditions have to be fulfilled.
+the following three clustering conditions have to be fulfilled.
 
 \begin{description}
   \itemsep0em 
   \item[Cond.~1] Out of $m$ tiles of a~media item with $n$ tiles ($m \leq n$),
-    at most $\textit{tiles\_threshold}$ tiles may differ not more than $\textit{similarity\_threshold}$
-    from their counterpart tiles.
+    the average color of at most $\textit{tiles\_threshold}$ tiles may differ
+    not more than $\textit{similarity\_threshold}$ from their counterpart tiles.
   \item[Cond.~2] The numbers $f_1$ and $f_2$ of detected faces in both media items
     have to be the same.
-    We note that we do not \emph{recognize} faces, but only \emph{detect} them.
-  \item[Cond.~3] If the colors of a~tile and its counterpart tile are within the
-  $\textit{bw\_tolerance}$, these tiles are not considered
-  and $\textit{tiles\_threshold}$ is decreased accordingly
-  (we speak of $\textit{effective\_tiles\_threshold}$ in
-  \autoref{sec:debugging-the-algorithm}).
+    We note that the algorithm does not \emph{recognize} faces,
+    but only \emph{detects} them.
+  \item[Cond.~3] If the average colors of a~tile and its counterpart tile
+    are within the black--and--white tolerance $\textit{bw\_tolerance}$,
+    these tiles are not considered and $\textit{tiles\_threshold}$
+    is decreased accordingly (we speak of $\textit{effective\_tiles\_threshold}$
+    in \autoref{sec:debugging-the-algorithm}).
 \end{description}
 
-The $\textit{bw\_tolerance}$ avoids media items to be clustered
-when the particular tiles are too dark
+The black--and--white tolerance $\textit{bw\_tolerance}$
+avoids media items to be clustered when the particular tiles are too dark
 (\emph{e.g.}, for the video borders in \autoref{fig:near-duplicate})
 or too bright (\emph{e.g.}, for screenshots of Web pages or applications,
-which frequently occur on social networks).
+which frequently appear on social networks).
 In order to illustrate the way the algorithm deduplicates media items,
 \autoref{fig:algorithmdebug} shows a~debug view of the algorithm
 for the two clustered media items related to the previous example around the
@@ -328,26 +335,30 @@ Independent of the actual media item's aspect ratio,
 the tile-wise comparison always happens based on a~potentially squeezed
 square aspect ratio version.
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
   \subfloat[From Facebook user]{
-    \includegraphics[width=0.3\linewidth]{debug1.png}
+    \includegraphics[width=0.35\linewidth]{debug1.png}
   }                
   \subfloat[From Google+ user]{
-    \includegraphics[width=0.3\linewidth]{debug2.png}
+    \includegraphics[width=0.35\linewidth]{debug2.png}
   }
   \caption{Debug view of the media item deduplication algorithm
     (as in the case of \autoref{fig:near-duplicate} no faces were detected,
-    clustering happens based on tile similarity;
-    black tiles not considered)}
+    the clustering happens based on tile similarity;
+    black tiles were not considered due to the chosen black--and--white tolerance)}
   \label{fig:algorithmdebug}  
 \end{figure}
 
 \subsection{Debugging the Algorithm}
 \label{sec:debugging-the-algorithm}
 
-In this section, we consider the following debug scenarios
-that during our previous experiments occurred most frequently.
+In this section, we consider the following three debug scenarios
+that during our previous experiments with human raters
+occurred most frequently, \emph{i.e.}, situations,
+where given a~set of deduplicated and clustered media items,
+the human raters wanted to understand the specific details
+of decisions taken by the algorithm that they were unsure about.
 
 \begin{description}
   \itemsep0em 
@@ -376,39 +387,44 @@ too high or too low (\textbf{Cond.~1})?
 Are the number of detected faces $f_1$ and $f_2$ the same?
 Are all faces correctly detected,
 or should the face matching condition be temporarily disregarded,
-\emph{e.g.}, with too tiny media items  (\textbf{Cond.~2})?
+\emph{e.g.}, with too tiny media items,
+where faces fail to be detected (\textbf{Cond.~2})?
 If the compared media items have very dark and/or very bright parts,
 is the $\textit{bw\_tolerance}$ too high or too low (\textbf{Cond.~3})?
 
-Consequently, the low-level debug output must include
+\subsection{Low-Level Debug Output}
+As a~consequence of the previous subsection,
+the low-level debug output must include
 the currently selected $\textit{tiles\_threshold}$ and
-$\textit{similarity\_threshold}$
-and how many tiles with these settings currently fulfill \textbf{Cond.~1}.
+$\textit{similarity\_threshold}$ and how many tiles
+with the present algorithm settings currently fulfill \textbf{Cond.~1}.
 In addition to that, the debug output has to contain
 the number of detected faces $f_1$ and $f_2$
 in each media item, \emph{i.e.}, whether \textbf{Cond.~2} is fulfilled,
-and the number of under the present $\textit{bw\_tolerance}$
+as well as the number of under the present $\textit{bw\_tolerance}$
 not considered tiles, which implies fulfillment of \textbf{Cond.~3}
 and potentially impacts \textbf{Cond.~1}
 in form of the $\textit{effective\_tiles\_threshold}$.
-The low-level debug output for the media items
-from \autoref{fig:near-duplicate} and \autoref{fig:algorithmdebug}
-looks as follows.
+As an example to illustrate the above,
+the low-level debug output for the media items
+from \autoref{fig:near-duplicate} and
+\autoref{fig:algorithmdebug} looks as follows.
 
 \begin{verbatim}
-  Cond. 1) Similarity threshold: 15
-  Cond. 1) Tiles threshold: 67
-  Cond. 1) Similar tiles: 53
-  Cond. 2) Faces left: 0. Faces right: 0
-  Cond. 3) BW tolerance: 1
-  Cond. 3) Not considered tiles: 23
-  Cond. 3) Effective tiles threshold: 44
+  Similarity threshold: 15 (Cond. 1)
+  Tiles threshold: 67 (Cond. 1)
+  Similar tiles: 52 (Cond. 1)
+  Faces left: 0. Faces right: 0 (Cond. 2)
+  BW tolerance: 1 (Cond. 3)
+  Not considered tiles: 22 (Cond. 3)
+  Effective tiles threshold: 45 (Cond. 3)
 \end{verbatim}
 
 While this low-level debug output is sufficient to respond to the polar question
-(yes--no question) whether media items are clustered or not,
+(yes--no question) whether media items are clustered at all or not,
 it does not help with the non-polar \emph{why} question
-(the linguistic term is \emph{wh--question}).
+(the linguistic term for this type of questions is \emph{wh--question}).
+In the following section, we show how this low-level debug output can be lifted.
 
 \section{From Debug Output to Story}
 \label{sec:from-debug-output-to-story}
@@ -421,15 +437,33 @@ for the previously defined debug scenarios
 \textbf{Clustering Consent}, \textbf{Clustering Dissent},
 and \textbf{Non-Clustering Dissent}.
 
+\subsection{Technical Implementation}
+
 We use the eSpeak~\cite{duddington2012espeak}
-speech synthesizer developed by Jonathan Duddington
+speech synthesizer that was originally developed by Jonathan Duddington
 in a~JavaScript port made available by Alon Zakai.%
 \footnote{Speak.js: \url{https://github.com/kripken/speak.js}}
-Spatial media fragment {\sc uri}s are currently not implemented
-in any of the existing Web browsers.
+This speech synthesizer uses the formant synthesis method,
+which allows many languages to be provided in a~small size.
+Rather than using human speech samples at runtime,
+the synthesized speech output is created using additive synthesis and an acoustic model
+where parameters such as fundamental frequency, voicing, and noise levels
+are varied over time to create a~waveform of artificial speech. 
+The speech is clear and can be used at high speeds,
+however, is not as natural or smooth as larger synthesizers
+that are based on human speech recordings.
+
+Spatial Media Fragments {\sc uri}s are currently not implemented
+in any of the existing Web browsers~\cite{weinberg2013polyfill}.
 In consequence, in order to support spatial media fragments,
-we use a~so-called JavaScript polyfill made available by Thomas Steiner.%
+we use a~so-called JavaScript polyfill for Media Fragments {\sc uri}
+made available by Thomas Steiner.%
 \footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}
+In Web development, a~polyfill is downloadable code
+that provides facilities that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
+Steiner's polyfill---in contrast to a~different spatial Media Fragments {\sc uri}
+polyfill implementation by Weinberg~\cite{weinberg2013polyfill}---%
+supports more browsers and both image \emph{and} video.
 
 \begin{figure}[b!]
   \centering
