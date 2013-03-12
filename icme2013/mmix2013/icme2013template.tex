@@ -407,6 +407,8 @@ If the compared media items have very dark and/or very bright parts,
 is the $\textit{bw\_tolerance}$ too high or too low (\textbf{Cond.~3})?
 
 \subsection{Low-Level Debug Output}
+\label{sec:low-level-debug-output}
+
 As a~consequence of the previous subsection,
 the low-level debug output must include
 the currently selected $\textit{tiles\_threshold}$ and
@@ -450,6 +452,23 @@ to a~high-level natural language story
 for the previously defined debug scenarios
 \textbf{Clustering Consent}, \textbf{Clustering Dissent},
 and \textbf{Non-Clustering Dissent}.
+This results in a~natural language generation task,
+whose three stages according to Reiter's and Dale's architecture~%
+\cite{reiter2000building} will be detailed in the following subsection.
+
+\subsection{Generating Natural Language}
+
+\subsubsection{Document Planning}
+
+In our context, the document is a~set of low-level debug data 
+as illustrated in \autoref{sec:low-level-debug-output}.
+
+\subsubsection{Microplanning}
+
+The microplanning task is driven by the previously described debug scenarios.
+
+
+\subsubsection{Realization}
 
 \subsection{Technical Implementation}
 
@@ -482,7 +501,7 @@ supports more browsers and both image \emph{and} video.
 \begin{figure}[b!]
   \centering
   \includegraphics[width=0.75\linewidth]{./similar-different.png}
-  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from Facebook user (left column) and Google+ user (right column); checkerboard tiles not considered}
+  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from Facebook user (left column) and Google+ user (right column); checkerboard tiles are not considered}
   \label{fig:similar-different}
 \end{figure}
 
