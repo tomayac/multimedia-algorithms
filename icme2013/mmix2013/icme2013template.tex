@@ -344,7 +344,7 @@ which frequently appear on social networks).
 In order to illustrate the way the algorithm deduplicates media items,
 \autoref{fig:algorithmdebug} shows a~debug view of the algorithm
 for the two clustered media items related to the previous example around the
-\emph{Backstreet Boys} music video from \autoref{fig:near-duplicate}.
+\emph{Backstreet Boys} music video.
 Independent of the actual media item's aspect ratio,
 the tile-wise comparison always happens based on a~potentially squeezed
 square aspect ratio version.
@@ -423,8 +423,8 @@ and potentially impacts \textbf{Cond.~1}
 in form of the $\textit{effective\_tiles\_threshold}$.
 As an example to illustrate the above,
 the low-level debug output for the media items
-from \autoref{fig:near-duplicate} and
-\autoref{fig:algorithmdebug} looks as follows.
+from the running example of the \emph{Backstreet Boys} media items
+for the music video \emph{Everybody} looks as follows.
 
 \begin{verbatim}
   Similarity threshold: 15 (Cond. 1)
@@ -499,17 +499,16 @@ the microplanner needs to be aware of contrasting juxtaposition
 
 With the aid of the following quotes,
 we show examples of actual generated texts
-for the different debug scenarios. 
-For the sake of completeness, we provide one additional example
+for the different debug scenarios (Quotes~1--4). 
+For the sake of completeness, we provide one additional example (Quote~5)
 for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
 The running example of the \emph{Backstreet Boys} media items
 for the music video \emph{Everybody} 
-from \autoref{fig:near-duplicate}, \autoref{fig:algorithmdebug},
-and \autoref{fig:similar-different} is represented by the first quote below.
+is represented by Quote~1 below.
 
 \begin{description}
   \item[Clustering Consent]
-      \textit{``The two media items are near-duplicates.
+      (Quote~1) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 52 from the minimum required 45 tiles
       were similar enough to be clustered.
       This corresponds to 52 percent of all tiles.
@@ -518,13 +517,13 @@ and \autoref{fig:similar-different} is represented by the first quote below.
       which is a common source of clustering issues.
       Neither the left, nor the right media item contain detected faces.''}
     
-      \textit{``The two media items are exact duplicates.
+      (Quote~2) \textit{``The two media items are exact duplicates.
       Out of overall 100 tiles, 100 from the minimum required 67 tiles
       were similar enough to be clustered.
       This corresponds to 100 percent of all tiles.
       Neither the left, nor the right media item contain detected faces.''}
   \item[Clustering Dissent]    
-      \textit{``The two media items are near-duplicates.
+      (Quote~3) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
       enough to be clustered.
       This corresponds to 41 percent of all tiles.
@@ -532,14 +531,14 @@ and \autoref{fig:similar-different} is represented by the first quote below.
       or too dark, which is a common source of clustering issues.
       Neither the left, nor the right media item contain detected faces.''}    
   \item[Non-Clustering Dissent]    
-      \textit{``The two media items are different.
+      (Quote~4) \textit{``The two media items are different.
       Out of overall 100 tiles, only 8 from the minimum required 67 tiles
       were similar enough to be clustered.
       This corresponds to 8 percent of all tiles.
       The left media item contains 2 detected faces,
       while the right media item contains 1 detected face.''}
   \item[(Non-Clustering Consent)]    
-      \textit{``The two media items are different.
+      (Quote~5) \textit{``The two media items are different.
       Out of overall 100 tiles, not a single one was similar enough
       to be clustered.
       Neither the left, nor the right media item contain detected faces.''}
@@ -567,33 +566,36 @@ that are based on speech recordings.
 
 \subsubsection{Visual Media Fragments Highlighting}
 
+We treat and address each tile of a~media item as a~spatial media fragment.
+\autoref{fig:similar-different} shows similar, different,
+and not considered tiles in a~grid-like structure.
 While the speech synthesizer reads the generated text,
 the corresponding tiles (\emph{e.g.}, the matching tiles,
 or the due to the black--and--white tolerance not considered tiles)
-are visually highlighted to support the human evaluators' understanding.
-We treat and address each tile as a~spatial media fragment.
+are visually highlighted to support the human evaluators' understanding,
+as can be seen in \autoref{fig:tile-highlight}.
 Spatial Media Fragments {\sc uri}s are currently not implemented
 in any of the existing Web browsers~\cite{weinberg2013polyfill}.
-In consequence, in order to support spatial media fragments,
+In order to nonetheless support spatial media fragments,
 we use a~so-called JavaScript polyfill for Media Fragments {\sc uri}
 made available by Thomas Steiner.%
 \footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}
 In Web development, a~polyfill is downloadable code
 that provides facilities that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
 Steiner's polyfill---in contrast to an additional spatial Media Fragments {\sc uri}
-polyfill implementation by Weinberg~\cite{weinberg2013polyfill}---%
+polyfill implementation by Fabrice Weinberg~\cite{weinberg2013polyfill}---%
 supports more browsers and both image \emph{and} video.
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.75\linewidth]{./similar-different.png}
-  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from Facebook user (left column) and Google+ user (right column); checkerboard tiles are not considered}
+  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from a~Facebook (left column) and a~Google+ user (right column); checkerboard tiles are not considered}
   \label{fig:similar-different}
 \end{figure}
 
-\begin{figure}[b!]
+\begin{figure}[t!]
   \centering
-  \includegraphics[width=0.75\linewidth]{./tile-highlight.png}
+  \includegraphics[width=0.8\linewidth]{./tile-highlight.png}
   \caption{Highlighted not considered tiles
     while the text--to--speech system reads the corresponding text fragment
     \textit{``However, 22 tiles were not considered,
