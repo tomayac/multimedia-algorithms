@@ -472,79 +472,84 @@ not considered tiles.
 \subsubsection{Microplanning}
 
 The microplanning task is driven by the previously described debug scenarios.
-Initially, we need to decide on a~matching condition aspect
-that is to be highlighted first,
-which is overall tiles statistics.
+Initially, we need to decide on a~matching condition aspect of the algorithm
+that will be highlighted first.
+Typically, this will be overall tiles statistics.
 Afterwards, we need to elaborate on secondary matching conditions
 like detected faces and black--and--white tolerance.
 The grammatical number (plural or singular) needs to be taken into account
-when statements about tile(s) or face(s) are made.
-Exactness and approximation of calculated values needs to be expressed.
-Finally, judgements in appositions have to be carefully balanced.
+when statements about tile(s) or face(s) are planned.
+Some values, \emph{e.g.}, the percentage of matching tiles, are calculated.
+The microplanner needs to decide when exactness
+(\emph{e.g.}, \textit{``99\% of all tiles''}),
+and when approximation of calculated values
+(\emph{e.g.}, \textit{``roughly 50\%''})
+better suits the human evaluators' information needs. 
+Neutral non-judgmental statements
+(\emph{e.g.}, \textit{``45 tiles''})
+and biased judgmental statements
+(\emph{e.g.}, \textit{``not a~single one [tile]''})
+need to be carefully balanced. 
+Finally, in the interest of a~more naturally sounding phrase composition,
+the microplanner needs to be aware of contrasting juxtaposition
+(\emph{e.g.}, \textit{``Both, the left and the right media item contain 1 detected face.''} or
+\textit{``The left media item contains no detected faces, while the right media item contains 1 detected face.''}).
 
 \subsubsection{Realization}
 
-In the following quotes, we show some examples of actual generated texts
-for different debug scenarios. 
-The running example of the \emph{Backstreet Boys}
-music video \emph{Everybody} media items
-is the first example below.
+With the aid of the following quotes,
+we show examples of actual generated texts
+for the different debug scenarios. 
+For the sake of completeness, we provide one additional example
+for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
+The running example of the \emph{Backstreet Boys} media items
+for the music video \emph{Everybody} 
+from \autoref{fig:near-duplicate}, \autoref{fig:algorithmdebug},
+and \autoref{fig:similar-different} is represented by the first quote below.
 
-\noindent \textbf{Clustering Consent}
-
-\begin{quote}
-  \textit{``The two media items are near-duplicates.
-  Out of overall 100 tiles, 52 from the minimum required 45 tiles
-  were similar enough to be clustered.
-  This corresponds to 52 percent of all tiles.
-  However, 22 tiles were not considered,
-  as they are either too bright or too dark,
-  which is a common source of clustering issues.
-  Neither the left, nor the right media item contain detected faces.''}
-\end{quote}
-
-\begin{quote}
-  \textit{``The two media items are exact duplicates.
-  Out of overall 100 tiles, 100 from the minimum required 67 tiles
-  were similar enough to be clustered.
-  This corresponds to 100 percent of all tiles.
-  Neither the left, nor the right media item contain detected faces.''}
-\end{quote}
-
-\noindent \textbf{Clustering Dissent}
-
-\begin{quote}
-  \textit{``The two media items are near-duplicates.
-  Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
-  enough to be clustered.
-  This corresponds to 41 percent of all tiles.
-  However, 26 tiles were not considered, as they are either too bright
-  or too dark, which is a common source of clustering issues.
-  Neither the left, nor the right media item contain detected faces.''}
-\end{quote}
-
-\noindent \textbf{Non-Clustering Dissent}
-
-\begin{quote}
-  \textit{``The two media items are different.
-  Out of overall 100 tiles, only 8 from the minimum required 67 tiles
-  were similar enough to be clustered.
-  This corresponds to 8 percent of all tiles.
-  The left media item contains 2 detected faces,
-  while the right media item contains 1 detected face.''}
-\end{quote}
-
-\noindent \textbf{(Non-Clustering Consent)}
-
-\begin{quote}
-  \textit{``The two media items are different.
-  Out of overall 100 tiles, not a single one was similar enough
-  to be clustered.
-  Neither the left, nor the right media item contain detected faces.''}
-\end{quote}
+\begin{description}
+  \item[Clustering Consent]
+      \textit{``The two media items are near-duplicates.
+      Out of overall 100 tiles, 52 from the minimum required 45 tiles
+      were similar enough to be clustered.
+      This corresponds to 52 percent of all tiles.
+      However, 22 tiles were not considered,
+      as they are either too bright or too dark,
+      which is a common source of clustering issues.
+      Neither the left, nor the right media item contain detected faces.''}
+    
+      \textit{``The two media items are exact duplicates.
+      Out of overall 100 tiles, 100 from the minimum required 67 tiles
+      were similar enough to be clustered.
+      This corresponds to 100 percent of all tiles.
+      Neither the left, nor the right media item contain detected faces.''}
+  \item[Clustering Dissent]    
+      \textit{``The two media items are near-duplicates.
+      Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
+      enough to be clustered.
+      This corresponds to 41 percent of all tiles.
+      However, 26 tiles were not considered, as they are either too bright
+      or too dark, which is a common source of clustering issues.
+      Neither the left, nor the right media item contain detected faces.''}    
+  \item[Non-Clustering Dissent]    
+      \textit{``The two media items are different.
+      Out of overall 100 tiles, only 8 from the minimum required 67 tiles
+      were similar enough to be clustered.
+      This corresponds to 8 percent of all tiles.
+      The left media item contains 2 detected faces,
+      while the right media item contains 1 detected face.''}
+  \item[(Non-Clustering Consent)]    
+      \textit{``The two media items are different.
+      Out of overall 100 tiles, not a single one was similar enough
+      to be clustered.
+      Neither the left, nor the right media item contain detected faces.''}
+\end{description}
 
 \subsection{Technical Implementation}
 
+\subsubsection{Text--to--Speech}
+
+The generated texts are converted to speech using a~text--to--speech system.
 We use the eSpeak~\cite{duddington2012espeak}
 speech synthesizer that was originally developed by Jonathan Duddington
 in a~JavaScript port made available by Alon Zakai.%
@@ -552,13 +557,21 @@ in a~JavaScript port made available by Alon Zakai.%
 This speech synthesizer uses the formant synthesis method,
 which allows many languages to be provided in a~small size.
 Rather than using human speech samples at runtime,
-the synthesized speech output is created using additive synthesis and an acoustic model
-where parameters such as fundamental frequency, voicing, and noise levels
+the synthesized speech output is created using additive synthesis
+and an acoustic model where parameters
+such as fundamental frequency, voicing, and noise levels
 are varied over time to create a~waveform of artificial speech. 
 The speech is clear and can be used at high speeds,
 however, is not as natural or smooth as larger synthesizers
-that are based on human speech recordings.
+that are based on speech recordings.
 
+\subsubsection{Visual Media Fragments Highlighting}
+
+While the speech synthesizer reads the generated text,
+the corresponding tiles (\emph{e.g.}, the matching tiles,
+or the due to the black--and--white tolerance not considered tiles)
+are visually highlighted to support the human evaluators' understanding.
+We treat and address each tile as a~spatial media fragment.
 Spatial Media Fragments {\sc uri}s are currently not implemented
 in any of the existing Web browsers~\cite{weinberg2013polyfill}.
 In consequence, in order to support spatial media fragments,
@@ -576,6 +589,17 @@ supports more browsers and both image \emph{and} video.
   \includegraphics[width=0.75\linewidth]{./similar-different.png}
   \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from Facebook user (left column) and Google+ user (right column); checkerboard tiles are not considered}
   \label{fig:similar-different}
+\end{figure}
+
+\begin{figure}[b!]
+  \centering
+  \includegraphics[width=0.75\linewidth]{./tile-highlight.png}
+  \caption{Highlighted not considered tiles
+    while the text--to--speech system reads the corresponding text fragment
+    \textit{``However, 22 tiles were not considered,
+    as they are either too bright or too dark,
+    which is a common source of clustering issues.''}}
+  \label{fig:tile-highlight}
 \end{figure}
 
 \section{Evaluation}
