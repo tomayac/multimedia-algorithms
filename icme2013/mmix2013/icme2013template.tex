@@ -41,7 +41,7 @@
 
 % Title.
 % ------
-\title{Tell me why! Ain't nothin' but a~mistake?\\ Describing Media Item Differences with Media Fragments URI}
+\title{Tell me why! Ain't nothin' but a~mistake? Describing Media Item Differences with Media Fragments URI and Speech Synthesis}
 %
 % Single address.
 % ---------------
@@ -53,13 +53,15 @@
 %
 \begin{abstract}
 We have developed a~tile-wise histogram-based
-media item deduplication and clustering algorithm
+media item deduplication algorithm
 with additional high-level semantic matching criteria
 that is tailored to photos and videos stemming from multiple social networks.
 In this paper, we investigate whether the addressing scheme
-Media Fragments {\sc uri} provides a~feasible and practicable way
-to vividly and graphically describe media item differences
-between media items of type photo and/or video.
+Media Fragments {\sc uri} together with a~natural language generation framework realized through a~text--to--speech system
+provides a~feasible and practicable way
+to visually and audially describe the differences
+between media items of type photo and/or video,
+so that human-friendly algorithm debugging is rendered possible.
 \end{abstract}
 %
 \begin{keywords}
@@ -110,8 +112,7 @@ that was shown to work effectively and efficiently for several events.
 
 \begin{figure}[b!]
   \centering
-  \includegraphics[width=1\linewidth]{./backstreetboys.png}
-  %\includegraphics[width=0.796\linewidth]{./backstreetboys.png}  
+  \includegraphics[width=0.9\linewidth]{./backstreetboys.png}
   \caption{\emph{Near-duplicate} music video \emph{Everybody}
     by the \emph{Backstreet Boys} shared
     independently on Facebook and Google+}
@@ -427,13 +428,13 @@ from the running example of the \emph{Backstreet Boys} media items
 for the music video \emph{Everybody} looks as follows.
 
 \begin{verbatim}
-  Similarity threshold: 15 (Cond. 1)
-  Tiles threshold: 67 (Cond. 1)
-  Similar tiles: 52 (Cond. 1)
-  Faces left: 0. Faces right: 0 (Cond. 2)
-  BW tolerance: 1 (Cond. 3)
-  Not considered tiles: 22 (Cond. 3)
-  Effective tiles threshold: 45 (Cond. 3)
+- Similarity threshold: 15 (Cond. 1)
+- Tiles threshold: 67 (Cond. 1)
+- Similar tiles: 52 (Cond. 1)
+- Faces left: 0. Faces right: 0 (Cond. 2)
+- BW tolerance: 1 (Cond. 3)
+- Not considered tiles: 22 (Cond. 3)
+- Effective tiles threshold: 45 (Cond. 3)
 \end{verbatim}
 
 While this low-level debug output is sufficient to respond to the polar question
@@ -672,6 +673,15 @@ however, without exception liked the system and encouraged future investment.
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions-and-future-work}
+
+Concluding, in this paper, we have successfully demonstrated the feasibility
+of making the task of debugging a~complex algorithm human-friendly,
+by means of a~combined visual and audial approach.
+We have used Media Fragments {\sc uri}
+together with a~natural language generation framework
+realized through a~speech synthesizer
+to visually and audially describe media item differences.
+ 
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
