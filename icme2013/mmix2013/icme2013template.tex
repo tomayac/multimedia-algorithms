@@ -183,16 +183,16 @@ when used over the {\sc http} protocol~\cite{fielding1999http}.
 The syntax is based on the specification of particular name-value pairs
 that can be used in {\sc uri} query strings and {\sc uri} fragment identifiers
 to restrict a~media resource to a~certain fragment.
-Currently supported Media Fragments {\sc uri}s in the basic version
+Currently supported Media Fragments {\sc uri}s %in the basic version
 cover the temporal and the spatial dimension.
-The temporal dimension denotes a~specific time range in the original media,
-such as ``starting at second 10, ending at second 20.''
-The spatial dimension denotes a~specific range of pixels in the original media,
-such as ``a~rectangle of size $ 100 \times 100 $ pixels
-with its top-left at the pixel coordinates $ (10, 10) $.''
-Combinations of both dimensions are possible,
-as well as combining Media Fragments {\sc uri} query strings
-and {\sc uri} fragment identifiers.
+%The temporal dimension denotes a~specific time range in the original media,
+%such as ``starting at second 10, ending at second 20.''
+%The spatial dimension denotes a~specific range of pixels in the original media,
+%such as ``a~rectangle of size $ 100 \times 100 $ pixels
+%with its top-left at the pixel coordinates $ (10, 10) $.''
+Combinations of dimensions are possible.
+%as well as combining Media Fragments {\sc uri} query strings
+%and {\sc uri} fragment identifiers.
 
 \noindent \textit{Digital Storytelling:}
 Pizzi and Cavazza report in~\cite{pizzi2008debugging} on the development of
@@ -221,6 +221,29 @@ document planning, microplanning, and realization.
 will be used to communicate the chosen content and structure.
 \emph{Realization} maps the abstract representations
 used by microplanning into actual text.
+
+\begin{lstlisting}[caption={Description of two 10~sec long media fragments:
+  \textit{(i)}~a~tile of dimensions $ 30 \times 40 $ pixels
+  starting at pixel coordinates $ (0, 0) $
+  that contains a~face; and
+  \textit{(ii)}~a~tile of dimensions $ 10 \times 10 $ pixels
+  starting at pixel coordinates $ (0, 0) $ of red color},
+  label=code:media-fragment, float=b!]
+@base <http://example.org/> .
+@prefix ma: <http://www.w3.org/ns/ma-ont> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix db: <http://dbpedia.org/resource/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix col: <http://purl.org/colors/rgb/> .
+
+<video> a ma:MediaResource .
+
+<video#t=,10&xywh=0,0,30,40> a ma:MediaFragment ;
+                             foaf:depicts db:Face .
+                             
+<video#t=,10&xywh=0,0,10,10> a ma:MediaFragment ;
+                             dbo:colour col:f00 .
+\end{lstlisting}
 
 \section{Media Fragments Requirements}
 \label{sec:media-fragment-requirements}
@@ -265,7 +288,7 @@ The value is either \texttt{pixel:} or \texttt{percent:}
 (defaulting to \texttt{pixel:}) and four comma-separated integers.
 The integers denote $ x $, $ y $, $ width $, and $ height $ respectively,
 with $ x = 0 $ and $ y = 0 $ being the top left corner of the media item.
-If \texttt{percent:} is used,
+If \texttt{percent:} is used,\linebreak
 $ x $ and $ width $ are interpreted as a~percentage
 of the width of the original media item,
 while $ y $ and $ height $ are interpreted as a~percentage
@@ -278,29 +301,6 @@ Combined with Media Fragments {\sc uri},
 this allows for making statements about media items and fragments thereof.
 An example in RDF Turtle syntax~\cite{prudhommeaux2013turtle}
 is given in \autoref{code:media-fragment}.
-
-\begin{lstlisting}[caption={Description of two 10~sec long media fragments:
-  \textit{(i)}~a~tile of dimensions $ 30 \times 40 $ pixels
-  starting at pixel coordinates $ (0, 0) $
-  that contains a~face; and
-  \textit{(ii)}~a~tile of dimensions $ 10 \times 10 $ pixels
-  starting at pixel coordinates $ (0, 0) $ of red color},
-  label=code:media-fragment, float=t!]
-@base <http://example.org/> .
-@prefix ma: <http://www.w3.org/ns/ma-ont> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix db: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix col: <http://purl.org/colors/rgb/> .
-
-<video> a ma:MediaResource .
-
-<video#t=,10&xywh=0,0,30,40> a ma:MediaFragment ;
-                             foaf:depicts db:Face .
-                             
-<video#t=,10&xywh=0,0,10,10> a ma:MediaFragment ;
-                             dbo:colour col:f00 .
-\end{lstlisting}
 
 \section{Media Item Deduplication Algorithm}
 \label{sec:media-item-deduplication-algorithm}
@@ -492,21 +492,22 @@ and biased judgmental statements
 need to be carefully balanced. 
 Finally, in the interest of a~more naturally sounding phrase composition,
 the microplanner needs to be aware of contrasting juxtaposition
-(\emph{e.g.}, \textit{``Both, the left and the right media item contain 1 detected face.''} or
+(\emph{e.g.}, \textit{``Both, the left and the right media item contain 1 detected face.''} \emph{vs.}
 \textit{``The left media item contains no detected faces, while the right media item contains 1 detected face.''}).
 
 \subsubsection{Realization}
 
-With the aid of the following quotes,
+With the aid of the quotes below,
 we show examples of actual generated texts
-for the different debug scenarios (Quotes~1--4). 
-For the sake of completeness, we provide one additional example (Quote~5)
+for the different debug scenarios (Quotes~1--3). 
+For the sake of completeness, we provide one additional example (Quote~4)
 for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
 The running example of the \emph{Backstreet Boys} media items
 for the music video \emph{Everybody} 
-is represented by Quote~1 below.
+is represented by Quote~1.
 
 \begin{description}
+  \itemsep0em 
   \item[Clustering Consent]
       (Quote~1) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 52 from the minimum required 45 tiles
@@ -515,15 +516,9 @@ is represented by Quote~1 below.
       However, 22 tiles were not considered,
       as they are either too bright or too dark,
       which is a common source of clustering issues.
-      Neither the left, nor the right media item contain detected faces.''}
-    
-      (Quote~2) \textit{``The two media items are exact duplicates.
-      Out of overall 100 tiles, 100 from the minimum required 67 tiles
-      were similar enough to be clustered.
-      This corresponds to 100 percent of all tiles.
-      Neither the left, nor the right media item contain detected faces.''}
+      Neither the left, nor the right media item contain detected faces.''}    
   \item[Clustering Dissent]    
-      (Quote~3) \textit{``The two media items are near-duplicates.
+      (Quote~2) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
       enough to be clustered.
       This corresponds to 41 percent of all tiles.
@@ -531,14 +526,14 @@ is represented by Quote~1 below.
       or too dark, which is a common source of clustering issues.
       Neither the left, nor the right media item contain detected faces.''}    
   \item[Non-Clustering Dissent]    
-      (Quote~4) \textit{``The two media items are different.
+      (Quote~3) \textit{``The two media items are different.
       Out of overall 100 tiles, only 8 from the minimum required 67 tiles
       were similar enough to be clustered.
       This corresponds to 8 percent of all tiles.
       The left media item contains 2 detected faces,
       while the right media item contains 1 detected face.''}
   \item[(Non-Clustering Consent)]    
-      (Quote~5) \textit{``The two media items are different.
+      (Quote~4) \textit{``The two media items are different.
       Out of overall 100 tiles, not a single one was similar enough
       to be clustered.
       Neither the left, nor the right media item contain detected faces.''}
@@ -568,11 +563,13 @@ that are based on speech recordings.
 
 We treat and address each tile of a~media item as a~spatial media fragment.
 \autoref{fig:similar-different} shows similar, different,
-and not considered tiles in a~grid-like structure.
+and not considered tiles of the \emph{Backstreet Boys} media items
+for the \emph{Everybody} music video in a~grid-like structure.
 While the speech synthesizer reads the generated text,
 the corresponding tiles (\emph{e.g.}, the matching tiles,
 or the due to the black--and--white tolerance not considered tiles)
-are visually highlighted to support the human evaluators' understanding,
+are interactively visually highlighted
+to support the human evaluators' understanding,
 as can be seen in \autoref{fig:tile-highlight}.
 Spatial Media Fragments {\sc uri}s are currently not implemented
 in any of the existing Web browsers~\cite{weinberg2013polyfill}.
@@ -581,9 +578,10 @@ we use a~so-called JavaScript polyfill for Media Fragments {\sc uri}
 made available by Thomas Steiner.%
 \footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}
 In Web development, a~polyfill is downloadable code
-that provides facilities that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
+that provides facilities by emulating potential future features or {\sc api}s
+that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
 Steiner's polyfill---in contrast to an additional spatial Media Fragments {\sc uri}
-polyfill implementation by Fabrice Weinberg~\cite{weinberg2013polyfill}---%
+polyfill implementation~\cite{weinberg2013polyfill} by Fabrice Weinberg---%
 supports more browsers and both image \emph{and} video.
 
 \begin{figure}[t!]
@@ -623,11 +621,12 @@ the quality and usefulness of the text.
 
 For our evaluation, we chose the third approach of human ratings,
 as we do not evaluate the natural language generating system in isolation,
-but in combination with a~visual representation
+but in \emph{combination with a~visual representation}
 that makes use of spatial Media Fragments {\sc uri}s,
-as can be seen in \autoref{fig:similar-different}.
+as can be seen in \autoref{fig:similar-different}
+and \autoref{fig:tile-highlight}.
 Evaluating subjective data like the quality and usefulness 
-of an auto-generated textual, visual, and audial description
+of an auto-generated textual, visual, and audial explanation
 of the results of a~deduplication algorithm
 is a~challenging task.
 For different users, there may be different emphases.
@@ -640,7 +639,36 @@ Therefore, a~set of standard subjective tests are conducted,
 where users rate the perceived quality of test samples
 with scores from 1 (worst) to 5 (best).
 The actual MOS is then the arithmetic mean of all individual scores.
-
+In the context of this research, we have conducted MOS test sessions
+with five external human raters.
+We generated artificially modified deduplicated media item sets
+around media items about the \emph{Backstreet Boys}
+that were shared on social networks during the time of writing.
+These media item sets were curated by yet another independent two
+external persons, assisted by a~previously developed
+software system that implements the deduplication algorithm
+described in this paper.
+We asked the two persons to provoke dissent and
+consent clustering situations for the five human raters,
+\emph{i.e.}, obviously correct clustering (\textbf{Clustering Consent}),
+obviously incorrect clustering (\textbf{Clustering Dissent}),
+and obviously incorrect non-clustering (\textbf{Non-Clustering Dissent}).
+We then asked the five human raters to have the system
+automatically explain the algorithm results to them
+as described in \autoref{sec:from-debug-output-to-story}.
+The raters gave MOS scores ranging from $2$ to $5$,
+with the overall average values as follows.
+\textbf{Clustering Consent}: $4.3$, \textbf{Clustering Dissent}: $3.3$,
+and \textbf{Non-Clustering Dissent}: $4.1$.
+The human raters appreciated the parallel explanation approach,
+where the visual and the audial parts synchronously described
+what the algorithm was doing.
+They uttered that the due to the black--and--white tolerance
+not considered tiles as well as erroneously not detected faces
+were sources of error in the algorithm that they easily understood
+thanks to the human language description.
+They sometimes wished for more diversification in the generated texts,
+however, without exception liked the system and encouraged future investment.
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions-and-future-work}
