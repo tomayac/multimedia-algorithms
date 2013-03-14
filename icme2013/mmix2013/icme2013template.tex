@@ -128,9 +128,9 @@ During previous experiments on deduplicating event-related media items,
 we noticed that human raters wanted to know \emph{why}%
 \footnote{Tell me why! Ain't nothin' but a~mistake?}
 certain media items were clustered as \emph{exact-} or \emph{near-duplicates}.
-In consequence, in this paper, we investigate in how far
+In this paper, we investigate in how far
 Media Fragments {\sc uri}~\cite{troncy2012mediafragments}
-provides a~feasible and practicable way
+combined with speech synthesis provide a~feasible way
 to tell raters why media items were clustered.
 As we deal with media items of type photo and/or video,
 we make simultaneous use of two types of media fragments dimensions,
@@ -393,7 +393,7 @@ of decisions taken by the algorithm that they were unsure about.
     The human rater wants to understand why they were not clustered.
 \end{description}
 
-In order to provide answers to the human rater's information needs above,
+In order to provide answers to the human raters' information needs above,
 different levers of the algorithm's internals need to be debugged.
 Is the $\textit{tiles\_threshold}$
 (\emph{i.e.}, the number of tiles that may differ)
@@ -502,7 +502,7 @@ the microplanner needs to be aware of contrasting juxtaposition
 
 With the aid of the quotes below,
 we show examples of actual generated texts
-for the different debug scenarios (Quotes~1--3). 
+for the three different debug scenarios (Quotes~1--3). 
 For the sake of completeness, we provide one additional example (Quote~4)
 for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
 The running example of the \emph{Backstreet Boys} media items
@@ -555,7 +555,7 @@ This speech synthesizer uses the formant synthesis method,
 which allows many languages to be provided in a~small size.
 Rather than using human speech samples at runtime,
 the synthesized speech output is created using additive synthesis
-and an acoustic model where parameters
+and an acoustic model, where parameters
 such as fundamental frequency, voicing, and noise levels
 are varied over time to create a~waveform of artificial speech. 
 The speech is clear and can be used at high speeds,
@@ -573,7 +573,7 @@ the corresponding tiles (\emph{e.g.}, the matching tiles,
 or the due to the black--and--white tolerance not considered tiles)
 are interactively visually highlighted
 to support the human evaluators' understanding,
-as can be seen in \autoref{fig:tile-highlight}.
+as can be seen in \autoref{fig:tile-highlight} and in the screencast.
 Spatial Media Fragments {\sc uri}s are currently not implemented
 in any of the existing Web browsers~\cite{weinberg2013polyfill}.
 In order to nonetheless support spatial media fragments,
@@ -590,14 +590,14 @@ supports more browsers and both image \emph{and} video.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.75\linewidth]{./similar-different.png}
-  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from a~Facebook (left column) and a~Google+ user (right column); checkerboard tiles are not considered}
+  \caption{Similar (upper row) and different (lower row) corresponding tile pairs for the media items from a~Facebook (left column) and a~Google+ user (right column); checkerboard tiles are not considered due to the black--and--white tolerance}
   \label{fig:similar-different}
 \end{figure}
 
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.75\linewidth]{./tile-highlight.png}
-  \caption{Highlighted not considered tiles
+  \caption{Highlighted not considered tiles,
     while the text--to--speech system reads the corresponding text fragment
     \textit{``However, 22 tiles were not considered,
     as they are either too bright or too dark,
@@ -615,7 +615,7 @@ where the generated text is given to a~person
 who evaluates how well it helps with performing a~given task
 (\emph{e.g.},~\cite{portet2009nlg}).
 Second, there are \emph{automatic metrics}
-(\emph{e.g.}, BLEU~\cite{papineni2002bleu}),
+(\emph{e.g.}, {\sc bleu}~\cite{papineni2002bleu}),
 where the generated text is compared to texts written by people
 based on the same input data.
 Finally, there are \emph{human ratings}, where the generated text
@@ -634,15 +634,15 @@ of the results of a~deduplication algorithm
 is a~challenging task.
 For different users, there may be different emphases.
 A~common subjective evaluation technique
-is the Mean~Opinion Score~(MOS,~\cite{itu1998mos}),
+is the Mean~Opinion Score~({\sc mos},~\cite{itu1998mos}),
 used for decades in telephony networks to
 obtain the human user's view of the quality of a~network.
-Recently, MOS has also found wider usage in the multimedia community.
+Recently, {\sc mos} has also found wider usage in the multimedia community.
 Therefore, a~set of standard subjective tests are conducted,
 where users rate the perceived quality of test samples
 with scores from 1 (worst) to 5 (best).
-The actual MOS is then the arithmetic mean of all individual scores.
-In the context of this research, we have conducted MOS test sessions
+The actual {\sc mos} is then the arithmetic mean of all individual scores.
+In the context of this research, we have conducted {\sc mos} test sessions
 with five external human raters.
 We generated artificially modified deduplicated media item sets
 around media items about the \emph{Backstreet Boys}
@@ -659,7 +659,7 @@ and obviously incorrect non-clustering (\textbf{Non-Clustering Dissent}).
 We then asked the five human raters to have the system
 automatically explain the algorithm results to them
 as described in \autoref{sec:from-debug-output-to-story}.
-The raters gave MOS scores ranging from $2$ to $5$,
+The raters gave {\sc mos} scores ranging from $2$ to $5$,
 with the overall average values as follows.
 \textbf{Clustering Consent}: $4.3$, \textbf{Clustering Dissent}: $3.3$,
 and \textbf{Non-Clustering Dissent}: $4.1$.
@@ -671,7 +671,8 @@ not considered tiles as well as erroneously not detected faces
 were sources of error in the algorithm that they easily understood
 thanks to the human language description.
 They sometimes wished for more diversification in the generated texts,
-however, without exception liked the system and encouraged future investment.
+however, without exception liked the system
+and encouraged future investment and development.
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions-and-future-work}
