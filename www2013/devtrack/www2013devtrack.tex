@@ -7,6 +7,8 @@
 \usepackage{lmodern}
 \usepackage[activate=compatibility]{microtype}
 
+\usepackage{setspace}
+
 % autoref command
 \usepackage[hyphens]{url}
 \usepackage[pdftex,urlcolor=black,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
@@ -177,8 +179,10 @@ a~ranking algorithm for user-generated videos based on social activities.
   \label{table:social-interactions}
 \end{table*}
 
+\vspace{-0.4em}
 \section{Social Network Interactions}
 
+\vspace{-0.9em}
 \subsection{Abstraction Layer}
 \label{sec:social-network-interactions}
 
@@ -235,7 +239,7 @@ In the ranking formula, we consider several well-defined ranking criteria
 that were detailed in~\cite{steiner2012definingaesthetic},
 namely these are visual, audial, textual, temporal, social, and aesthetic.
 For a~given set of media item clusters, a~ranking is calculated as follows.
-\vspace{-1em}
+
 \begin{gather}
   \alpha \times \mathit{likes} + \beta \times \mathit{shares} +
   \gamma \times \mathit{comments} + \delta \times \mathit{views} + \nonumber\\
@@ -265,8 +269,10 @@ that in two user studies were shown to be perceived as
 aesthetically pleasing~\cite{steiner2013mediagalleries}.
 We differentiate between the \emph{Loose Order, Varying Size} style,
 where certain media items can be featured more prominently by making them bigger
+at the cost of loosely disrespecting the ranking-implied order
 and the \emph{Strict Order, Equal Size} style,
 which strictly respects the ranking-implied order~\cite{steiner2013mediagalleries}.
+\\
 
 \section{Implementation Details}
 
@@ -339,7 +345,9 @@ and to identify the few needles in the social network haystack.
   \label{fig:media-gallery}
 \end{figure*}
 
+\begin{spacing}{0.964}
 \bibliographystyle{abbrv}
 \bibliography{www2013devtrack}
+\end{spacing}
 
 \end{document}
