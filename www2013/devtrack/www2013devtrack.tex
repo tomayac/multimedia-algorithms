@@ -77,7 +77,7 @@
 % --- Author Metadata here ---
 \conferenceinfo{World Wide Web Conference}{'13 Rio de Janeiro, Brazil}
 \CopyrightYear{2013} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
-%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+%\crdata{0‒12345‒67‒8/90/01}  % Allows default copyright data (0‒89791‒88‒6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
 
@@ -97,10 +97,11 @@ Thomas Steiner\\
 We have developed an application called Social Media\linebreak Illustrator
 that allows for finding media items on multiple social networks,
 clustering them by visual similarity, ranking them by different criteria,
-and finally arranging them in aesthetically pleasing media galleries.
+and finally arranging them in media galleries
+that were evaluated to be perceived as aesthetically pleasing.
 In this paper, we focus on the ranking aspect and show how,
 for a~given set of media items, the most adequate ranking criterion combination
-can be found through interactively applying different criteria
+can be found by interactively applying different criteria
 and seeing their effect on-the-fly.
 This leads us to an empirically optimized media item ranking formula,
 which takes social network interactions into account.
@@ -140,7 +141,7 @@ potentially overwhelmingly many media items retrieved for a~given event.
 
 In~\cite{sanpedro2009ranking}, San Pedro and Siersdorfer propse a~methodology
 for automatically ranking and classifying photos from the photo sharing platform Flickr
-according to their attractiveness for folksonomy members.
+according to their attractiveness for Flickr members.
 They work with extracted user feedback and annotations available on Flickr
 to train machine learning models based on
 image features like sharpness and colorfulness.
@@ -195,46 +196,36 @@ via specific API calls in order to be considered.
 In \autoref{table:social-interactions}, we detail
 how we abstract the social interactions in question on each social network.
 We differentiate between unknown values
-that are returned as \texttt{null}, \emph{i.e.},
+that are returned as \texttt{unknown}, \emph{i.e.},
 where the information is not exposed,
 and \texttt{0} values, where the value is known to be zero.
 
 \subsection{Merging Social Interactions}
 \label{sec:merging-social-interactions}
 
+In the context of our previous research,
+we have developed a~tile-wise histogram-based
+media item deduplication algorithm
+with additional high-level semantic matching criteria
+that is tailored to photos and videos stemming from multiple social networks.
 If a~set of media items is visually similar enough to be clustered
 under the criteria detailed in~\cite{rizzo2012whatfresh},
 we treat the whole of the cluster
 as if it were just one media item.
-Therefore, we specify a~merging strategy
+These criteria are pair-wise tile histogram similarity 
+that does not exceed a~given threshold
+and the same number of detected faces per media item.
+In consequence, we specify a~merging strategy
 for the associated social interactions of the individual media items
 in the particular cluster.
-\autoref{code:merging} shows the pseudocode of the merging algorithm.
-We treat unknown values represented as \texttt{null} as \texttt{0}.
+We treat \texttt{unknown} values as \texttt{0}.
+The alternative to this solution is to exclude \texttt{unknown} values
+from the merging step.
+However, as in practice a~considerable amount of
+social interaction values are \texttt{unknwon},
+we are forced to proceed with the abovementioned simplification.
 The algorithm accumulates individual social interactions
-and returns the accumulated social interactions.
-
-\begin{lstlisting}[caption=The social interactions merging algorithm,
-  label=code:merging, float=b!]
-§\textbf{Input: cluster, cluster of visually similar media items}§ 
-§\textbf{Output: socialInteractions, merged social interactions}§ 
-
-likes = shares = views = comments = 0
-socialInteractions = {}
-
-§\textbf{for}§ item §\textbf{in}§ cluster
-  likes += item.likes ? item.likes : 0
-  shares += item.shares ? item.shares : 0
-  comments += item.comments ? item.comments : 0
-  views += item.views ? item.views : 0
-§\textbf{end for}§
-socialInteractions.likes = likes
-socialInteractions.shares = shares
-socialInteractions.comments = comments
-socialInteractions.views = views
-
-§\textbf{return}§ socialInteractions
-\end{lstlisting}
+and assigns the accumulated social interactions to the cluster.
 
 \section{Ranking Media Item Clusters}
 
@@ -244,29 +235,38 @@ In the ranking formula, we consider several well-defined ranking criteria
 that were detailed in~\cite{steiner2012definingaesthetic},
 namely these are visual, audial, textual, temporal, social, and aesthetic.
 For a~given set of media item clusters, a~ranking is calculated as follows.
-
+\vspace{-1em}
 \begin{gather}
   \alpha \times \mathit{likes} + \beta \times \mathit{shares} +
   \gamma \times \mathit{comments} + \delta \times \mathit{views} + \nonumber\\
-  \epsilon \times \mathit{crossNetwork} + \zeta \times \mathit{recency} +
+  \epsilon \times \mathit{clusterSize} + \zeta \times \mathit{recency} +
   \eta \times \mathit{quality}
 \end{gather}
 
 The factors $ \mathit{likes}, \mathit{shares}, \mathit{comments},$ and $ \mathit{views} $
 stem from the individual media items as described in \autoref{sec:social-network-interactions}
 and \autoref{sec:merging-social-interactions}.
-The factor $ \mathit{crossNetwork} $ corresponds to the size of the current cluster. 
+The factor $ \mathit{clusterSize} $ corresponds to the size of the current cluster. 
 The factor $ \mathit{recency} $ is calculated as follows.
 If the youngest media item in the cluster is less than or exactly one day old,
 the value is 8, for two days it is 4, for three days it is 2,
 and for each day more, the value is 1.
 The factor $ \mathit{quality} $ is a~representation of the
-presence of faces and a~media item's photo or video quality.
+presence of faces and a~media item’s photo or video quality.
 Empirically optimized default values
 that can be fine-tuned for a~concrete media item set
 were determined as follows:
 $ \alpha = 2 $, $ \beta = 4 $ , $ \gamma = 8 $, $ \delta = 1 $,
 $ \epsilon = 32 $, $ \zeta = 2 $, and $ \eta = 8 $.
+
+Once a~final ranking for all media items has been found,
+the top-$n$ media items are compiled to different kinds of media galleries
+that in two user studies were shown to be perceived as
+aesthetically pleasing~\cite{steiner2013mediagalleries}.
+We differentiate between the \emph{Loose Order, Varying Size} style,
+where certain media items can be featured more prominently by making them bigger
+and the \emph{Strict Order, Equal Size} style,
+which strictly respects the ranking-implied order~\cite{steiner2013mediagalleries}.
 
 \section{Implementation Details}
 
@@ -278,12 +278,10 @@ to minimize overhead and maximize scalability.
 The clustering and ranking logic is kept on the client side,
 while the media item retrieval logic is kept on the server side.
 As the clustering logic needs read access to the pixel data of media items via
-the \texttt{canvas} element's \texttt{getImageData} function,
+the \texttt{canvas} element’s \texttt{getImageData} function,
 all media items need to be proxied locally.
 Face detection works fully on the client side based on a~library
-made available by Liu.%
-\footnote{\url{http://liuliu.me/eyes/javascript-face-detection-explained/},\linebreak
-accessed 02/21/2013}
+made available by Liu~\cite{liu2012facedetection}.
 The interface is fully interactive and event-driven.
 \autoref{fig:application} and \autoref{fig:media-gallery} show screenshots
 of the deployed application.
