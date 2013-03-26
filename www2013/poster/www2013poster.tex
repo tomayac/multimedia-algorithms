@@ -1,4 +1,5 @@
-\documentclass{sig-alternate}
+%\documentclass{sig-alternate}
+\documentclass{sig-alt-release2}
 
 \usepackage[utf8]{inputenc}
 \usepackage[activate=compatibility]{microtype}
@@ -81,12 +82,11 @@
 
 \begin{document}
 
-% --- Author Metadata here ---
-\conferenceinfo{World Wide Web Conference}{'13 Rio de Janeiro, Brazil}
-\CopyrightYear{2013} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
-%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
-% --- End of Author Metadata ---
-
+\conferenceinfo{WWW 2013 Companion,} {May 13--17, 2013, Rio de Janeiro, Brazil.} 
+\CopyrightYear{2013} 
+\crdata{978‒1‒4503‒2038‒2/13/05} 
+\clubpenalty=10000 
+\widowpenalty = 10000
 
 \title{To Crop, Or Not to Crop: Compiling Online Media Galleries}
 
@@ -150,6 +150,12 @@ such that the ranking-implied order is (loosely) respected.
 Previously, we have defined~\cite{steiner2012definingaesthetic}
 aesthetic principles for automatic media gallery layout,
 which we now apply to media gallery styles.
+The task of media gallery compilation is different
+from the widely researched task of photo book generation,
+as media galleries can contain both, photos and videos.
+Different types of media gallery layouts are possible,
+two of which we have implemented and evaluated via two different user studies.
+One with, and one without detailed user comments.
 
 \section{Media Gallery Styles}
 
