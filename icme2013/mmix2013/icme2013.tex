@@ -1,12 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Tell me why! Ain't nothin' but a mistake? Describing Media Item Differences with Media Fragments URI and Speech Synthesis  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Template for ICME-2013 paper; to be used with:
 %          spconf.sty  - ICASSP/ICIP LaTeX style file, and
 %          IEEEbib.bst - IEEE bibliography style file.
 % --------------------------------------------------------------------------
+
 \documentclass{article}
+
 \usepackage{spconf,amsmath,epsfig}
-
 \usepackage[utf8]{inputenc}
-
 \usepackage{subfig}
 \usepackage{enumerate}
 \usepackage{setspace}
@@ -35,23 +39,34 @@
 
 \pagestyle{empty}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Beginning of document  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}\sloppy
 
 % for 1st, 2nd, etc. superscripting
 \newcommand{\ts}{\textsuperscript}
 
 % Title.
-% ------
 \title{Tell me why! Ain't nothin' but a~mistake? Describing Media Item Differences with Media Fragments URI and Speech Synthesis}
-%
-% Single address.
-% ---------------
-\name{Anonymous ICME submission}
-\address{}
+
+\twoauthors
+  {Thomas Steiner}
+	{Google Germany GmbH\\
+	Hamburg, Germany\\
+    \texttt{tomac@google.com}}
+  {Raphaël Troncy}
+	{EURECOM\\
+    Sophia Antipolis, France\\
+	\texttt{raphael.troncy@eurecom.fr}}
 
 \maketitle
 
-%
+%%%%%%%%%%%%%%%%%%
+%%%  Abstract  %%%
+%%%%%%%%%%%%%%%%%%
+
 \begin{abstract}
 We have developed a~tile-wise histogram-based
 media item deduplication algorithm
@@ -66,11 +81,15 @@ so that human-friendly algorithm debugging is rendered possible.
 A~short screencast excerpt is available online.%
 \footnote{Screencast: \url{http://youtu.be/DWqwEnhqTSc}}
 \end{abstract}
-%
+
 \begin{keywords}
 Media Fragments {\sc uri}, Media Fragments, Media Items, Deduplication, Social Networks
 \end{keywords}
-%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  1. Introduction  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
 \label{sec:introduction}
 
@@ -95,7 +114,7 @@ and follow the group on \emph{social networks}.
 Social networks are at the heart of our research on event summarization,
 specifically deduplicating \emph{exact-} and \emph{near-duplicate}
 media items that optionally accompany textual status messages
-referred to as \emph{microposts} on multiple social networks. 
+referred to as \emph{microposts} on multiple social networks.
 In the context of our research, we define a~\emph{media item}
 as either a~photo (image) or video
 that was \emph{publicly} shared or published
@@ -243,7 +262,7 @@ used by microplanning into actual text.
 
 <video#t=,10&xywh=0,0,30,40> a ma:MediaFragment ;
                              foaf:depicts db:Face .
-                             
+
 <video#t=,10&xywh=0,0,10,10> a ma:MediaFragment ;
                              dbo:colour col:f00 .
 \end{lstlisting}
@@ -255,7 +274,7 @@ In the context of our research on media item deduplication and clustering,
 media fragments identifiers need to be capable of expressing the following concepts.
 
 \begin{enumerate}[i]
-  \itemsep0em 
+  \itemsep0em
   \item Given a~rectangular media item with the dimensions $ width \times height $,
     express that in turn rectangular tiles
     of smaller dimensions are part of the original media item.
@@ -324,7 +343,7 @@ For two media items to be clustered,
 the following three clustering conditions have to be fulfilled.
 
 \begin{description}
-  \itemsep0em 
+  \itemsep0em
   \item[Cond.~1] Out of $m$ tiles of a~media item with $n$ tiles ($m \leq n$),
     the average color of at most $\textit{tiles\_threshold}$ tiles may differ
     not more than $\textit{similarity\_threshold}$ from their counterpart tiles.
@@ -356,7 +375,7 @@ square aspect ratio version.
   \centering
   \subfloat[From Facebook user]{
     \includegraphics[width=0.35\linewidth]{debug1.png}
-  }                
+  }
   \subfloat[From Google+ user]{
     \includegraphics[width=0.35\linewidth]{debug2.png}
   }
@@ -364,7 +383,7 @@ square aspect ratio version.
     (as in the case of \autoref{fig:near-duplicate} no faces were detected,
     the clustering happens based on tile similarity;
     black tiles were not considered due to the chosen black--and--white tolerance)}
-  \label{fig:algorithmdebug}  
+  \label{fig:algorithmdebug}
 \end{figure}
 
 \subsection{Debugging the Algorithm}
@@ -378,7 +397,7 @@ the human raters wanted to understand the specific details
 of decisions taken by the algorithm that they were unsure about.
 
 \begin{description}
-  \itemsep0em 
+  \itemsep0em
   \item[Clustering Consent]
     Two or more media items are clustered by the algorithm
     and the human rater agrees.
@@ -463,7 +482,7 @@ whose three stages according to Reiter's and Dale's architecture~%
 
 \subsubsection{Document Planning}
 
-In our context, the document is a~set of low-level debug data 
+In our context, the document is a~set of low-level debug data
 as illustrated in \autoref{sec:low-level-debug-output},
 so the natural language generation task is manageable.
 We need to convey the currently selected $\textit{tiles\_threshold}$
@@ -487,12 +506,12 @@ The microplanner needs to decide when exactness
 (\emph{e.g.}, \textit{``99\% of all tiles''}),
 and when approximation of calculated values
 (\emph{e.g.}, \textit{``roughly 50\%''})
-better suits the human evaluators' information needs. 
+better suits the human evaluators' information needs.
 Neutral non-judgmental statements
 (\emph{e.g.}, \textit{``45 tiles''})
 and biased judgmental statements
 (\emph{e.g.}, \textit{``not a~single one [tile]''})
-need to be carefully balanced. 
+need to be carefully balanced.
 Finally, in the interest of a~more naturally sounding phrase composition,
 the microplanner needs to be aware of contrasting juxtaposition
 (\emph{e.g.}, \textit{``Both, the left and the right media item contain 1 detected face.''} \emph{vs.}
@@ -502,15 +521,15 @@ the microplanner needs to be aware of contrasting juxtaposition
 
 With the aid of the quotes below,
 we show examples of actual generated texts
-for the three different debug scenarios (Quotes~1--3). 
+for the three different debug scenarios (Quotes~1--3).
 For the sake of completeness, we provide one additional example (Quote~4)
 for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
 The running example of the \emph{Backstreet Boys} media items
-for the music video \emph{Everybody} 
+for the music video \emph{Everybody}
 is represented by Quote~1.
 
 \begin{description}
-  \itemsep0em 
+  \itemsep0em
   \item[Clustering Consent]
       (Quote~1) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 52 from the minimum required 45 tiles
@@ -519,23 +538,23 @@ is represented by Quote~1.
       However, 22 tiles were not considered,
       as they are either too bright or too dark,
       which is a common source of clustering issues.
-      Neither the left, nor the right media item contain detected faces.''}    
-  \item[Clustering Dissent]    
+      Neither the left, nor the right media item contain detected faces.''}
+  \item[Clustering Dissent]
       (Quote~2) \textit{``The two media items are near-duplicates.
       Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
       enough to be clustered.
       This corresponds to 41 percent of all tiles.
       However, 26 tiles were not considered, as they are either too bright
       or too dark, which is a common source of clustering issues.
-      Neither the left, nor the right media item contain detected faces.''}    
-  \item[Non-Clustering Dissent]    
+      Neither the left, nor the right media item contain detected faces.''}
+  \item[Non-Clustering Dissent]
       (Quote~3) \textit{``The two media items are different.
       Out of overall 100 tiles, only 8 from the minimum required 67 tiles
       were similar enough to be clustered.
       This corresponds to 8 percent of all tiles.
       The left media item contains 2 detected faces,
       while the right media item contains 1 detected face.''}
-  \item[(Non-Clustering Consent)]    
+  \item[(Non-Clustering Consent)]
       (Quote~4) \textit{``The two media items are different.
       Out of overall 100 tiles, not a single one was similar enough
       to be clustered.
@@ -557,7 +576,7 @@ Rather than using human speech samples at runtime,
 the synthesized speech output is created using additive synthesis
 and an acoustic model, where parameters
 such as fundamental frequency, voicing, and noise levels
-are varied over time to create a~waveform of artificial speech. 
+are varied over time to create a~waveform of artificial speech.
 The speech is clear and can be used at high speeds,
 however, is not as natural or smooth as larger synthesizers
 that are based on speech recordings.
@@ -628,7 +647,7 @@ but in \emph{combination with a~visual representation}
 that makes use of spatial Media Fragments {\sc uri}s,
 as can be seen in \autoref{fig:similar-different}
 and \autoref{fig:tile-highlight}.
-Evaluating subjective data like the quality and usefulness 
+Evaluating subjective data like the quality and usefulness
 of an auto-generated textual, visual, and audial explanation
 of the results of a~deduplication algorithm
 is a~challenging task.
