@@ -226,145 +226,38 @@ While this low-level debug output is sufficient to answer to the polar question 
 
 \section{From Debug Output to Story}
 \label{sec:from-debug-output-to-story}
-
-In order for human raters to get answers to the wh--question
-on \emph{why} media items are clustered,
-we need to lift the low-level debug output
-to a~high-level natural language story
-for the previously defined debug scenarios
-\textbf{Clustering Consent}, \textbf{Clustering Dissent},
-and \textbf{Non-Clustering Dissent}.
-This results in a~natural language generation task,
-whose three stages according to Reiter's and Dale's architecture~%
-\cite{reiter2000building} will be detailed in the following subsection.
+In order for human raters to get answers to the question on \emph{why} media items are clustered, we need to lift the low-level debug output to a~high-level natural language story for the previously defined debug scenarios \textbf{Clustering Consent}, \textbf{Clustering Dissent}, and \textbf{Non-Clustering Dissent}. This results in a~natural language generation task, whose three stages according to Reiter's and Dale's architecture~\cite{reiter2000building} will be detailed in the following subsections.
 
 \subsection{Generating Natural Language}
 
 \subsubsection{Document Planning}
-
-In our context, the document is a~set of low-level debug data
-as illustrated in \autoref{sec:low-level-debug-output},
-so the natural language generation task is manageable.
-We need to convey the currently selected $\textit{tiles\_threshold}$
-and $\textit{similarity\_threshold}$,
-the number of detected faces $f_1$ and $f_2$ in each media item,
-and the number of under the present $\textit{bw\_tolerance}$
-not considered tiles.
+In our context, the document is a~set of low-level debug data as illustrated in \autoref{sec:low-level-debug-output}. The natural language generation task is thus manageable. We need to convey the $\textit{tiles\_threshold}$ and $\textit{similarity\_threshold}$ currently selected, the number of detected faces $f_1$ and $f_2$ in each media item and the number of tiles not considered given the $\textit{bw\_tolerance}$ parameter.
 
 \subsubsection{Microplanning}
-
-The microplanning task is driven by the previously described debug scenarios.
-Initially, we need to decide on a~matching condition aspect of the algorithm
-that will be highlighted first.
-Typically, this will be overall tiles statistics.
-Afterwards, we need to elaborate on secondary matching conditions
-like detected faces and black--and--white tolerance.
-The grammatical number (plural or singular) needs to be taken into account
-when statements about tile(s) or face(s) are planned.
-Some values, \emph{e.g.}, the percentage of matching tiles, are calculated.
-The microplanner needs to decide when exactness
-(\emph{e.g.}, \textit{``99\% of all tiles''}),
-and when approximation of calculated values
-(\emph{e.g.}, \textit{``roughly 50\%''})
-better suits the human evaluators' information needs.
-Neutral non-judgmental statements
-(\emph{e.g.}, \textit{``45 tiles''})
-and biased judgmental statements
-(\emph{e.g.}, \textit{``not a~single one [tile]''})
-need to be carefully balanced.
-Finally, in the interest of a~more naturally sounding phrase composition,
-the microplanner needs to be aware of contrasting juxtaposition
-(\emph{e.g.}, \textit{``Both, the left and the right media item contain 1 detected face.''} \emph{vs.}
-\textit{``The left media item contains no detected faces, while the right media item contains 1 detected face.''}).
+The microplanning task is driven by the debug scenarios described previously. Initially, we need to decide on a~matching condition aspect of the algorithm that will be first highlighted. Typically, this will be the overall tiles statistics. Afterwards, we need to elaborate on secondary matching conditions such as detected faces and black--and--white tolerance. The grammatical number (plural or singular) needs to be taken into account when statements about tile(s) or face(s) are planned. Some values, \emph{e.g.}, the percentage of matching tiles, are calculated. The microplanner needs to decide when exactness (\emph{e.g.}, \textit{``99\% of all tiles''}), and when approximation of calculated values (\emph{e.g.}, \textit{``roughly 50\%''}) better suits the human evaluators' information needs. Neutral non-judgmental statements (\emph{e.g.}, \textit{``45 tiles''}) and biased judgmental statements (\emph{e.g.}, \textit{``not a~single one [tile]''}) need to be carefully balanced. Finally, in the interest of a~more naturally sounding phrase composition, the microplanner needs to be aware of contrasting juxtaposition (\emph{e.g.}, \textit{``Both the left and the right media item contain 1 detected face.''} \emph{vs.} \textit{``The left media item contains no detected faces, while the right media item contains 1 detected face.''}).
 
 \subsubsection{Realization}
-
-With the aid of the quotes below,
-we show examples of actual generated texts
-for the three different debug scenarios (Quotes~1--3).
-For the sake of completeness, we provide one additional example (Quote~4)
-for the not separately considered debug scenario \textbf{Non-Clustering Consent}.
-The running example of the \emph{Backstreet Boys} media items
-for the music video \emph{Everybody}
-is represented by Quote~1.
+We show examples of sentences that are actually generated for the three different debug scenarios (Quotes~1--3). For the sake of completeness, we provide one additional example (Quote~4) for the debug scenario \textbf{Non-Clustering Consent}. The running example of the \emph{Backstreet Boys} media items for the music video \emph{Everybody} is represented by Quote~1.
 
 \begin{description}
   \itemsep0em
-  \item[Clustering Consent]
-      (Quote~1) \textit{``The two media items are near-duplicates.
-      Out of overall 100 tiles, 52 from the minimum required 45 tiles
-      were similar enough to be clustered.
-      This corresponds to 52 percent of all tiles.
-      However, 22 tiles were not considered,
-      as they are either too bright or too dark,
-      which is a common source of clustering issues.
-      Neither the left, nor the right media item contain detected faces.''}
-  \item[Clustering Dissent]
-      (Quote~2) \textit{``The two media items are near-duplicates.
-      Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar
-      enough to be clustered.
-      This corresponds to 41 percent of all tiles.
-      However, 26 tiles were not considered, as they are either too bright
-      or too dark, which is a common source of clustering issues.
-      Neither the left, nor the right media item contain detected faces.''}
-  \item[Non-Clustering Dissent]
-      (Quote~3) \textit{``The two media items are different.
-      Out of overall 100 tiles, only 8 from the minimum required 67 tiles
-      were similar enough to be clustered.
-      This corresponds to 8 percent of all tiles.
-      The left media item contains 2 detected faces,
-      while the right media item contains 1 detected face.''}
-  \item[(Non-Clustering Consent)]
-      (Quote~4) \textit{``The two media items are different.
-      Out of overall 100 tiles, not a single one was similar enough
-      to be clustered.
-      Neither the left, nor the right media item contain detected faces.''}
+  \item[Clustering Consent] (Quote~1). \textit{``The two media items are near-duplicates. Out of overall 100 tiles, 52 from the minimum required 45 tiles
+      were similar enough to be clustered. This corresponds to 52 percent of all tiles. However, 22 tiles were not considered, as they are either too bright or too dark, which is a common source of clustering issues. Neither the left, nor the right media item contain detected faces.''}
+  \item[Clustering Dissent] (Quote~2). \textit{``The two media items are near-duplicates. Out of overall 100 tiles, 41 from the minimum required 41 tiles were similar enough to be clustered. This corresponds to 41 percent of all tiles. However, 26 tiles were not considered, as they are either too bright
+      or too dark, which is a common source of clustering issues. Neither the left, nor the right media item contain detected faces.''}
+  \item[Non-Clustering Dissent] (Quote~3). \textit{``The two media items are different. Out of overall 100 tiles, only 8 from the minimum required 67 tiles
+      were similar enough to be clustered. This corresponds to 8 percent of all tiles. The left media item contains 2 detected faces, while the right media item contains 1 detected face.''}
+  \item[(Non-Clustering Consent)] (Quote~4). \textit{``The two media items are different. Out of overall 100 tiles, not a single one was similar enough to be clustered. Neither the left, nor the right media item contain detected faces.''}
 \end{description}
 
 \subsection{Technical Implementation}
 
 \subsubsection{Text--to--Speech}
-
-The generated texts are converted to speech using a~text--to--speech system.
-We use the eSpeak~\cite{duddington2012espeak}
-speech synthesizer that was originally developed by Jonathan Duddington
-in a~JavaScript port made available by Alon Zakai.%
-\footnote{Speak.js: \url{https://github.com/kripken/speak.js}}
-This speech synthesizer uses the formant synthesis method,
-which allows many languages to be provided in a~small size.
-Rather than using human speech samples at runtime,
-the synthesized speech output is created using additive synthesis
-and an acoustic model, where parameters
-such as fundamental frequency, voicing, and noise levels
-are varied over time to create a~waveform of artificial speech.
-The speech is clear and can be used at high speeds,
-however, is not as natural or smooth as larger synthesizers
-that are based on speech recordings.
+The generated texts are converted to speech using a~text--to--speech system. We use the eSpeak~\cite{duddington2012espeak} speech synthesizer that was originally developed by Jonathan Duddington in a~JavaScript port made available by Alon Zakai.\footnote{Speak.js: \url{https://github.com/kripken/speak.js}}. This speech synthesizer uses the formant synthesis method, which allows many languages to be provided in a~small size. Rather than using human speech samples at runtime, the synthesized speech output is created using additive synthesis and an acoustic model, where parameters such as fundamental frequency, voicing, and noise levels
+are varied over time to create a~waveform of artificial speech. The speech is clear and can be used at high speeds. However, it is not as natural or smooth as larger synthesizers that are based on speech recordings.
 
 \subsubsection{Visual Media Fragments Highlighting}
-
-We treat and address each tile of a~media item as a~spatial media fragment.
-\autoref{fig:similar-different} shows similar, different,
-and not considered tiles of the \emph{Backstreet Boys} media items
-for the \emph{Everybody} music video in a~grid-like structure.
-While the speech synthesizer reads the generated text,
-the corresponding tiles (\emph{e.g.}, the matching tiles,
-or the due to the black--and--white tolerance not considered tiles)
-are interactively visually highlighted
-to support the human evaluators' understanding,
-as can be seen in \autoref{fig:tile-highlight} and in the screencast.
-Spatial Media Fragments {\sc uri}s are currently not implemented
-in any of the existing Web browsers~\cite{weinberg2013polyfill}.
-In order to nonetheless support spatial media fragments,
-we use a~so-called JavaScript polyfill for Media Fragments {\sc uri}
-made available by Thomas Steiner.%
-\footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}
-In Web development, a~polyfill is downloadable code
-that provides facilities by emulating potential future features or {\sc api}s
-that are not built-in to a~Web browser~\cite{sharp2010polyfill}.
-Steiner's polyfill---in contrast to an additional spatial Media Fragments {\sc uri}
-polyfill implementation~\cite{weinberg2013polyfill} by Fabrice Weinberg---%
-supports more browsers and both image \emph{and} video.
+We treat and address each tile of a~media item as a~spatial media fragment. \autoref{fig:similar-different} shows, in a~grid-like structure, similar, different, and tiles not considered from the \emph{Backstreet Boys} media items for the \emph{Everybody} music video. While the speech synthesizer reads the generated text, the corresponding tiles (\emph{e.g.}, the matching tiles or the not considered tiles due to the black--and--white tolerance) are interactively visually highlighted to support the human evaluators' understanding. Spatial Media Fragments {\sc uri}s are currently not implemented in any of the existing Web browsers~\cite{weinberg2013polyfill}. In order to nonetheless support spatial media fragments, we use a~so-called JavaScript polyfill for Media Fragments {\sc uri} made available by Thomas Steiner\footnote{xywh.js: \url{https://github.com/tomayac/xywh.js}}. In Web development, a~polyfill is downloadable code that provides facilities by emulating potential future features or {\sc api}s that are not built-in to a~Web browser~\cite{sharp2010polyfill}. Steiner's polyfill--in contrast to an additional spatial Media Fragments {\sc uri} polyfill implementation~\cite{weinberg2013polyfill} by Fabrice Weinberg-- supports more browsers and both image \emph{and} video.
 
 \begin{figure}[t!]
   \centering
@@ -376,99 +269,41 @@ supports more browsers and both image \emph{and} video.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.75\linewidth]{./tile-highlight.png}
-  \caption{Highlighted not considered tiles,
-    while the text--to--speech system reads the corresponding text fragment
-    \textit{``However, 22 tiles were not considered,
-    as they are either too bright or too dark,
-    which is a common source of clustering issues.''}}
+  \caption{Highlighted not considered tiles, while the text--to--speech system reads the corresponding text fragment \textit{``However, 22 tiles were not considered, as they are either too bright or too dark, which is a common source of clustering issues.''}}
   \label{fig:tile-highlight}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%  6. Evaluation  %%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Evaluation}
 \label{sec:evaluation}
+For the evaluation of natural language generating systems, there are three basic techniques. First, the \emph{task-based} or \emph{extrinsic} evaluation,
+where the generated text is given to a~person who evaluates how well it helps with performing a~given task~\cite{portet2009nlg}. Second, there are \emph{automatic metrics} such as {\sc bleu}~\cite{papineni2002bleu}, where the generated text is compared to texts written by people based on the same input data. Finally, there are \emph{human ratings}, where the generated text is given to a~person who is asked to rate the quality and usefulness of the text.
 
-For the evaluation of natural language generating systems,
-there are three basic techniques.
-First, the \emph{task-based} or \emph{extrinsic} evaluation,
-where the generated text is given to a~person
-who evaluates how well it helps with performing a~given task
-(\emph{e.g.},~\cite{portet2009nlg}).
-Second, there are \emph{automatic metrics}
-(\emph{e.g.}, {\sc bleu}~\cite{papineni2002bleu}),
-where the generated text is compared to texts written by people
-based on the same input data.
-Finally, there are \emph{human ratings}, where the generated text
-is given to a~person who is asked to rate
-the quality and usefulness of the text.
+For our evaluation, we chose the third approach of human ratings, as we do not evaluate the natural language generating system in isolation but in \emph{combination with a~visual representation} that makes use of spatial Media Fragments {\sc uri}s (\autoref{fig:similar-different} and \autoref{fig:tile-highlight}). Evaluating subjective data like the quality and usefulness of an auto-generated textual, visual, and audial explanation of the results of a~deduplication algorithm is a~challenging task. For different users, there may be different emphasis. A~common subjective evaluation technique
+is the Mean~Opinion Score~({\sc mos},~\cite{itu1998mos}), used for decades in telephony networks to obtain the human user's view of the quality of a~network.
+Recently, {\sc mos} has also found wider usage in the multimedia community. Therefore, we conducted a~set of standard subjective tests, where users rate the perceived quality of test samples with scores from 1 (worst) to 5 (best). The actual {\sc mos} is then the arithmetic mean of all individual scores. In the context of this research, we have conducted {\sc mos} test sessions with five external human raters. We generated artificially modified deduplicated media item sets around media items about the \emph{Backstreet Boys} that were shared on social networks during the time of writing. These media item sets were curated by yet another independent two external persons, assisted by a~previously developed software system that implements the deduplication algorithm described in this paper. We asked the two persons to provoke dissent and consent clustering situations for the five human raters, \emph{i.e.}, obviously correct clustering (\textbf{Clustering Consent}), obviously incorrect clustering (\textbf{Clustering Dissent}), and obviously incorrect non-clustering (\textbf{Non-Clustering Dissent}). We then asked the five human raters to have the system automatically explain the algorithm results to them as described in \autoref{sec:from-debug-output-to-story}. The raters gave {\sc mos} scores ranging from $2$ to $5$, with the overall average values as follows: \textbf{Clustering Consent}: $4.3$, \textbf{Clustering Dissent}: $3.3$, and \textbf{Non-Clustering Dissent}: $4.1$. The human raters appreciated the parallel explanation approach, where the visual and the audial parts synchronously described what the algorithm was doing. They uttered that the not considered tiles (due to the black--and--white tolerance) as well as erroneously not detected faces were sources of error in the algorithm that they easily understood thanks to the human language description. They sometimes wished for more diversification in the generated texts. Without exception, they liked the system and encouraged future investment and development.
 
-For our evaluation, we chose the third approach of human ratings,
-as we do not evaluate the natural language generating system in isolation,
-but in \emph{combination with a~visual representation}
-that makes use of spatial Media Fragments {\sc uri}s,
-as can be seen in \autoref{fig:similar-different}
-and \autoref{fig:tile-highlight}.
-Evaluating subjective data like the quality and usefulness
-of an auto-generated textual, visual, and audial explanation
-of the results of a~deduplication algorithm
-is a~challenging task.
-For different users, there may be different emphases.
-A~common subjective evaluation technique
-is the Mean~Opinion Score~({\sc mos},~\cite{itu1998mos}),
-used for decades in telephony networks to
-obtain the human user's view of the quality of a~network.
-Recently, {\sc mos} has also found wider usage in the multimedia community.
-Therefore, a~set of standard subjective tests are conducted,
-where users rate the perceived quality of test samples
-with scores from 1 (worst) to 5 (best).
-The actual {\sc mos} is then the arithmetic mean of all individual scores.
-In the context of this research, we have conducted {\sc mos} test sessions
-with five external human raters.
-We generated artificially modified deduplicated media item sets
-around media items about the \emph{Backstreet Boys}
-that were shared on social networks during the time of writing.
-These media item sets were curated by yet another independent two
-external persons, assisted by a~previously developed
-software system that implements the deduplication algorithm
-described in this paper.
-We asked the two persons to provoke dissent and
-consent clustering situations for the five human raters,
-\emph{i.e.}, obviously correct clustering (\textbf{Clustering Consent}),
-obviously incorrect clustering (\textbf{Clustering Dissent}),
-and obviously incorrect non-clustering (\textbf{Non-Clustering Dissent}).
-We then asked the five human raters to have the system
-automatically explain the algorithm results to them
-as described in \autoref{sec:from-debug-output-to-story}.
-The raters gave {\sc mos} scores ranging from $2$ to $5$,
-with the overall average values as follows.
-\textbf{Clustering Consent}: $4.3$, \textbf{Clustering Dissent}: $3.3$,
-and \textbf{Non-Clustering Dissent}: $4.1$.
-The human raters appreciated the parallel explanation approach,
-where the visual and the audial parts synchronously described
-what the algorithm was doing.
-They uttered that the due to the black--and--white tolerance
-not considered tiles as well as erroneously not detected faces
-were sources of error in the algorithm that they easily understood
-thanks to the human language description.
-They sometimes wished for more diversification in the generated texts,
-however, without exception liked the system
-and encouraged future investment and development.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  7. Conclusions and Future Work  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions-and-future-work}
+We have successfully demonstrated the feasibility of making the task of debugging a~complex algorithm human-friendly, by means of a~combined visual and audial approach. We have used Media Fragments {\sc uri} together with a~natural language generation framework realized through a~speech synthesizer to visually and audially describe media item differences. Future work will focus on generalizing the approach. Many algorithms need expert evaluators for fine-tuning their settings, simply because the debug output is unaccessible to untrained raters. With this work, we have contributed a~promising proof of concept, which, through the involvement of non-domain expert raters, has helped us greatly improve our deduplication algorithm's default parameters.
 
-Concluding, in this paper, we have successfully demonstrated the feasibility
-of making the task of debugging a~complex algorithm human-friendly,
-by means of a~combined visual and audial approach.
-We have used Media Fragments {\sc uri}
-together with a~natural language generation framework
-realized through a~speech synthesizer
-to visually and audially describe media item differences.
-Future work will focus on generalizing the approach.
-Many algorithms need expert evaluators for fine-tuning their settings,
-simply because the debug output is unaccessible to untrained raters.
-With this work, we have contributed a~promising proof of concept,
-which, through the involvement of non-domain expert raters,
-has helped us greatly improve our deduplication algorithm's default parameters.
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Acknowledgments  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Acknowledgments}
+This work was partially supported by the European Union's 7th Framework Programme via the project LinkedTV (GA 287911).
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%%  Bibliography  %%%
+%%%%%%%%%%%%%%%%%%%%%%
 
 % References should be produced using the bibtex program from suitable
 % BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
